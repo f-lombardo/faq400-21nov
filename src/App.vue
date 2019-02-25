@@ -10,6 +10,7 @@
 
                       template: `<div><button>ciao</button><Renderer :scheda="{ component: { template: '<button>secondo</button>' } }"></Renderer></div>` 
     <Bottoniera :buttons="[{message:'primo'},{message:'secondo'},{message:'terzo'}]"></Bottoniera>
+    <Renderer :scheda="jsonProva"></Renderer>
     -->
     <Renderer :scheda="jsonProva"></Renderer>
   </div>
@@ -17,23 +18,48 @@
 
 <script>
 import Renderer from './components/Renderer.vue';
-import Bottoniera from './components/Bottoniera.vue';
+import parser from './parser/parser.js';
+import jsonScheda from './provaScheda.json'
 
+/*
+     template: `<div><button>ciao</button><button>a tutti</button><Bottoniera :buttons="[{message:'primo'},{message:'secondo'},{message:'terzo'}]"></Bottoniera></div>`
+*/
 export default {
+  mounted() {
+    //this.myTemplate = this.callParser(jsonScheda)
+    //this.jsonProva.component.template = this.callParser(jsonScheda)
+  },
   data: function () {
+    /**/
+    return { 
+      //myTemplate: `<div><button>ciao</button><button>a tutti</button><vaadin-text-field label="First Name" :value="'Armando'"></vaadin-text-field></div>`,
+      jsonProva: {
+                    component: { 
+                      template : "<button>ciao</button>"
+                    } 
+                  }
+      }
+/**/
+    /**
+    jsonProva: return parser(jsonScheda)
     return {
       jsonProva: {
                     component: { 
-                      template: `<div><button>ciao</button><button>a tutti</button><Bottoniera :buttons="[{message:'primo'},{message:'secondo'},{message:'terzo'}]"></Bottoniera></div>`
+                      template: `<div><button>ciao</button><button>a tutti</button><vaadin-text-field label="First Name" :value="'Armando'"></vaadin-text-field></div>`
                       } 
                   }
     }
+    /**/
   },  
   name: 'app',
   components: {
     Renderer,
-    Bottoniera
-  }
+  },
+  methods: {
+    callParser(scheda) {
+      parser(scheda)
+    }
+  },
 }
 </script>
 

@@ -7,9 +7,16 @@
 </template>
 <script>
 export default {
+  name : 'bottoniera',
   props: {
-    buttons: Array,
-    horizontal: Boolean
-  }
+    buttons: {
+      default: () => ([]),
+      type: Array
+    },
+    horizontal: {
+      default: true,
+      type: Boolean
+    }
+  }  
 }
 </script>

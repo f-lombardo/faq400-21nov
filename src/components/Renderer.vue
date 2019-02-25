@@ -1,14 +1,22 @@
 <template>
-  <div>
+  <div >
     <!--
+      v-html="scheda.component.template"
     <button>{{ scheda.componente }}</button>
-    -->
+    <v-html></v-html>
     <component v-bind:is="scheda.component"></component>      
+    -->
+    <h1>{{ this.scheda }}</h1>
+    <component :is="scheda.component"></component>      
   </div>
 </template>
 <script>
 
-import Bottoniera from './Bottoniera.vue';
+//import Bottoniera from './Bottoniera.vue';
+
+import '@vaadin/vaadin-button';
+import '@vaadin/vaadin-grid';
+import '@vaadin/vaadin-text-field';
 
 export default {
   /**/
@@ -17,6 +25,7 @@ export default {
       type : Object
     }
   },
+  /*
   computed: {
     currentComponent: function () {
       return this.scheda.component;
@@ -25,6 +34,7 @@ export default {
   components: {
     Bottoniera
   }
+  */
     /*
     data: function () {
       return {
