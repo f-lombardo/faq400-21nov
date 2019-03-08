@@ -4,9 +4,9 @@ import Main from './views/Main.vue';
 
 Vue.use(Router);
 
+// mode: 'history',
 export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
+  base: './',
   routes: [
     {
       path: '/',
