@@ -1,0 +1,1 @@
+mycomponent.loadBundle("chunk-99ece03a.js",["exports"],function(e){window,e.eventFromElement=function(e,n){for(;n;){if(console.log(n),n===e)return!0;n=n.parentElement}return!1},e.generateUniqueId=function(e){return(new Date).getTime()+e.trim().replace(/\s/g,"_")},e.format=function(e,n,t){return(e||"")+(n?" "+n:"")+(t?" "+t:"")}});
