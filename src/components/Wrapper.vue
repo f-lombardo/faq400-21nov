@@ -2,7 +2,8 @@
   <div>
     <component 
       :is="this.getType()" 
-      :data.prop="this.component.data" 
+      :component="this.component"
+      :data.prop="this.getData()" 
       :json.prop="this.getOptions()">
     </component>
   </div>
@@ -24,14 +25,28 @@ export default class Wrapper extends BasicComponent {
       case 'BTN':
         return 'ketchup-btn';
       case 'EXD':
-        return 'exd'; // TODO
+        return 'EXD';
+      case 'MAT':
+        return 'MAT';
+      case 'LAB':
+        return 'LAB';
       default:
         return 'ketchup-fld';
     }
   }
 
   public getOptions(): object {
-    return this.component.options[this.type].default;
+    if (this.component.options) {
+      return this.component.options[this.type].default;
+    }
+    return {};
+  }
+
+  public getData(): object {
+    if (this.component.data) {
+      return this.component.data;
+    }
+    return {};
   }
 
 }

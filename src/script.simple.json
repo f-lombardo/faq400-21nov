@@ -1,0 +1,100 @@
+{
+  "type": "EXD",
+  "key": "exd1",
+  "id": "",
+  "title": "",
+  "fun": "F()",
+  "loaded": true,
+  "layout": "column",
+  "sections": [
+    {
+      "key": "sec1",
+      "id": "",
+      "layout": "",
+      "dim": "",
+      "components": [
+        {
+          "type": "EXD",
+          "key": "exd2",
+          "id": "",
+          "title": "",
+          "fun": "F()",
+          "loaded": true,
+          "layout": "column",
+          "sections": [
+            {
+              "key": "sec2",
+              "id": "",
+              "layout": "",
+              "dim": "",
+              "components": [
+                {
+                  "type": "FLD",
+                  "key": "fld1",
+                  "id": "fld1",
+                  "title": "",
+                  "fun": "F()",
+                  "options": {
+                    "FLD": {
+                      "default": {
+                        "type": "rad",
+                        "showSubmit": true,
+                        "submitPos": "left",
+                        "label": "Row of radio buttons",
+                        "labelPos": "left",
+                        "extensions": {
+                          "minQueryLength": 4,
+                          "forceSelection": true
+                        }
+                      }
+                    }
+                  },
+                  "data": [
+                    {
+                      "value": "label bottone #1",
+                      "options": true,
+                      "obj": "J1KEY",
+                      "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
+                      "children": []
+                    },
+                    {
+                      "value": "label bottone #2",
+                      "options": true,
+                      "obj": "J2KEY",
+                      "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
+                      "children": []
+                    },
+                    {
+                      "value": "label bottone #3",
+                      "options": true,
+                      "obj": "J3KEY",
+                      "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
+                      "children": []
+                    },
+                    {
+                      "value": "label bottone #4",
+                      "options": true,
+                      "obj": "J4KEY",
+                      "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
+                      "children": []
+                    }
+                  ],
+                  "variables": [],
+                  "dynamisms": [
+                    {
+                      "event": "change",
+                      "exec": "F()",
+                      "targets": [
+                        "exd2"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
