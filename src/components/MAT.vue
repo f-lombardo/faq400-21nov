@@ -1,6 +1,6 @@
 <template>
   <p>
-    MAT {{ this.component.title }}
+    MATRICE {{ this.component.title }}
   </p>
 </template>
 

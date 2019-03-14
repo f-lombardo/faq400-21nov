@@ -5,165 +5,70 @@
   "title": "",
   "fun": "F()",
   "loaded": true,
-  "layout": "column", 
-  "sections": [
-    {
-      "key": "sec1",
-      "id": "",
-      "layout": "",
-      "dim": "",
-      "components": [
-        {
-          "type": "LAB",
-          "key": "lbl1",
-          "id": "",
-          "title": "",
-          "data": [
-            {
-              "value": "Sme.UP Gateway",
-              "options": true,
-              "obj": "",
-              "iconClass": "",
-              "children": []
+  "layout": "column",
+  "sections": [{
+    "key": "sec1",
+    "id": "",
+    "layout": "",
+    "dim": "",
+    "components": [{
+      "type": "FLD",
+      "key": "fld1",
+      "id": "fld1",
+      "title": "",
+      "fun": "F()",
+      "options": {
+        "FLD": {
+          "default": {
+            "type": "rad",
+            "showSubmit": true,
+            "submitPos": "left",
+            "label": "Row of radio buttons",
+            "labelPos": "left",
+            "extensions": {
+              "minQueryLength": 4,
+              "forceSelection": true
             }
-          ]
+          }
         }
-      ]
-    },
-    {
-      "key": "sec2",
-      "id": "",
-      "layout": "",
-      "dim": "",
-      "components": [
+      },
+      "data": [{
+          "value": "label bottone #1",
+          "options": true,
+          "obj": "J1KEY",
+          "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
+          "children": []
+        },
         {
-          "type": "FLD",
-          "key": "fld1",
-          "id": "fld1",
-          "title": "",
-          "fun": "F()",
-          "options": {
-            "FLD": {
-              "default": {
-                "type": "CMB",
-                "showSubmit": true
-              }
-            }
-          },
-          "data": [],
-          "variables": [],
-          "dynamisms": [
-            {
-              "event": "change",
-              "exec": "F()",
-              "targets": [
-                "exd2"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "key": "sec3",
-      "id": "",
-      "layout": "",
-      "dim": "",
-      "components": [
+          "value": "label bottone #2",
+          "options": true,
+          "obj": "J2KEY",
+          "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
+          "children": []
+        },
         {
-          "type": "EXD",
-          "key": "exd2",
-          "id": "exd2",
-          "title": "",
-          "layout": "column",
-          "fun": "F()",
-          "loaded": true,
-          "sections" : [
-            {
-              "key": "sec4",
-              "id": "",
-              "layout": "",
-              "dim": "",
-              "components": [
-                {
-                  "type": "FLD",
-                  "key": "fld2",
-                  "id": "fld2",
-                  "title": "",
-                  "fun": "F()",
-                  "options": {
-                    "FLD": {
-                      "default": {
-                        "type": "RAD",
-                        "showSubmit": false,
-                        "inline": true
-                      }
-                    }
-                  },
-                  "data": [],
-                  "variables": [],
-                  "dynamisms": [
-                    {
-                      "event": "change",
-                      "exec": "F()",
-                      "targets": [
-                        "exd3"
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "key": "sec5",
-              "id": "",
-              "layout": "",
-              "dim": "",
-              "components": [
-                {
-                  "type": "EXD",
-                  "key": "exd3",
-                  "id": "exd3",
-                  "title": "",
-                  "fun": "F()",
-                  "loaded": true,
-                  "sections" : [
-                    {
-                      "key": "sec6",
-                      "id": "",
-                      "layout": "",
-                      "dim": "",
-                      "components": [
-                        {
-                          "type": "MAT",
-                          "key": "mat1",
-                          "id": "mat1",
-                          "title": "",
-                          "fun": "F()",
-                          "loaded": true,
-                          "options": {
-                            "EXB": {
-                              "": {
-                                "enableSort": true
-                              },
-                              "A01": {
-                                "showFilter": true
-                              }
-                            }
-                          },
-                          "data": [],
-                          "variables": [],
-                          "dynamisms": []
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }  
-          ]
+          "value": "label bottone #3",
+          "options": true,
+          "obj": "J3KEY",
+          "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
+          "children": []
+        },
+        {
+          "value": "label bottone #4",
+          "options": true,
+          "obj": "J4KEY",
+          "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
+          "children": []
         }
-      ]
-    }
-  ] 
+      ],
+      "variables": [],
+      "dynamisms": [{
+        "event": "change",
+        "exec": "F()",
+        "targets": [
+          "exd2"
+        ]
+      }]
+    }]
+  }]
 }
