@@ -318,6 +318,9 @@
           "name": "labelPos"
         },
         {
+          "name": "propagate"
+        },
+        {
           "name": "showSubmit"
         },
         {

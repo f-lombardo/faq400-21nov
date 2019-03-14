@@ -1,5 +1,8 @@
-import { generateUniqueId } from "../../utils/utils";
-export class KetchupFld {
+import { h } from '../mycomponent.core.js';
+
+import { b as generateUniqueId } from './chunk-b080c327.js';
+
+class KetchupFld {
     constructor() {
         this.json = '';
         this.showSubmit = false;
@@ -125,5 +128,7 @@ export class KetchupFld {
             "cancelable": false,
             "composed": true
         }]; }
-    static get style() { return "/**style-placeholder:ketchup-fld:**/"; }
+    static get style() { return ":host{display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;--fld_comp-margin:var(--kup-fld_component-margin,8px)}.ketchup-fld__top-container{-ms-flex-align:center;align-items:center;display:-ms-flexbox;display:flex;-ms-flex-order:0;order:0;width:100%}.ketchup-fld__label{margin:var(--fld_comp-margin);-ms-flex-order:1;order:1}.ketchup-fld__label.ketchup-fld--right{-ms-flex-order:4;order:4}.ketchup-fld__component{margin:var(--fld_comp-margin);-ms-flex-order:3;order:3}.ketchup-fld__submit{margin:var(--fld_comp-margin);-ms-flex-order:2;order:2}.ketchup-fld__submit.ketchup-fld--right{-ms-flex-order:5;order:5}"; }
 }
+
+export { KetchupFld };

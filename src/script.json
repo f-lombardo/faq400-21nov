@@ -48,7 +48,8 @@
                 "type": "cmb",
                 "displayedField" : "value",
                 "initialValue" : "PRVSHO",
-                "showSubmit": true
+                "showSubmit": true,
+                "submitLabel": "Conferma"
               }
             }
           },
@@ -120,35 +121,35 @@
                     {
                       "value": "Templates list",
                       "options": true,
-                      "obj": "J1KEY",
+                      "obj": "J2KEY",
                       "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
                       "children": []
                     },                    
                     {
                       "value": "A38 plugins",
                       "options": true,
-                      "obj": "J1KEY",
+                      "obj": "J3KEY",
                       "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
                       "children": []
                     },                    
                     {
                       "value": "A37 plugins",
                       "options": true,
-                      "obj": "J1KEY",
+                      "obj": "J4KEY",
                       "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
                       "children": []
                     },                    
                     {
                       "value": "Queue rabbit",
                       "options": true,
-                      "obj": "J1KEY",
+                      "obj": "J5KEY",
                       "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
                       "children": []
                     },  
                     {
                       "value": "Logs",
                       "options": true,
-                      "obj": "J1KEY",
+                      "obj": "J6KEY",
                       "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
                       "children": []
                     }                            
@@ -190,7 +191,7 @@
                           "type": "MAT",
                           "key": "mat1",
                           "id": "mat1",
-                          "title": "",
+                          "title": "mat1",
                           "fun": "F()",
                           "loaded": true,
                           "data": [],

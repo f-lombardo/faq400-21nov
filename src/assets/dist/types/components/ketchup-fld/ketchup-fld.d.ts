@@ -36,6 +36,10 @@ export declare class KetchupFld {
      */
     labelPos: string;
     /**
+     * Unsupported props gets propagated down to dynamic component
+     */
+    propagate: any;
+    /**
      * Other configurations
      */
     extensions: {

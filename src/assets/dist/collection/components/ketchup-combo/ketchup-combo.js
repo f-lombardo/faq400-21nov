@@ -16,6 +16,9 @@ export class KetchupCombo {
         };
         this.baseClass = 'ketchup-combo';
     }
+    componentWillLoad() {
+        this.reflectInitialValue(this.initialValue);
+    }
     componentDidLoad() {
         document.addEventListener('click', this.clickFunction);
     }

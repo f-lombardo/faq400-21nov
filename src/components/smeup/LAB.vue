@@ -1,7 +1,7 @@
 <template>
-  <p>
-    LABEL {{ this.component.data[0].value }}
-  </p>
+  <h2>
+    {{ this.component.data[0].value }}
+  </h2>
 </template>
 
 <script lang="ts">

@@ -45,6 +45,7 @@ export declare class KetchupCombo {
         isTop: boolean;
     };
     baseClass: string;
+    componentWillLoad(): void;
     componentDidLoad(): void;
     componentDidUnload(): void;
     /**
