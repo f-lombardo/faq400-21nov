@@ -10,7 +10,6 @@ export default class Basic extends Vue {
   protected created(): void {
     if (this.component) {
       // saving component in store
-      
       this.$store.dispatch('addComponent', {
         id: this.id,
         component: this
