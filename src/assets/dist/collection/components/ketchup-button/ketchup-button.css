@@ -1,0 +1,55 @@
+:host.fillspace {
+  width: 100%; }
+
+button {
+  background: #4e908f;
+  border: none;
+  color: #fff;
+  border-radius: 2px;
+  box-shadow: none;
+  white-space: nowrap;
+  padding: 0px 8px;
+  line-height: 30px;
+  cursor: pointer;
+  text-align: center;
+  /* standard classes */
+  /* flat button */
+  /* align */ }
+  button:hover {
+    box-shadow: 2px 2px 5px 1px rgba(100, 100, 100, 0.7); }
+  button > .button-icon {
+    float: left;
+    display: block;
+    width: 18px; }
+  button.rounded {
+    border-radius: 50%; }
+  button.transparent {
+    background-color: transparent;
+    border: 1px solid gray;
+    color: gray; }
+  button.btn-info {
+    background: #6a8fd1; }
+  button.btn-danger {
+    background: #f0423c; }
+    button.btn-danger:hover {
+      background: #d91e18; }
+  button.btn-warning {
+    background: #ffd454; }
+  button.btn-selected {
+    background: #ffc107; }
+  button.flat-btn {
+    background: none;
+    border: none;
+    color: #4e908f; }
+    button.flat-btn:hover {
+      box-shadow: none; }
+    button.flat-btn .button-text {
+      text-decoration: underline; }
+  button.align-right {
+    text-align: right; }
+    button.align-right > .button-icon {
+      float: right; }
+  button.align-left {
+    text-align: left; }
+  button.fillspace {
+    width: 100%; }

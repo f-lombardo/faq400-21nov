@@ -1,0 +1,509 @@
+{
+  "components": [
+    {
+      "tag": "ketchup-btn",
+      "dependencies": [
+        "ketchup-button"
+      ],
+      "componentClass": "KetchupBtn",
+      "componentPath": "components/ketchup-btn/ketchup-btn.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/ketchup-btn/ketchup-btn.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "align",
+          "type": "String",
+          "attr": "align"
+        },
+        {
+          "name": "borderColor",
+          "type": "String",
+          "attr": "border-color"
+        },
+        {
+          "name": "btnStyle",
+          "type": "Any",
+          "attr": "btn-style"
+        },
+        {
+          "name": "buttonClass",
+          "type": "String",
+          "attr": "button-class"
+        },
+        {
+          "name": "buttons",
+          "attr": "buttons"
+        },
+        {
+          "name": "columns",
+          "type": "Number",
+          "attr": "columns"
+        },
+        {
+          "name": "fillspace",
+          "type": "Boolean",
+          "attr": "fillspace"
+        },
+        {
+          "name": "flat",
+          "type": "Boolean",
+          "attr": "flat"
+        },
+        {
+          "name": "horizontal",
+          "type": "Boolean",
+          "attr": "horizontal"
+        },
+        {
+          "name": "iconUrl",
+          "type": "String",
+          "attr": "icon-url"
+        },
+        {
+          "name": "rounded",
+          "type": "Boolean",
+          "attr": "rounded"
+        },
+        {
+          "name": "showicon",
+          "type": "Boolean",
+          "attr": "showicon"
+        },
+        {
+          "name": "showSelection",
+          "type": "Boolean",
+          "attr": "show-selection",
+          "watch": [
+            "onShowSelectionChanged"
+          ]
+        },
+        {
+          "name": "showtext",
+          "type": "Boolean",
+          "attr": "showtext"
+        },
+        {
+          "name": "textmode",
+          "type": "String",
+          "attr": "textmode"
+        },
+        {
+          "name": "transparent",
+          "type": "Boolean",
+          "attr": "transparent"
+        }
+      ],
+      "states": [
+        {
+          "name": "selectedBtnIndex"
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "ketchup-button",
+      "dependencies": [],
+      "componentClass": "KetchupButton",
+      "componentPath": "components/ketchup-button/ketchup-button.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/ketchup-button/ketchup-button.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "align",
+          "type": "String",
+          "attr": "align"
+        },
+        {
+          "name": "borderColor",
+          "type": "String",
+          "attr": "border-color",
+          "watch": [
+            "onBorderColorChange"
+          ]
+        },
+        {
+          "name": "btnStyle",
+          "type": "Any",
+          "attr": "btn-style",
+          "watch": [
+            "onStyleChanged"
+          ]
+        },
+        {
+          "name": "buttonClass",
+          "type": "String",
+          "attr": "button-class"
+        },
+        {
+          "name": "fillspace",
+          "type": "Boolean",
+          "attr": "fillspace"
+        },
+        {
+          "name": "flat",
+          "type": "Boolean",
+          "attr": "flat"
+        },
+        {
+          "name": "iconClass",
+          "type": "String",
+          "attr": "icon-class"
+        },
+        {
+          "name": "iconUrl",
+          "type": "String",
+          "attr": "icon-url"
+        },
+        {
+          "name": "label",
+          "type": "String",
+          "attr": "label"
+        },
+        {
+          "name": "rounded",
+          "type": "Boolean",
+          "attr": "rounded"
+        },
+        {
+          "name": "showicon",
+          "type": "Boolean",
+          "attr": "showicon"
+        },
+        {
+          "name": "showtext",
+          "type": "Boolean",
+          "attr": "showtext"
+        },
+        {
+          "name": "textmode",
+          "type": "String",
+          "attr": "textmode"
+        },
+        {
+          "name": "transparent",
+          "type": "Boolean",
+          "attr": "transparent"
+        }
+      ],
+      "hostElement": {
+        "name": "ketchupButtonEl"
+      },
+      "events": [
+        {
+          "event": "ketchupButtonClicked"
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "ketchup-combo",
+      "dependencies": [
+        "ketchup-text-input"
+      ],
+      "componentClass": "KetchupCombo",
+      "componentPath": "components/ketchup-combo/ketchup-combo.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/ketchup-combo/ketchup-combo.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "displayedField",
+          "type": "String",
+          "attr": "displayed-field"
+        },
+        {
+          "name": "initialValue",
+          "type": "String",
+          "attr": "initial-value",
+          "watch": [
+            "reflectInitialValue"
+          ]
+        },
+        {
+          "name": "isClearable",
+          "type": "Boolean",
+          "attr": "is-clearable"
+        },
+        {
+          "name": "items",
+          "attr": "items"
+        },
+        {
+          "name": "label",
+          "type": "String",
+          "attr": "label"
+        }
+      ],
+      "states": [
+        {
+          "name": "filter"
+        },
+        {
+          "name": "isOpen"
+        },
+        {
+          "name": "value"
+        }
+      ],
+      "methods": [
+        {
+          "name": "closeCombo"
+        },
+        {
+          "name": "openCombo"
+        }
+      ],
+      "hostElement": {
+        "name": "comboEl"
+      },
+      "events": [
+        {
+          "event": "ketchupComboSelected",
+          "cancelable": false
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "ketchup-fld",
+      "dependencies": [
+        "ketchup-button"
+      ],
+      "componentClass": "KetchupFld",
+      "componentPath": "components/ketchup-fld/ketchup-fld.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/ketchup-fld/ketchup-fld.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "data",
+          "type": "Any",
+          "attr": "data"
+        },
+        {
+          "name": "json",
+          "type": "String",
+          "attr": "json",
+          "watch": [
+            "updateInternalState"
+          ]
+        }
+      ],
+      "states": [
+        {
+          "name": "extensions"
+        },
+        {
+          "name": "label"
+        },
+        {
+          "name": "labelPos"
+        },
+        {
+          "name": "propagate"
+        },
+        {
+          "name": "showSubmit"
+        },
+        {
+          "name": "submitLabel"
+        },
+        {
+          "name": "submitPos"
+        },
+        {
+          "name": "type"
+        }
+      ],
+      "events": [
+        {
+          "event": "ketchupFldSubmit",
+          "cancelable": false
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "ketchup-radio",
+      "dependencies": [],
+      "componentClass": "KetchupRadio",
+      "componentPath": "components/ketchup-radio/ketchup-radio.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/ketchup-radio/ketchup-radio.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "direction",
+          "type": "String",
+          "attr": "direction",
+          "watch": [
+            "checkDirection"
+          ]
+        },
+        {
+          "name": "displayedField",
+          "type": "String",
+          "attr": "displayed-field"
+        },
+        {
+          "name": "items",
+          "attr": "items"
+        },
+        {
+          "name": "label",
+          "type": "String",
+          "attr": "label"
+        },
+        {
+          "name": "radioName",
+          "type": "String",
+          "attr": "radio-name"
+        },
+        {
+          "name": "valueField",
+          "type": "String",
+          "attr": "value-field"
+        }
+      ],
+      "states": [
+        {
+          "name": "selectedRadio"
+        }
+      ],
+      "events": [
+        {
+          "event": "ketchupRadioChanged",
+          "method": "radioChanged",
+          "cancelable": false
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "ketchup-text-input",
+      "dependencies": [],
+      "componentClass": "KetchupTextInput",
+      "componentPath": "components/ketchup-text-input/ketchup-text-input.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/ketchup-text-input/ketchup-text-input.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "initialValue",
+          "type": "String",
+          "attr": "initial-value"
+        },
+        {
+          "name": "isClearable",
+          "type": "Boolean",
+          "attr": "is-clearable"
+        },
+        {
+          "name": "label",
+          "type": "String",
+          "attr": "label"
+        },
+        {
+          "name": "maxLength",
+          "type": "Number",
+          "attr": "max-length"
+        }
+      ],
+      "states": [
+        {
+          "name": "value"
+        }
+      ],
+      "methods": [
+        {
+          "name": "triggerFocus"
+        }
+      ],
+      "hostElement": {
+        "name": "inputEl"
+      },
+      "events": [
+        {
+          "event": "ketchupTextInputBlurred",
+          "method": "inputBlur",
+          "cancelable": false
+        },
+        {
+          "event": "ketchupTextInputFocused",
+          "method": "inputFocused",
+          "cancelable": false
+        },
+        {
+          "event": "ketchupTextInputUpdated",
+          "method": "inputUpdated",
+          "cancelable": false
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "my-component",
+      "dependencies": [],
+      "componentClass": "MyComponent",
+      "componentPath": "components/my-component/my-component.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/my-component/my-component.css"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "first",
+          "type": "String",
+          "attr": "first"
+        },
+        {
+          "name": "last",
+          "type": "String",
+          "attr": "last"
+        },
+        {
+          "name": "middle",
+          "type": "String",
+          "attr": "middle"
+        }
+      ],
+      "shadow": true
+    }
+  ],
+  "collections": [],
+  "compiler": {
+    "name": "@stencil/core",
+    "version": "0.16.2",
+    "typescriptVersion": "3.2.2"
+  },
+  "bundles": []
+}

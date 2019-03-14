@@ -13,7 +13,7 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
 import BasicComponent from '@/components/Basic.vue'; // @ is an alias to /src
-import smeupSection from '@/components/SEC.vue';
+import smeupSection from '@/components/smeup/SEC.vue';
 
 @Component({
   components: { smeupSection }

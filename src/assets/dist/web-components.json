@@ -1,0 +1,281 @@
+{
+  "tags": [
+    {
+      "label": "ketchup-btn",
+      "description": "",
+      "attributes": [
+        {
+          "label": "align",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "border-color",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "btn-style",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "button-class",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "columns",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "fillspace",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "flat",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "horizontal",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "icon-url",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "rounded",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "show-selection",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "showicon",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "showtext",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "textmode",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "transparent",
+          "description": "",
+          "required": false
+        }
+      ]
+    },
+    {
+      "label": "ketchup-button",
+      "description": "",
+      "attributes": [
+        {
+          "label": "align",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "border-color",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "btn-style",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "button-class",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "fillspace",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "flat",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "icon-class",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "icon-url",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "label",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "rounded",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "showicon",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "showtext",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "textmode",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "transparent",
+          "description": "",
+          "required": false
+        }
+      ]
+    },
+    {
+      "label": "ketchup-combo",
+      "description": "TODO: Control if there can be issues with z-index and elements not correctly triggering the functions to close the combo box list\r\nSee this article here to use the method to get the current position and avoid opening the menu in the wrong direction\r\nhttps://gomakethings.com/how-to-test-if-an-element-is-in-the-viewport-with-vanilla-javascript/",
+      "attributes": [
+        {
+          "label": "displayed-field",
+          "description": "Chooses which field of an item object should be used to create the list and be filtered.",
+          "required": false
+        },
+        {
+          "label": "initial-value",
+          "description": "Allows to pass an initial selected item for the combobox",
+          "required": false
+        },
+        {
+          "label": "is-clearable",
+          "description": "Marks the field as clearable, allowing an icon to delete its content",
+          "required": false
+        },
+        {
+          "label": "label",
+          "description": "Label to describe the radio group",
+          "required": false
+        }
+      ]
+    },
+    {
+      "label": "ketchup-fld",
+      "description": "",
+      "attributes": [
+        {
+          "label": "data",
+          "description": "Effective data to pass to the component",
+          "required": false
+        },
+        {
+          "label": "json",
+          "description": "Data the FLD must parse to fully be configured",
+          "required": false
+        }
+      ]
+    },
+    {
+      "label": "ketchup-radio",
+      "description": "",
+      "attributes": [
+        {
+          "label": "direction",
+          "description": "Direction in which the radio elements must be placed",
+          "required": false
+        },
+        {
+          "label": "displayed-field",
+          "description": "Chooses which field of an item object should be used to create the list and be filtered.",
+          "required": false
+        },
+        {
+          "label": "label",
+          "description": "Label to describe the radio group",
+          "required": false
+        },
+        {
+          "label": "radio-name",
+          "description": "Radio elements value",
+          "required": false
+        },
+        {
+          "label": "value-field",
+          "description": "Chooses which field of an item object should be used to create the list and be filtered.",
+          "required": false
+        }
+      ]
+    },
+    {
+      "label": "ketchup-text-input",
+      "description": "",
+      "attributes": [
+        {
+          "label": "initial-value",
+          "description": "Marks the field as clearable, allowing an icon to delete its content",
+          "required": false
+        },
+        {
+          "label": "is-clearable",
+          "description": "Marks the field as clearable, allowing an icon to delete its content",
+          "required": false
+        },
+        {
+          "label": "label",
+          "description": "Label to describe the radio group",
+          "required": false
+        },
+        {
+          "label": "max-length",
+          "description": "The max length of the text field.\r\nDefault value copied from here: https://www.w3schools.com/tags/att_input_maxlength.asp",
+          "required": false
+        }
+      ]
+    },
+    {
+      "label": "my-component",
+      "description": "",
+      "attributes": [
+        {
+          "label": "first",
+          "description": "The first name",
+          "required": false
+        },
+        {
+          "label": "last",
+          "description": "The last name",
+          "required": false
+        },
+        {
+          "label": "middle",
+          "description": "The middle name",
+          "required": false
+        }
+      ]
+    }
+  ]
+}
