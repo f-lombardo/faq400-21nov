@@ -1,32 +1,30 @@
 <template>
-    <component
-      :is="this.getMainComponentType()"
-      :component="this.getMainComponent()">
-    </component>
+  <component :is="mainComponent.type" :component="mainComponent"></component>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-// TODO
-const script = require('@/script.json');
+import { Component, Vue } from 'vue-property-decorator'
+import { mapGetters } from 'vuex'
 
-@Component
+import script from '@/script.js'
+
+@Component({
+  computed: {
+    ...mapGetters({
+      mainComponent: 'webup/mainComponent',
+    }),
+  },
+})
 export default class Main extends Vue {
+  private script: any
 
-  private script: any;
+  mainComponent: any
 
   private created() {
-    // get json via REST
-    this.script = script;
-  }
+    this.script = script
 
-  private getMainComponent() {
-    return this.script;
+    // save root in store
+    this.$store.commit('webup/SET_ROOT', this.script)
   }
-
-  private getMainComponentType() {
-    return this.script.type;
-  }
-
 }
 </script>
