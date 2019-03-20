@@ -13,12 +13,13 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
-import BasicComponent from '@/components/Basic.vue'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Component
-export default class SEC extends BasicComponent {
+export default class SEC extends Vue {
   protected name = 'SEC'
+
+  @Prop() protected component!: any
 
   public getType(comp: any): string {
     switch (comp.type) {

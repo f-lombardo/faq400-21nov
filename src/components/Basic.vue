@@ -1,33 +1,32 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import { mapActions } from 'vuex'
 
 import Dynamism from './interfaces/Dynamism'
 import ImplicitVariables from './interfaces/ImplicitVariable'
 
-@Component
+import { dynMixin } from '@/mixins/dynMixin'
+
+@Component({
+  mixins: [dynMixin],
+})
 export default class Basic extends Vue {
   @Prop() protected component!: any
   protected name: string = ''
-  private id: string = this.component.id
-    ? this.component.id
-    : this.component.key
 
   private implicitVariables?: ImplicitVariables[]
 
   protected created(): void {
     if (this.component) {
       // saving component in store
-      this.$store.dispatch('addComponent', {
-        id: this.id,
-        component: this,
-      })
+      this.$store.dispatch('webup/addComponent', this.component)
     }
   }
 
   protected destroyed(): void {
     if (this.component) {
       // remove component from store
-      this.$store.dispatch('removeComponent', this.id)
+      this.$store.dispatch('webup/removeComponent', this.component)
     }
   }
 
@@ -46,23 +45,7 @@ export default class Basic extends Vue {
       )
     }
 
-    // return empty array
     return []
-  }
-
-  get isLoaded() {
-    if (this.component) {
-      return this.component.loaded
-    }
-
-    return false
-  }
-
-  set isLoaded(value) {
-    if (this.component) {
-      console.log('setting loaded')
-      this.component.loaded = value
-    }
   }
 }
 </script>

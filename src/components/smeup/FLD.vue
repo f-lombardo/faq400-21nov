@@ -33,7 +33,8 @@ export default class FLD extends BasicComponent {
         value: $event.detail.newValue.value,
       })
 
-      this.$store.dispatch('dynamism', {
+      this.manageDyn({
+        source: this.component,
         event: dyn.event,
         targets: dyn.targets,
         variables,

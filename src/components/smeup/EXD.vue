@@ -1,5 +1,5 @@
 <template>
-  <div :style="getStyle()" v-if="isLoaded">
+  <div :style="getStyle()" v-if="component.loaded">
     {{ this.component.title }}
     <template v-for="section in this.component.sections">
       <smeup-section :component="section" :key="section.key"></smeup-section>
