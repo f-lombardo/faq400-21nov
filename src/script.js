@@ -82,7 +82,7 @@ const parsedJson = JSON.parse(`{
           "key": "i003",
           "id": "exd2",
           "title": "",
-          "fun": "F(EXD;*SCO;) 2(MB;SCP_SCH;[T1])",
+          "fun": "F(EXD;*SCO;) 2(MB;SCP_SCH;[K1])",
           "loaded": false,
           "layout": "column",
           "sections": [

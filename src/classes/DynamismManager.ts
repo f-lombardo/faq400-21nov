@@ -3,6 +3,7 @@ import { Vue } from 'vue-property-decorator'
 import BasicComponent from '@/interfaces/BasicComponent'
 
 import Dynamism from '@/classes/Dynamism'
+import ExpressionEvaluator from './expressions/ExpressionEvaluator'
 
 export default class DynamismManager {
   execute(comp: Vue, dyn: Dynamism): void {
@@ -29,7 +30,12 @@ export default class DynamismManager {
           // save variables in target
           this.executeAssignmentsInTarget(c, dyn)
 
-          // TODO ricalcola la fun
+          // ricalcola la fun
+          const evaluatedFun = new ExpressionEvaluator().variableExpression(
+            c,
+            c.component.fun
+          )
+          console.log(evaluatedFun)
 
           // TODO ricarica componente
           comp.$store.commit('webup/RELOAD_COMPONENT', c)
@@ -47,14 +53,14 @@ export default class DynamismManager {
     // variables from source component
     if (dyn.source && dyn.source.variables) {
       for (let k in dyn.source.variables) {
-        target.variables[k] = dyn.source.variables[k]
+        target.put(k, dyn.source.variables[k])
       }
     }
 
     // variables from dyn
     if (dyn.variables) {
       for (let k in dyn.variables) {
-        target.variables[k] = dyn.variables[k]
+        target.put(k, dyn.variables[k])
       }
     }
 
