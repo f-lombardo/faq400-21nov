@@ -1,19 +1,30 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 
-import BasicComponent from '@/components/interfaces/BasicComponent'
+import BasicComponent from '@/interfaces/BasicComponent'
+
+interface Component {
+  component: BasicComponent
+}
+
+interface ComponentMap {
+  [index: string]: Component
+}
 
 @Module({
   namespaced: true,
 })
 export default class Webup extends VuexModule {
-  root: BasicComponent = {
-    id: '',
-    loaded: false,
+  root: Component = {
+    component: {
+      key: 'webup',
+      loaded: true,
+      variables: {},
+    },
   }
 
-  componentsByKey = {}
+  componentsByKey: ComponentMap = {}
 
-  componentsById = {}
+  componentsById: ComponentMap = {}
 
   @Mutation
   SET_ROOT(root: any) {
@@ -21,45 +32,53 @@ export default class Webup extends VuexModule {
   }
 
   @Mutation
-  ADD_COMPONENT(comp: BasicComponent) {
-    this.componentsById[comp.id] = comp
+  ADD_COMPONENT(comp: Component) {
+    this.componentsByKey[comp.component.key] = comp
 
-    if (comp.key) {
-      this.componentsByKey[comp.key] = comp
+    if (comp.component.id) {
+      this.componentsById[comp.component.id] = comp
     }
   }
 
   @Mutation
-  REMOVE_COMPONENT(comp: BasicComponent) {
-    delete (this.componentsById as any)[comp.id]
+  REMOVE_COMPONENT(comp: Component) {
+    delete this.componentsByKey[comp.component.key]
 
-    if (comp.key) {
-      delete (this.componentsByKey as any)[comp.key]
+    if (comp.component.id) {
+      delete this.componentsById[comp.component.id]
     }
   }
 
   @Mutation
-  RELOAD_COMPONENT(comp: BasicComponent) {
-    comp.loaded = true
+  RELOAD_COMPONENT(comp: Component) {
+    comp.component.loaded = true
   }
 
   @Action({ commit: 'ADD_COMPONENT' })
-  addComponent(payload: BasicComponent) {
+  addComponent(payload: Component) {
     return payload
   }
 
   @Action({ commit: 'REMOVE_COMPONENT' })
-  removeComponent(comp: BasicComponent) {
+  removeComponent(comp: Component) {
+    return comp
+  }
+
+  @Action({ commit: 'RELOAD_COMPONENT' })
+  reloadComponent(comp: Component) {
+    // TODO questo dovrebbe controllare la fun, chiamare API facendosi dare i nuovi dati etc
+    comp.component.loaded = true
+
     return comp
   }
 
   get getComponentById() {
     return (key: string): any => {
-      return (this.componentsById as any)[key]
+      return this.componentsById[key]
     }
   }
 
-  get mainComponent(): BasicComponent {
+  get mainComponent(): Component {
     return this.root
   }
 }

@@ -1,44 +1,33 @@
 <template>
-  <ketchup-fld :component="component" @ketchupComboSelected="onComboChange($event)"></ketchup-fld>
+  <ketchup-fld
+    @ketchupComboSelected="onFldChange($event)"
+    :data.prop="getData()"
+    :json.prop="getOptions()"
+  ></ketchup-fld>
 </template>
 
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
 
 import BasicComponent from '@/components/Basic.vue'
-import Dynamism from '../interfaces/Dynamism'
+import Dynamism from '@/classes/Dynamism'
 
 @Component
 export default class FLD extends BasicComponent {
   protected name = 'FLD'
 
-  onComboChange($event: CustomEvent) {
-    this.getDynamisms('change').forEach((dyn: Dynamism) => {
-      // TODO tutta questa logica sarebbe da spostare in un altro file
-      // preparing variables
-      const variables = new Array()
+  onFldChange($event: CustomEvent) {
+    this.getDynamisms('change').forEach((d) => {
+      const dyn = new Dynamism(d.event)
+      dyn.source = this.component
+      dyn.targets = d.targets
 
-      variables.push({
-        key: 'T1',
-        value: '',
-      })
+      // adding implicit variables
+      dyn.addImplictVariable({ key: 'T1', value: '' })
+      dyn.addImplictVariable({ key: 'P1', value: '' })
+      dyn.addImplictVariable({ key: 'K1', value: $event.detail.newValue.value })
 
-      variables.push({
-        key: 'P1',
-        value: '',
-      })
-
-      variables.push({
-        key: 'K1',
-        value: $event.detail.newValue.value,
-      })
-
-      this.manageDyn({
-        source: this.component,
-        event: dyn.event,
-        targets: dyn.targets,
-        variables,
-      })
+      this.$dynamismManager.execute(this, dyn)
     })
   }
 }

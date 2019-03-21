@@ -2,32 +2,47 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { mapActions } from 'vuex'
 
-import Dynamism from './interfaces/Dynamism'
-import ImplicitVariables from './interfaces/ImplicitVariable'
+import Dynamism from '@/classes/Dynamism'
+import ImplicitVariable from '@/interfaces/ImplicitVariable'
 
-import { dynMixin } from '@/mixins/dynMixin'
+import { variableContextMixin } from '@/mixins/variableContextMixin.ts'
 
 @Component({
-  mixins: [dynMixin],
+  mixins: [variableContextMixin],
 })
 export default class Basic extends Vue {
   @Prop() protected component!: any
   protected name: string = ''
 
-  private implicitVariables?: ImplicitVariables[]
+  private implicitVariables?: ImplicitVariable[]
 
   protected created(): void {
     if (this.component) {
       // saving component in store
-      this.$store.dispatch('webup/addComponent', this.component)
+      this.$store.dispatch('webup/addComponent', this)
     }
   }
 
   protected destroyed(): void {
     if (this.component) {
       // remove component from store
-      this.$store.dispatch('webup/removeComponent', this.component)
+      this.$store.dispatch('webup/removeComponent', this)
     }
+  }
+
+  public getOptions(): any {
+    // TODO questo sara' da rivedere quando gestiremo i setup 'correttamente'
+    if (this.component.options) {
+      return this.component.options[this.component.type].default
+    }
+    return {}
+  }
+
+  public getData(): any {
+    if (this.component.data) {
+      return this.component.data
+    }
+    return {}
   }
 
   protected hasDynamisms() {

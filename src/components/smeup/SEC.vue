@@ -1,13 +1,7 @@
 <template>
   <div>
     <template v-for="comp in this.component.components">
-      <component
-        :key="comp.key"
-        :is="getType(comp)"
-        :component="comp"
-        :data.prop="getData(comp)"
-        :json.prop="getOptions(comp)"
-      ></component>
+      <component :key="comp.key" :is="getType(comp)" :component="comp"></component>
     </template>
   </div>
 </template>
@@ -36,20 +30,6 @@ export default class SEC extends Vue {
       default:
         return 'UNK'
     }
-  }
-
-  public getOptions(comp: any): object {
-    if (comp.options) {
-      return comp.options[comp.type].default
-    }
-    return {}
-  }
-
-  public getData(comp: any): object {
-    if (comp.data) {
-      return comp.data
-    }
-    return {}
   }
 }
 </script>

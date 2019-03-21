@@ -3,13 +3,18 @@ import App from './App.vue'
 import router from './router'
 import store from './store/store'
 import axios from 'axios'
-import './registerServiceWorker'
 
+import './registerServiceWorker'
 import './smeupComponents'
+
+import DynamismManager from './classes/DynamismManager'
 
 Vue.config.productionTip = false
 
 axios.defaults.baseURL = 'TODO'
+
+// adding dynamism manager to Vue
+Vue.prototype.$dynamismManager = new DynamismManager()
 
 new Vue({
   router,
