@@ -1,4 +1,4 @@
-import BasicComponent from '@/interfaces/BasicComponent'
+import IBasic from '@/interfaces/IBasic'
 
 interface Variable {
   key: string
@@ -11,7 +11,7 @@ interface VariableMap {
 
 export default class Dynamism {
   event: string
-  source?: BasicComponent
+  source?: IBasic
   variables: VariableMap = {}
   targets: string[] = []
   title?: string

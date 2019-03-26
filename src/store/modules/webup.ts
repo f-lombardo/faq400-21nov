@@ -2,6 +2,8 @@ import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 
 import BasicComponent from '@/interfaces/BasicComponent'
 
+import { defaultSections, prv123, prv456 } from '@/mocks/script'
+
 interface Component {
   component: BasicComponent
 }
@@ -22,8 +24,6 @@ export default class Webup extends VuexModule {
     },
   }
 
-  componentsByKey: ComponentMap = {}
-
   componentsById: ComponentMap = {}
 
   @Mutation
@@ -33,8 +33,6 @@ export default class Webup extends VuexModule {
 
   @Mutation
   ADD_COMPONENT(comp: Component) {
-    this.componentsByKey[comp.component.key] = comp
-
     if (comp.component.id) {
       this.componentsById[comp.component.id] = comp
     }
@@ -42,16 +40,15 @@ export default class Webup extends VuexModule {
 
   @Mutation
   REMOVE_COMPONENT(comp: Component) {
-    delete this.componentsByKey[comp.component.key]
-
     if (comp.component.id) {
       delete this.componentsById[comp.component.id]
     }
   }
 
   @Mutation
-  RELOAD_COMPONENT(comp: Component) {
-    comp.component.loaded = true
+  RELOAD_COMPONENT(payload: any) {
+    // replace component
+    payload.comp.comp = payload.newExd
   }
 
   @Action({ commit: 'ADD_COMPONENT' })
@@ -65,11 +62,18 @@ export default class Webup extends VuexModule {
   }
 
   @Action({ commit: 'RELOAD_COMPONENT' })
-  reloadComponent(comp: Component) {
-    // TODO questo dovrebbe controllare la fun, chiamare API facendosi dare i nuovi dati etc
-    comp.component.loaded = true
+  reloadComponent(payload: { comp: Component; fun: string }) {
+    let newExd = []
 
-    return comp
+    if (payload.fun.endsWith('PRV123)')) {
+      newExd = prv123
+    } else if (payload.fun.endsWith('PRV456)')) {
+      newExd = prv456
+    } else {
+      newExd = defaultSections
+    }
+
+    return { comp: payload.comp, newExd }
   }
 
   get getComponentById() {

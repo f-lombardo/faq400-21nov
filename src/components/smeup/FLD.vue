@@ -19,7 +19,7 @@ export default class FLD extends BasicComponent {
   onFldChange($event: CustomEvent) {
     this.getDynamisms('change').forEach((d) => {
       const dyn = new Dynamism(d.event)
-      dyn.source = this.component
+      dyn.source = this.comp
       dyn.targets = d.targets
 
       // adding implicit variables

@@ -6,7 +6,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { mapGetters } from 'vuex'
 
-import script from '@/script.js'
+import { mainEXD } from '@/mocks/script'
 
 @Component({
   computed: {
@@ -16,15 +16,11 @@ import script from '@/script.js'
   },
 })
 export default class Main extends Vue {
-  private script: any
-
   mainComponent: any
 
   private created() {
-    this.script = script
-
     // save root in store
-    this.$store.commit('webup/SET_ROOT', this.script)
+    this.$store.commit('webup/SET_ROOT', mainEXD)
   }
 }
 </script>

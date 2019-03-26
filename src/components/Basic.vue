@@ -6,18 +6,22 @@ import Dynamism from '@/classes/Dynamism'
 import ImplicitVariable from '@/interfaces/ImplicitVariable'
 
 import { variableContextMixin } from '@/mixins/variableContextMixin.ts'
+import VariableContext from '@/classes/VariableContext'
 
-@Component({
-  mixins: [variableContextMixin],
-})
-export default class Basic extends Vue {
+@Component
+export default class Basic extends VariableContext {
   @Prop() protected component!: any
+
+  comp: any = {}
+
   protected name: string = ''
 
   private implicitVariables?: ImplicitVariable[]
 
   protected created(): void {
     if (this.component) {
+      this.comp = this.component
+
       // saving component in store
       this.$store.dispatch('webup/addComponent', this)
     }

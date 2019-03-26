@@ -1,7 +1,7 @@
 <template>
-  <div :style="getStyle()" v-if="component.loaded">
-    {{ this.component.title }}
-    <template v-for="section in this.component.sections">
+  <div :style="getStyle()" v-if="comp.loaded">
+    {{ this.comp.title }}
+    <template v-for="section in this.comp.sections">
       <smeup-section :component="section" :key="section.key"></smeup-section>
     </template>
   </div>
@@ -22,7 +22,7 @@ export default class EXD extends BasicComponent {
   private getStyle(): object {
     return {
       display: 'flex',
-      flexDirection: this.component.layout,
+      flexDirection: this.comp.layout,
     }
   }
 }

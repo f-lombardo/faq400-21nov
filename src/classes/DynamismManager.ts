@@ -1,9 +1,9 @@
 import { Vue } from 'vue-property-decorator'
 
-import BasicComponent from '@/interfaces/BasicComponent'
-
 import Dynamism from '@/classes/Dynamism'
 import ExpressionEvaluator from './expressions/ExpressionEvaluator'
+
+import IBasic from '@/interfaces/IBasic'
 
 export default class DynamismManager {
   execute(comp: Vue, dyn: Dynamism): void {
@@ -35,32 +35,30 @@ export default class DynamismManager {
             c,
             c.component.fun
           )
-          console.log(evaluatedFun)
 
           // TODO ricarica componente
-          comp.$store.commit('webup/RELOAD_COMPONENT', c)
+          comp.$store.dispatch('webup/reloadComponent', {
+            comp: c,
+            fun: evaluatedFun,
+          })
         })
     }
 
     // TODO exec
   }
 
-  executeAssignmentsInTarget(target: BasicComponent, dyn: Dynamism) {
-    if (!target.variables) {
-      target.variables = {}
-    }
-
+  executeAssignmentsInTarget(target: IBasic, dyn: Dynamism) {
     // variables from source component
     if (dyn.source && dyn.source.variables) {
       for (let k in dyn.source.variables) {
-        target.put(k, dyn.source.variables[k])
+        target.putVariable(k, dyn.source.variables[k])
       }
     }
 
     // variables from dyn
     if (dyn.variables) {
       for (let k in dyn.variables) {
-        target.put(k, dyn.variables[k])
+        target.putVariable(k, dyn.variables[k])
       }
     }
 
@@ -70,7 +68,7 @@ export default class DynamismManager {
 
     // change title
     if (dyn.title) {
-      target.title = dyn.title
+      target.component.title = dyn.title
     }
   }
 }
