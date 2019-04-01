@@ -1,31 +1,29 @@
 <template>
-  <div :style="this.getStyle()">
-    {{ this.component.title }}
-    <template v-for="section in this.component.sections">
-      <smeup-section
-        :component="section"
-        :key="section.key">
-      </smeup-section>
+  <div :style="getStyle()" v-if="comp.loaded">
+    {{ this.comp.title }}
+    <template v-for="section in this.comp.sections">
+      <smeup-section :component="section" :key="section.key"></smeup-section>
     </template>
   </div>
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator';
-import BasicComponent from '@/components/Basic.vue'; // @ is an alias to /src
-import smeupSection from '@/components/smeup/SEC.vue';
+import { Component } from 'vue-property-decorator'
+
+import BasicComponent from '@/components/Basic.vue'
+import smeupSection from '@/components/smeup/SEC.vue'
 
 @Component({
-  components: { smeupSection }
+  components: { smeupSection },
 })
 export default class EXD extends BasicComponent {
-  protected name: string = 'EXD';
+  protected name: string = 'EXD'
 
   private getStyle(): object {
     return {
       display: 'flex',
-      flexDirection: this.component.layout
-    };
+      flexDirection: this.comp.layout,
+    }
   }
 }
 </script>

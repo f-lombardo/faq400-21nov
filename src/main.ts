@@ -1,18 +1,23 @@
-import Vue from 'vue';
-import App from './App.vue';
-import router from './router';
-import store from './store';
-import axios from 'axios';
-import './registerServiceWorker';
+import Vue from 'vue'
+import App from './App.vue'
+import router from './router'
+import store from './store/store'
+import axios from 'axios'
 
-import './smeupComponents';
+import './registerServiceWorker'
+import './smeupComponents'
 
-Vue.config.productionTip = false;
+import DynamismManager from './classes/DynamismManager'
 
-axios.defaults.baseURL = 'TODO';
+Vue.config.productionTip = false
+
+axios.defaults.baseURL = 'TODO'
+
+// adding dynamism manager to Vue
+Vue.prototype.$dynamismManager = new DynamismManager()
 
 new Vue({
   router,
   store,
   render: (h) => h(App),
-}).$mount('#app');
+}).$mount('#app')
