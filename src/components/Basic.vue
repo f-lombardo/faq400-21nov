@@ -5,7 +5,8 @@ import { mapActions } from 'vuex'
 import Dynamism from '@/classes/Dynamism'
 import ImplicitVariable from '@/interfaces/ImplicitVariable'
 
-import { variableContextMixin } from '@/mixins/variableContextMixin.ts'
+//import { variableContextMixin } from '@/mixins/variableContextMixin.ts'
+const variableContextMixin = require('@/mixins/variableContextMixin.js');
 import VariableContext from '@/classes/VariableContext'
 
 @Component

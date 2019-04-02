@@ -4,22 +4,19 @@ export const variableContextMixin = {
       variables: {},
     }
   },
-
   methods: {
-    get(name: string): string {
+    get(name) {
       return this.variables[name]
     },
-
-    put(name: string, value: string): void {
+    put(name, value){
       if ('*CLEAR' === value) {
         delete this.variables[name]
       } else {
         this.variables[name] = value
       }
     },
-
-    evaluateExpression(expression: string): string {
+    evaluateExpression(expression) {
       return expression
-    },
-  },
+    }
+  }
 }
