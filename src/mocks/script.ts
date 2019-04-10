@@ -204,13 +204,195 @@ export const defaultSections: any = JSON.parse(`
               "dim": "",
               "components": [
                 {
-                  "type": "MAT",
-                  "key": "mat1",
-                  "id": "mat1",
-                  "title": "mat1",
-                  "fun": "F()",
-                  "loaded": true,
-                  "data": [],
+                  "type": "EXB",
+                  "key": "i123",
+                  "title": "la mia matrice ",
+                  "options": {
+                    "EXB": {
+                      "": {
+                        "enableSort": true
+                      },
+                      "A01": {
+                        "showFilter": true
+                      }
+                    },
+                    "CHA": {
+                      "": {
+                        "type": "BAR"
+                      }
+                    }
+                  },
+                  "data": {
+                    "columns": [
+                      {
+                        "name": "FLD1",
+                        "title": "Column A",
+                        "size": ""
+                      },
+                      {
+                        "name": "FLD2",
+                        "title": "Column B",
+                        "size": 10
+                      },
+                      {
+                        "name": "FLD3",
+                        "title": "Column C",
+                        "size": 10
+                      }
+                    ],
+                    "rows": [
+                      {
+                        "object": "se presente, il K01",
+                        "readOnly": true,
+                        "cells": [
+                            {
+                              "readOnly": true,
+                              "options (sarebbe il tasto destro)": true,
+                              "obj": {
+                                "t": "CN",
+                                "p": "COL",
+                                "k": "KEKBUR"
+                              },
+                              "style": "",
+                              "type": "itx / acp / etc...",
+                              "value": "A 1"
+                            },
+                            {
+                              "readOnly": true,
+                              "options (sarebbe il tasto destro)": true,
+                              "obj": {
+                                "t": "CN",
+                                "p": "COL",
+                                "k": "M1B"
+                              },
+                              "style": "",
+                              "type": "itx / acp / etc...",
+                              "value": "B 55"
+                            },
+                            {
+                              "readOnly": true,
+                              "options (sarebbe il tasto destro)": true,
+                              "obj": {
+                                "t": "CN",
+                                "p": "COL",
+                                "k": "M1C"
+                              },
+                              "style": "",
+                              "type": "itx / acp / etc...",
+                              "value": "C 999"
+                            }
+                        ]
+                      },
+                      {
+                        "object": "se presente, il K02",
+                        "readOnly": true,
+                        "cells": [
+                            {
+                              "readOnly": true,
+                              "options (sarebbe il tasto destro)": true,
+                              "obj": {
+                                "t": "CN",
+                                "p": "COL",
+                                "k": "M2A"
+                              },
+                              "style": "",
+                              "type": "itx / acp / etc...",
+                              "value": "A 2"
+                            },
+                            {
+                              "readOnly": true,
+                              "options (sarebbe il tasto destro)": true,
+                              "obj": {
+                                "t": "CN",
+                                "p": "COL",
+                                "k": "M2B"
+                              },
+                              "style": "",
+                              "type": "itx / acp / etc...",
+                              "value": "B 33"
+                            },
+                            {
+                              "readOnly": true,
+                              "options (sarebbe il tasto destro)": true,
+                              "obj": {
+                                "t": "CN",
+                                "p": "COL",
+                                "k": "M2C"
+                              },
+                              "style": "",
+                              "type": "itx / acp / etc...",
+                              "value": "C 777"
+                            }
+                        ]
+                      },
+                      {
+                        "object": "se presente, il K02",
+                        "readOnly": true,
+                        "cells": [
+                            {
+                              "readOnly": true,
+                              "options (sarebbe il tasto destro)": true,
+                              "obj": {
+                                "t": "CN",
+                                "p": "COL",
+                                "k": "M3A"
+                              },
+                              "style": "",
+                              "type": "itx / acp / etc...",
+                              "value": "A 3"
+                            },
+                            {
+                              "readOnly": true,
+                              "options (sarebbe il tasto destro)": true,
+                              "obj": {
+                                "t": "CN",
+                                "p": "COL",
+                                "k": "M3B"
+                              },
+                              "style": "",
+                              "type": "itx / acp / etc...",
+                              "value": "B 77"
+                            },
+                            {
+                              "readOnly": true,
+                              "options (sarebbe il tasto destro)": true,
+                              "obj": {
+                                "t": "CN",
+                                "p": "COL",
+                                "k": "M3C"
+                              },
+                              "style": "",
+                              "type": "itx / acp / etc...",
+                              "value": "C 555"
+                            }
+                        ]
+                      }
+                    ]
+                  },
+                  "messages": [],
+                  "actions": {
+                    "row": [
+                      {
+                        "exec": "...",
+                        "icon": "mdi-clock",
+                        "text": "Scheda orologio"
+                      }
+                    ],
+                    "global": [],
+                    "auto (tag action attuale)": [
+                      "F() / CLOSE / ETC...",
+                      "F() / CLOSE / ETC...",
+                      "F() / CLOSE / ETC...",
+                      "F() / CLOSE / ETC..."
+                    ],
+                    "command": [
+                      {
+                        "exec": "...",
+                        "icon": "mdi-play",
+                        "text": "Spotify"
+                      }
+                    ]
+                  },
                   "variables": [],
                   "dynamisms": []
                 }
