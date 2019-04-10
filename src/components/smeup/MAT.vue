@@ -29,7 +29,7 @@
       </tr>
     </template>
       <!-- 
-          funziona ma da questo erroe a console: [Vuetify] Headers must have a value property that corresponds to a value in the v-model 
+          funziona ma da questo warning a console: [Vuetify] Headers must have a value property that corresponds to a value in the v-model 
     <template slot="headerCell" slot-scope="props">
       <th>{{ props.header.title }}</th>
     </template>
