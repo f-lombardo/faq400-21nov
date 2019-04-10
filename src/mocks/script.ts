@@ -8,6 +8,38 @@ export const mainEXD: any = JSON.parse(`
   "loaded": true,
   "layout": "column",
   "sections": [
+	{
+      "key": "i999",
+      "id": "",
+      "layout": "",
+      "dim": "",
+      "components": [
+        {
+          "type": "BTN",
+          "key": "i998",
+          "id": "lbl9",
+          "title": "",
+          "loaded": true,
+          "data": [
+            {
+              "value": "Debug",
+              "options": true,
+              "obj": "",
+              "iconClass": "",
+              "children": []
+            }
+          ],
+          "variables": [],
+          "dynamisms": [
+            {
+              "event": "click",
+              "exec": "F()",
+              "targets": []
+            }
+          ]
+        }
+      ]
+    },
     {
       "key": "i007",
       "id": "",
@@ -50,7 +82,9 @@ export const mainEXD: any = JSON.parse(`
               "default": {
                 "type": "cmb",
                 "displayedField": "value",
-                "initialValue": "PRVSHO",
+                "initialValue": {
+                  "value": "PRVSHO"
+                },
                 "showSubmit": true,
                 "submitLabel": "Conferma"
               }
@@ -65,8 +99,13 @@ export const mainEXD: any = JSON.parse(`
           "dynamisms": [
             {
               "event": "change",
-              "exec": "F()",
+              "exec": "",
               "targets": ["exd2"]
+            },
+            {
+              "event": "click",
+              "exec": "F()",
+              "targets": []
             }
           ]
         }
@@ -121,6 +160,8 @@ export const defaultSections: any = JSON.parse(`
               "default": {
                 "type": "rad",
                 "showSubmit": false,
+                "valueField": "value",
+                "displayedField": "value",
                 "extensions": {
                   "minQueryLength": 4,
                   "forceSelection": true
@@ -176,7 +217,7 @@ export const defaultSections: any = JSON.parse(`
           "dynamisms": [
             {
               "event": "change",
-              "exec": "F()",
+              "exec": "",
               "targets": ["exd3"]
             }
           ]

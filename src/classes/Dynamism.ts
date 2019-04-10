@@ -15,6 +15,7 @@ export default class Dynamism {
   variables: VariableMap = {}
   targets: string[] = []
   title?: string
+  exec: string = ''
 
   constructor(event: string) {
     this.event = event

@@ -1,7 +1,7 @@
 import { generateUniqueId } from "../../utils/utils";
 export class KetchupFld {
     constructor() {
-        this.json = '';
+        this.config = '';
         this.showSubmit = false;
         this.submitLabel = '';
         this.submitPos = 'right';
@@ -10,14 +10,17 @@ export class KetchupFld {
         this.propagate = {};
         this.extensions = {};
         this.radioGeneratedName = generateUniqueId('value');
+        this.currentValue = null;
+        this.onChangeInstance = this.onChange.bind(this);
+        this.onSubmitInstance = this.onSubmit.bind(this);
     }
     updateInternalState() {
         let currentData;
-        if (typeof this.json === 'string' && this.json) {
-            currentData = JSON.parse(this.json);
+        if (typeof this.config === 'string' && this.config) {
+            currentData = JSON.parse(this.config);
         }
         else {
-            currentData = this.json;
+            currentData = this.config;
         }
         const keys = Object.keys(currentData);
         let propagate = {};
@@ -34,8 +37,23 @@ export class KetchupFld {
     componentWillLoad() {
         this.updateInternalState();
     }
-    onSubmitClicked() {
-        this.ketchupFldSubmit.emit();
+    onChange(event) {
+        const { value } = event.detail;
+        this.ketchupFldChanged.emit({
+            originalEvent: event,
+            oldValue: this.currentValue,
+            value
+        });
+        this.currentValue = value;
+    }
+    onSubmit(event) {
+        this.ketchupFldSubmit.emit({
+            originalEvent: event,
+            value: this.currentValue,
+        });
+    }
+    async getCurrentValue() {
+        return this.currentValue;
     }
     render() {
         let toRender = [];
@@ -48,7 +66,7 @@ export class KetchupFld {
         }
         if (this.showSubmit) {
             submit =
-                h("ketchup-button", { class: baseClass + '__submit' + ' ' + baseClass + '--' + this.submitPos, label: this.submitLabel, onKetchupButtonClicked: this.onSubmitClicked.bind(this) });
+                h("ketchup-button", { class: baseClass + '__submit' + ' ' + baseClass + '--' + this.submitPos, label: this.submitLabel, onKetchupButtonClicked: this.onSubmitInstance });
         }
         const labelIsTop = this.labelPos === 'top';
         const submitIsTop = this.submitPos === 'top';
@@ -65,13 +83,21 @@ export class KetchupFld {
         switch (this.type) {
             case 'cmb':
                 confObj.displayedField = 'value';
+                confObj.valueField = 'value';
+                confObj.onKetchupComboSelected = this.onChangeInstance;
                 type = 'combo';
                 break;
             case 'rad':
-                confObj.displayedField = 'value';
                 confObj.valueField = 'obj';
                 confObj.radioName = this.radioGeneratedName;
+                confObj.onKetchupRadioChanged = this.onChangeInstance;
                 type = 'radio';
+                break;
+            case 'itx':
+            case 'Itx':
+                confObj.onKetchupTextInputUpdated = this.onChangeInstance;
+                confObj.onKetchupTextInputSubmit = this.onSubmitInstance;
+                type = 'text-input';
                 break;
         }
         const $DynamicComponent = ('ketchup-' + type);
@@ -84,6 +110,11 @@ export class KetchupFld {
     static get is() { return "ketchup-fld"; }
     static get encapsulation() { return "shadow"; }
     static get properties() { return {
+        "config": {
+            "type": String,
+            "attr": "config",
+            "watchCallbacks": ["updateInternalState"]
+        },
         "data": {
             "type": "Any",
             "attr": "data"
@@ -91,10 +122,8 @@ export class KetchupFld {
         "extensions": {
             "state": true
         },
-        "json": {
-            "type": String,
-            "attr": "json",
-            "watchCallbacks": ["updateInternalState"]
+        "getCurrentValue": {
+            "method": true
         },
         "label": {
             "state": true
@@ -119,6 +148,12 @@ export class KetchupFld {
         }
     }; }
     static get events() { return [{
+            "name": "ketchupFldChanged",
+            "method": "ketchupFldChanged",
+            "bubbles": true,
+            "cancelable": false,
+            "composed": true
+        }, {
             "name": "ketchupFldSubmit",
             "method": "ketchupFldSubmit",
             "bubbles": true,

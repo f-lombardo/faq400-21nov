@@ -1,8 +1,16 @@
+/**
+* @prop --cmb_font-size, --kup-combo_input_font-size: Regulates sizes of the font and the icon
+* @prop --cmb_border-color, --kup-combo_input_border-color: Specifies the border color
+* @prop --cmb_border-color--selected, --kup-combo_input_border-color: Specifies the border color when focused
+* @prop --cmb_tr-duration, --kup-combo_input_transition-duration: Animation duration of all animations of the component
+* @prop --cmb_icon-color, --kup-combo_icon_color: Base icon color
+* @prop --cmb_icon-color--hover, --kup-combo_icon_color--hover: Icon color when hovered
+* @prop --cmb_menu-background, --kup-combo_menu_background: Specify menu background
+*/
 :host {
   --cmb_font-size: var(--kup-combo_input_font-size, 14px);
   --cmb_border-color: var(--kup-combo_input_border-color, #808080);
   --cmb_border-color--selected: var(--kup-combo_input_border-color, #676767);
-  --cmb_color: var(--kup-combo_input_color, #4e908f);
   --cmb_tr-duration: var(--kup-combo_input_transition-duration, 0.6s);
   --cmb_icon-color: var(--kup-combo_icon_color, #808080);
   --cmb_icon-color--hover: var(--kup-combo_icon_color--hover, #676767);
@@ -23,7 +31,7 @@
   display: inline-flex;
   outline: none; }
   .ketchup-combo__container:hover, .ketchup-combo__container:focus {
-    border-color: var(--cmb_color); }
+    border-color: var(--cmb_border-color--selected); }
 
 .ketchup-combo__icon {
   fill: var(--cmb_icon-color);
@@ -78,13 +86,16 @@
   .ketchup-combo__menu.is-right {
     left: auto;
     right: 0; }
-  .ketchup-combo__menu > div {
-    box-sizing: border-box;
-    display: inline-block;
-    padding: 4px; }
+  .ketchup-combo__menu.is-using-portal {
+    position: relative; }
+
+.ketchup-combo__filter {
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 4px; }
 
 .ketchup-combo__list {
-  display: inline-block;
+  display: block;
   list-style-type: none;
   padding: 0;
   max-height: 400px;
@@ -94,9 +105,8 @@
     border-bottom: 1px solid #e8eae9;
     box-sizing: border-box;
     cursor: pointer;
-    display: inline-block;
-    padding: 6px 8px 5px;
-    width: 100%; }
+    display: block;
+    padding: 6px 8px 5px; }
     .ketchup-combo__list > li:hover, .ketchup-combo__list > li.is-selected {
       background-color: #f0f0f0; }
     .ketchup-combo__list > li:last-of-type {

@@ -1,5 +1,6 @@
 import '../../stencil.core';
 import { EventEmitter } from '../../stencil.core';
+import { KetchupTextInputEvent } from './ketchup-text-input-declarations';
 export declare class KetchupTextInput {
     /**
      * Marks the field as clearable, allowing an icon to delete its content
@@ -30,18 +31,36 @@ export declare class KetchupTextInput {
     triggerFocus(): void;
     /**
      * Clear the current content inside the the text input
-     * @method onClearClick
      */
     onClearClick(): void;
-    inputBlur: EventEmitter;
+    /**
+     * Listens for keydown events to get when 'Enter' is pressed, firing a submit event.
+     */
+    onKeyDown(event: KeyboardEvent): void;
+    /**
+     * When text field loses focus (blur)
+     */
+    inputBlur: EventEmitter<KetchupTextInputEvent>;
     onInputBlurred(event: UIEvent & {
         target: HTMLInputElement;
     }): void;
-    inputFocused: EventEmitter;
+    /**
+     * When the text input gains focus
+     */
+    inputFocused: EventEmitter<KetchupTextInputEvent>;
     onInputFocused(event: UIEvent & {
         target: HTMLInputElement;
     }): void;
-    inputUpdated: EventEmitter;
+    /**
+     * When a keydown enter event occurs it generates
+     */
+    ketchupTextInputSubmit: EventEmitter<{
+        value: string;
+    }>;
+    /**
+     * When the input text value gets updated
+     */
+    ketchupTextInputUpdated: EventEmitter<KetchupTextInputEvent>;
     onInputUpdated(event: UIEvent & {
         target: HTMLInputElement;
     }): void;

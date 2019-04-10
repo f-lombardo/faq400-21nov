@@ -1,11 +1,18 @@
+/**
+* @prop --int_font-size, --kup-text-input_font-size: Set height of the font and the svg icon
+* @prop --int_border-color, --kup-text-input_border-color: Set normal border color of the input
+* @prop --int_border-color--selected, --kup-text-input_border-color: Set color of the border when focused or hovered
+* @prop --int_tr-duration, --kup-text-input_transition-duration: Set all transitions duration
+* @prop --int_icon-color, --kup-text-input_icon-color: Set icon color
+* @prop --int_icon-color--hover, --kup-text-input_icon-color--hover: Set icon color when hovered
+*/
 :host {
   --int_font-size: var(--kup-text-input_font-size, 14px);
   --int_border-color: var(--kup-text-input_border-color, #808080);
-  --int_border-color--selected: var(--kup-text-input_border-color, #676767);
-  --int_color: var(--kup-text-input_color, #4e908f);
+  --int_border-color--selected: var(--kup-text-input_border-color--selected, #4e908f);
   --int_tr-duration: var(--kup-text-input_transition-duration, 0.6s);
-  --int_icon-color: $gray-80;
-  --int_icon-color--hover: darken($gray-80, 10);
+  --int_icon-color: var(--kup-text-input_icon-color ,#808080);
+  --int_icon-color--hover: var(--kup-text-input_icon-color--hover, #676767);
   display: inline-block; }
 
 .ketchup-input-text {
@@ -23,7 +30,7 @@
     position: relative;
     z-index: 0; }
   .ketchup-input-text:hover, .ketchup-input-text:focus {
-    border-color: var(--int_color); }
+    border-color: var(--int_border-color--selected); }
   .ketchup-input-text--clearable {
     padding-right: calc(6px + 4px * 2 + var(--int_font-size)); }
   .ketchup-input-text__clear {

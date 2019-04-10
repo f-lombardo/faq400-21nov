@@ -18,10 +18,18 @@ export class KetchupTextInput {
         this.value = '';
         setTimeout(() => this.triggerFocus(), 10);
     }
+    onKeyDown(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            this.ketchupTextInputSubmit.emit({
+                value: this.value
+            });
+        }
+    }
     onInputBlurred(event) {
         const { target } = event;
         this.inputBlur.emit({
-            newValue: target.value,
+            value: target.value,
             oldValue: this.value,
         });
         this.value = target.value;
@@ -29,15 +37,15 @@ export class KetchupTextInput {
     onInputFocused(event) {
         const { target } = event;
         this.inputFocused.emit({
-            newValue: target.value,
+            value: target.value,
             oldValue: this.value,
         });
         this.value = target.value;
     }
     onInputUpdated(event) {
         const { target } = event;
-        this.inputUpdated.emit({
-            newValue: target.value,
+        this.ketchupTextInputUpdated.emit({
+            value: target.value,
             oldValue: this.value,
         });
         this.value = target.value;
@@ -45,7 +53,7 @@ export class KetchupTextInput {
     render() {
         const containerClass = this.classInputText + '__container';
         return (h("div", { class: containerClass + (this.isClearable ? ' ' + containerClass + '--clearable' : '') },
-            h("input", { class: this.classInputText + (this.isClearable ? ' ' + this.classInputText + '--clearable' : ''), maxlength: this.maxLength, ref: (el) => this.textInput = el, tabindex: "0", value: this.value, onBlur: this.onInputBlurred.bind(this), onInput: this.onInputUpdated.bind(this), onFocus: this.onInputFocused.bind(this) }),
+            h("input", { class: this.classInputText + (this.isClearable ? ' ' + this.classInputText + '--clearable' : ''), maxlength: this.maxLength, ref: (el) => this.textInput = el, tabindex: "0", value: this.value, onBlur: this.onInputBlurred.bind(this), onInput: this.onInputUpdated.bind(this), onFocus: this.onInputFocused.bind(this), onKeyDown: this.onKeyDown.bind(this) }),
             this.isClearable ?
                 h("button", { "aria-label": "Close", class: this.classInputText + '__clear', role: "button", onClick: this.onClearClick.bind(this) },
                     h("svg", { viewBox: "0 0 24 24" },
@@ -94,8 +102,14 @@ export class KetchupTextInput {
             "cancelable": false,
             "composed": true
         }, {
+            "name": "ketchupTextInputSubmit",
+            "method": "ketchupTextInputSubmit",
+            "bubbles": true,
+            "cancelable": false,
+            "composed": true
+        }, {
             "name": "ketchupTextInputUpdated",
-            "method": "inputUpdated",
+            "method": "ketchupTextInputUpdated",
             "bubbles": true,
             "cancelable": false,
             "composed": true

@@ -20,7 +20,7 @@ export default class SEC extends Vue {
       case 'FLD':
         return 'FLD'
       case 'BTN':
-        return 'ketchup-btn'
+        return 'BTN'
       case 'EXD':
         return 'EXD'
       case 'MAT':

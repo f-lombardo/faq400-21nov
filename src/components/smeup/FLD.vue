@@ -1,8 +1,10 @@
 <template>
+  <!-- @ketchupFldChanged -->
   <ketchup-fld
-    @ketchupComboSelected="onFldChange($event)"
+    @ketchupComboSelected="onFldChange($event)" 
+    @ketchupFldSubmit="onClick($event)"
     :data.prop="getData()"
-    :json.prop="getOptions()"
+    :config.prop="getOptions()"
   ></ketchup-fld>
 </template>
 
@@ -16,7 +18,7 @@ import Dynamism from '@/classes/Dynamism'
 export default class FLD extends BasicComponent {
   protected name = 'FLD'
 
-  onFldChange($event: CustomEvent) {
+  private onFldChange($event: CustomEvent) {
     this.getDynamisms('change').forEach((d) => {
       const dyn = new Dynamism(d.event)
       dyn.source = this.comp
@@ -25,11 +27,28 @@ export default class FLD extends BasicComponent {
       // adding implicit variables
       dyn.addImplictVariable({ key: 'T1', value: '' })
       dyn.addImplictVariable({ key: 'P1', value: '' })
-      dyn.addImplictVariable({ key: 'K1', value: $event.detail.newValue.value })
+      dyn.addImplictVariable({ key: 'K1', value: $event.detail.value.value })
 
       this.$dynamismManager.execute(this, dyn)
     })
   }
+
+  private onClick($event: CustomEvent) {
+    this.getDynamisms('click').forEach((d) => {
+      const dyn = new Dynamism(d.event)
+      dyn.source = this.comp
+      dyn.targets = d.targets
+      dyn.exec = d.exec
+
+      // adding implicit variables
+      dyn.addImplictVariable({ key: 'T1', value: '' })
+      dyn.addImplictVariable({ key: 'P1', value: '' })
+      dyn.addImplictVariable({ key: 'K1', value: $event.detail.value.value })
+
+      this.$dynamismManager.execute(this, dyn)
+    })
+  }
+
 }
 </script>
 

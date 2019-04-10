@@ -27,11 +27,15 @@ export declare class KetchupRadio {
      */
     valueField: string;
     checkDirection(newVal: string): void;
-    selectedRadio: string;
-    radioChanged: EventEmitter;
-    onRadioChanged(event: UIEvent & {
-        target: HTMLInputElement;
-    }): void;
+    selectedRadio: KetchupRadioElement | null;
+    /**
+     * When currently selected radio button has been changed.
+     * */
+    ketchupRadioChanged: EventEmitter<{
+        value: KetchupRadioElement;
+        oldValue: KetchupRadioElement;
+    }>;
+    onRadioChanged(radio: KetchupRadioElement): void;
     radioElementsComposer(): JSX.Element[];
     render(): JSX.Element;
 }

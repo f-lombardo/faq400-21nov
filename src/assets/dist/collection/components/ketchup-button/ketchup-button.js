@@ -6,39 +6,7 @@ export class KetchupButton {
         this.showicon = true;
         this.rounded = false;
         this.transparent = false;
-        this.btnStyle = {};
         this.iconUrl = 'https://cdn.materialdesignicons.com/3.2.89/css/materialdesignicons.min.css';
-    }
-    onBorderColorChange(newValue, oldValue) {
-        if (newValue === oldValue) {
-            return;
-        }
-        if (this.transparent && this.borderColor) {
-            const btnStyle = this.ketchupButtonEl.querySelector('button').style;
-            btnStyle.borderColor = this.borderColor;
-            btnStyle.color = this.borderColor;
-        }
-    }
-    onStyleChanged(newValue, oldValue) {
-        if (newValue === oldValue) {
-            return;
-        }
-        const btnStyle = this.ketchupButtonEl.querySelector('button').style;
-        if (newValue.fontName) {
-            btnStyle.fontFamily = newValue.fontName;
-        }
-        else {
-            btnStyle.fontFamily = 'inherit';
-        }
-        if (newValue.fontColor) {
-            btnStyle.color = newValue.fontColor;
-        }
-        if (newValue.bold) {
-            btnStyle.fontWeight = 'bold';
-        }
-        else {
-            btnStyle.fontWeight = 'inherit';
-        }
     }
     onBtnClickedHandler() {
         this.ketchupButtonClicked.emit({ id: this.ketchupButtonEl.dataset.id });
@@ -85,14 +53,15 @@ export class KetchupButton {
         }
         btnClass = btnClass.trim();
         let title = '';
-        if ('Hint' === this.textmode) {
+        if (this._isHint()) {
             title = this.label;
         }
-        return (h("div", null,
+        return [
             h("link", { href: this.iconUrl, rel: "stylesheet", type: "text/css" }),
             h("button", { class: btnClass, title: title, onClick: () => this.onBtnClickedHandler() },
                 icon,
-                btnLabel)));
+                btnLabel),
+        ];
     }
     static get is() { return "ketchup-button"; }
     static get encapsulation() { return "shadow"; }
@@ -100,16 +69,6 @@ export class KetchupButton {
         "align": {
             "type": String,
             "attr": "align"
-        },
-        "borderColor": {
-            "type": String,
-            "attr": "border-color",
-            "watchCallbacks": ["onBorderColorChange"]
-        },
-        "btnStyle": {
-            "type": "Any",
-            "attr": "btn-style",
-            "watchCallbacks": ["onStyleChanged"]
         },
         "buttonClass": {
             "type": String,
