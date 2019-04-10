@@ -64,7 +64,6 @@ export default class Webup extends VuexModule {
   @Action({ commit: 'RELOAD_COMPONENT' })
   reloadComponent(payload: { comp: Component; fun: string }) {
     let newExd = []
-
     if (payload.fun.endsWith('PRV123)')) {
       newExd = prv123
     } else if (payload.fun.endsWith('PRV456)')) {
@@ -72,8 +71,20 @@ export default class Webup extends VuexModule {
     } else {
       newExd = defaultSections
     }
-
     return { comp: payload.comp, newExd }
+  }
+
+  @Action({ commit: 'SET_ROOT' })
+  reloadExd(fun: string) {
+    let newExd = []
+    if (fun.endsWith('PRV123)')) {
+      newExd = prv123
+    } else if (fun.endsWith('PRV456)')) {
+      newExd = prv456
+    } else {
+      newExd = defaultSections
+    }
+    return newExd
   }
 
   get getComponentById() {
@@ -82,7 +93,8 @@ export default class Webup extends VuexModule {
     }
   }
 
-  get mainComponent(): Component {
+  get getMainComponent(): Component {
     return this.root
   }
+
 }

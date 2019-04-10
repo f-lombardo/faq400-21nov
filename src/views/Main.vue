@@ -4,19 +4,15 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { mapGetters } from 'vuex'
-
 import { mainEXD } from '@/mocks/script'
 
-@Component({
-  computed: {
-    ...mapGetters({
-      mainComponent: 'webup/mainComponent',
-    }),
-  },
-})
+@Component
 export default class Main extends Vue {
-  mainComponent: any
+
+  get mainComponent() {
+    return this.$store.getters['webup/getMainComponent']
+    // return this.$store.state.webup.root
+  } 
 
   private created() {
     // save root in store

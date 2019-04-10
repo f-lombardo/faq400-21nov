@@ -104,7 +104,7 @@ export const mainEXD: any = JSON.parse(`
             },
             {
               "event": "click",
-              "exec": "F()",
+              "exec": "F(EXD;*SCO;) 2(MB;SCP_SCH;[K1])",
               "targets": []
             }
           ]
