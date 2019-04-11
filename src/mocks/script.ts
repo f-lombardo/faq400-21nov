@@ -8,38 +8,6 @@ export const mainEXD: any = JSON.parse(`
   "loaded": true,
   "layout": "column",
   "sections": [
-	{
-      "key": "i999",
-      "id": "",
-      "layout": "",
-      "dim": "",
-      "components": [
-        {
-          "type": "BTN",
-          "key": "i998",
-          "id": "lbl9",
-          "title": "",
-          "loaded": true,
-          "data": [
-            {
-              "value": "Debug",
-              "options": true,
-              "obj": "",
-              "iconClass": "",
-              "children": []
-            }
-          ],
-          "variables": [],
-          "dynamisms": [
-            {
-              "event": "click",
-              "exec": "F()",
-              "targets": []
-            }
-          ]
-        }
-      ]
-    },
     {
       "key": "i007",
       "id": "",
@@ -98,14 +66,9 @@ export const mainEXD: any = JSON.parse(`
           "variables": [],
           "dynamisms": [
             {
-              "event": "change",
+              "event": "click",
               "exec": "",
               "targets": ["exd2"]
-            },
-            {
-              "event": "click",
-              "exec": "F()",
-              "targets": []
             }
           ]
         }
