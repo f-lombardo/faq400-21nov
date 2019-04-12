@@ -12,14 +12,12 @@ export declare class KetchupButton {
     rounded: boolean;
     textmode: string;
     transparent: boolean;
-    borderColor: string;
     align: string;
-    btnStyle: any;
     iconUrl: string;
-    ketchupButtonClicked: EventEmitter;
-    onBorderColorChange(newValue: string, oldValue: string): void;
-    onStyleChanged(newValue: any, oldValue: any): void;
+    ketchupButtonClicked: EventEmitter<{
+        id: string;
+    }>;
     onBtnClickedHandler(): void;
     _isHint(): boolean;
-    render(): JSX.Element;
+    render(): JSX.Element[];
 }

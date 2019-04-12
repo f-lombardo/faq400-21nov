@@ -16,86 +16,12 @@
       },
       "props": [
         {
-          "name": "align",
-          "type": "String",
-          "attr": "align"
-        },
-        {
-          "name": "borderColor",
-          "type": "String",
-          "attr": "border-color"
-        },
-        {
-          "name": "btnStyle",
-          "type": "Any",
-          "attr": "btn-style"
-        },
-        {
-          "name": "buttonClass",
-          "type": "String",
-          "attr": "button-class"
-        },
-        {
           "name": "buttons",
           "attr": "buttons"
         },
         {
-          "name": "columns",
-          "type": "Number",
-          "attr": "columns"
-        },
-        {
-          "name": "fillspace",
-          "type": "Boolean",
-          "attr": "fillspace"
-        },
-        {
-          "name": "flat",
-          "type": "Boolean",
-          "attr": "flat"
-        },
-        {
-          "name": "horizontal",
-          "type": "Boolean",
-          "attr": "horizontal"
-        },
-        {
-          "name": "iconUrl",
-          "type": "String",
-          "attr": "icon-url"
-        },
-        {
-          "name": "rounded",
-          "type": "Boolean",
-          "attr": "rounded"
-        },
-        {
-          "name": "showicon",
-          "type": "Boolean",
-          "attr": "showicon"
-        },
-        {
-          "name": "showSelection",
-          "type": "Boolean",
-          "attr": "show-selection",
-          "watch": [
-            "onShowSelectionChanged"
-          ]
-        },
-        {
-          "name": "showtext",
-          "type": "Boolean",
-          "attr": "showtext"
-        },
-        {
-          "name": "textmode",
-          "type": "String",
-          "attr": "textmode"
-        },
-        {
-          "name": "transparent",
-          "type": "Boolean",
-          "attr": "transparent"
+          "name": "config",
+          "attr": "config"
         }
       ],
       "states": [
@@ -122,22 +48,6 @@
           "name": "align",
           "type": "String",
           "attr": "align"
-        },
-        {
-          "name": "borderColor",
-          "type": "String",
-          "attr": "border-color",
-          "watch": [
-            "onBorderColorChange"
-          ]
-        },
-        {
-          "name": "btnStyle",
-          "type": "Any",
-          "attr": "btn-style",
-          "watch": [
-            "onStyleChanged"
-          ]
         },
         {
           "name": "buttonClass",
@@ -208,6 +118,7 @@
     {
       "tag": "ketchup-combo",
       "dependencies": [
+        "ketchup-portal",
         "ketchup-text-input"
       ],
       "componentClass": "KetchupCombo",
@@ -227,7 +138,7 @@
         },
         {
           "name": "initialValue",
-          "type": "String",
+          "type": "Any",
           "attr": "initial-value",
           "watch": [
             "reflectInitialValue"
@@ -246,6 +157,19 @@
           "name": "label",
           "type": "String",
           "attr": "label"
+        },
+        {
+          "name": "usePortal",
+          "type": "Boolean",
+          "attr": "use-portal"
+        },
+        {
+          "name": "valueField",
+          "type": "String",
+          "attr": "value-field",
+          "watch": [
+            "reflectValueField"
+          ]
         }
       ],
       "states": [
@@ -294,17 +218,17 @@
       },
       "props": [
         {
-          "name": "data",
-          "type": "Any",
-          "attr": "data"
-        },
-        {
-          "name": "json",
+          "name": "config",
           "type": "String",
-          "attr": "json",
+          "attr": "config",
           "watch": [
             "updateInternalState"
           ]
+        },
+        {
+          "name": "data",
+          "type": "Any",
+          "attr": "data"
         }
       ],
       "states": [
@@ -333,12 +257,159 @@
           "name": "type"
         }
       ],
+      "methods": [
+        {
+          "name": "getCurrentValue"
+        }
+      ],
       "events": [
+        {
+          "event": "ketchupFldChanged",
+          "cancelable": false
+        },
         {
           "event": "ketchupFldSubmit",
           "cancelable": false
         }
       ],
+      "shadow": true
+    },
+    {
+      "tag": "ketchup-html",
+      "dependencies": [
+        "ketchup-button"
+      ],
+      "componentClass": "KetchupTextInput",
+      "componentPath": "components/ketchup-html/ketchup-html.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/ketchup-html/ketchup-html.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "isButton",
+          "type": "Boolean",
+          "reflectToAttr": true,
+          "attr": "is-button"
+        },
+        {
+          "name": "label",
+          "type": "String",
+          "attr": "label"
+        },
+        {
+          "name": "src",
+          "type": "String",
+          "attr": "src"
+        }
+      ],
+      "events": [
+        {
+          "event": "ketchupHtmlError",
+          "cancelable": false
+        },
+        {
+          "event": "ketchupHtmlLoaded",
+          "cancelable": false
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "ketchup-portal",
+      "dependencies": [
+        "ketchup-portal-instance"
+      ],
+      "componentClass": "KetchupPortal",
+      "componentPath": "components/ketchup-portal/ketchup-portal.js",
+      "styles": {},
+      "props": [
+        {
+          "name": "cssVarsRef",
+          "attr": "css-vars-ref"
+        },
+        {
+          "name": "isVisible",
+          "type": "Boolean",
+          "attr": "is-visible"
+        },
+        {
+          "name": "mirroredCssVars",
+          "attr": "mirrored-css-vars"
+        },
+        {
+          "name": "nodes",
+          "type": "Any",
+          "attr": "nodes"
+        },
+        {
+          "name": "portalRootNode",
+          "attr": "portal-root-node",
+          "watch": [
+            "onPortalRootNodeChange"
+          ]
+        },
+        {
+          "name": "refOffset",
+          "attr": "ref-offset"
+        },
+        {
+          "name": "styleNode",
+          "attr": "style-node"
+        }
+      ],
+      "methods": [
+        {
+          "name": "getPortalInstance"
+        }
+      ],
+      "events": [
+        {
+          "event": "ketchupHtmlError",
+          "cancelable": false
+        },
+        {
+          "event": "ketchupHtmlLoaded",
+          "cancelable": false
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "ketchup-portal-instance",
+      "dependencies": [],
+      "componentClass": "KetchupPortalInstance",
+      "componentPath": "components/ketchup-portal-instance/ketchup-portal-instance.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/ketchup-portal-instance/ketchup-portal-instance.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "isVisible",
+          "type": "Boolean",
+          "reflectToAttr": true,
+          "attr": "is-visible"
+        },
+        {
+          "name": "styleNode",
+          "attr": "style-node"
+        },
+        {
+          "name": "vNodes",
+          "type": "Any",
+          "attr": "v-nodes"
+        }
+      ],
+      "hostElement": {
+        "name": "port"
+      },
       "shadow": true
     },
     {
@@ -395,7 +466,6 @@
       "events": [
         {
           "event": "ketchupRadioChanged",
-          "method": "radioChanged",
           "cancelable": false
         }
       ],
@@ -460,8 +530,11 @@
           "cancelable": false
         },
         {
+          "event": "ketchupTextInputSubmit",
+          "cancelable": false
+        },
+        {
           "event": "ketchupTextInputUpdated",
-          "method": "inputUpdated",
           "cancelable": false
         }
       ],
@@ -502,8 +575,8 @@
   "collections": [],
   "compiler": {
     "name": "@stencil/core",
-    "version": "0.16.2",
-    "typescriptVersion": "3.2.2"
+    "version": "0.18.1",
+    "typescriptVersion": "3.3.3"
   },
   "bundles": []
 }

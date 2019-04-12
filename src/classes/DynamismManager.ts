@@ -17,34 +17,36 @@ export default class DynamismManager {
       // TODO messaggio
       return
     }
+    if (!dyn.exec) {
+      // check targets
+      if (!dyn.targets || dyn.targets.length == 0) {
+        // save variable in source
+        this.executeAssignmentsInTarget(dyn.source, dyn)
+      } else {
+        dyn.targets
+          .map((target) => comp.$store.getters['webup/getComponentById'](target))
+          .filter((c: any) => c)
+          .forEach((c: any) => {
+            // save variables in target
+            this.executeAssignmentsInTarget(c, dyn)
 
-    // check targets
-    if (!dyn.targets || dyn.targets.length == 0) {
-      // save variable in source
-      this.executeAssignmentsInTarget(dyn.source, dyn)
-    } else {
-      dyn.targets
-        .map((target) => comp.$store.getters['webup/getComponentById'](target))
-        .filter((c: any) => c)
-        .forEach((c: any) => {
-          // save variables in target
-          this.executeAssignmentsInTarget(c, dyn)
+            // ricalcola la fun
+            const evaluatedFun = new ExpressionEvaluator().variableExpression(
+              c,
+              c.component.fun
+            )
 
-          // ricalcola la fun
-          const evaluatedFun = new ExpressionEvaluator().variableExpression(
-            c,
-            c.component.fun
-          )
-
-          // TODO ricarica componente
-          comp.$store.dispatch('webup/reloadComponent', {
-            comp: c,
-            fun: evaluatedFun,
+            // TODO ricarica componente
+            comp.$store.dispatch('webup/reloadComponent', {
+              comp: c,
+              fun: evaluatedFun,
+            })
           })
-        })
+      }
+    } else {
+      // TODO exec
+      console.log("EXEC")
     }
-
-    // TODO exec
   }
 
   executeAssignmentsInTarget(target: IBasic, dyn: Dynamism) {

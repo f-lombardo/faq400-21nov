@@ -7,28 +7,26 @@ export class KetchupRadio {
         this.items = [];
         this.radioName = '';
         this.valueField = 'id';
-        this.selectedRadio = '';
+        this.selectedRadio = null;
     }
     checkDirection(newVal) {
         if (!/horizontal|vertical/.test(newVal)) {
             throw new Error('ketchup-radio: direction must be horizontal or vertical.');
         }
     }
-    onRadioChanged(event) {
-        const { target } = event;
-        this.radioChanged.emit({
-            target,
-            newValue: target.value,
+    onRadioChanged(radio) {
+        this.ketchupRadioChanged.emit({
+            value: radio,
             oldValue: this.selectedRadio,
         });
-        this.selectedRadio = target.value;
+        this.selectedRadio = radio;
     }
     radioElementsComposer() {
         return this.items.map((radio) => {
             const uId = generateUniqueId(radio[this.valueField]);
-            return h("li", { class: 'ketchup-radio__item' + (this.selectedRadio === radio[this.valueField] ? ' ketchup-radio__item--selected' : '') },
+            return h("li", { class: 'ketchup-radio__item' + (this.selectedRadio && this.selectedRadio[this.valueField] === radio[this.valueField] ? ' ketchup-radio__item--selected' : '') },
                 h("div", null,
-                    h("input", { id: uId, type: "radio", name: this.radioName, value: radio[this.valueField], onChange: this.onRadioChanged.bind(this) })),
+                    h("input", { id: uId, type: "radio", name: this.radioName, value: radio[this.valueField], onChange: this.onRadioChanged.bind(this, radio) })),
                 h("label", { htmlFor: uId }, radio[this.displayedField]));
         });
     }
@@ -75,7 +73,7 @@ export class KetchupRadio {
     }; }
     static get events() { return [{
             "name": "ketchupRadioChanged",
-            "method": "radioChanged",
+            "method": "ketchupRadioChanged",
             "bubbles": true,
             "cancelable": false,
             "composed": true

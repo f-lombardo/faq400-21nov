@@ -1,15 +1,16 @@
 import { EventEmitter } from '../../stencil.core';
+import { KetchupFldChangeEvent, KetchupFldSubmitEvent } from "./ketchup-fld-declarations";
 export declare class KetchupFld {
     /**
-     * Data the FLD must parse to fully be configured
+     * Data the FLD must parse to fully be configured.
+     * It must be either an Object or a JSON parsable string
      */
-    json: string | object;
+    config: string | object;
     /**
      * Effective data to pass to the component
      */
     data: any;
     updateInternalState(): void;
-    componentWillLoad(): void;
     /**
      * The type of the FLD
      */
@@ -47,7 +48,25 @@ export declare class KetchupFld {
         forceSelection?: boolean;
     };
     radioGeneratedName: string;
-    ketchupFldSubmit: EventEmitter;
-    onSubmitClicked(): void;
+    currentValue: object | string;
+    onChangeInstance: any;
+    onSubmitInstance: any;
+    /**
+     * Launched when the value of the current FLD changes.
+     */
+    ketchupFldChanged: EventEmitter<KetchupFldChangeEvent>;
+    /**
+     * Launched when the FLD values are confirmed and a submit event is triggered.
+     */
+    ketchupFldSubmit: EventEmitter<KetchupFldSubmitEvent>;
+    componentWillLoad(): void;
+    onChange(event: CustomEvent): void;
+    onSubmit(event: CustomEvent): void;
+    /**
+     * Provides an interface to get the current value programmatically
+     * @method getCurrentValue
+     * @returns {any}
+     */
+    getCurrentValue(): Promise<string | object>;
     render(): any[];
 }

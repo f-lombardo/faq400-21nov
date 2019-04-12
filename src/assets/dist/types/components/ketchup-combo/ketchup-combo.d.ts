@@ -1,20 +1,19 @@
 import '../../stencil.core';
 import { EventEmitter } from '../../stencil.core';
-import { ComboItem } from './ketchup-combo-declarations';
-/**
- * TODO: Control if there can be issues with z-index and elements not correctly triggering the functions to close the combo box list
- * See this article here to use the method to get the current position and avoid opening the menu in the wrong direction
- * https://gomakethings.com/how-to-test-if-an-element-is-in-the-viewport-with-vanilla-javascript/
- **/
+import { ComboItem, ComboPosition } from './ketchup-combo-declarations';
 export declare class KetchupCombo {
     /**
      * Chooses which field of an item object should be used to create the list and be filtered.
      */
     displayedField: string;
     /**
+     * Chooses which field of an item object should be used to create the list and be filtered.
+     */
+    valueField: string;
+    /**
      * Allows to pass an initial selected item for the combobox
      */
-    initialValue: string;
+    initialValue: any;
     /**
      * Marks the field as clearable, allowing an icon to delete its content
      */
@@ -27,11 +26,16 @@ export declare class KetchupCombo {
      * Label to describe the radio group
      */
     label: string;
+    /**
+     * If true, the combobox uses a portal to create the menu
+     */
+    usePortal: boolean;
     value: string;
     filter: string;
     isOpen: boolean;
     comboEl: HTMLElement;
     selected: ComboItem;
+    portalRef?: HTMLKetchupPortalElement;
     /**
      * Creates a variable with an instance of the handler for the click event and binds this instance of the combo box to it.
      * This is used to add and more importantly remove events listeners attached to the body.
@@ -40,25 +44,23 @@ export declare class KetchupCombo {
      */
     clickFunction: any;
     comboText: HTMLInputElement;
-    comboPosition: {
-        isRight: boolean;
-        isTop: boolean;
-    };
+    comboPosition: ComboPosition;
     baseClass: string;
     componentWillLoad(): void;
     componentDidLoad(): void;
     componentDidUnload(): void;
     /**
-     * Opens the combo box
+     * Programmatically close the combo box
      * @method closeCombo
      */
     closeCombo(): void;
     /**
-     * Opens the combo box
+     * Programmatically opens the combo box
      * @method openCombo
      */
     openCombo(): void;
-    reflectInitialValue(newValue: string): void;
+    reflectInitialValue(newValue: ComboItem): void;
+    reflectValueField(newValue: string): void;
     calcBoxPosition(): {
         isRight: boolean;
         isTop: boolean;
@@ -90,7 +92,7 @@ export declare class KetchupCombo {
      * @see https://developer.mozilla.org/en-US/docs/Web/API/Event/composedPath
      * But in that case you can traverse the DOM starting from the target element and going up.
      */
-    onDocumentClick(event: UIEvent): void;
+    onDocumentClick(event: UIEvent): Promise<void>;
     /**
      * Function which gets triggered when filter changes
      * @param event
@@ -101,7 +103,10 @@ export declare class KetchupCombo {
      * @param item
      */
     onItemSelected(item: ComboItem): void;
-    ketchupComboSelected: EventEmitter;
+    ketchupComboSelected: EventEmitter<{
+        value: object;
+    }>;
     onComboSelected(item: ComboItem | null): void;
+    composeList(): JSX.Element;
     render(): JSX.Element[];
 }
