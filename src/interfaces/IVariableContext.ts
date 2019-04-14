@@ -1,9 +1,9 @@
 export default interface IVariableContext {
   variables: {
-    [index: string]: string
-  }
+    [index: string]: string;
+  };
 
-  getVariableValue(key: string): string
+  getVariableValue(key: string): string;
 
-  putVariable(key: string, value: string): void
+  putVariable(key: string, value: string): void;
 }

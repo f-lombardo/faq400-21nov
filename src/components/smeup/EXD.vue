@@ -8,22 +8,22 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
+import { Component } from "vue-property-decorator";
 
-import BasicComponent from '@/components/Basic.vue'
-import smeupSection from '@/components/smeup/SEC.vue'
+import BasicComponent from "@/components/Basic.vue";
+import smeupSection from "@/components/smeup/SEC.vue";
 
 @Component({
-  components: { smeupSection },
+  components: { smeupSection }
 })
 export default class EXD extends BasicComponent {
-  protected name: string = 'EXD'
+  protected name: string = "EXD";
 
   private getStyle(): object {
     return {
-      display: 'flex',
-      flexDirection: this.comp.layout,
-    }
+      display: "flex",
+      flexDirection: this.comp.layout
+    };
   }
 }
 </script>
