@@ -1,32 +1,32 @@
-import IBasic from '@/interfaces/IBasic'
+import IBasic from "@/interfaces/IBasic";
 
 interface Variable {
-  key: string
-  value: string
+  key: string;
+  value: string;
 }
 
 interface VariableMap {
-  [index: string]: string
+  [index: string]: string;
 }
 
 export default class Dynamism {
-  event: string
-  source?: IBasic
-  variables: VariableMap = {}
-  targets: string[] = []
-  title?: string
-  exec: string = ''
+  event: string;
+  source?: IBasic;
+  variables: VariableMap = {};
+  targets: string[] = [];
+  title?: string;
+  exec: string = "";
 
   constructor(event: string) {
-    this.event = event
+    this.event = event;
   }
 
   addImplictVariable(variable: Variable) {
-    this.variables[variable.key] = variable.value
+    this.variables[variable.key] = variable.value;
   }
 
   isEnabled() {
     // TODO
-    return true
+    return true;
   }
 }

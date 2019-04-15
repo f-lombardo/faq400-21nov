@@ -1,14 +1,14 @@
-import SubExpression from './SubExpression'
-import IVariableContext from '@/interfaces/IVariableContext'
+import SubExpression from "./SubExpression";
+import IVariableContext from "@/interfaces/IVariableContext";
 
 export default class Variable implements SubExpression {
-  value: string
+  value: string;
 
   constructor(value: string) {
-    this.value = value
+    this.value = value;
   }
 
   evaluate(context: IVariableContext): string {
-    return context.variables[this.value]
+    return context.variables[this.value];
   }
 }
