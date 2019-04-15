@@ -25,6 +25,8 @@ export default class SEC extends Vue {
         return 'EXD'
       case 'MAT':
         return 'MAT'
+      case 'EXB':
+        return 'MAT'        
       case 'LAB':
         return 'LAB'
       default:
