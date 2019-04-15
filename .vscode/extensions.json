@@ -13,6 +13,5 @@
     // Format-on-save with Prettier
     // https://github.com/prettier/prettier-vscode
     "esbenp.prettier-vscode"
-
   ]
 }
