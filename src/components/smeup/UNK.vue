@@ -3,11 +3,11 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
-import BasicComponent from '@/components/Basic.vue'
+import { Component } from "vue-property-decorator";
+import BasicComponent from "@/components/Basic.vue";
 
 @Component
 export default class UNK extends BasicComponent {
-  protected name = 'UNK'
+  protected name = "UNK";
 }
 </script>

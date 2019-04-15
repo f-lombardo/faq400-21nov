@@ -3,24 +3,24 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { mapGetters } from 'vuex'
+import { Component, Vue } from "vue-property-decorator";
+import { mapGetters } from "vuex";
 
-import { mainEXD } from '@/mocks/script'
+import { mainEXD } from "@/mocks/script";
 
 @Component({
   computed: {
     ...mapGetters({
-      mainComponent: 'webup/mainComponent',
-    }),
-  },
+      mainComponent: "webup/mainComponent"
+    })
+  }
 })
 export default class Main extends Vue {
-  mainComponent: any
+  mainComponent: any;
 
   private created() {
     // save root in store
-    this.$store.commit('webup/SET_ROOT', mainEXD)
+    this.$store.commit("webup/SET_ROOT", mainEXD);
   }
 }
 </script>

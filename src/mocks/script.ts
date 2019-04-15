@@ -94,7 +94,7 @@ export const mainEXD: any = JSON.parse(`
     }
   ]
 }
-`)
+`);
 
 export const defaultSections: any = JSON.parse(`
 {
@@ -408,7 +408,7 @@ export const defaultSections: any = JSON.parse(`
     }
   ]
 }
-`)
+`);
 
 export const prv123: any = JSON.parse(`
 {
@@ -446,7 +446,7 @@ export const prv123: any = JSON.parse(`
     }
   ]
 }
-`)
+`);
 
 export const prv456: any = JSON.parse(`
 {
@@ -484,4 +484,4 @@ export const prv456: any = JSON.parse(`
     }
   ]
 }
-`)
+`);

@@ -1,5 +1,5 @@
-import IVariableContext from '@/interfaces/IVariableContext'
+import IVariableContext from "@/interfaces/IVariableContext";
 
 export default interface SubExpression {
-  evaluate(context: IVariableContext): string
+  evaluate(context: IVariableContext): string;
 }

@@ -1,21 +1,21 @@
-import { Vue } from 'vue-property-decorator'
-import IVariableContext from '@/interfaces/IVariableContext'
+import { Vue } from "vue-property-decorator";
+import IVariableContext from "@/interfaces/IVariableContext";
 
 export default class VariableContext extends Vue implements IVariableContext {
   variables: {
-    [index: string]: string
-  }
+    [index: string]: string;
+  };
 
   constructor() {
-    super()
-    this.variables = {}
+    super();
+    this.variables = {};
   }
 
   getVariableValue(key: string): string {
-    return this.variables[key]
+    return this.variables[key];
   }
 
   putVariable(key: string, value: string): void {
-    this.variables[key] = value
+    this.variables[key] = value;
   }
 }
