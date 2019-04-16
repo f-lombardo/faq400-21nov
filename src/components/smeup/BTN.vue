@@ -1,8 +1,9 @@
 <template>
-  <ketchup-button
-    :label="this.component.data[0].value"
+  <ketchup-btn
+    :buttons.prop="this.component.data"
+    :config.prop="getOptions()"
     @ketchupButtonClicked="onClick($event)"
-  ></ketchup-button>
+  ></ketchup-btn>
 </template>
 
 <script lang="ts">
@@ -21,6 +22,15 @@ export default class BTN extends BasicComponent {
       dyn.source = this.comp;
       dyn.targets = d.targets;
       dyn.exec = d.exec;
+
+      // adding implicit variables
+      dyn.addImplictVariable({ key: "T1", value: "" });
+      dyn.addImplictVariable({ key: "P1", value: "" });
+      dyn.addImplictVariable({
+        key: "K1",
+        value: this.component.data[$event.detail.id].value
+      });
+
       this.$dynamismManager.execute(this, dyn);
     });
   }
