@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { mapActions } from "vuex";
 
 import Dynamism from "@/classes/Dynamism";
@@ -12,7 +12,11 @@ import VariableContext from "@/classes/VariableContext";
 export default class Basic extends VariableContext {
   @Prop() protected component!: any;
 
-  comp: any = {};
+  // This substitutes the data `comp: any = {}` var
+
+  get comp() {
+    return this.component ? this.component : {};
+  }
 
   protected name: string = "";
 
@@ -20,8 +24,6 @@ export default class Basic extends VariableContext {
 
   protected created(): void {
     if (this.component) {
-      this.comp = this.component;
-
       // saving component in store
       this.$store.dispatch("webup/addComponent", this);
     }
