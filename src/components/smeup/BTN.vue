@@ -30,7 +30,6 @@ export default class BTN extends BasicComponent {
         key: "K1",
         value: this.component.data[$event.detail.id].value
       });
-
       this.$dynamismManager.execute(this, dyn);
     });
   }

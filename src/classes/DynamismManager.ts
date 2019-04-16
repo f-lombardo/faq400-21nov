@@ -6,7 +6,7 @@ import ExpressionEvaluator from "./expressions/ExpressionEvaluator";
 import IBasic from "@/interfaces/IBasic";
 
 export default class DynamismManager {
-  execute(comp: Vue, dyn: Dynamism): void {
+  execute(comp: any, dyn: Dynamism): void {
     if (!dyn.source) {
       // TODO lanciare errore?
       return;
@@ -36,7 +36,7 @@ export default class DynamismManager {
               c.component.fun
             );
 
-            // TODO ricarica componente
+            // ricarica componente
             comp.$store.dispatch("webup/reloadComponent", {
               comp: c,
               fun: evaluatedFun
@@ -44,8 +44,15 @@ export default class DynamismManager {
           });
       }
     } else {
-      // TODO exec
-      console.log("EXEC");
+      // save variable in comp
+      this.executeAssignmentsInTarget(comp, dyn);
+      // ricalcola la fun
+      const evaluatedFun = new ExpressionEvaluator().variableExpression(
+        comp,
+        dyn.exec
+      );
+      // carica nuova scheda
+      comp.$store.dispatch("webup/reloadExd", evaluatedFun);
     }
   }
 
