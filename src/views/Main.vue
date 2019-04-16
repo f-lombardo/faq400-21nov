@@ -1,5 +1,5 @@
 <template>
-  <component :is="mainComponent.type" :component="mainComponent"></component>
+  <component :is="mainComponent.type" :component="mainComponent" :key="mainComponent.id"></component>
 </template>
 
 <script lang="ts">
@@ -11,7 +11,7 @@ export default class Main extends Vue {
 
   get mainComponent() {
     return this.$store.getters['webup/getMainComponent']
-    // return this.$store.state.webup.root
+    //return this.$store.state.webup.root
   } 
 
   private created() {
