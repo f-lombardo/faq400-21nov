@@ -65,7 +65,6 @@ export default class Basic extends VariableContext {
         (d: Dynamism) => dynName === d.event
       );
     }
-
     return [];
   }
 }

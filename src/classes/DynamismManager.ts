@@ -44,16 +44,20 @@ export default class DynamismManager {
           });
       }
     } else {
-      // save variable in comp
-      this.executeAssignmentsInTarget(comp, dyn);
-      // ricalcola la fun
-      const evaluatedFun = new ExpressionEvaluator().variableExpression(
-        comp,
-        dyn.exec
-      );
-      // carica nuova scheda
-      comp.$store.dispatch("webup/reloadExd", evaluatedFun);
+      this.exec(comp, dyn);
     }
+  }
+
+  public exec(comp: any, dyn: Dynamism) {
+    // save variable in comp
+    this.executeAssignmentsInTarget(comp, dyn);
+    // ricalcola la fun
+    const evaluatedFun = new ExpressionEvaluator().variableExpression(
+      comp,
+      dyn.exec
+    );
+    // carica nuova scheda
+    comp.$store.dispatch("webup/reloadExd", evaluatedFun);
   }
 
   executeAssignmentsInTarget(target: IBasic, dyn: Dynamism) {
