@@ -17,14 +17,13 @@ export default class BTN extends BasicComponent {
   protected name = "BTN";
 
   private onClick($event: CustomEvent): void {
-    const clickDynamisms = this.getDynamisms("click");
-    const doubleClickDynamisms = this.getDynamisms("dblclick");
-    if (clickDynamisms.length > 0 || doubleClickDynamisms.length > 0) {
-      clickDynamisms.forEach(d => {
-        var dyn: Dynamism = this.createDynamism(d, $event);
-        this.$dynamismManager.execute(this, dyn);
-      });
-      doubleClickDynamisms.forEach(d => {
+    const dyns = [
+      ...this.getDynamisms("click"),
+      ...this.getDynamisms("dblclick")
+    ];
+
+    if (dyns.length > 0) {
+      dyns.forEach(d => {
         var dyn: Dynamism = this.createDynamism(d, $event);
         this.$dynamismManager.execute(this, dyn);
       });
@@ -35,7 +34,7 @@ export default class BTN extends BasicComponent {
         const d = new Dynamism("click");
         d.exec = exec;
         var dyn: Dynamism = this.createDynamism(d, $event);
-        this.$dynamismManager.exec(this, dyn);
+        this.$dynamismManager.execute(this, dyn);
       }
     }
   }
