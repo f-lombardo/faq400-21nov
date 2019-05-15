@@ -16,8 +16,10 @@ axios.defaults.baseURL = 'TODO'
 // adding dynamism manager to Vue
 Vue.prototype.$dynamismManager = new DynamismManager()
 
-new Vue({
+const Instance = new Vue({
   router,
   store,
   render: (h) => h(App),
 }).$mount('#app')
+
+console.log(Instance);
