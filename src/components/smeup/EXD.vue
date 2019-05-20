@@ -1,9 +1,11 @@
 <template>
   <div :style="getStyle()" v-if="comp.loaded">
     {{ this.comp.title }}
-    <template v-for="section in this.comp.sections">
-      <smeup-section :component="section" :key="section.key"></smeup-section>
-    </template>
+    <smeup-section
+      v-for="section in comp.sections"
+      :key="section.id"
+      :component="section"
+      />
   </div>
 </template>
 
@@ -18,6 +20,10 @@ import smeupSection from "@/components/smeup/SEC.vue";
 })
 export default class EXD extends BasicComponent {
   protected name: string = "EXD";
+
+  mounted() {
+    console.log(this.comp, this.comp.sections);
+  }
 
   private getStyle(): object {
     return {

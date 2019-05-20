@@ -5,7 +5,7 @@ import { ComponentStoredState } from '../store/modules/StateRestorer'
 @Component
 export default class StateRestorer extends Vue {
   // This field gets overrided by declarations in BasicComponent.
-  // It's just for avoiding TS errors on comp.key
+  // It's just for avoiding TS errors on comp.id
   comp: {[index: string]: any} = {}
 
   // Life cycle hooks
@@ -17,7 +17,7 @@ export default class StateRestorer extends Vue {
     // TODO Set controls and check if name is correct
     this.$store.commit('StateRestorer/STORE_COMPONENT_STATE', {
       // Fix this
-      key: this.comp.key || '',
+      id: this.comp.id || '',
       toStore: this.SRComposeStateToStore()
     })
   }
@@ -35,7 +35,7 @@ export default class StateRestorer extends Vue {
   }
 
   SRSetStateFromStorage() {
-    let stateToSet = this.$store.getters['StateRestorer/getComponentState'](this.comp.key)
+    let stateToSet = this.$store.getters['StateRestorer/getComponentState'](this.comp.id)
     // Sets positions
     this.$el.scrollLeft = stateToSet.scrollX
     this.$el.scrollTop = stateToSet.scrollY

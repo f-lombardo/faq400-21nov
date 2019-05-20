@@ -1,5 +1,8 @@
 <template>
-  <component :is="mainComponent.type" :component="mainComponent" :key="mainComponent.id"></component>
+  <component
+    :is="mainComponent.type"
+    :component="mainComponent"
+    :key="mainComponent.id"></component>
 </template>
 
 <script lang="ts">
