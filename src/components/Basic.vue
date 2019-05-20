@@ -18,9 +18,9 @@ export default class Basic extends VariableContext {
     return this.component ? this.component : {};
   }
 
-  protected name: string = "";
+  protected name: string = ''
 
-  private implicitVariables?: ImplicitVariable[];
+  private implicitVariables?: ImplicitVariable[]
 
   protected created(): void {
     if (this.component) {
