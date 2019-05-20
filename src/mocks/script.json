@@ -1,0 +1,137 @@
+{
+  "type": "EXD",
+  "key": "i000",
+  "id": "exd1",
+  "title": "",
+  "fun": "F()",
+  "loaded": true,
+  "layout": "column",
+  "sections": [{
+      "key": "i999",
+      "id": "i999",
+      "layout": "",
+      "dim": "",
+      "components": [{
+        "type": "BTN",
+        "key": "i998",
+        "id": "i998",
+        "title": "",
+        "loaded": true,
+        "options": {
+          "horizontal": true,
+          "showText": true
+        },
+        "data": [{
+            "value": "PRVSHO",
+            "options": true,
+            "obj": "",
+            "iconClass": "",
+            "children": [],
+            "exec": "F(EXD;*SCO;) 2(MB;SCP_SCH;[K1])"
+          },
+          {
+            "value": "PRV123",
+            "options": true,
+            "obj": "",
+            "iconClass": "",
+            "children": [],
+            "exec": "F(EXD;*SCO;) 2(MB;SCP_SCH;[K1])"
+          },
+          {
+            "value": "PRV456",
+            "options": true,
+            "obj": "",
+            "iconClass": "",
+            "children": [],
+            "exec": "F(EXD;*SCO;) 2(MB;SCP_SCH;[K1])"
+          }
+        ],
+        "variables": [],
+        "dynamisms": [{
+          "event": "click",
+          "exec": "",
+          "targets": ["exd2"]
+        }]
+      }]
+    },
+    {
+      "key": "i007",
+      "id": "i007",
+      "layout": "",
+      "dim": "",
+      "components": [{
+        "type": "LAB",
+        "key": "i001",
+        "id": "lbl1",
+        "title": "",
+        "loaded": true,
+        "data": [{
+          "value": "Sme.UP Gateway",
+          "options": true,
+          "obj": "",
+          "iconClass": "",
+          "children": []
+        }]
+      }]
+    },
+    {
+      "key": "i008",
+      "id": "",
+      "layout": "",
+      "dim": "",
+      "components": [{
+        "type": "FLD",
+        "key": "i002",
+        "id": "fld1",
+        "title": "",
+        "loaded": true,
+        "fun": "F()",
+        "options": {
+          "FLD": {
+            "default": {
+              "type": "cmb",
+              "displayedField": "value",
+              "initialValue": {
+                "value": "PRVSHO"
+              },
+              "showSubmit": true,
+              "submitLabel": "Conferma"
+            }
+          }
+        },
+        "data": [{
+            "value": "PRVSHO"
+          },
+          {
+            "value": "PRV123"
+          },
+          {
+            "value": "PRV456"
+          }
+        ],
+        "variables": [],
+        "dynamisms": [{
+          "event": "click",
+          "exec": "",
+          "targets": ["exd2"]
+        }]
+      }]
+    },
+    {
+      "key": "i009",
+      "id": "",
+      "layout": "",
+      "dim": "",
+      "components": [{
+        "type": "EXD",
+        "key": "i003",
+        "id": "exd2",
+        "title": "",
+        "fun": "F(EXD;*SCO;) 2(MB;SCP_SCH;[K1])",
+        "loaded": false,
+        "layout": "column",
+        "sections": []
+      }]
+    }
+  ]
+}

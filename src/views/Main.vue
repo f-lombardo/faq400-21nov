@@ -10,7 +10,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import { mapGetters } from "vuex";
 
-import { mainEXD } from "@/mocks/script";
+import mainEXD from "@/mocks/script.json";
 
 @Component({
   computed: {

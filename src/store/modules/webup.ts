@@ -2,7 +2,9 @@ import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
 
 import BasicComponent from "@/interfaces/BasicComponent";
 
-import { defaultSections, prv123, prv456 } from "@/mocks/script";
+import defaultSections from "@/mocks/sottoscheda1.json";
+import prv123 from "@/mocks/sottoscheda2.json";
+import prv456 from "@/mocks/sottoscheda3.json";
 
 interface Component {
   component: BasicComponent;
@@ -63,7 +65,7 @@ export default class Webup extends VuexModule {
 
   @Action({ commit: "RELOAD_COMPONENT" })
   reloadComponent(payload: { comp: Component; fun: string }) {
-    let newExd = [];
+    let newExd: any = [];
 
     if (payload.fun.endsWith("PRV123)")) {
       newExd = prv123;
@@ -77,7 +79,7 @@ export default class Webup extends VuexModule {
 
   @Action({ commit: "SET_ROOT" })
   reloadExd(fun: string) {
-    let newExd = [];
+    let newExd: any = [];
     if (fun.endsWith("PRV123)")) {
       newExd = prv123;
     } else if (fun.endsWith("PRV456)")) {
