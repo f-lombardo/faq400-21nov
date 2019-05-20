@@ -9,8 +9,61 @@ export const mainEXD: any = JSON.parse(`
   "layout": "column",
   "sections": [
     {
+      "key": "i999",
+      "id": "i999",
+      "layout": "",
+      "dim": "",
+      "components": [
+        {
+          "type": "BTN",
+          "key": "i998",
+          "id": "i998",
+          "title": "",
+          "loaded": true,
+          "options": {
+            "horizontal": true,
+            "showText": true
+          },
+          "data": [
+            {
+              "value": "PRVSHO",
+              "options": true,
+              "obj": "",
+              "iconClass": "",
+              "children": [],
+              "exec": "F(EXD;*SCO;) 2(MB;SCP_SCH;[K1])"
+            },
+            {
+              "value": "PRV123",
+              "options": true,
+              "obj": "",
+              "iconClass": "",
+              "children": [],
+              "exec": "F(EXD;*SCO;) 2(MB;SCP_SCH;[K1])"
+            },
+            {
+              "value": "PRV456",
+              "options": true,
+              "obj": "",
+              "iconClass": "",
+              "children": [],
+              "exec": "F(EXD;*SCO;) 2(MB;SCP_SCH;[K1])"
+            }
+          ],
+          "variables": [],
+          "dynamisms": [
+            {
+              "event": "click",
+              "exec": "",
+              "targets": ["exd2"]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "key": "i007",
-      "id": "",
+      "id": "i007",
       "layout": "",
       "dim": "",
       "components": [
@@ -377,7 +430,7 @@ export const defaultSections: any = JSON.parse(`
                   "actions": {
                     "row": [
                       {
-                        "exec": "...",
+                        "exec": "",
                         "icon": "mdi-clock",
                         "text": "Scheda orologio"
                       }
@@ -391,7 +444,7 @@ export const defaultSections: any = JSON.parse(`
                     ],
                     "command": [
                       {
-                        "exec": "...",
+                        "exec": "",
                         "icon": "mdi-play",
                         "text": "Spotify"
                       }

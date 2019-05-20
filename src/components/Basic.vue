@@ -36,8 +36,10 @@ export default class Basic extends VariableContext {
 
   public getOptions(): any {
     // TODO questo sara' da rivedere quando gestiremo i setup 'correttamente'
-    if (this.component.options) {
-      return this.component.options[this.component.type].default;
+    if (this.component.options && this.component.type) {
+      if (this.component.type === "FLD")
+        return this.component.options[this.component.type].default;
+      else return this.component.options;
     }
     return {};
   }
@@ -63,7 +65,6 @@ export default class Basic extends VariableContext {
         (d: Dynamism) => dynName === d.event
       );
     }
-
     return [];
   }
 }

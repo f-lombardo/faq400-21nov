@@ -1,5 +1,9 @@
 <template>
-  <component :is="mainComponent.type" :component="mainComponent"></component>
+  <component
+    :is="mainComponent.type"
+    :component="mainComponent"
+    :key="mainComponent.key"
+  ></component>
 </template>
 
 <script lang="ts">

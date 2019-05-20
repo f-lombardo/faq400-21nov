@@ -6,7 +6,7 @@ import ExpressionEvaluator from "./expressions/ExpressionEvaluator";
 import IBasic from "@/interfaces/IBasic";
 
 export default class DynamismManager {
-  execute(comp: Vue, dyn: Dynamism): void {
+  execute(comp: any, dyn: Dynamism): void {
     if (!dyn.source) {
       // TODO lanciare errore?
       return;
@@ -17,39 +17,51 @@ export default class DynamismManager {
       // TODO messaggio
       return;
     }
-    if (!dyn.exec) {
-      // check targets
-      if (!dyn.targets || dyn.targets.length == 0) {
-        // save variable in source
-        this.executeAssignmentsInTarget(dyn.source, dyn);
-      } else {
-        dyn.targets
-          .map(target => comp.$store.getters["webup/getComponentById"](target))
-          .filter((c: any) => c)
-          .forEach((c: any) => {
-            // save variables in target
-            this.executeAssignmentsInTarget(c, dyn);
 
-            // ricalcola la fun
-            const evaluatedFun = new ExpressionEvaluator().variableExpression(
-              c,
-              c.component.fun
-            );
-
-            // TODO ricarica componente
-            comp.$store.dispatch("webup/reloadComponent", {
-              comp: c,
-              fun: evaluatedFun
-            });
-          });
-      }
+    // check targets
+    if (!dyn.targets || dyn.targets.length == 0) {
+      // save variable in source
+      this._executeAssignmentsInTarget(dyn.source, dyn);
     } else {
-      // TODO exec
-      console.log("EXEC");
+      dyn.targets
+        .map(target => comp.$store.getters["webup/getComponentById"](target))
+        .filter((c: any) => c)
+        .forEach((c: any) => {
+          // save variables in target
+          this._executeAssignmentsInTarget(c, dyn);
+
+          // ricalcola la fun
+          const evaluatedFun = new ExpressionEvaluator().variableExpression(
+            c,
+            c.component.fun
+          );
+
+          // ricarica componente
+          comp.$store.dispatch("webup/reloadComponent", {
+            comp: c,
+            fun: evaluatedFun
+          });
+        });
+    }
+
+    if (!dyn.targets && dyn.exec && dyn.exec !== "") {
+      const evaluatedFun = new ExpressionEvaluator().variableExpression(
+        comp,
+        dyn.exec
+      );
+
+      this._execFun(comp, evaluatedFun);
     }
   }
 
-  executeAssignmentsInTarget(target: IBasic, dyn: Dynamism) {
+  private _execFun(comp: any, fun: string) {
+    // TODO check fun virtuali?
+
+    // carica nuova scheda
+    comp.$store.dispatch("webup/reloadExd", fun);
+  }
+
+  private _executeAssignmentsInTarget(target: IBasic, dyn: Dynamism) {
     // variables from source component
     if (dyn.source && dyn.source.variables) {
       for (let k in dyn.source.variables) {

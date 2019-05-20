@@ -1,8 +1,9 @@
 <template>
-  <ketchup-button
-    :label="this.component.data[0].value"
+  <ketchup-btn
+    :buttons.prop="this.component.data"
+    :config.prop="getOptions()"
     @ketchupButtonClicked="onClick($event)"
-  ></ketchup-button>
+  ></ketchup-btn>
 </template>
 
 <script lang="ts">
@@ -15,14 +16,43 @@ import Dynamism from "@/classes/Dynamism";
 export default class BTN extends BasicComponent {
   protected name = "BTN";
 
-  private onClick($event: CustomEvent) {
-    this.getDynamisms("click").forEach(d => {
-      const dyn = new Dynamism(d.event);
-      dyn.source = this.comp;
-      dyn.targets = d.targets;
-      dyn.exec = d.exec;
-      this.$dynamismManager.execute(this, dyn);
+  private onClick($event: CustomEvent): void {
+    const dyns = [
+      ...this.getDynamisms("click"),
+      ...this.getDynamisms("dblclick")
+    ];
+
+    if (dyns.length > 0) {
+      dyns.forEach(d => {
+        var dyn: Dynamism = this.createDynamism(d, $event);
+        this.$dynamismManager.execute(this, dyn);
+      });
+    } else {
+      // if there aren't dynamisms, check the single button's exec
+      const exec = this.component.data[$event.detail.id].exec;
+      if (exec) {
+        const d = new Dynamism("click");
+        d.exec = exec;
+        var dyn: Dynamism = this.createDynamism(d, $event);
+        this.$dynamismManager.execute(this, dyn);
+      }
+    }
+  }
+
+  private createDynamism(d: Dynamism, $event: CustomEvent): Dynamism {
+    const dyn = new Dynamism(d.event);
+    dyn.source = this.comp;
+    dyn.targets = d.targets;
+    dyn.exec = d.exec;
+
+    // adding implicit variables
+    dyn.addImplictVariable({ key: "T1", value: "" });
+    dyn.addImplictVariable({ key: "P1", value: "" });
+    dyn.addImplictVariable({
+      key: "K1",
+      value: this.component.data[$event.detail.id].value
     });
+    return dyn;
   }
 }
 </script>

@@ -72,8 +72,20 @@ export default class Webup extends VuexModule {
     } else {
       newExd = defaultSections;
     }
-
     return { comp: payload.comp, newExd };
+  }
+
+  @Action({ commit: "SET_ROOT" })
+  reloadExd(fun: string) {
+    let newExd = [];
+    if (fun.endsWith("PRV123)")) {
+      newExd = prv123;
+    } else if (fun.endsWith("PRV456)")) {
+      newExd = prv456;
+    } else {
+      newExd = defaultSections;
+    }
+    return newExd;
   }
 
   get getComponentById() {
