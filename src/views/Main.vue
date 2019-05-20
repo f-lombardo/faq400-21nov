@@ -2,8 +2,7 @@
   <component
     :is="mainComponent.type"
     :component="mainComponent"
-    :key="mainComponent.key"
-  ></component>
+    :key="mainComponent.id"></component>
 </template>
 
 <script lang="ts">

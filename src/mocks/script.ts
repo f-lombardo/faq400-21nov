@@ -87,7 +87,7 @@ export const mainEXD: any = JSON.parse(`
     },
     {
       "key": "i008",
-      "id": "",
+      "id": "i008",
       "layout": "",
       "dim": "",
       "components": [
@@ -129,7 +129,7 @@ export const mainEXD: any = JSON.parse(`
     },
     {
       "key": "i009",
-      "id": "",
+      "id": "i009",
       "layout": "",
       "dim": "",
       "components": [
@@ -161,7 +161,7 @@ export const defaultSections: any = JSON.parse(`
   "sections": [
     {
       "key": "sec4",
-      "id": "",
+      "id": "sec4",
       "layout": "",
       "dim": "",
       "components": [
@@ -242,7 +242,7 @@ export const defaultSections: any = JSON.parse(`
     },
     {
       "key": "sec5",
-      "id": "",
+      "id": "sec5",
       "layout": "",
       "dim": "",
       "components": [
@@ -256,7 +256,7 @@ export const defaultSections: any = JSON.parse(`
           "sections": [
             {
               "key": "sec6",
-              "id": "",
+              "id": "sec6",
               "layout": "",
               "dim": "",
               "components": [
@@ -475,7 +475,7 @@ export const prv123: any = JSON.parse(`
   "sections": [
     {
       "key": "sec4",
-      "id": "",
+      "id": "sec4",
       "layout": "",
       "dim": "",
       "components": [
@@ -513,7 +513,7 @@ export const prv456: any = JSON.parse(`
   "sections": [
     {
       "key": "sec4",
-      "id": "",
+      "id": "sec4",
       "layout": "",
       "dim": "",
       "components": [

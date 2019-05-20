@@ -1,12 +1,11 @@
 <template>
   <div>
-    <template v-for="comp in this.component.components">
       <component
-        :key="comp.key"
+        v-for="comp in component.components"
+        :key="comp.id"
         :is="getType(comp)"
         :component="comp"
-      ></component>
-    </template>
+      />
   </div>
 </template>
 
