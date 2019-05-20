@@ -26,4 +26,4 @@ const Instance = new Vue({
   render: h => h(App)
 }).$mount("#app");
 
-console.log(Instance);
+// console.log(Instance);

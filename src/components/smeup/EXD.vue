@@ -21,10 +21,6 @@ import smeupSection from "@/components/smeup/SEC.vue";
 export default class EXD extends BasicComponent {
   protected name: string = "EXD";
 
-  mounted() {
-    console.log(this.comp, this.comp.sections);
-  }
-
   private getStyle(): object {
     return {
       display: "flex",

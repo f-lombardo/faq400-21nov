@@ -45,6 +45,14 @@ export default class Webup extends VuexModule {
     }
   }
 
+  /**
+   * FIXME this mutation is pontatially dangerous
+   * Use see comp link below for more details
+   * @namespace RELOAD_COMPONENT
+   * @param payload
+   * @see reloadComponent
+   * @see comp
+   */
   @Mutation
   RELOAD_COMPONENT(payload: any) {
     // replace component
@@ -61,6 +69,11 @@ export default class Webup extends VuexModule {
     return comp;
   }
 
+  /**
+   * @namespace reloadComponent
+   * @param payload
+   * @see RELOAD_COMPONENT
+   */
   @Action({ commit: "RELOAD_COMPONENT" })
   reloadComponent(payload: { comp: Component; fun: string }) {
     let newExd = [];
