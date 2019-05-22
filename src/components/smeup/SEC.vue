@@ -1,11 +1,13 @@
 <template>
-  <div>
-      <component
-        v-for="comp in component.components"
-        :key="comp.id"
-        :is="getType(comp)"
-        :component="comp"
-      />
+  <div
+    :style="sectionStyle"
+    class="section">
+    <component
+      v-for="comp in component.components"
+      :key="comp.id"
+      :is="getType(comp)"
+      :component="comp"
+    />
   </div>
 </template>
 
@@ -36,5 +38,22 @@ export default class SEC extends Vue {
         return "UNK";
     }
   }
+
+  private sectionStyle(): object {
+    return {
+      flexDirection: this.component.layout ? this.component.layout : "column"
+    };
+  }
 }
 </script>
+
+<style lang="scss">
+// Style of a single section
+.section {
+  display: flex;
+
+  > * {
+    width: 100%;
+  }
+}
+</style>

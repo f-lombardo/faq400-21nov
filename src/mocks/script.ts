@@ -6,7 +6,7 @@ export const mainEXD: any = JSON.parse(`
   "title": "",
   "fun": "F()",
   "loaded": true,
-  "layout": "aa",
+  "layout": "accordion",
   "sections": [
     {
       "key": "i999",
