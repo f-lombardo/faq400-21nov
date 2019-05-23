@@ -62,6 +62,8 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 export default class SEC extends Vue {
   protected name = "SEC";
 
+  protected tabIndexModel: string | null = null;
+
   @Prop() protected component!: any;
 
   public getType(comp: any): string {

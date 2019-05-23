@@ -23,8 +23,6 @@ import smeupSection from "@/components/smeup/SEC.vue";
 export default class EXD extends BasicComponent {
   protected name: string = "EXD";
 
-  protected tabIndexModel: string | null = null;
-
   private get sectionStyle(): object {
     return {
       flexDirection: this.comp.layout ? this.comp.layout : "column"
