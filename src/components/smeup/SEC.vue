@@ -1,8 +1,11 @@
 <template>
   <div class="full-width">
     <template v-if="component.components.length > 1">
-      <!-- When layout uses accordion (ExpansionPanel) -->
-      <v-expansion-panel v-if="component.layout === 'accordion'">
+      <!-- When layout uses accordion (ExpansionPanel) - The expand property allows more than one open panel at time -->
+      <v-expansion-panel
+        v-if="component.layout === 'accordion'"
+        expand
+        >
         <v-expansion-panel-content
           v-for="comp in component.components"
           :key="comp.id"
