@@ -9,7 +9,7 @@ export default class Fun {
     const funExpr: RegExp = new RegExp(/F\((.*?)\)/);
     const objExpr: RegExp = new RegExp(/\d\([^\(]*\)/g);
     var funResult = funExpr.exec(fun);
-    let triad: Triad;
+    var triad: Triad;
     // F
     if (funResult) {
       const triadResult: string[] = funResult[0].split(";");

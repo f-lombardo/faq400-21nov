@@ -1,14 +1,16 @@
 import Triad from "@/classes/Triad";
 
 export default class FunObject {
-  private triad: Triad = { service: "", method: "", component: "" };
+  private triad: Triad;
   private code: Number;
 
   constructor(code: Number, obj: any) {
     this.code = code;
-    this.triad.component = obj.component;
-    this.triad.service = obj.service;
-    this.triad.method = obj.method;
+    this.triad = {
+      component: obj.component,
+      service: obj.service,
+      method: obj.method
+    };
   }
 
   getComponent(): String {

@@ -2,6 +2,8 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { mapActions } from "vuex";
 
+import Fun from "@/classes/Fun";
+import FunManager from "@/classes/FunManager";
 import Dynamism from "@/classes/Dynamism";
 import ImplicitVariable from "@/interfaces/ImplicitVariable";
 
@@ -22,11 +24,13 @@ export default class Basic extends VariableContext {
     if (this.component) {
       // saving component in store
       this.$store.dispatch("webup/addComponent", this);
-
+      // get data
+      var component: any;
       if (this.component.loaded == true) {
-        let component: any = funManager.doFun(this.component.fun);
-        this.comp = component;
+        var fun: Fun = new Fun(this.component.fun);
+        component = this.$funManager.doSomething(fun);
       }
+      this.comp = component;
     }
   }
 
