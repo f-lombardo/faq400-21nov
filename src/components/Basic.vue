@@ -22,15 +22,14 @@ export default class Basic extends VariableContext {
 
   protected created(): void {
     if (this.component) {
-      // saving component in store
-      this.$store.dispatch("webup/addComponent", this);
       // get data
-      var component: any;
       if (this.component.loaded == true) {
         var fun: Fun = new Fun(this.component.fun);
-        component = this.$funManager.doSomething(fun);
+        this.component.data = this.$funManager.execute(fun);
       }
-      this.comp = component;
+      this.comp = this.component;
+      // saving component in store
+      this.$store.dispatch("webup/addComponent", this);
     }
   }
 
