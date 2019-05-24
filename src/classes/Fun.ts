@@ -2,27 +2,43 @@ import Triad from "@/classes/Triad";
 import FunObject from "@/classes/FunObject";
 
 export default class Fun {
-  private triad: Triad = { service: "", method: "", component: "" };
-  private objects: FunObject[] = [];
+  private triad: Triad;
+  private objects: FunObject[];
 
   constructor(fun: string) {
-    //TODO ci sarà un fun parser o la creo qui dentro?
-    //fun.indexOf("");
-    //https://developer.mozilla.org/it/docs/Web/JavaScript/Guida/Espressioni_Regolari
-    //https://flaviocopes.com/javascript-regular-expressions/
-    /*
-    let expr: RegExp = new RegExp(/F\((.*?)\)/);
-    var result = expr.exec("fun"); //RegExpExecArray
-    console.log(result);
-    if (result) {
-      const matchIndex = result.index;
-      var first: RegExpExecArray = result[0];
-      console.log(result[0]);
-      const firstText = first.toString;
-      const t = first.length;
-      //console.log(new RegRange(matchIndex, t));
+    const funExpr: RegExp = new RegExp(/F\((.*?)\)/);
+    const objExpr: RegExp = new RegExp(/\d\([^\(]*\)/g);
+    var funResult = funExpr.exec(fun);
+    let triad: Triad;
+    // F
+    if (funResult) {
+      const triadResult: string[] = funResult[0].split(";");
+      triad = {
+        component: triadResult[0],
+        service: triadResult[1],
+        method: triadResult[2]
+      };
+    } else {
+      triad = {
+        component: "",
+        service: "",
+        method: ""
+      };
     }
-    */
+    this.triad = triad;
+    // Objects
+    var objs: FunObject[] = [];
+    while ((funResult = objExpr.exec(fun)) !== null) {
+      const objsSplitted = funResult[0].split("(");
+      const code = parseInt(objsSplitted[0], 10);
+      const codeSplitted = objsSplitted[1].split(";");
+      const component = codeSplitted[0];
+      const service = codeSplitted[1];
+      const method = codeSplitted[2].slice(0, codeSplitted[2].length - 1);
+      const triad = { component, service, method };
+      objs.push(new FunObject(code, triad));
+    }
+    this.objects = objs;
   }
 
   isServiceInternal(): boolean {
