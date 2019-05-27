@@ -9,3 +9,10 @@
     <router-view />
   </div>
 </template>
+
+<style lang="scss">
+//---- Global style ----
+.full-width {
+  width: 100%;
+}
+</style>

@@ -1,11 +1,13 @@
-<template>
-  <div :style="getStyle()" v-if="comp.loaded">
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+  <div
+    v-if="comp.loaded"
+    :style="sectionStyle"
+    class="scheda full-width">
     {{ this.comp.title }}
     <smeup-section
       v-for="section in comp.sections"
       :key="section.id"
-      :component="section"
-      />
+      :component="section"/>
   </div>
 </template>
 
@@ -21,11 +23,21 @@ import smeupSection from "@/components/smeup/SEC.vue";
 export default class EXD extends BasicComponent {
   protected name: string = "EXD";
 
-  private getStyle(): object {
+  private get sectionStyle(): object {
     return {
-      display: "flex",
-      flexDirection: this.comp.layout
+      flexDirection: this.comp.layout ? this.comp.layout : "column"
     };
   }
 }
 </script>
+
+<style lang="scss">
+// Style of a single section
+.scheda {
+  display: flex;
+
+  > * {
+    width: 100%;
+  }
+}
+</style>

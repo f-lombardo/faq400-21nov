@@ -13,11 +13,12 @@ export default class Basic extends VariableContext {
   @Prop() protected component!: any;
 
   /**
-   * FIXME There are a few things to know about this passage.
+   * TODO Tenere sotto controllo questo funzionamento se da dei problemi con i successivi sviluppi dell'applicazione.
+   * There are a few things to know about this passage.
    * The mutation RELOAD_COMPONENT (linked below) current job is to take a component and overwrite its comp data prop.
    * Questo tipo di approccio è potenzialmente pericoloso in quanto duplica di fatto la struttura dati:
    * 1. da una parte abbiamo il componente globale che crea e gestisce tutti gli altri passando di volta
-   *    in volta la parte che gli interesa del JSON.
+   *    in volta la parte che gli interessa del JSON.
    * 2. Poi quando un dinamismo lancia la mutation RELOAD_COMPONENT, il valore assegnato in quell'istanza
    *    di componente Vue alla proprietà comp può essere diverso rispetto al valore ancora custodito nell'albero dei
    *    componenti contenuto nella proprietà component dell'istanza corrente e globale.
@@ -55,7 +56,7 @@ export default class Basic extends VariableContext {
    *    // current component
    * }
    *
-   * A prescindere rimuoverei la dualità esistente tra comp (computed property) e component (prop).
+   * A prescindere rimuoverei la dualità esistente tra comp (data property) e component (prop).
    *
    * @namespace comp
    * @see RELOAD_COMPONENT
@@ -63,7 +64,7 @@ export default class Basic extends VariableContext {
    */
   comp: any = {};
 
-  protected name: string = ''
+  protected name: string = "";
 
   private implicitVariables?: ImplicitVariable[]
 
