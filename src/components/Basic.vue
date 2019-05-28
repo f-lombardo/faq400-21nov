@@ -25,7 +25,12 @@ export default class Basic extends VariableContext {
       // get data
       if (this.component.loaded == true) {
         var fun: Fun = new Fun(this.component.fun);
-        this.component.data = this.$funManager.execute(fun);
+        console.log(fun);
+        if (fun.isServiceExternal()) {
+          this.component = this.$funManager.getScript(fun);
+        } else {
+          this.component.data = this.$funManager.execute(fun);
+        }
       }
       this.comp = this.component;
       // saving component in store

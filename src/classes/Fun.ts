@@ -41,7 +41,7 @@ export default class Fun {
     this.objects = objs;
   }
 
-  isServiceInternal(): boolean {
+  isServiceExternal(): boolean {
     if (this.triad.service === "*SCO") return true;
     return false;
   }
@@ -62,7 +62,7 @@ export default class Fun {
     return this.objects;
   }
 
-  getObject(code: Number) {
+  getObject(code: Number): FunObject | null {
     this.objects.forEach(obj => {
       if (obj.getCode() === code) return obj;
     });
