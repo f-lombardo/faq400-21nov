@@ -6,16 +6,13 @@ export default class FunManager {
     //TODO
   }
 
-  getScript(fun: Fun): any {
+  async getScript(fun: Fun) {
     var obj2: FunObject | null = fun.getObject(2);
     if (obj2) {
-      const script = import("@/mocks/" + obj2.getMethod + ".json");
-      if (script) {
-        return script;
-      } else {
-        // TODO
-        throw "Error";
-      }
+      const path = "@/mocks/" + obj2.getMethod() + ".ts";
+      const script = await import(path);
+      console.log(script);
+      return script;
     }
   }
 }

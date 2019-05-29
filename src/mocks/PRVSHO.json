@@ -6,8 +6,7 @@
   "loaded": true,
   "layout": "column",
   "sections": [{
-      "key": "sec4",
-      "id": "",
+      "id": "sec4",
       "layout": "",
       "dim": "",
       "components": [{
@@ -82,8 +81,7 @@
       }]
     },
     {
-      "key": "sec5",
-      "id": "",
+      "id": "sec5",
       "layout": "",
       "dim": "",
       "components": [{

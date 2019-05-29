@@ -63,9 +63,13 @@ export default class Fun {
   }
 
   getObject(code: Number): FunObject | null {
-    this.objects.forEach(obj => {
-      if (obj.getCode() === code) return obj;
-    });
+    var obj;
+    for (let index = 0; index < this.objects.length; index++) {
+      obj = this.objects[index];
+      if (obj.getCode() === code) {
+        return obj;
+      }
+    }
     return null;
   }
 }

@@ -1,6 +1,7 @@
 import { Vue } from "vue-property-decorator";
 
 import Dynamism from "@/classes/Dynamism";
+import Fun from "@/classes/Fun";
 import ExpressionEvaluator from "./expressions/ExpressionEvaluator";
 
 import IBasic from "@/interfaces/IBasic";
@@ -29,27 +30,27 @@ export default class DynamismManager {
         .forEach((c: any) => {
           // save variables in target
           this._executeAssignmentsInTarget(c, dyn);
-
-          // ricalcola la fun
+          // compose the fun
           const evaluatedFun = new ExpressionEvaluator().variableExpression(
             c,
             c.component.fun
           );
-
-          // ricarica componente
+          // get new component
+          var fun: Fun = new Fun(evaluatedFun);
+          const newComp = Vue.prototype.$funManager.getScript(fun);
+          // reload component
           comp.$store.dispatch("webup/reloadComponent", {
             comp: c,
-            fun: evaluatedFun
+            newComp
           });
         });
     }
-
+    // exec
     if (!dyn.targets && dyn.exec && dyn.exec !== "") {
       const evaluatedFun = new ExpressionEvaluator().variableExpression(
         comp,
         dyn.exec
       );
-
       this._execFun(comp, evaluatedFun);
     }
   }
@@ -57,7 +58,7 @@ export default class DynamismManager {
   private _execFun(comp: any, fun: string) {
     // TODO check fun virtuali?
 
-    // carica nuova scheda
+    // load new exd
     comp.$store.dispatch("webup/reloadExd", fun);
   }
 

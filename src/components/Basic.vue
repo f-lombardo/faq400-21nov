@@ -22,10 +22,9 @@ export default class Basic extends VariableContext {
 
   protected created(): void {
     if (this.component) {
-      // get data
-      if (this.component.loaded == true) {
+      const hasFun = this.component.fun && this.component.fun != "";
+      if (this.component.loaded == true && hasFun) {
         var fun: Fun = new Fun(this.component.fun);
-        console.log(fun);
         if (fun.isServiceExternal()) {
           this.component = this.$funManager.getScript(fun);
         } else {

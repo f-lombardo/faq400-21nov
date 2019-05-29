@@ -2,7 +2,7 @@
   "type": "EXD",
   "id": "exd1",
   "title": "",
-  "fun": "F(EXD;*SCO;) 2(;;script)",
+  "fun": "",
   "loaded": true,
   "layout": "column",
   "sections": [{
@@ -118,7 +118,7 @@
         "type": "EXD",
         "id": "exd2",
         "title": "",
-        "fun": "F(EXD;*SCO;) 2(;;[k1])",
+        "fun": "F(EXD;*SCO;) 2(MB;SCP_SCH;[K1])",
         "loaded": false,
         "layout": "column",
         "sections": []

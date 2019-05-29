@@ -12,7 +12,6 @@
     "dim": "",
     "components": [{
       "type": "LAB",
-      "key": "i001",
       "id": "lbl2",
       "title": "",
       "loaded": true,
