@@ -1,4 +1,4 @@
-export const script: any = JSON.parse(`
+export const PRV123: any = JSON.parse(`
   {
     "type": "EXD",
     "id": "exd2",
