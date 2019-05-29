@@ -46,15 +46,15 @@ export default class Fun {
     return false;
   }
 
-  getComponent(): String {
+  getComponent(): string {
     return this.triad.component;
   }
 
-  getService(): String {
+  getService(): string {
     return this.triad.service;
   }
 
-  getMethod(): String {
+  getMethod(): string {
     return this.triad.method;
   }
 
