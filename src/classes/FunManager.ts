@@ -1,9 +1,10 @@
 import Fun from "@/classes/Fun";
 import FunObject from "./FunObject";
+import ServicesFactory from "./ServicesFactory";
 
 export default class FunManager {
   execute(fun: Fun): any {
-    //TODO
+    new ServicesFactory().getService(fun.getService())[fun.getMethod()];
   }
 
   async getScript(fun: Fun) {
