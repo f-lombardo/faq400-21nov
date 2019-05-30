@@ -39,4 +39,4 @@ function setElementOffset(el, position) {
     }
 }
 
-export { setElementOffset as a, getElementOffset as b };
+export { getElementOffset as a, setElementOffset as b };

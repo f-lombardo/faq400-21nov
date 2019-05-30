@@ -13,7 +13,7 @@ export declare class KetchupCombo {
     /**
      * Allows to pass an initial selected item for the combobox
      */
-    initialValue: any;
+    initialValue: ComboItem;
     /**
      * Marks the field as clearable, allowing an icon to delete its content
      */
@@ -27,7 +27,9 @@ export declare class KetchupCombo {
      */
     label: string;
     /**
-     * If true, the combobox uses a portal to create the menu
+     * If true, the combobox uses a Stencil portal to create the menu.
+     * Please use this feature carefully, only if needed.
+     * @see ketchup-portal readme for more details.
      */
     usePortal: boolean;
     value: string;
@@ -59,7 +61,7 @@ export declare class KetchupCombo {
      * @method openCombo
      */
     openCombo(): void;
-    reflectInitialValue(newValue: ComboItem): void;
+    reflectInitialValue(newValue: ComboItem, oldValue?: ComboItem): void;
     reflectValueField(newValue: string): void;
     calcBoxPosition(): {
         isRight: boolean;
@@ -103,8 +105,11 @@ export declare class KetchupCombo {
      * @param item
      */
     onItemSelected(item: ComboItem): void;
+    /**
+     * When an element has been selected
+     */
     ketchupComboSelected: EventEmitter<{
-        value: object;
+        value: ComboItem;
     }>;
     onComboSelected(item: ComboItem | null): void;
     composeList(): JSX.Element;

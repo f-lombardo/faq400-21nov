@@ -6,12 +6,15 @@
   --htm_height: var(--kup-html_height, 600px);
   --htm_width: var(--kup-html_width, 100%);
   display: inline-block;
-  width: 100%; }
+  width: 100%;
+}
 
 :host([is-button]) {
   display: inline-block;
-  width: auto; }
+  width: auto;
+}
 
 .ketchup-frame {
   height: var(--htm_height);
-  width: var(--htm_width); }
+  width: var(--htm_width);
+}

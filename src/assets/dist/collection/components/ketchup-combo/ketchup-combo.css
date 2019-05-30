@@ -21,7 +21,8 @@
   */
   display: inline-block;
   position: relative;
-  z-index: 1; }
+  z-index: 1;
+}
 
 .ketchup-combo__container {
   background-color: #ffffff;
@@ -29,29 +30,31 @@
   border-radius: 2px;
   box-sizing: border-box;
   display: inline-flex;
-  outline: none; }
-  .ketchup-combo__container:hover, .ketchup-combo__container:focus {
-    border-color: var(--cmb_border-color--selected); }
-
+  outline: none;
+}
+.ketchup-combo__container:hover, .ketchup-combo__container:focus {
+  border-color: var(--cmb_border-color--selected);
+}
 .ketchup-combo__icon {
   fill: var(--cmb_icon-color);
   height: var(--cmb_font-size);
   transition: fill var(--cmb_tr-duration), transform var(--cmb_tr-duration);
-  width: var(--cmb_font-size); }
-
+  width: var(--cmb_font-size);
+}
 .ketchup-combo__current-value {
   align-items: center;
   cursor: pointer;
   display: inline-flex;
   font-size: var(--cmb_font-size);
   justify-content: center;
-  padding: 4px 6px; }
-
+  padding: 4px 6px;
+}
 .ketchup-combo__chevron {
-  margin-left: 16px; }
-  .ketchup-combo__chevron--open {
-    transform: rotate(180deg); }
-
+  margin-left: 16px;
+}
+.ketchup-combo__chevron--open {
+  transform: rotate(180deg);
+}
 .ketchup-combo__clear {
   align-items: center;
   background-color: transparent;
@@ -61,10 +64,11 @@
   justify-content: center;
   margin: 0;
   outline: none;
-  padding: 4px; }
-  .ketchup-combo__clear:hover > svg {
-    fill: var(--cmb_icon-color--hover); }
-
+  padding: 4px;
+}
+.ketchup-combo__clear:hover > svg {
+  fill: var(--cmb_icon-color--hover);
+}
 .ketchup-combo__menu {
   background-color: var(--cmb_menu-background);
   border-radius: 2px;
@@ -76,38 +80,46 @@
   transition: opacity var(--cmb_tr-duration);
   top: 100%;
   visibility: hidden;
-  z-index: 1; }
-  .ketchup-combo__menu.is-open {
-    opacity: 1;
-    visibility: visible; }
-  .ketchup-combo__menu.is-top {
-    bottom: 100%;
-    top: auto; }
-  .ketchup-combo__menu.is-right {
-    left: auto;
-    right: 0; }
-  .ketchup-combo__menu.is-using-portal {
-    position: relative; }
-
+  z-index: 1;
+}
+.ketchup-combo__menu.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+.ketchup-combo__menu.is-top {
+  bottom: 100%;
+  top: auto;
+}
+.ketchup-combo__menu.is-right {
+  left: auto;
+  right: 0;
+}
+.ketchup-combo__menu.is-using-portal {
+  position: relative;
+}
 .ketchup-combo__filter {
   box-sizing: border-box;
   display: inline-block;
-  padding: 4px; }
-
+  padding: 4px;
+}
 .ketchup-combo__list {
   display: block;
   list-style-type: none;
   padding: 0;
   max-height: 400px;
   margin: 0;
-  overflow: auto; }
-  .ketchup-combo__list > li {
-    border-bottom: 1px solid #e8eae9;
-    box-sizing: border-box;
-    cursor: pointer;
-    display: block;
-    padding: 6px 8px 5px; }
-    .ketchup-combo__list > li:hover, .ketchup-combo__list > li.is-selected {
-      background-color: #f0f0f0; }
-    .ketchup-combo__list > li:last-of-type {
-      border-bottom: none; }
+  overflow: auto;
+}
+.ketchup-combo__list > li {
+  border-bottom: 1px solid #e8eae9;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: block;
+  padding: 6px 8px 5px;
+}
+.ketchup-combo__list > li:hover, .ketchup-combo__list > li.is-selected {
+  background-color: #f0f0f0;
+}
+.ketchup-combo__list > li:last-of-type {
+  border-bottom: none;
+}

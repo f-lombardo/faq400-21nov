@@ -72,17 +72,23 @@
       ]
     },
     {
+      "label": "ketchup-chart",
+      "description": "",
+      "attributes": [
+        {
+          "label": "data",
+          "description": "",
+          "required": false
+        }
+      ]
+    },
+    {
       "label": "ketchup-combo",
       "description": "",
       "attributes": [
         {
           "label": "displayed-field",
           "description": "Chooses which field of an item object should be used to create the list and be filtered.",
-          "required": false
-        },
-        {
-          "label": "initial-value",
-          "description": "Allows to pass an initial selected item for the combobox",
           "required": false
         },
         {
@@ -97,12 +103,69 @@
         },
         {
           "label": "use-portal",
-          "description": "If true, the combobox uses a portal to create the menu",
+          "description": "If true, the combobox uses a Stencil portal to create the menu.\r\nPlease use this feature carefully, only if needed.",
           "required": false
         },
         {
           "label": "value-field",
           "description": "Chooses which field of an item object should be used to create the list and be filtered.",
+          "required": false
+        }
+      ]
+    },
+    {
+      "label": "kup-dash",
+      "description": "",
+      "attributes": [
+        {
+          "label": "layout",
+          "description": "",
+          "required": false
+        }
+      ]
+    },
+    {
+      "label": "kup-data-table",
+      "description": "",
+      "attributes": [
+        {
+          "label": "global-filter",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "paginator-pos",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "rows-per-page",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "select-row",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "show-filters",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "show-grid",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "show-header",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "sort-enabled",
+          "description": "",
           "required": false
         }
       ]
@@ -140,6 +203,32 @@
         {
           "label": "src",
           "description": "The address which must be referenced by the iframe",
+          "required": false
+        }
+      ]
+    },
+    {
+      "label": "kup-paginator",
+      "description": "",
+      "attributes": [
+        {
+          "label": "current-page",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "max",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "per-page",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "selected-per-page",
+          "description": "",
           "required": false
         }
       ]
@@ -208,9 +297,14 @@
       ]
     },
     {
-      "label": "ketchup-text-input",
+      "label": "kup-text-input",
       "description": "",
       "attributes": [
+        {
+          "label": "debounce",
+          "description": "Set the amount of time, in milliseconds, to wait to trigger the `ketchupTextInputUpdated` event after each keystroke.",
+          "required": false
+        },
         {
           "label": "initial-value",
           "description": "Marks the field as clearable, allowing an icon to delete its content",

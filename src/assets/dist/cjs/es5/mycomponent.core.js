@@ -345,7 +345,7 @@ catch (n) { } return i; }(d, r, i), w = y.J.documentElement, b = r["s-defined"] 
     } })(n, this); }, e["s-init"] = function () { (function (n, t, e, r, i, o, u) { if (L(n, t) && (i = n.gn.get(t)) && !n.mn.has(t) && (!t["s-ld"] || !t["s-ld"].length)) {
         n.ot.set(t, !0), (u = n.st.has(t)) || (n.st.set(t, !0), t["s-ld"] = void 0, n.Z.En(t, e));
         try {
-            k(n.On.get(t)), (o = n.at.get(t)) && (o.forEach(function (n) { return n(t); }), n.at.delete(t)), !u && i.componentDidLoad && i.componentDidLoad();
+            k(n.On.get(t)), (o = n.at.get(t)) && (o.forEach(function (n) { return n(t); }), n.at.delete(t)), !u && i.componentDidLoad ? i.componentDidLoad() : u && i.componentDidUpdate && i.componentDidUpdate();
         }
         catch (e) {
             n.kn(e, 4, t);

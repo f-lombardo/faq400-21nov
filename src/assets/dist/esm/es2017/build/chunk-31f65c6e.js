@@ -18,4 +18,4 @@ function eventFromElement(element, eventSource) {
     return false;
 }
 
-export { generateUniqueId as a, eventFromElement as b, format as c };
+export { eventFromElement as a, generateUniqueId as b, format as c };

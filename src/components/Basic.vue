@@ -56,6 +56,7 @@ export default class Basic extends VariableContext {
 
   public getData(): any {
     if (this.component.data) {
+      console.log(JSON.stringify(this.component.data));
       return this.component.data;
     }
     return {};

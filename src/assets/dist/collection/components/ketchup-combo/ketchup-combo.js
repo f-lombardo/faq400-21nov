@@ -4,7 +4,7 @@ export class KetchupCombo {
     constructor() {
         this.displayedField = 'id';
         this.valueField = 'id';
-        this.initialValue = '';
+        this.initialValue = {};
         this.isClearable = false;
         this.items = [];
         this.label = '';
@@ -36,9 +36,12 @@ export class KetchupCombo {
         this.comboPosition = this.calcBoxPosition();
         this.isOpen = true;
     }
-    reflectInitialValue(newValue) {
-        this.value = newValue[this.valueField];
-        this.selected = newValue;
+    reflectInitialValue(newValue, oldValue) {
+        if (!oldValue || newValue[this.valueField] !== oldValue[this.valueField]) {
+            this.value = newValue[this.valueField];
+            this.selected = newValue;
+            this.onComboSelected(newValue);
+        }
     }
     reflectValueField(newValue) {
         this.value = this.selected ? this.selected[newValue] : '';
