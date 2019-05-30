@@ -12,7 +12,7 @@ export default class Fun {
     var triad: Triad;
     // F
     if (funResult) {
-      const triadResult: string[] = funResult[0].split(";");
+      const triadResult: string[] = funResult[1].split(";");
       triad = {
         component: triadResult[0],
         service: triadResult[1],

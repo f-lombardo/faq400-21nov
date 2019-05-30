@@ -1,6 +1,6 @@
 import Fun from "@/classes/Fun";
 import FunObject from "./FunObject";
-import ServicesFactory from "./ServicesFactory";
+import ServiceFactory from "./ServicesFactory";
 
 import { PRVSHO } from "@/mocks/PRVSHO.ts";
 import { PRV123 } from "@/mocks/PRV123.ts";
@@ -8,7 +8,9 @@ import { PRV456 } from "@/mocks/PRV456.ts";
 
 export default class FunManager {
   execute(fun: Fun): any {
-    new ServicesFactory().getService(fun.getService())[fun.getMethod()];
+    return new ServiceFactory()
+      .createService(fun.getService())
+      [fun.getMethod()]();
   }
 
   getScript(fun: Fun): any {

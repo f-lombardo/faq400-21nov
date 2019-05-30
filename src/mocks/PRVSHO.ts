@@ -15,7 +15,7 @@ export const PRVSHO: any = JSON.parse(`
           "key": "fld2",
           "id": "fld2",
           "title": "",
-          "fun": "F()",
+          "fun": "",
           "options": {
             "FLD": {
               "default": {
@@ -90,7 +90,7 @@ export const PRVSHO: any = JSON.parse(`
           "key": "exd3",
           "id": "exd3",
           "title": "",
-          "fun": "F()",
+          "fun": "",
           "loaded": true,
           "sections": [{
             "key": "sec6",

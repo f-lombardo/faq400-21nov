@@ -78,7 +78,7 @@
         "id": "fld1",
         "title": "",
         "loaded": true,
-        "fun": "",
+        "fun": "F(FLD;A37;getPluginList)",
         "options": {
           "FLD": {
             "default": {
@@ -92,16 +92,7 @@
             }
           }
         },
-        "data": [{
-            "value": "PRVSHO"
-          },
-          {
-            "value": "PRV123"
-          },
-          {
-            "value": "PRV456"
-          }
-        ],
+        "data": [],
         "variables": [],
         "dynamisms": [{
           "event": "click",
