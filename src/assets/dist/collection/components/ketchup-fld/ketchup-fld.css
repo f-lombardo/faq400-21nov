@@ -5,26 +5,30 @@
 :host {
   display: flex;
   flex-wrap: wrap;
-  --fld_comp-margin: var(--kup-fld_component-margin, 8px); }
+  --fld_comp-margin: var(--kup-fld_component-margin, 8px);
+}
 
 .ketchup-fld__top-container {
   align-items: center;
   display: flex;
   order: 0;
-  width: 100%; }
-
+  width: 100%;
+}
 .ketchup-fld__label {
   margin: var(--fld_comp-margin);
-  order: 1; }
-  .ketchup-fld__label.ketchup-fld--right {
-    order: 4; }
-
+  order: 1;
+}
+.ketchup-fld__label.ketchup-fld--right {
+  order: 4;
+}
 .ketchup-fld__component {
   margin: var(--fld_comp-margin);
-  order: 3; }
-
+  order: 3;
+}
 .ketchup-fld__submit {
   margin: var(--fld_comp-margin);
-  order: 2; }
-  .ketchup-fld__submit.ketchup-fld--right {
-    order: 5; }
+  order: 2;
+}
+.ketchup-fld__submit.ketchup-fld--right {
+  order: 5;
+}

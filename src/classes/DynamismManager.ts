@@ -1,6 +1,7 @@
 import { Vue } from "vue-property-decorator";
 
 import Dynamism from "@/classes/Dynamism";
+import Fun from "@/classes/Fun";
 import ExpressionEvaluator from "./expressions/ExpressionEvaluator";
 
 import IBasic from "@/interfaces/IBasic";
@@ -11,13 +12,11 @@ export default class DynamismManager {
       // TODO lanciare errore?
       return;
     }
-
     // check enable
     if (!dyn.isEnabled()) {
       // TODO messaggio
       return;
     }
-
     // check targets
     if (!dyn.targets || dyn.targets.length == 0) {
       // save variable in source
@@ -28,37 +27,54 @@ export default class DynamismManager {
         .filter((c: any) => c)
         .forEach((c: any) => {
           // save variables in target
+          c.component.loaded = true;
           this._executeAssignmentsInTarget(c, dyn);
-
-          // ricalcola la fun
+          // compose the fun
           const evaluatedFun = new ExpressionEvaluator().variableExpression(
             c,
             c.component.fun
           );
-
-          // ricarica componente
-          comp.$store.dispatch("webup/reloadComponent", {
-            comp: c,
-            fun: evaluatedFun
-          });
+          // get new component
+          var fun: Fun = new Fun(evaluatedFun);
+          var newComp: any;
+          // TODO refactor this
+          if (fun.isServiceExternal()) {
+            newComp = Vue.prototype.$funManager.getScript(fun);
+            // reload component
+            comp.$store.dispatch("webup/reloadComponent", {
+              comp: c,
+              newComp
+            });
+          } else {
+            Vue.prototype.$funManager.execute(fun).then((data: any) => {
+              c.component.data = data;
+              newComp = c.component;
+              // reload component
+              comp.$store.dispatch("webup/reloadComponent", {
+                comp: c,
+                newComp
+              });
+            });
+          }
         });
     }
-
+    // exec
     if (!dyn.targets && dyn.exec && dyn.exec !== "") {
       const evaluatedFun = new ExpressionEvaluator().variableExpression(
         comp,
         dyn.exec
       );
-
       this._execFun(comp, evaluatedFun);
     }
   }
 
-  private _execFun(comp: any, fun: string) {
+  private _execFun(comp: any, evaluatedFun: string) {
     // TODO check fun virtuali?
 
-    // carica nuova scheda
-    comp.$store.dispatch("webup/reloadExd", fun);
+    // load new exd
+    var fun: Fun = new Fun(evaluatedFun);
+    const newExd = Vue.prototype.$funManager.getScript(fun);
+    comp.$store.dispatch("webup/reloadExd", newExd);
   }
 
   private _executeAssignmentsInTarget(target: IBasic, dyn: Dynamism) {
@@ -68,7 +84,6 @@ export default class DynamismManager {
         target.putVariable(k, dyn.source.variables[k]);
       }
     }
-
     // variables from dyn
     if (dyn.variables) {
       for (let k in dyn.variables) {

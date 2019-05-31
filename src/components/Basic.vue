@@ -2,6 +2,8 @@
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { mapActions } from "vuex";
 
+import Fun from "@/classes/Fun";
+import FunManager from "@/classes/FunManager";
 import Dynamism from "@/classes/Dynamism";
 import ImplicitVariable from "@/interfaces/ImplicitVariable";
 
@@ -66,13 +68,31 @@ export default class Basic extends VariableContext {
 
   protected name: string = "";
 
-  private implicitVariables?: ImplicitVariable[]
+  private implicitVariables?: ImplicitVariable[];
 
   protected created(): void {
     if (this.component) {
-      this.comp = this.component; // FIXME @see comp
-      // saving component in store
-      this.$store.dispatch("webup/addComponent", this);
+      const hasFun = this.component.fun && this.component.fun != "";
+      if (this.component.loaded == true && hasFun) {
+        var fun: Fun = new Fun(this.component.fun);
+        if (fun.isServiceExternal()) {
+          this.component = this.$funManager.getScript(fun);
+          this.comp = this.component;
+          // saving component in store
+          this.$store.dispatch("webup/addComponent", this); // TODO refactor this
+        } else {
+          Vue.prototype.$funManager.execute(fun).then((data: any) => {
+            this.component.data = data;
+            this.comp = this.component;
+            // saving component in store
+            this.$store.dispatch("webup/addComponent", this);
+          });
+        }
+      } else {
+        this.comp = this.component;
+        // saving component in store
+        this.$store.dispatch("webup/addComponent", this);
+      }
     }
   }
 

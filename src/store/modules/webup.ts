@@ -2,8 +2,6 @@ import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
 
 import BasicComponent from "@/interfaces/BasicComponent";
 
-import { defaultSections, prv123, prv456 } from "@/mocks/script";
-
 interface Component {
   component: BasicComponent;
 }
@@ -18,7 +16,7 @@ interface ComponentMap {
 export default class Webup extends VuexModule {
   root: Component = {
     component: {
-      key: "webup",
+      id: "webup",
       loaded: true,
       variables: {}
     }
@@ -61,7 +59,7 @@ export default class Webup extends VuexModule {
   @Mutation
   RELOAD_COMPONENT(payload: any) {
     // replace component
-    payload.comp.comp = payload.newExd;
+    payload.comp.comp = payload.newComp;
   }
 
   @Action({ commit: "ADD_COMPONENT" })
@@ -87,29 +85,12 @@ export default class Webup extends VuexModule {
    * @see SET_ROOT
    */
   @Action({ commit: "RELOAD_COMPONENT" })
-  reloadComponent(payload: { comp: Component; fun: string }) {
-    let newExd = [];
-
-    if (payload.fun.endsWith("PRV123)")) {
-      newExd = prv123;
-    } else if (payload.fun.endsWith("PRV456)")) {
-      newExd = prv456;
-    } else {
-      newExd = defaultSections;
-    }
-    return { comp: payload.comp, newExd };
+  reloadComponent(payload: { comp: Component; newComp: any }) {
+    return { comp: payload.comp, newComp: payload.newComp };
   }
 
   @Action({ commit: "SET_ROOT" })
-  reloadExd(fun: string) {
-    let newExd = [];
-    if (fun.endsWith("PRV123)")) {
-      newExd = prv123;
-    } else if (fun.endsWith("PRV456)")) {
-      newExd = prv456;
-    } else {
-      newExd = defaultSections;
-    }
+  reloadExd(newExd: any) {
     return newExd;
   }
 

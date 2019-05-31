@@ -116,10 +116,34 @@
       "shadow": true
     },
     {
+      "tag": "ketchup-chart",
+      "dependencies": [],
+      "componentClass": "KetchupChart",
+      "componentPath": "components/ketchup-chart/ketchup-chart.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/ketchup-chart/ketchup-chart.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "config",
+          "attr": "config"
+        },
+        {
+          "name": "data",
+          "type": "Any",
+          "attr": "data"
+        }
+      ],
+      "shadow": true
+    },
+    {
       "tag": "ketchup-combo",
       "dependencies": [
-        "ketchup-portal",
-        "ketchup-text-input"
+        "ketchup-portal"
       ],
       "componentClass": "KetchupCombo",
       "componentPath": "components/ketchup-combo/ketchup-combo.js",
@@ -138,7 +162,6 @@
         },
         {
           "name": "initialValue",
-          "type": "Any",
           "attr": "initial-value",
           "watch": [
             "reflectInitialValue"
@@ -472,7 +495,190 @@
       "shadow": true
     },
     {
-      "tag": "ketchup-text-input",
+      "tag": "kup-dash",
+      "dependencies": [],
+      "componentClass": "KetchupDash",
+      "componentPath": "components/ketchup-dash/ketchup-dash.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/ketchup-dash/ketchup-dash.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "layout",
+          "type": "String",
+          "attr": "layout"
+        }
+      ],
+      "events": [
+        {
+          "event": "ketchupDashClicked"
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "kup-data-table",
+      "dependencies": [
+        "kup-paginator",
+        "kup-text-input"
+      ],
+      "componentClass": "KetchupDataTable",
+      "componentPath": "components/ketchup-data-table/ketchup-data-table.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/ketchup-data-table/ketchup-data-table.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "columnsWidth",
+          "attr": "columns-width"
+        },
+        {
+          "name": "data",
+          "attr": "data"
+        },
+        {
+          "name": "filters",
+          "mutable": true,
+          "attr": "filters"
+        },
+        {
+          "name": "globalFilter",
+          "type": "Boolean",
+          "attr": "global-filter"
+        },
+        {
+          "name": "groups",
+          "attr": "groups"
+        },
+        {
+          "name": "paginatorPos",
+          "type": "String",
+          "attr": "paginator-pos"
+        },
+        {
+          "name": "rowsPerPage",
+          "type": "Number",
+          "attr": "rows-per-page",
+          "watch": [
+            "rowsPerPageHandler"
+          ]
+        },
+        {
+          "name": "selectRow",
+          "type": "Number",
+          "attr": "select-row"
+        },
+        {
+          "name": "showFilters",
+          "type": "Boolean",
+          "attr": "show-filters"
+        },
+        {
+          "name": "showGrid",
+          "type": "Boolean",
+          "attr": "show-grid"
+        },
+        {
+          "name": "showHeader",
+          "type": "Boolean",
+          "attr": "show-header"
+        },
+        {
+          "name": "sort",
+          "mutable": true,
+          "attr": "sort"
+        },
+        {
+          "name": "sortEnabled",
+          "type": "Boolean",
+          "attr": "sort-enabled"
+        },
+        {
+          "name": "totals",
+          "attr": "totals"
+        }
+      ],
+      "states": [
+        {
+          "name": "currentPage"
+        },
+        {
+          "name": "currentRowsPerPage"
+        },
+        {
+          "name": "globalFilterValue"
+        },
+        {
+          "name": "groupState"
+        },
+        {
+          "name": "selectedRow"
+        }
+      ],
+      "events": [
+        {
+          "event": "kupRowSelected",
+          "cancelable": false
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "kup-paginator",
+      "dependencies": [],
+      "componentClass": "KetchupPaginator",
+      "componentPath": "components/ketchup-paginator/ketchup-paginator.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/ketchup-paginator/ketchup-paginator.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "currentPage",
+          "type": "Number",
+          "attr": "current-page"
+        },
+        {
+          "name": "max",
+          "type": "Number",
+          "attr": "max"
+        },
+        {
+          "name": "perPage",
+          "type": "Number",
+          "attr": "per-page"
+        },
+        {
+          "name": "selectedPerPage",
+          "type": "Number",
+          "attr": "selected-per-page"
+        }
+      ],
+      "events": [
+        {
+          "event": "kupPageChanged",
+          "cancelable": false
+        },
+        {
+          "event": "kupRowsPerPageChanged",
+          "cancelable": false
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "kup-text-input",
       "dependencies": [],
       "componentClass": "KetchupTextInput",
       "componentPath": "components/ketchup-text-input/ketchup-text-input.js",
@@ -484,6 +690,14 @@
         }
       },
       "props": [
+        {
+          "name": "debounce",
+          "type": "Number",
+          "attr": "debounce",
+          "watch": [
+            "debounceChanged"
+          ]
+        },
         {
           "name": "initialValue",
           "type": "String",

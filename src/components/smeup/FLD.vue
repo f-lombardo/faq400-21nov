@@ -1,7 +1,7 @@
 <template>
   <!-- @ketchupFldChanged -->
   <ketchup-fld
-    @ketchupComboSelected="onFldChange($event)"
+    @ketchupFldChanged="onFldChange($event)"
     @ketchupFldSubmit="onClick($event)"
     :data.prop="getData()"
     :config.prop="getOptions()"
@@ -44,6 +44,7 @@ export default class FLD extends BasicComponent {
       dyn.addImplictVariable({ key: "T1", value: "" });
       dyn.addImplictVariable({ key: "P1", value: "" });
       dyn.addImplictVariable({ key: "K1", value: $event.detail.value.value });
+      // dyn.addImplictVariable({ key: "Fu", value: $event.detail.value.exec });
 
       this.$dynamismManager.execute(this, dyn);
     });

@@ -19,11 +19,17 @@ export declare class KetchupTextInput {
      * Default value copied from here: https://www.w3schools.com/tags/att_input_maxlength.asp
      */
     maxLength: number;
+    /**
+     * Set the amount of time, in milliseconds, to wait to trigger the `ketchupTextInputUpdated` event after each keystroke.
+     */
+    debounce: number;
+    protected debounceChanged(): void;
     value: string;
     inputEl: HTMLElement;
     textInput: HTMLInputElement;
     classInputText: string;
     componentWillLoad(): void;
+    componentDidLoad(): void;
     /**
      * Triggers the focus event on the input text
      * @method triggerFocus

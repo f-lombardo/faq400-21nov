@@ -2,14 +2,15 @@
   <component
     :is="mainComponent.type"
     :component="mainComponent"
-    :key="mainComponent.id"></component>
+    :key="mainComponent.id"
+  ></component>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { mapGetters } from "vuex";
 
-import { mainEXD } from "@/mocks/script";
+import mainEXD from "@/mocks/START.json";
 
 @Component({
   computed: {

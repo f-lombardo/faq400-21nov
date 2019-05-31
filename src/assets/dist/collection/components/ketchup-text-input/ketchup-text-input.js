@@ -1,14 +1,22 @@
+import { debounceEvent } from '../../utils/helpers';
 export class KetchupTextInput {
     constructor() {
         this.initialValue = '';
         this.isClearable = false;
         this.label = '';
         this.maxLength = 524288;
+        this.debounce = 400;
         this.value = '';
         this.classInputText = 'ketchup-input-text';
     }
+    debounceChanged() {
+        this.ketchupTextInputUpdated = debounceEvent(this.ketchupTextInputUpdated, this.debounce);
+    }
     componentWillLoad() {
         this.value = this.initialValue;
+    }
+    componentDidLoad() {
+        this.debounceChanged();
     }
     triggerFocus() {
         this.inputEl.focus();
@@ -22,7 +30,7 @@ export class KetchupTextInput {
         if (event.key === 'Enter') {
             event.preventDefault();
             this.ketchupTextInputSubmit.emit({
-                value: this.value
+                value: this.value,
             });
         }
     }
@@ -52,17 +60,31 @@ export class KetchupTextInput {
     }
     render() {
         const containerClass = this.classInputText + '__container';
-        return (h("div", { class: containerClass + (this.isClearable ? ' ' + containerClass + '--clearable' : '') },
-            h("input", { class: this.classInputText + (this.isClearable ? ' ' + this.classInputText + '--clearable' : ''), maxlength: this.maxLength, ref: (el) => this.textInput = el, tabindex: "0", value: this.value, onBlur: this.onInputBlurred.bind(this), onInput: this.onInputUpdated.bind(this), onFocus: this.onInputFocused.bind(this), onKeyDown: this.onKeyDown.bind(this) }),
-            this.isClearable ?
-                h("button", { "aria-label": "Close", class: this.classInputText + '__clear', role: "button", onClick: this.onClearClick.bind(this) },
-                    h("svg", { viewBox: "0 0 24 24" },
-                        h("path", { d: "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" }))) :
-                null));
+        let lbl = null;
+        if (this.label) {
+            lbl = h("label", { htmlFor: "ketchup-input" }, this.label);
+        }
+        return (h("div", { class: containerClass +
+                (this.isClearable
+                    ? ' ' + containerClass + '--clearable'
+                    : '') },
+            lbl,
+            h("input", { id: "ketchup-input", class: this.classInputText +
+                    (this.isClearable
+                        ? ' ' + this.classInputText + '--clearable'
+                        : ''), maxlength: this.maxLength, ref: (el) => (this.textInput = el), tabindex: "0", value: this.value, onBlur: this.onInputBlurred.bind(this), onInput: this.onInputUpdated.bind(this), onFocus: this.onInputFocused.bind(this), onKeyDown: this.onKeyDown.bind(this) }),
+            this.isClearable ? (h("button", { "aria-label": "Close", class: this.classInputText + '__clear', role: "button", onClick: this.onClearClick.bind(this) },
+                h("svg", { viewBox: "0 0 24 24" },
+                    h("path", { d: "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" })))) : null));
     }
-    static get is() { return "ketchup-text-input"; }
+    static get is() { return "kup-text-input"; }
     static get encapsulation() { return "shadow"; }
     static get properties() { return {
+        "debounce": {
+            "type": Number,
+            "attr": "debounce",
+            "watchCallbacks": ["debounceChanged"]
+        },
         "initialValue": {
             "type": String,
             "attr": "initial-value"
@@ -114,5 +136,5 @@ export class KetchupTextInput {
             "cancelable": false,
             "composed": true
         }]; }
-    static get style() { return "/**style-placeholder:ketchup-text-input:**/"; }
+    static get style() { return "/**style-placeholder:kup-text-input:**/"; }
 }
