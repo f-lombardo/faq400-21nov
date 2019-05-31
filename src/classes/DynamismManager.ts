@@ -27,6 +27,7 @@ export default class DynamismManager {
         .filter((c: any) => c)
         .forEach((c: any) => {
           // save variables in target
+          c.component.loaded = true;
           this._executeAssignmentsInTarget(c, dyn);
           // compose the fun
           const evaluatedFun = new ExpressionEvaluator().variableExpression(
@@ -35,12 +36,25 @@ export default class DynamismManager {
           );
           // get new component
           var fun: Fun = new Fun(evaluatedFun);
-          const newComp = Vue.prototype.$funManager.getScript(fun);
-          // reload component
-          comp.$store.dispatch("webup/reloadComponent", {
-            comp: c,
-            newComp
-          });
+          var newComp: any;
+          if (fun.isServiceExternal()) {
+            newComp = Vue.prototype.$funManager.getScript(fun);
+            // reload component
+            comp.$store.dispatch("webup/reloadComponent", {
+              comp: c,
+              newComp
+            });
+          } else {
+            Vue.prototype.$funManager.execute(fun).then((data: any) => {
+              c.component.data = data;
+              newComp = c.component;
+              // reload component
+              comp.$store.dispatch("webup/reloadComponent", {
+                comp: c,
+                newComp
+              });
+            });
+          }
         });
     }
     // exec
@@ -49,7 +63,6 @@ export default class DynamismManager {
         comp,
         dyn.exec
       );
-      console.log(evaluatedFun);
       this._execFun(comp, evaluatedFun);
     }
   }

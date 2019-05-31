@@ -6,52 +6,6 @@
   "loaded": true,
   "layout": "column",
   "sections": [{
-      "id": "i999",
-      "layout": "",
-      "dim": "",
-      "components": [{
-        "type": "BTN",
-        "id": "i998",
-        "title": "",
-        "loaded": true,
-        "options": {
-          "horizontal": true,
-          "showText": true
-        },
-        "data": [{
-            "value": "PRVSHO",
-            "options": true,
-            "obj": "",
-            "iconClass": "",
-            "children": [],
-            "exec": ""
-          },
-          {
-            "value": "PRV123",
-            "options": true,
-            "obj": "",
-            "iconClass": "",
-            "children": [],
-            "exec": ""
-          },
-          {
-            "value": "PRV456",
-            "options": true,
-            "obj": "",
-            "iconClass": "",
-            "children": [],
-            "exec": ""
-          }
-        ],
-        "variables": [],
-        "dynamisms": [{
-          "event": "click",
-          "exec": "",
-          "targets": ["exd2"]
-        }]
-      }]
-    },
-    {
       "id": "i007",
       "layout": "",
       "dim": "",
@@ -78,7 +32,7 @@
         "id": "fld1",
         "title": "",
         "loaded": true,
-        "fun": "F(FLD;A37;getPluginList)",
+        "fun": "",
         "options": {
           "FLD": {
             "default": {
@@ -92,7 +46,13 @@
             }
           }
         },
-        "data": [],
+        "data": [{
+            "value": "PRVSHO"
+          },
+          {
+            "value": "PRVTODO"
+          }
+        ],
         "variables": [],
         "dynamisms": [{
           "event": "click",

@@ -1,4 +1,4 @@
-export const PRV123: any = JSON.parse(`
+export const TODO: any = JSON.parse(`
   {
     "type": "EXD",
     "id": "exd2",
@@ -13,12 +13,11 @@ export const PRV123: any = JSON.parse(`
       "dim": "",
       "components": [{
         "type": "LAB",
-        "key": "i001",
         "id": "lbl2",
         "title": "",
         "loaded": true,
         "data": [{
-          "value": "PRV123",
+          "value": "TODO",
           "options": true,
           "obj": "",
           "iconClass": "",

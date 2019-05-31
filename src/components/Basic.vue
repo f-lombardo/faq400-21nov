@@ -21,6 +21,7 @@ export default class Basic extends VariableContext {
   private implicitVariables?: ImplicitVariable[];
 
   protected created(): void {
+    console.log("created");
     if (this.component) {
       const hasFun = this.component.fun && this.component.fun != "";
       if (this.component.loaded == true && hasFun) {
@@ -38,6 +39,7 @@ export default class Basic extends VariableContext {
   }
 
   protected destroyed(): void {
+    console.log("destroyed");
     if (this.component) {
       // remove component from store
       this.$store.dispatch("webup/removeComponent", this);
@@ -56,7 +58,6 @@ export default class Basic extends VariableContext {
 
   public getData(): any {
     if (this.component.data) {
-      console.log(JSON.stringify(this.component.data));
       return this.component.data;
     }
     return {};

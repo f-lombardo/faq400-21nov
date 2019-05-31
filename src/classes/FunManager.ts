@@ -3,14 +3,15 @@ import FunObject from "./FunObject";
 import ServiceFactory from "./ServicesFactory";
 
 import { PRVSHO } from "@/mocks/PRVSHO.ts";
-import { PRV123 } from "@/mocks/PRV123.ts";
-import { PRV456 } from "@/mocks/PRV456.ts";
+import { TODO } from "@/mocks/TODO";
 
 export default class FunManager {
-  execute(fun: Fun): any {
-    return new ServiceFactory()
-      .createService(fun.getService())
-      [fun.getMethod()]();
+  async execute(fun: Fun): Promise<any> {
+    return new Promise(function(resolve) {
+      resolve(
+        new ServiceFactory().createService(fun.getService())[fun.getMethod()]()
+      );
+    });
   }
 
   getScript(fun: Fun): any {
@@ -21,14 +22,8 @@ export default class FunManager {
         case "PRVSHO": {
           return PRVSHO;
         }
-        case "PRV123": {
-          return PRV123;
-        }
-        case "PRV456": {
-          return PRV456;
-        }
         default: {
-          return PRVSHO;
+          return TODO;
         }
       }
     }

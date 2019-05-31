@@ -12,11 +12,13 @@ import DynamismManager from "./classes/DynamismManager";
 import FunManager from "./classes/FunManager";
 
 import "vuetify/dist/vuetify.min.css"; // Ensure you are using css-loader
+import "@mdi/font/css/materialdesignicons.min.css";
+
 Vue.use(Vuetify);
 
 Vue.config.productionTip = false;
 
-axios.defaults.baseURL = "TODO";
+axios.defaults.baseURL = "https://webuptest.smeup.com/gtw";
 
 // adding fun manager to Vue
 Vue.prototype.$funManager = new FunManager();

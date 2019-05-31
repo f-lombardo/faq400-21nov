@@ -25,6 +25,9 @@ export const PRVSHO: any = JSON.parse(`
                 "showSubmit": false,
                 "valueField": "value",
                 "displayedField": "value",
+                "initialValue": {
+                  "value": "Dashboard"
+                },
                 "extensions": {
                   "minQueryLength": 4,
                   "forceSelection": true
@@ -81,7 +84,7 @@ export const PRVSHO: any = JSON.parse(`
             {
               "event": "change",
               "exec": "",
-              "targets": ["exd3"]
+              "targets": ["exb1"]
             }
           ]
         }
@@ -94,7 +97,6 @@ export const PRVSHO: any = JSON.parse(`
       "components": [
         {
           "type": "EXD",
-          "key": "exd3",
           "id": "exd3",
           "title": "",
           "fun": "",
@@ -108,8 +110,10 @@ export const PRVSHO: any = JSON.parse(`
               "components": [
                 {
                   "type": "EXB",
-                  "key": "i123",
-                  "title": "la mia matice ",
+                  "id": "exb1",
+                  "title": "",
+                  "loaded": false,
+                  "fun": "F(EXD;[K1];list)",
                   "options": {
                     "EXB": {
                       "": {
@@ -125,43 +129,7 @@ export const PRVSHO: any = JSON.parse(`
                       }
                     }
                   },
-                  "data":
-                  {
-                    "columns": [
-                      {
-                        "name": "FLD1",
-                        "title": "colonna A",
-                        "size": ""
-                      },
-                      {
-                        "name": "FLD2",
-                        "title": "Colonna B",
-                        "size": 10
-                      }
-                    ],
-                    "rows": [
-                      {
-                        "object": "se presente, il K01",
-                        "readOnly": true,
-                        "cells": {
-                          "FLD1": {
-                            "readOnly": true,
-                            "options (sarebbe il tasto destro)": true,
-                            "obj": {
-                              "t": "CN",
-                              "p": "COL",
-                              "k": "KEKBUR"
-                            },
-                            "style": "",
-                            "type": "itx / acp / etc...",
-                            "value": "mickey mouse"
-                          },
-                          "FLD2": {}
-                        }
-                      }
-                    ]
-                }
-                ,
+                  "data": {},
                   "messages": [],
                   "actions": {
                     "row": [
