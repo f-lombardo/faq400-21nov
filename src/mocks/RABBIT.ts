@@ -7,7 +7,7 @@ export const RABBIT: any = JSON.parse(`
   "layout": "column",
   "sections": [
     {
-      "id": "S1",
+      "id": "SRABB1",
       "components": [
         {
           "type": "EXB",

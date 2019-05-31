@@ -8,7 +8,7 @@ export const LIST: any = JSON.parse(`
   "layout": "column",
   "sections": [
     {
-      "id": "S1",
+      "id": "SLIS1",
       "components": [
         {
           "type": "EXB",

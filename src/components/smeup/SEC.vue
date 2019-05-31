@@ -14,7 +14,7 @@
           <template v-slot:header>
             <div>Section: {{ component.id }}</div>
           </template>
-          <component :is="getType(comp)" :component="comp" />
+          <component :key="comp.id" :is="getType(comp)" :component="comp" />
         </v-expansion-panel-content>
       </v-expansion-panel>
       <!-- layout: other than accordion -->

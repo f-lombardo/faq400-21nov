@@ -8,7 +8,7 @@ export const DASHBOARD: any = JSON.parse(`
   "layout": "column",
   "sections": [
     {
-      "id": "S1",
+      "id": "SDAS1",
       "components": [
         {
           "type": "EXB",
