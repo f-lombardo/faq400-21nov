@@ -37,6 +37,7 @@ export default class DynamismManager {
           // get new component
           var fun: Fun = new Fun(evaluatedFun);
           var newComp: any;
+          // TODO refactor this
           if (fun.isServiceExternal()) {
             newComp = Vue.prototype.$funManager.getScript(fun);
             // reload component

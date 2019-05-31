@@ -1,7 +1,7 @@
 <template>
-  <h2>
+  <h1>
     {{ this.component.data[0].value }}
-  </h2>
+  </h1>
 </template>
 
 <script lang="ts">

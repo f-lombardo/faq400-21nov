@@ -2,7 +2,7 @@
   <div>
     <template v-for="comp in this.component.components">
       <component
-        :key="comp.key"
+        :key="comp.id"
         :is="getType(comp)"
         :component="comp"
       ></component>

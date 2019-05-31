@@ -2,7 +2,10 @@ import Fun from "@/classes/Fun";
 import FunObject from "./FunObject";
 import ServiceFactory from "./ServicesFactory";
 
-import { PRVSHO } from "@/mocks/PRVSHO.ts";
+import { DASHBOARD } from "@/mocks/DASH";
+import { LIST } from "@/mocks/LIST";
+import { A37 } from "@/mocks/A37";
+import { RABBIT } from "@/mocks/RABBIT";
 import { TODO } from "@/mocks/TODO";
 
 export default class FunManager {
@@ -19,8 +22,17 @@ export default class FunManager {
     var obj2: FunObject | null = fun.getObject(2);
     if (obj2) {
       switch (obj2.getMethod()) {
-        case "PRVSHO": {
-          return PRVSHO;
+        case "Dashboard": {
+          return DASHBOARD;
+        }
+        case "Templates list": {
+          return LIST;
+        }
+        case "A37 plugins": {
+          return A37;
+        }
+        case "Queue rabbit": {
+          return RABBIT;
         }
         default: {
           return TODO;

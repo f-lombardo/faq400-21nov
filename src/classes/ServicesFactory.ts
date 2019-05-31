@@ -8,22 +8,22 @@ import Logs from "./services/Logs";
 export default class ServiceFactory {
   public createService(key: string): any {
     switch (key) {
-      case "Dashboard": {
+      case "DASHBOARD": {
         return new Dashboard();
       }
-      case "Templates list": {
+      case "LISTTEMPLATE": {
         return new TemplatesList();
       }
-      case "A38 plugins": {
+      case "A38": {
         return new A38Plugins();
       }
-      case "A37 plugins": {
+      case "A37": {
         return new A37Plugins();
       }
-      case "Queue rabbit": {
+      case "RABBIT": {
         return new QueueRabbit();
       }
-      case "Logs": {
+      case "LOGS": {
         return new Logs();
       }
       default: {

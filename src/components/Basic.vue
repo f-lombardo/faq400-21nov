@@ -21,25 +21,32 @@ export default class Basic extends VariableContext {
   private implicitVariables?: ImplicitVariable[];
 
   protected created(): void {
-    console.log("created");
     if (this.component) {
       const hasFun = this.component.fun && this.component.fun != "";
       if (this.component.loaded == true && hasFun) {
         var fun: Fun = new Fun(this.component.fun);
         if (fun.isServiceExternal()) {
           this.component = this.$funManager.getScript(fun);
+          this.comp = this.component;
+          // saving component in store
+          this.$store.dispatch("webup/addComponent", this); // TODO refactor this
         } else {
-          this.component.data = this.$funManager.execute(fun);
+          Vue.prototype.$funManager.execute(fun).then((data: any) => {
+            this.component.data = data;
+            this.comp = this.component;
+            // saving component in store
+            this.$store.dispatch("webup/addComponent", this);
+          });
         }
+      } else {
+        this.comp = this.component;
+        // saving component in store
+        this.$store.dispatch("webup/addComponent", this);
       }
-      this.comp = this.component;
-      // saving component in store
-      this.$store.dispatch("webup/addComponent", this);
     }
   }
 
   protected destroyed(): void {
-    console.log("destroyed");
     if (this.component) {
       // remove component from store
       this.$store.dispatch("webup/removeComponent", this);

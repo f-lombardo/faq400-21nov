@@ -2,7 +2,7 @@
   <component
     :is="mainComponent.type"
     :component="mainComponent"
-    :key="mainComponent.key"
+    :key="mainComponent.id"
   ></component>
 </template>
 
@@ -10,7 +10,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import { mapGetters } from "vuex";
 
-import mainEXD from "@/mocks/script.json";
+import mainEXD from "@/mocks/START.json";
 
 @Component({
   computed: {

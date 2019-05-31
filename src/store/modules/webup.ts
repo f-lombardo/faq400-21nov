@@ -16,7 +16,7 @@ interface ComponentMap {
 export default class Webup extends VuexModule {
   root: Component = {
     component: {
-      key: "webup",
+      id: "webup",
       loaded: true,
       variables: {}
     }
