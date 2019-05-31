@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import webup from '@/store/modules/webup'
+import webup from "@/store/modules/webup";
 //import StateRestorer from './modules/StateRestorer'
 
 Vue.use(Vuex);

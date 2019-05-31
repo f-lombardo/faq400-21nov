@@ -3,9 +3,7 @@
     This attribute is basically what the v-app component does.
     https://vuetifyjs.com/en/framework/default-markup
    -->
-  <div
-    id="app"
-    data-app>
+  <div id="app" data-app>
     <router-view />
   </div>
 </template>
