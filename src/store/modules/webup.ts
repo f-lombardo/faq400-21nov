@@ -24,6 +24,11 @@ export default class Webup extends VuexModule {
 
   componentsById: ComponentMap = {};
 
+  /**
+   * Sets a new root for the component used in Main.vue component.
+   * @namespace SET_ROOT
+   * @param root - The new root component to set
+   */
   @Mutation
   SET_ROOT(root: any) {
     this.root = root;
@@ -43,6 +48,14 @@ export default class Webup extends VuexModule {
     }
   }
 
+  /**
+   * FIXME this mutation is pontatially dangerous
+   * Use see comp link below for more details
+   * @namespace RELOAD_COMPONENT
+   * @param payload
+   * @see reloadComponent
+   * @see comp
+   */
   @Mutation
   RELOAD_COMPONENT(payload: any) {
     // replace component
@@ -59,6 +72,18 @@ export default class Webup extends VuexModule {
     return comp;
   }
 
+  /**
+   * TODO
+   * Per come funziona webup, se al dinamismo non è associato nessun target ed è presente il parametro 'exec',
+   * allora il target è la scheda globale.
+   * In quel caso è necessario invocare la mutation SET_ROOT.
+   * Questa action va aggiornata di conseguenza.
+   *
+   * @namespace reloadComponent
+   * @param payload
+   * @see RELOAD_COMPONENT
+   * @see SET_ROOT
+   */
   @Action({ commit: "RELOAD_COMPONENT" })
   reloadComponent(payload: { comp: Component; newComp: any }) {
     return { comp: payload.comp, newComp: payload.newComp };
