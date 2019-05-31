@@ -7,7 +7,7 @@ export default class Fun {
 
   constructor(fun: string) {
     const funExpr: RegExp = new RegExp(/F\((.*?)\)/);
-    const objExpr: RegExp = new RegExp(/\d\([^\(]*\)/g);
+    const objExpr: RegExp = new RegExp(/\d\([^(]*\)/g);
     var funResult = funExpr.exec(fun);
     var triad: Triad;
     // F
