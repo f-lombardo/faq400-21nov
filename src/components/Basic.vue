@@ -77,23 +77,23 @@ export default class Basic extends VariableContext {
         var fun: Fun = new Fun(this.component.fun);
         if (fun.isServiceExternal()) {
           this.component = this.$funManager.getScript(fun);
-          this.comp = this.component;
-          // saving component in store
-          this.$store.dispatch("webup/addComponent", this); // TODO refactor this
+          this.addComponent();
         } else {
           Vue.prototype.$funManager.execute(fun).then((data: any) => {
             this.component.data = data;
-            this.comp = this.component;
-            // saving component in store
-            this.$store.dispatch("webup/addComponent", this);
+            this.addComponent();
           });
         }
       } else {
-        this.comp = this.component;
-        // saving component in store
-        this.$store.dispatch("webup/addComponent", this);
+        this.addComponent();
       }
     }
+  }
+
+  private addComponent(): void {
+    this.comp = this.component;
+    // saving component in store
+    this.$store.dispatch("webup/addComponent", this);
   }
 
   protected destroyed(): void {

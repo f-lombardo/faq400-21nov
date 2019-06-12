@@ -37,23 +37,16 @@ export default class DynamismManager {
           // get new component
           var fun: Fun = new Fun(evaluatedFun);
           var newComp: any;
-          // TODO refactor this
           if (fun.isServiceExternal()) {
             newComp = Vue.prototype.$funManager.getScript(fun);
             // reload component
-            comp.$store.dispatch("webup/reloadComponent", {
-              comp: c,
-              newComp
-            });
+            this._reloadComponent(comp.$store, c, newComp);
           } else {
             Vue.prototype.$funManager.execute(fun).then((data: any) => {
               c.component.data = data;
               newComp = c.component;
               // reload component
-              comp.$store.dispatch("webup/reloadComponent", {
-                comp: c,
-                newComp
-              });
+              this._reloadComponent(comp.$store, c, newComp);
             });
           }
         });
@@ -68,7 +61,14 @@ export default class DynamismManager {
     }
   }
 
-  private _execFun(comp: any, evaluatedFun: string) {
+  private _reloadComponent(store: any, oldComp: any, newComp: any): void {
+    store.dispatch("webup/reloadComponent", {
+      comp: oldComp,
+      newComp
+    });
+  }
+
+  private _execFun(comp: any, evaluatedFun: string): void {
     // TODO check fun virtuali?
 
     // load new exd
