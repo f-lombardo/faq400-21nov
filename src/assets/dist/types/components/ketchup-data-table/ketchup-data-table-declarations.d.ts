@@ -1,16 +1,22 @@
 export interface Column {
     name: string;
     title: string;
-    size: number;
+    size?: number;
+    visible?: boolean;
 }
 export interface Row {
     cells: {
         [index: string]: Cell;
     };
     group?: {
+        parent: Row;
+        column: string;
         expanded: boolean;
         label: string;
         children: Array<Row>;
+        totals: {
+            [index: string]: number;
+        };
     };
 }
 export interface Cell {
@@ -20,6 +26,8 @@ export interface Cell {
         k: string;
     };
     value: string;
+    style?: GenericMap;
+    options?: boolean;
 }
 export interface GenericMap {
     [index: string]: string;
@@ -31,6 +39,9 @@ export interface SortObject {
 export declare enum SortMode {
     A = "A",
     D = "D"
+}
+export interface TotalsMap {
+    [index: string]: TotalMode;
 }
 export declare enum TotalMode {
     COUNT = "Count",

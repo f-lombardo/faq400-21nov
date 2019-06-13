@@ -3,7 +3,7 @@
     {
       "tag": "ketchup-btn",
       "dependencies": [
-        "ketchup-button"
+        "kup-button"
       ],
       "componentClass": "KetchupBtn",
       "componentPath": "components/ketchup-btn/ketchup-btn.js",
@@ -27,90 +27,6 @@
       "states": [
         {
           "name": "selectedBtnIndex"
-        }
-      ],
-      "shadow": true
-    },
-    {
-      "tag": "ketchup-button",
-      "dependencies": [],
-      "componentClass": "KetchupButton",
-      "componentPath": "components/ketchup-button/ketchup-button.js",
-      "styles": {
-        "$": {
-          "stylePaths": [
-            "components/ketchup-button/ketchup-button.scss"
-          ]
-        }
-      },
-      "props": [
-        {
-          "name": "align",
-          "type": "String",
-          "attr": "align"
-        },
-        {
-          "name": "buttonClass",
-          "type": "String",
-          "attr": "button-class"
-        },
-        {
-          "name": "fillspace",
-          "type": "Boolean",
-          "attr": "fillspace"
-        },
-        {
-          "name": "flat",
-          "type": "Boolean",
-          "attr": "flat"
-        },
-        {
-          "name": "iconClass",
-          "type": "String",
-          "attr": "icon-class"
-        },
-        {
-          "name": "iconUrl",
-          "type": "String",
-          "attr": "icon-url"
-        },
-        {
-          "name": "label",
-          "type": "String",
-          "attr": "label"
-        },
-        {
-          "name": "rounded",
-          "type": "Boolean",
-          "attr": "rounded"
-        },
-        {
-          "name": "showicon",
-          "type": "Boolean",
-          "attr": "showicon"
-        },
-        {
-          "name": "showtext",
-          "type": "Boolean",
-          "attr": "showtext"
-        },
-        {
-          "name": "textmode",
-          "type": "String",
-          "attr": "textmode"
-        },
-        {
-          "name": "transparent",
-          "type": "Boolean",
-          "attr": "transparent"
-        }
-      ],
-      "hostElement": {
-        "name": "ketchupButtonEl"
-      },
-      "events": [
-        {
-          "event": "ketchupButtonClicked"
         }
       ],
       "shadow": true
@@ -143,7 +59,8 @@
     {
       "tag": "ketchup-combo",
       "dependencies": [
-        "ketchup-portal"
+        "ketchup-portal",
+        "kup-text-input"
       ],
       "componentClass": "KetchupCombo",
       "componentPath": "components/ketchup-combo/ketchup-combo.js",
@@ -228,7 +145,7 @@
     {
       "tag": "ketchup-fld",
       "dependencies": [
-        "ketchup-button"
+        "kup-button"
       ],
       "componentClass": "KetchupFld",
       "componentPath": "components/ketchup-fld/ketchup-fld.js",
@@ -300,7 +217,7 @@
     {
       "tag": "ketchup-html",
       "dependencies": [
-        "ketchup-button"
+        "kup-button"
       ],
       "componentClass": "KetchupTextInput",
       "componentPath": "components/ketchup-html/ketchup-html.js",
@@ -462,6 +379,13 @@
           "attr": "displayed-field"
         },
         {
+          "name": "initialValue",
+          "attr": "initial-value",
+          "watch": [
+            "reflectInitialValue"
+          ]
+        },
+        {
           "name": "items",
           "attr": "items"
         },
@@ -495,6 +419,90 @@
       "shadow": true
     },
     {
+      "tag": "kup-button",
+      "dependencies": [],
+      "componentClass": "KetchupButton",
+      "componentPath": "components/ketchup-button/ketchup-button.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/ketchup-button/ketchup-button.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "align",
+          "type": "String",
+          "attr": "align"
+        },
+        {
+          "name": "buttonClass",
+          "type": "String",
+          "attr": "button-class"
+        },
+        {
+          "name": "fillspace",
+          "type": "Boolean",
+          "attr": "fillspace"
+        },
+        {
+          "name": "flat",
+          "type": "Boolean",
+          "attr": "flat"
+        },
+        {
+          "name": "iconClass",
+          "type": "String",
+          "attr": "icon-class"
+        },
+        {
+          "name": "iconUrl",
+          "type": "String",
+          "attr": "icon-url"
+        },
+        {
+          "name": "label",
+          "type": "String",
+          "attr": "label"
+        },
+        {
+          "name": "rounded",
+          "type": "Boolean",
+          "attr": "rounded"
+        },
+        {
+          "name": "showicon",
+          "type": "Boolean",
+          "attr": "showicon"
+        },
+        {
+          "name": "showtext",
+          "type": "Boolean",
+          "attr": "showtext"
+        },
+        {
+          "name": "textmode",
+          "type": "String",
+          "attr": "textmode"
+        },
+        {
+          "name": "transparent",
+          "type": "Boolean",
+          "attr": "transparent"
+        }
+      ],
+      "hostElement": {
+        "name": "ketchupButtonEl"
+      },
+      "events": [
+        {
+          "event": "ketchupButtonClicked"
+        }
+      ],
+      "shadow": true
+    },
+    {
       "tag": "kup-dash",
       "dependencies": [],
       "componentClass": "KetchupDash",
@@ -507,6 +515,11 @@
         }
       },
       "props": [
+        {
+          "name": "fontsize",
+          "type": "String",
+          "attr": "fontsize"
+        },
         {
           "name": "layout",
           "type": "String",
@@ -523,6 +536,7 @@
     {
       "tag": "kup-data-table",
       "dependencies": [
+        "kup-button",
         "kup-paginator",
         "kup-text-input"
       ],
@@ -556,7 +570,13 @@
         },
         {
           "name": "groups",
+          "mutable": true,
           "attr": "groups"
+        },
+        {
+          "name": "multiSelection",
+          "type": "Boolean",
+          "attr": "multi-selection"
         },
         {
           "name": "paginatorPos",
@@ -614,16 +634,34 @@
           "name": "currentRowsPerPage"
         },
         {
+          "name": "density"
+        },
+        {
           "name": "globalFilterValue"
         },
         {
           "name": "groupState"
         },
         {
-          "name": "selectedRow"
+          "name": "openedMenu"
+        },
+        {
+          "name": "selectedRows"
         }
       ],
       "events": [
+        {
+          "event": "kupAddColumn",
+          "cancelable": false
+        },
+        {
+          "event": "kupAutoRowSelect",
+          "cancelable": false
+        },
+        {
+          "event": "kupOptionClicked",
+          "cancelable": false
+        },
         {
           "event": "kupRowSelected",
           "cancelable": false
@@ -680,7 +718,7 @@
     {
       "tag": "kup-text-input",
       "dependencies": [],
-      "componentClass": "KetchupTextInput",
+      "componentClass": "KupTextInput",
       "componentPath": "components/ketchup-text-input/ketchup-text-input.js",
       "styles": {
         "$": {

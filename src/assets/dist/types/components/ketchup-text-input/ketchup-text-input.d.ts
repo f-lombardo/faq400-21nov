@@ -1,7 +1,7 @@
 import '../../stencil.core';
 import { EventEmitter } from '../../stencil.core';
 import { KetchupTextInputEvent } from './ketchup-text-input-declarations';
-export declare class KetchupTextInput {
+export declare class KupTextInput {
     /**
      * Marks the field as clearable, allowing an icon to delete its content
      */

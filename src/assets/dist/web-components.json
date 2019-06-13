@@ -6,7 +6,7 @@
       "attributes": []
     },
     {
-      "label": "ketchup-button",
+      "label": "kup-button",
       "description": "",
       "attributes": [
         {
@@ -118,6 +118,11 @@
       "description": "",
       "attributes": [
         {
+          "label": "fontsize",
+          "description": "",
+          "required": false
+        },
+        {
           "label": "layout",
           "description": "",
           "required": false
@@ -130,6 +135,11 @@
       "attributes": [
         {
           "label": "global-filter",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "multi-selection",
           "description": "",
           "required": false
         },

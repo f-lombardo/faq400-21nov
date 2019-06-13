@@ -102,7 +102,7 @@ export class KetchupCombo {
                 (this.comboPosition.isRight ? ' is-right' : '') + (this.comboPosition.isTop ? ' is-top' : '')
                 + (this.usePortal ? ' is-using-portal' : '') },
             h("div", { class: this.baseClass + '__filter' },
-                h("ketchup-text-input", { onKetchupTextInputUpdated: this.onFilterUpdate.bind(this) })),
+                h("kup-text-input", { onKetchupTextInputUpdated: this.onFilterUpdate.bind(this) })),
             h("ul", { class: this.baseClass + '__list' }, this.items.filter(item => !this.filter || item[this.displayedField].toLowerCase().indexOf(this.filter) >= 0)
                 .map(item => h("li", { onClick: () => this.onItemSelected(item) },
                 h("span", null, item[this.displayedField])))));

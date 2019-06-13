@@ -66,7 +66,7 @@ export class KetchupFld {
         }
         if (this.showSubmit) {
             submit =
-                h("ketchup-button", { class: baseClass + '__submit' + ' ' + baseClass + '--' + this.submitPos, label: this.submitLabel, onKetchupButtonClicked: this.onSubmitInstance });
+                h("kup-button", { class: baseClass + '__submit' + ' ' + baseClass + '--' + this.submitPos, label: this.submitLabel, onKetchupButtonClicked: this.onSubmitInstance });
         }
         const labelIsTop = this.labelPos === 'top';
         const submitIsTop = this.submitPos === 'top';
@@ -97,10 +97,10 @@ export class KetchupFld {
             case 'Itx':
                 confObj.onKetchupTextInputUpdated = this.onChangeInstance;
                 confObj.onKetchupTextInputSubmit = this.onSubmitInstance;
-                type = 'text-input';
+                type = 'kup-text-input';
                 break;
         }
-        const $DynamicComponent = ('ketchup-' + type);
+        const $DynamicComponent = ((type.indexOf('kup') < 0 ? 'ketchup-' : '') + type);
         toRender.push(h($DynamicComponent, Object.assign({ class: baseClass + '__component', items: this.data }, confObj, this.propagate)));
         if (!submitIsTop && submit) {
             toRender.push(submit);

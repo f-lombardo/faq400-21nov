@@ -11,16 +11,14 @@
   background-color: var(--dash_bkg-color);
   border: 1px solid var(--dash_border-color);
   min-height: 170px;
-  font-size: 30px;
+  font-size: 2vw;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   text-align: center;
   position: relative;
-}
-#dash #content {
-  margin: 5%;
+  word-break: normal;
 }
 #dash #content .icon {
   margin: auto;
@@ -30,10 +28,11 @@
   text-align: center;
 }
 #dash #content.layout-1 .descr, #dash #content.layout-3 .descr {
-  font-size: 80%;
+  font-size: 70%;
+  width: 100%;
 }
 #dash #content.layout-1 .value, #dash #content.layout-3 .value {
-  font-size: 150%;
+  font-size: 220%;
   padding: 2% 0;
 }
 #dash #content.layout-2 > div {
@@ -41,7 +40,8 @@
 }
 #dash #content.layout-2 > div .icon {
   margin: auto;
-  font-size: 200%;
+  font-size: 100%;
+  margin-right: 10%;
 }
 #dash #content.layout-2 > div .value-int {
   font-size: 250%;
@@ -57,59 +57,56 @@
 }
 #dash #content.layout-4 > div {
   display: grid;
-  grid-template-columns: 0fr 5fr;
+  grid-template-columns: 2fr 5fr;
 }
 #dash #content.layout-4 > div .icon {
   margin: auto;
-  font-size: 200%;
+  font-size: 100%;
+  margin-right: 10%;
 }
 #dash #content.layout-4 > div .value-and-unit {
   display: flex;
+}
+#dash #content.layout-4 > div .value-and-unit .value-int {
   font-size: 250%;
 }
+#dash #content.layout-4 > div .value-and-unit .value-dec,
 #dash #content.layout-4 > div .value-and-unit .unit {
-  font-size: 50%;
+  font-size: 130%;
   margin-top: auto;
-  margin-left: 4%;
   margin-bottom: 4%;
 }
 #dash #content.layout-4 > div .descr {
   margin-left: 4%;
   text-align: left;
   font-size: 80%;
+  width: 100%;
+  min-width: max-content;
 }
 #dash #content.layout-5 > div, #dash #content.layout-7 > div {
   display: flex;
+}
+#dash #content.layout-5 > div .icon, #dash #content.layout-7 > div .icon {
+  font-size: 150%;
+  margin: auto;
+  margin-left: 10%;
 }
 #dash #content.layout-5 > div .value, #dash #content.layout-7 > div .value {
   font-size: 200%;
 }
 #dash #content.layout-5 > div .descr, #dash #content.layout-7 > div .descr {
-  margin-left: 4%;
-  text-align: left;
+  text-align: right;
   font-size: 65%;
-}
-#dash #content.layout-5 .icon {
-  font-size: 150%;
-  margin: 0;
-  margin-top: auto;
-  margin-left: 4%;
-  margin-bottom: 2%;
-}
-#dash #content.layout-7 .icon {
-  font-size: 150%;
-  margin: 0;
-  margin-bottom: auto;
-  margin-left: 4%;
-  margin-top: 4%;
+  width: 100%;
+  min-width: max-content;
 }
 #dash #content.layout-6 > div {
   display: flex;
   justify-content: space-between;
 }
 #dash #content.layout-6 > div .icon {
-  font-size: 250%;
-  width: 10%;
+  font-size: 150%;
+  margin-right: 10%;
 }
 #dash #content.layout-6 > div .value {
   font-size: 220%;
@@ -118,6 +115,8 @@
 #dash #content.layout-6 > div .descr {
   font-size: 80%;
   text-align: right;
+  width: 100%;
+  min-width: max-content;
 }
 #dash #content.layout-8 > div {
   display: flex;

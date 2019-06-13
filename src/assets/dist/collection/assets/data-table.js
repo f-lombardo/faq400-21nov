@@ -353,10 +353,8 @@ const sortRows = [
 ];
 
 const defaultData = {
-    data: {
-        columns: mockedColumns,
-        rows: mockedRows,
-    },
+    columns: mockedColumns,
+    rows: mockedRows,
 };
 
 const sortData = {
