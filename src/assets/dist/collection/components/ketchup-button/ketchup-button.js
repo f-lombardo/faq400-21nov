@@ -63,7 +63,7 @@ export class KetchupButton {
                 btnLabel),
         ];
     }
-    static get is() { return "ketchup-button"; }
+    static get is() { return "kup-button"; }
     static get encapsulation() { return "shadow"; }
     static get properties() { return {
         "align": {
@@ -125,5 +125,5 @@ export class KetchupButton {
             "cancelable": true,
             "composed": true
         }]; }
-    static get style() { return "/**style-placeholder:ketchup-button:**/"; }
+    static get style() { return "/**style-placeholder:kup-button:**/"; }
 }

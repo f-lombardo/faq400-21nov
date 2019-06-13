@@ -1,6 +1,7 @@
 export class KetchupDash {
     constructor() {
         this.layout = '1';
+        this.fontsize = '';
     }
     onDshClickedHandler() {
         this.ketchupDashClicked.emit();
@@ -31,8 +32,10 @@ export class KetchupDash {
                     h("div", { class: "icon" },
                         h("slot", { name: "icon" })),
                     h("div", { class: "value-and-unit" },
-                        h("div", { class: "value" },
-                            h("slot", { name: "value" })),
+                        h("div", { class: "value-int" },
+                            h("slot", { name: "value-int" })),
+                        h("div", { class: "value-dec" },
+                            h("slot", { name: "value-dec" })),
                         h("div", { class: "unit" },
                             h("slot", { name: "unit" }))),
                     h("div", null),
@@ -86,12 +89,17 @@ export class KetchupDash {
                         h("slot", { name: "value" }))));
                 break;
         }
-        return (h("div", { id: "dash", onClick: () => this.onDshClickedHandler() },
+        const style = { fontSize: this.fontsize };
+        return (h("div", { id: "dash", style: style, onClick: () => this.onDshClickedHandler() },
             h("div", { id: "content", class: `layout-${this.layout}` }, content)));
     }
     static get is() { return "kup-dash"; }
     static get encapsulation() { return "shadow"; }
     static get properties() { return {
+        "fontsize": {
+            "type": String,
+            "attr": "fontsize"
+        },
         "layout": {
             "type": String,
             "attr": "layout"

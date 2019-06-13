@@ -1,5 +1,5 @@
 import { debounceEvent } from '../../utils/helpers';
-export class KetchupTextInput {
+export class KupTextInput {
     constructor() {
         this.initialValue = '';
         this.isClearable = false;

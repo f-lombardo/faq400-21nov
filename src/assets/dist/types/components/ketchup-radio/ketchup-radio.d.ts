@@ -15,6 +15,10 @@ export declare class KetchupRadio {
      */
     displayedField: string;
     /**
+     * Allows to pass an initial selected item for the Radio group
+     */
+    initialValue: KetchupRadioElement;
+    /**
      * Radio elements to display
      */
     items: KetchupRadioElement[];
@@ -28,6 +32,8 @@ export declare class KetchupRadio {
     valueField: string;
     checkDirection(newVal: string): void;
     selectedRadio: KetchupRadioElement | null;
+    componentWillLoad(): void;
+    reflectInitialValue(newValue: KetchupRadioElement, oldValue?: KetchupRadioElement): void;
     /**
      * When currently selected radio button has been changed.
      * */
