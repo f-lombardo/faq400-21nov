@@ -33,6 +33,9 @@
               "showSubmit": false,
               "valueField": "value",
               "displayedField": "value",
+              "initialValue": {
+                "value": "Dashboard"
+              },
               "extensions": {
                 "minQueryLength": 4,
                 "forceSelection": true
