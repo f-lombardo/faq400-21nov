@@ -13,12 +13,8 @@ export default new Router({
   routes: [
     {
       path: "/",
-      component: Login
-    },
-    {
-      path: "/login",
-      name: "login",
-      component: Login
+      component: Login,
+      alias: "/login"
     },
     {
       path: "/main",
@@ -28,7 +24,7 @@ export default new Router({
         if (store.getters["user/isLogged"]) {
           next();
         } else {
-          next("/login");
+          next("/");
         }
       }
     }

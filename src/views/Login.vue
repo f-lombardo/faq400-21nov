@@ -20,21 +20,23 @@ fieldset {
         is-clearable
         :initial-value="this.userValue"
       ></kup-text-input>
-      <br>
-      <br>
+      <br />
+      <br />
       <kup-text-input
         @ketchupTextInputUpdated="onFldChangePwd($event)"
         label="PASSWORD"
         is-clearable
       ></kup-text-input>
-      <br>
-      <br>
-      <kup-button label="LOGIN" @ketchupButtonClicked="onClick($event)"></kup-button>
+      <br />
+      <br />
+      <kup-button
+        label="LOGIN"
+        @ketchupButtonClicked="onClick($event)"
+      ></kup-button>
     </fieldset>
     <label style="text-align:left;color:red;padding:4px;">{{ message }}</label>
   </form>
 </template>
-
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
@@ -79,7 +81,7 @@ export default class Main extends Vue {
           this.$router.push("/main");
         });
     } else {
-      this.message = "CREDENZIALLI ERRATE";
+      this.message = "WRONG CREDENTIALS SUPPLIED";
     }
   }
 }
