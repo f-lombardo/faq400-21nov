@@ -48,6 +48,7 @@ export default class Main extends Vue {
   private pwdValue: string = "";
   private message: string = "";
 
+  // TODO Logout
   beforeMount() {
     console.log("RESET PAGE");
     //reset status
@@ -78,7 +79,7 @@ export default class Main extends Vue {
         })
         .then(() => {
           console.log("LOGGED IN");
-          this.$router.push("/main");
+          this.$router.push("/");
         });
     } else {
       this.message = "WRONG CREDENTIALS SUPPLIED";

@@ -12,19 +12,20 @@ export default new Router({
   base: "./",
   routes: [
     {
-      path: "/",
-      component: Login,
-      alias: "/login"
+      path: "/login",
+      name: "login",
+      component: Login
     },
     {
-      path: "/main",
+      path: "/",
       name: "main",
       component: Main,
+      alias: "/main",
       beforeEnter(to, from, next) {
         if (store.getters["user/isLogged"]) {
           next();
         } else {
-          next("/");
+          next("/login");
         }
       }
     }
