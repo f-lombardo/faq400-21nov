@@ -48,17 +48,15 @@ export default class Main extends Vue {
   private pwdValue: string = "";
   private message: string = "";
 
-  // TODO Logout
-  beforeMount() {
+  created(): void {
     console.log("RESET PAGE");
-    //reset status
+    this.$store.dispatch("webup/clearState");
     this.$store.dispatch("user/setUser", {
-      name: "",
+      user: "",
       password: ""
     });
   }
-
-  private onFldChangeUser($event: CustomEvent) {
+  private onFldChangeUser($event: CustomEvent): void {
     this.userValue = $event.detail.value;
     console.log("USER CHANGED", $event.detail);
     this.message = "";
@@ -69,7 +67,7 @@ export default class Main extends Vue {
     this.message = "";
   }
 
-  private onClick($event: CustomEvent) {
+  private onClick($event: CustomEvent): void {
     this.message = "";
     if (this.userValue == "admin" && this.pwdValue == "admin123") {
       var xxx = this.$store
