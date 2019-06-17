@@ -56,12 +56,14 @@ export default class Main extends Vue {
       password: ""
     });
   }
+
   private onFldChangeUser($event: CustomEvent): void {
     this.userValue = $event.detail.value;
     console.log("USER CHANGED", $event.detail);
     this.message = "";
   }
-  private onFldChangePwd($event: CustomEvent) {
+
+  private onFldChangePwd($event: CustomEvent): void {
     this.pwdValue = $event.detail.value;
     console.log("PWD CHANGED", $event.detail);
     this.message = "";
