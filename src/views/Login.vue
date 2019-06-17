@@ -20,21 +20,23 @@ fieldset {
         is-clearable
         :initial-value="this.userValue"
       ></kup-text-input>
-      <br>
-      <br>
+      <br />
+      <br />
       <kup-text-input
         @ketchupTextInputUpdated="onFldChangePwd($event)"
         label="PASSWORD"
         is-clearable
       ></kup-text-input>
-      <br>
-      <br>
-      <kup-button label="LOGIN" @ketchupButtonClicked="onClick($event)"></kup-button>
+      <br />
+      <br />
+      <kup-button
+        label="LOGIN"
+        @ketchupButtonClicked="onClick($event)"
+      ></kup-button>
     </fieldset>
     <label style="text-align:left;color:red;padding:4px;">{{ message }}</label>
   </form>
 </template>
-
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
@@ -46,27 +48,28 @@ export default class Main extends Vue {
   private pwdValue: string = "";
   private message: string = "";
 
-  beforeMount() {
+  created(): void {
     console.log("RESET PAGE");
-    //reset status
+    this.$store.dispatch("webup/clearState");
     this.$store.dispatch("user/setUser", {
-      name: "",
+      user: "",
       password: ""
     });
   }
 
-  private onFldChangeUser($event: CustomEvent) {
+  private onFldChangeUser($event: CustomEvent): void {
     this.userValue = $event.detail.value;
     console.log("USER CHANGED", $event.detail);
     this.message = "";
   }
-  private onFldChangePwd($event: CustomEvent) {
+
+  private onFldChangePwd($event: CustomEvent): void {
     this.pwdValue = $event.detail.value;
     console.log("PWD CHANGED", $event.detail);
     this.message = "";
   }
 
-  private onClick($event: CustomEvent) {
+  private onClick($event: CustomEvent): void {
     this.message = "";
     if (this.userValue == "admin" && this.pwdValue == "admin123") {
       var xxx = this.$store
@@ -76,10 +79,10 @@ export default class Main extends Vue {
         })
         .then(() => {
           console.log("LOGGED IN");
-          this.$router.push("/main");
+          this.$router.push("/");
         });
     } else {
-      this.message = "CREDENZIALLI ERRATE";
+      this.message = "WRONG CREDENTIALS SUPPLIED";
     }
   }
 }

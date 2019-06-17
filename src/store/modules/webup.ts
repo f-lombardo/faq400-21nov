@@ -24,6 +24,11 @@ export default class Webup extends VuexModule {
 
   componentsById: ComponentMap = {};
 
+  @Mutation
+  CLEAR_ROOT() {
+    this.root = { component: { id: "webup", loaded: true, variables: {} } };
+  }
+
   /**
    * Sets a new root for the component used in Main.vue component.
    * @namespace SET_ROOT
@@ -61,6 +66,9 @@ export default class Webup extends VuexModule {
     // replace component
     payload.comp.comp = payload.newComp;
   }
+
+  @Action({ commit: "CLEAR_ROOT" })
+  clearState() {}
 
   @Action({ commit: "ADD_COMPONENT" })
   addComponent(payload: Component) {

@@ -1,3 +1,5 @@
+export function startScript(): any {
+  return JSON.parse(`
 {
   "type": "EXD",
   "id": "START",
@@ -107,4 +109,6 @@
       }]
     }
   ]
+}
+`);
 }
