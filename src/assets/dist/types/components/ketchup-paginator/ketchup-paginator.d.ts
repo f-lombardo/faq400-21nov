@@ -1,10 +1,10 @@
 import '../../stencil.core';
 import { EventEmitter } from '../../stencil.core';
 export declare class KetchupPaginator {
-    private max;
-    private perPage;
-    private selectedPerPage;
-    private currentPage;
+    max: number;
+    perPage: number;
+    selectedPerPage: number;
+    currentPage: number;
     /**
      * When the current page change
      */

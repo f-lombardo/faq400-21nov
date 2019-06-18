@@ -1,16 +1,23 @@
 export interface Column {
     name: string;
     title: string;
-    size: number;
+    size?: number;
+    visible?: boolean;
 }
 export interface Row {
     cells: {
         [index: string]: Cell;
     };
+    actions?: Array<RowAction>;
     group?: {
+        parent: Row;
+        column: string;
         expanded: boolean;
         label: string;
         children: Array<Row>;
+        totals: {
+            [index: string]: number;
+        };
     };
 }
 export interface Cell {
@@ -20,6 +27,8 @@ export interface Cell {
         k: string;
     };
     value: string;
+    style?: GenericMap;
+    options?: boolean;
 }
 export interface GenericMap {
     [index: string]: string;
@@ -31,6 +40,9 @@ export interface SortObject {
 export declare enum SortMode {
     A = "A",
     D = "D"
+}
+export interface TotalsMap {
+    [index: string]: TotalMode;
 }
 export declare enum TotalMode {
     COUNT = "Count",
@@ -45,4 +57,14 @@ export declare enum PaginatorPos {
 export interface GroupObject {
     column: string;
     visible: boolean;
+}
+export interface RowAction {
+    text: string;
+    icon: string;
+}
+export declare enum ShowGrid {
+    NONE = "None",
+    ROW = "Row",
+    COL = "Col",
+    COMPLETE = "Complete"
 }

@@ -10,7 +10,7 @@ import Unk from "@/components/smeup/UNK.vue";
 import { defineCustomElements } from "./assets/dist/loader";
 
 Vue.config.productionTip = false;
-Vue.config.ignoredElements = [/ketchup-\w*/];
+Vue.config.ignoredElements = [/[ketchup|kup|app]-\w*/];
 
 defineCustomElements(window);
 

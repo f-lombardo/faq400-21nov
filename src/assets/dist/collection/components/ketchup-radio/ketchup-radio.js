@@ -1,9 +1,11 @@
 import { generateUniqueId } from "../../utils/utils";
+import { KetchupRadioElementFactory } from "./ketchup-radio-declarations";
 export class KetchupRadio {
     constructor() {
         this.label = '';
         this.direction = 'horizontal';
         this.displayedField = 'id';
+        this.initialValue = KetchupRadioElementFactory();
         this.items = [];
         this.radioName = '';
         this.valueField = 'id';
@@ -12,6 +14,14 @@ export class KetchupRadio {
     checkDirection(newVal) {
         if (!/horizontal|vertical/.test(newVal)) {
             throw new Error('ketchup-radio: direction must be horizontal or vertical.');
+        }
+    }
+    componentWillLoad() {
+        this.reflectInitialValue(this.initialValue);
+    }
+    reflectInitialValue(newValue, oldValue) {
+        if (!oldValue || newValue[this.valueField] !== oldValue[this.valueField]) {
+            this.onRadioChanged(newValue);
         }
     }
     onRadioChanged(radio) {
@@ -50,6 +60,11 @@ export class KetchupRadio {
         "displayedField": {
             "type": String,
             "attr": "displayed-field"
+        },
+        "initialValue": {
+            "type": "Any",
+            "attr": "initial-value",
+            "watchCallbacks": ["reflectInitialValue"]
         },
         "items": {
             "type": "Any",

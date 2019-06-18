@@ -15,3 +15,10 @@ export var PaginatorPos;
     PaginatorPos["BOTTOM"] = "Bottom";
     PaginatorPos["BOTH"] = "Both";
 })(PaginatorPos || (PaginatorPos = {}));
+export var ShowGrid;
+(function (ShowGrid) {
+    ShowGrid["NONE"] = "None";
+    ShowGrid["ROW"] = "Row";
+    ShowGrid["COL"] = "Col";
+    ShowGrid["COMPLETE"] = "Complete";
+})(ShowGrid || (ShowGrid = {}));

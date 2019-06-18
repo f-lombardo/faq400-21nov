@@ -6,7 +6,7 @@
       "attributes": []
     },
     {
-      "label": "ketchup-button",
+      "label": "kup-button",
       "description": "",
       "attributes": [
         {
@@ -103,7 +103,7 @@
         },
         {
           "label": "use-portal",
-          "description": "If true, the combobox uses a Stencil portal to create the menu.\r\nPlease use this feature carefully, only if needed.",
+          "description": "If true, the combobox uses a Stencil portal to create the menu.\nPlease use this feature carefully, only if needed.",
           "required": false
         },
         {
@@ -118,6 +118,11 @@
       "description": "",
       "attributes": [
         {
+          "label": "fontsize",
+          "description": "",
+          "required": false
+        },
+        {
           "label": "layout",
           "description": "",
           "required": false
@@ -130,6 +135,11 @@
       "attributes": [
         {
           "label": "global-filter",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "multi-selection",
           "description": "",
           "required": false
         },
@@ -176,12 +186,33 @@
       "attributes": [
         {
           "label": "config",
-          "description": "Data the FLD must parse to fully be configured.\r\nIt must be either an Object or a JSON parsable string",
+          "description": "Data the FLD must parse to fully be configured.\nIt must be either an Object or a JSON parsable string",
           "required": false
         },
         {
           "label": "data",
           "description": "Effective data to pass to the component",
+          "required": false
+        }
+      ]
+    },
+    {
+      "label": "kup-graphic-cell",
+      "description": "",
+      "attributes": [
+        {
+          "label": "height",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "value",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "width",
+          "description": "",
           "required": false
         }
       ]
@@ -322,7 +353,7 @@
         },
         {
           "label": "max-length",
-          "description": "The max length of the text field.\r\nDefault value copied from here: https://www.w3schools.com/tags/att_input_maxlength.asp",
+          "description": "The max length of the text field.\nDefault value copied from here: https://www.w3schools.com/tags/att_input_maxlength.asp",
           "required": false
         }
       ]
