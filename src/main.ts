@@ -18,12 +18,25 @@ Vue.use(Vuetify);
 
 Vue.config.productionTip = false;
 
-axios.defaults.baseURL = "https://webuptest.smeup.com/gtw";
+//axios.defaults.baseURL = "https://webuptest.smeup.com/gtw";
 
 // adding fun manager to Vue
 Vue.prototype.$funManager = new FunManager();
 // adding dynamism manager to Vue
 Vue.prototype.$dynamismManager = new DynamismManager();
+//initial context
+Vue.prototype.$SmeUP = {
+  GTWFrontend: {
+    urls: {
+      urlREST: process.env.VUE_APP_SMEUP_REST_URL
+    }
+  },
+  axiosInstance: axios
+};
+
+//axios.defaults.baseURL
+Vue.prototype.$SmeUP.axiosInstance.defaults.baseURL =
+  Vue.prototype.$SmeUP.GTWFrontend.urls.urlREST;
 
 const Instance = new Vue({
   router,

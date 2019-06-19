@@ -1,16 +1,16 @@
-import axios from "axios";
+import Vue from "vue";
 
 export default class Dashboard {
   protected async doGet(path: string): Promise<any> {
     return new Promise(function(resolve, reject) {
-      axios
+      Vue.prototype.$SmeUP.axiosInstance
         .get(path)
-        .then(res => {
+        .then((res: any) => {
           // eslint-disable-next-line
           console.log(res);
           resolve(res.data);
         })
-        .catch(error => {
+        .catch((error: any) => {
           // eslint-disable-next-line
           console.log(error);
           reject(error);
