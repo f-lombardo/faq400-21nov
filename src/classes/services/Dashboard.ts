@@ -1,4 +1,5 @@
 import Service from "@/classes/Service";
+import EnrichUtil from "../utils/EnrichUtil";
 
 export default class Dashboard extends Service {
   private path: string = "/gtw-hub/api/services";
@@ -14,24 +15,38 @@ export default class Dashboard extends Service {
         if (data.rows) {
           data.rows = data.rows.map((row: any) => {
             let cellId: Cell = row.cells.IDMIC;
-            cellId.obj = { t: "", p: "", k: "" };
+            cellId = EnrichUtil.addObj(cellId, "", "", "");
             let cellDebug: Cell = row.cells.DEBUG;
-            cellDebug.obj = { t: "J1", p: "URL", k: "" };
+            cellDebug = EnrichUtil.addObj(cellDebug, "", "", "");
             let cellActive: Cell = row.cells.ACTIVE;
-            cellActive.obj = { t: "J4", p: "ICO", k: "" };
+            cellActive = EnrichUtil.addObj(cellActive, "J4", "ICO", "");
             if (cellActive.value == "true") {
-              cellActive.value = "mdi mdi-brightness-1";
-              cellActive.style = { color: "green" };
+              cellActive = EnrichUtil.setCellIcon(
+                cellActive,
+                "mdi mdi-brightness-1",
+                "green"
+              );
             } else {
-              cellActive.style = { color: "red" };
+              cellActive = EnrichUtil.setCellIcon(
+                cellActive,
+                "mdi mdi-brightness-1",
+                "red"
+              );
             }
             let cellReady: Cell = row.cells.READY;
-            cellReady.obj = { t: "J4", p: "ICO", k: "" };
+            cellReady = EnrichUtil.addObj(cellReady, "J4", "ICO", "");
             if (cellReady.value == "true") {
-              cellReady.value = "mdi mdi-brightness-1";
-              cellReady.style = { color: "green" };
+              cellReady = EnrichUtil.setCellIcon(
+                cellReady,
+                "mdi mdi-brightness-1",
+                "green"
+              );
             } else {
-              cellReady.style = { color: "red" };
+              cellReady = EnrichUtil.setCellIcon(
+                cellReady,
+                "mdi mdi-brightness-1",
+                "red"
+              );
             }
             return row;
           });
