@@ -3,7 +3,7 @@ export function format(first, middle, last) {
         (middle ? ` ${middle}` : '') +
         (last ? ` ${last}` : ''));
 }
-export function generateUniqueId(field) {
+export function generateUniqueId(field = "def") {
     return (new Date()).getTime() + field.trim().replace(/\s/g, '_');
 }
 export function eventFromElement(element, eventSource) {

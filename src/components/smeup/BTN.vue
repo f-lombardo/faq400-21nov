@@ -1,9 +1,9 @@
 <template>
-  <ketchup-btn
+  <kup-btn
     :buttons.prop="this.component.data"
     :config.prop="getOptions()"
     @ketchupButtonClicked="onClick($event)"
-  ></ketchup-btn>
+  ></kup-btn>
 </template>
 
 <script lang="ts">

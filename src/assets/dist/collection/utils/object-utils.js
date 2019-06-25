@@ -13,6 +13,9 @@ export function isLink({ t, p }) {
 export function isNumber({ t }) {
     return 'NR' === t;
 }
+export function isProgressBar({ t, p }) {
+    return 'J4' === t && 'PGB' === p;
+}
 export function isVoCodver({ t, p }) {
     return 'VO' === t && 'COD_VER' === p;
 }

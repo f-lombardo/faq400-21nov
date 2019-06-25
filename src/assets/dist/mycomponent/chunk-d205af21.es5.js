@@ -1,0 +1,1 @@
+mycomponent.loadBundle("chunk-d205af21.js",["exports"],function(e){e.eventFromElement=function(e,n){for(;n;){if(console.log(n),n===e)return!0;n=n.parentElement}return!1},e.generateUniqueId=function(e){return void 0===e&&(e="def"),(new Date).getTime()+e.trim().replace(/\s/g,"_")}});

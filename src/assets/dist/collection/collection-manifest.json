@@ -1,16 +1,16 @@
 {
   "components": [
     {
-      "tag": "ketchup-btn",
+      "tag": "kup-btn",
       "dependencies": [
         "kup-button"
       ],
-      "componentClass": "KetchupBtn",
-      "componentPath": "components/ketchup-btn/ketchup-btn.js",
+      "componentClass": "KupBtn",
+      "componentPath": "components/kup-btn/kup-btn.js",
       "styles": {
         "$": {
           "stylePaths": [
-            "components/ketchup-btn/ketchup-btn.scss"
+            "components/kup-btn/kup-btn.scss"
           ]
         }
       },
@@ -32,396 +32,14 @@
       "shadow": true
     },
     {
-      "tag": "ketchup-chart",
-      "dependencies": [],
-      "componentClass": "KetchupChart",
-      "componentPath": "components/ketchup-chart/ketchup-chart.js",
-      "styles": {
-        "$": {
-          "stylePaths": [
-            "components/ketchup-chart/ketchup-chart.scss"
-          ]
-        }
-      },
-      "props": [
-        {
-          "name": "config",
-          "attr": "config"
-        },
-        {
-          "name": "data",
-          "type": "Any",
-          "attr": "data"
-        }
-      ],
-      "shadow": true
-    },
-    {
-      "tag": "ketchup-combo",
-      "dependencies": [
-        "ketchup-portal"
-      ],
-      "componentClass": "KetchupCombo",
-      "componentPath": "components/ketchup-combo/ketchup-combo.js",
-      "styles": {
-        "$": {
-          "stylePaths": [
-            "components/ketchup-combo/ketchup-combo.scss"
-          ]
-        }
-      },
-      "props": [
-        {
-          "name": "displayedField",
-          "type": "String",
-          "attr": "displayed-field"
-        },
-        {
-          "name": "initialValue",
-          "attr": "initial-value",
-          "watch": [
-            "reflectInitialValue"
-          ]
-        },
-        {
-          "name": "isClearable",
-          "type": "Boolean",
-          "attr": "is-clearable"
-        },
-        {
-          "name": "items",
-          "attr": "items"
-        },
-        {
-          "name": "label",
-          "type": "String",
-          "attr": "label"
-        },
-        {
-          "name": "usePortal",
-          "type": "Boolean",
-          "attr": "use-portal"
-        },
-        {
-          "name": "valueField",
-          "type": "String",
-          "attr": "value-field",
-          "watch": [
-            "reflectValueField"
-          ]
-        }
-      ],
-      "states": [
-        {
-          "name": "filter"
-        },
-        {
-          "name": "isOpen"
-        },
-        {
-          "name": "value"
-        }
-      ],
-      "methods": [
-        {
-          "name": "closeCombo"
-        },
-        {
-          "name": "openCombo"
-        }
-      ],
-      "hostElement": {
-        "name": "comboEl"
-      },
-      "events": [
-        {
-          "event": "ketchupComboSelected",
-          "cancelable": false
-        }
-      ],
-      "shadow": true
-    },
-    {
-      "tag": "ketchup-fld",
-      "dependencies": [],
-      "componentClass": "KetchupFld",
-      "componentPath": "components/ketchup-fld/ketchup-fld.js",
-      "styles": {
-        "$": {
-          "stylePaths": [
-            "components/ketchup-fld/ketchup-fld.scss"
-          ]
-        }
-      },
-      "props": [
-        {
-          "name": "config",
-          "type": "String",
-          "attr": "config",
-          "watch": [
-            "updateInternalState"
-          ]
-        },
-        {
-          "name": "data",
-          "type": "Any",
-          "attr": "data"
-        }
-      ],
-      "states": [
-        {
-          "name": "extensions"
-        },
-        {
-          "name": "label"
-        },
-        {
-          "name": "labelPos"
-        },
-        {
-          "name": "propagate"
-        },
-        {
-          "name": "showSubmit"
-        },
-        {
-          "name": "submitLabel"
-        },
-        {
-          "name": "submitPos"
-        },
-        {
-          "name": "type"
-        }
-      ],
-      "methods": [
-        {
-          "name": "getCurrentValue"
-        }
-      ],
-      "events": [
-        {
-          "event": "ketchupFldChanged",
-          "cancelable": false
-        },
-        {
-          "event": "ketchupFldSubmit",
-          "cancelable": false
-        }
-      ],
-      "shadow": true
-    },
-    {
-      "tag": "ketchup-html",
-      "dependencies": [],
-      "componentClass": "KetchupTextInput",
-      "componentPath": "components/ketchup-html/ketchup-html.js",
-      "styles": {
-        "$": {
-          "stylePaths": [
-            "components/ketchup-html/ketchup-html.scss"
-          ]
-        }
-      },
-      "props": [
-        {
-          "name": "isButton",
-          "type": "Boolean",
-          "reflectToAttr": true,
-          "attr": "is-button"
-        },
-        {
-          "name": "label",
-          "type": "String",
-          "attr": "label"
-        },
-        {
-          "name": "src",
-          "type": "String",
-          "attr": "src"
-        }
-      ],
-      "events": [
-        {
-          "event": "ketchupHtmlError",
-          "cancelable": false
-        },
-        {
-          "event": "ketchupHtmlLoaded",
-          "cancelable": false
-        }
-      ],
-      "shadow": true
-    },
-    {
-      "tag": "ketchup-portal",
-      "dependencies": [
-        "ketchup-portal-instance"
-      ],
-      "componentClass": "KetchupPortal",
-      "componentPath": "components/ketchup-portal/ketchup-portal.js",
-      "styles": {},
-      "props": [
-        {
-          "name": "cssVarsRef",
-          "attr": "css-vars-ref"
-        },
-        {
-          "name": "isVisible",
-          "type": "Boolean",
-          "attr": "is-visible"
-        },
-        {
-          "name": "mirroredCssVars",
-          "attr": "mirrored-css-vars"
-        },
-        {
-          "name": "nodes",
-          "type": "Any",
-          "attr": "nodes"
-        },
-        {
-          "name": "portalRootNode",
-          "attr": "portal-root-node",
-          "watch": [
-            "onPortalRootNodeChange"
-          ]
-        },
-        {
-          "name": "refOffset",
-          "attr": "ref-offset"
-        },
-        {
-          "name": "styleNode",
-          "attr": "style-node"
-        }
-      ],
-      "methods": [
-        {
-          "name": "getPortalInstance"
-        }
-      ],
-      "events": [
-        {
-          "event": "ketchupHtmlError",
-          "cancelable": false
-        },
-        {
-          "event": "ketchupHtmlLoaded",
-          "cancelable": false
-        }
-      ],
-      "shadow": true
-    },
-    {
-      "tag": "ketchup-portal-instance",
-      "dependencies": [],
-      "componentClass": "KetchupPortalInstance",
-      "componentPath": "components/ketchup-portal-instance/ketchup-portal-instance.js",
-      "styles": {
-        "$": {
-          "stylePaths": [
-            "components/ketchup-portal-instance/ketchup-portal-instance.scss"
-          ]
-        }
-      },
-      "props": [
-        {
-          "name": "isVisible",
-          "type": "Boolean",
-          "reflectToAttr": true,
-          "attr": "is-visible"
-        },
-        {
-          "name": "styleNode",
-          "attr": "style-node"
-        },
-        {
-          "name": "vNodes",
-          "type": "Any",
-          "attr": "v-nodes"
-        }
-      ],
-      "hostElement": {
-        "name": "port"
-      },
-      "shadow": true
-    },
-    {
-      "tag": "ketchup-radio",
-      "dependencies": [],
-      "componentClass": "KetchupRadio",
-      "componentPath": "components/ketchup-radio/ketchup-radio.js",
-      "styles": {
-        "$": {
-          "stylePaths": [
-            "components/ketchup-radio/ketchup-radio.scss"
-          ]
-        }
-      },
-      "props": [
-        {
-          "name": "direction",
-          "type": "String",
-          "attr": "direction",
-          "watch": [
-            "checkDirection"
-          ]
-        },
-        {
-          "name": "displayedField",
-          "type": "String",
-          "attr": "displayed-field"
-        },
-        {
-          "name": "initialValue",
-          "attr": "initial-value",
-          "watch": [
-            "reflectInitialValue"
-          ]
-        },
-        {
-          "name": "items",
-          "attr": "items"
-        },
-        {
-          "name": "label",
-          "type": "String",
-          "attr": "label"
-        },
-        {
-          "name": "radioName",
-          "type": "String",
-          "attr": "radio-name"
-        },
-        {
-          "name": "valueField",
-          "type": "String",
-          "attr": "value-field"
-        }
-      ],
-      "states": [
-        {
-          "name": "selectedRadio"
-        }
-      ],
-      "events": [
-        {
-          "event": "ketchupRadioChanged",
-          "cancelable": false
-        }
-      ],
-      "shadow": true
-    },
-    {
       "tag": "kup-button",
       "dependencies": [],
-      "componentClass": "KetchupButton",
-      "componentPath": "components/ketchup-button/ketchup-button.js",
+      "componentClass": "KupButton",
+      "componentPath": "components/kup-button/kup-button.js",
       "styles": {
         "$": {
           "stylePaths": [
-            "components/ketchup-button/ketchup-button.scss"
+            "components/kup-button/kup-button.scss"
           ]
         }
       },
@@ -498,14 +116,129 @@
       "shadow": true
     },
     {
-      "tag": "kup-dash",
+      "tag": "kup-chart",
       "dependencies": [],
-      "componentClass": "KetchupDash",
-      "componentPath": "components/ketchup-dash/ketchup-dash.js",
+      "componentClass": "KupChart",
+      "componentPath": "components/kup-chart/kup-chart.js",
       "styles": {
         "$": {
           "stylePaths": [
-            "components/ketchup-dash/ketchup-dash.scss"
+            "components/kup-chart/kup-chart.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "config",
+          "attr": "config"
+        },
+        {
+          "name": "data",
+          "type": "Any",
+          "attr": "data"
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "kup-combo",
+      "dependencies": [
+        "kup-portal",
+        "kup-text-input"
+      ],
+      "componentClass": "KupCombo",
+      "componentPath": "components/kup-combo/kup-combo.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/kup-combo/kup-combo.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "displayedField",
+          "type": "String",
+          "attr": "displayed-field"
+        },
+        {
+          "name": "initialValue",
+          "attr": "initial-value",
+          "watch": [
+            "reflectInitialValue"
+          ]
+        },
+        {
+          "name": "isClearable",
+          "type": "Boolean",
+          "attr": "is-clearable"
+        },
+        {
+          "name": "items",
+          "attr": "items"
+        },
+        {
+          "name": "label",
+          "type": "String",
+          "attr": "label"
+        },
+        {
+          "name": "obj",
+          "attr": "obj"
+        },
+        {
+          "name": "usePortal",
+          "type": "Boolean",
+          "attr": "use-portal"
+        },
+        {
+          "name": "valueField",
+          "type": "String",
+          "attr": "value-field",
+          "watch": [
+            "reflectValueField"
+          ]
+        }
+      ],
+      "states": [
+        {
+          "name": "filter"
+        },
+        {
+          "name": "isOpen"
+        },
+        {
+          "name": "value"
+        }
+      ],
+      "methods": [
+        {
+          "name": "closeCombo"
+        },
+        {
+          "name": "openCombo"
+        }
+      ],
+      "hostElement": {
+        "name": "comboEl"
+      },
+      "events": [
+        {
+          "event": "ketchupComboSelected",
+          "cancelable": false
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "kup-dash",
+      "dependencies": [],
+      "componentClass": "KupDash",
+      "componentPath": "components/kup-dash/kup-dash.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/kup-dash/kup-dash.scss"
           ]
         }
       },
@@ -536,12 +269,12 @@
         "kup-paginator",
         "kup-text-input"
       ],
-      "componentClass": "KetchupDataTable",
-      "componentPath": "components/ketchup-data-table/ketchup-data-table.js",
+      "componentClass": "KupDataTable",
+      "componentPath": "components/kup-data-table/kup-data-table.js",
       "styles": {
         "$": {
           "stylePaths": [
-            "components/ketchup-data-table/ketchup-data-table.scss"
+            "components/kup-data-table/kup-data-table.scss"
           ]
         }
       },
@@ -555,6 +288,14 @@
           "attr": "data",
           "watch": [
             "recalculateRows"
+          ]
+        },
+        {
+          "name": "expandGroups",
+          "type": "Boolean",
+          "attr": "expand-groups",
+          "watch": [
+            "expandGroupsHandler"
           ]
         },
         {
@@ -690,10 +431,82 @@
       "shadow": true
     },
     {
+      "tag": "kup-fld",
+      "dependencies": [
+        "kup-button"
+      ],
+      "componentClass": "KupFld",
+      "componentPath": "components/kup-fld/kup-fld.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/kup-fld/kup-fld.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "config",
+          "type": "String",
+          "attr": "config",
+          "watch": [
+            "updateInternalState"
+          ]
+        },
+        {
+          "name": "data",
+          "type": "Any",
+          "attr": "data"
+        }
+      ],
+      "states": [
+        {
+          "name": "extensions"
+        },
+        {
+          "name": "label"
+        },
+        {
+          "name": "labelPos"
+        },
+        {
+          "name": "propagate"
+        },
+        {
+          "name": "showSubmit"
+        },
+        {
+          "name": "submitLabel"
+        },
+        {
+          "name": "submitPos"
+        },
+        {
+          "name": "type"
+        }
+      ],
+      "methods": [
+        {
+          "name": "getCurrentValue"
+        }
+      ],
+      "events": [
+        {
+          "event": "ketchupFldChanged",
+          "cancelable": false
+        },
+        {
+          "event": "ketchupFldSubmit",
+          "cancelable": false
+        }
+      ],
+      "shadow": true
+    },
+    {
       "tag": "kup-graphic-cell",
       "dependencies": [],
       "componentClass": "KetchupDataTable",
-      "componentPath": "components/ketchup-graphic-cell/ketchup-graphic-cell.js",
+      "componentPath": "components/kup-graphic-cell/kup-graphic-cell.js",
       "styles": {},
       "props": [
         {
@@ -718,14 +531,58 @@
       "shadow": true
     },
     {
-      "tag": "kup-paginator",
-      "dependencies": [],
-      "componentClass": "KetchupPaginator",
-      "componentPath": "components/ketchup-paginator/ketchup-paginator.js",
+      "tag": "kup-html",
+      "dependencies": [
+        "kup-button"
+      ],
+      "componentClass": "KupHtml",
+      "componentPath": "components/kup-html/kup-html.js",
       "styles": {
         "$": {
           "stylePaths": [
-            "components/ketchup-paginator/ketchup-paginator.scss"
+            "components/kup-html/kup-html.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "isButton",
+          "type": "Boolean",
+          "reflectToAttr": true,
+          "attr": "is-button"
+        },
+        {
+          "name": "label",
+          "type": "String",
+          "attr": "label"
+        },
+        {
+          "name": "src",
+          "type": "String",
+          "attr": "src"
+        }
+      ],
+      "events": [
+        {
+          "event": "ketchupHtmlError",
+          "cancelable": false
+        },
+        {
+          "event": "ketchupHtmlLoaded",
+          "cancelable": false
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "kup-paginator",
+      "dependencies": [],
+      "componentClass": "KupPaginator",
+      "componentPath": "components/kup-paginator/kup-paginator.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/kup-paginator/kup-paginator.scss"
           ]
         }
       },
@@ -764,14 +621,190 @@
       "shadow": true
     },
     {
-      "tag": "kup-text-input",
+      "tag": "kup-portal",
+      "dependencies": [
+        "kup-portal-instance"
+      ],
+      "componentClass": "KupPortal",
+      "componentPath": "components/kup-portal/kup-portal.js",
+      "styles": {},
+      "props": [
+        {
+          "name": "cssVarsRef",
+          "attr": "css-vars-ref"
+        },
+        {
+          "name": "isVisible",
+          "type": "Boolean",
+          "attr": "is-visible"
+        },
+        {
+          "name": "mirroredCssVars",
+          "attr": "mirrored-css-vars"
+        },
+        {
+          "name": "nodes",
+          "type": "Any",
+          "attr": "nodes"
+        },
+        {
+          "name": "portalRootNode",
+          "attr": "portal-root-node",
+          "watch": [
+            "onPortalRootNodeChange"
+          ]
+        },
+        {
+          "name": "refOffset",
+          "attr": "ref-offset"
+        },
+        {
+          "name": "styleNode",
+          "attr": "style-node"
+        }
+      ],
+      "methods": [
+        {
+          "name": "getPortalInstance"
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "kup-portal-instance",
       "dependencies": [],
-      "componentClass": "KetchupTextInput",
-      "componentPath": "components/ketchup-text-input/ketchup-text-input.js",
+      "componentClass": "KupPortalInstance",
+      "componentPath": "components/kup-portal-instance/kup-portal-instance.js",
       "styles": {
         "$": {
           "stylePaths": [
-            "components/ketchup-text-input/ketchup-text-input.scss"
+            "components/kup-portal-instance/kup-portal-instance.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "isVisible",
+          "type": "Boolean",
+          "reflectToAttr": true,
+          "attr": "is-visible"
+        },
+        {
+          "name": "styleNode",
+          "attr": "style-node"
+        },
+        {
+          "name": "vNodes",
+          "type": "Any",
+          "attr": "v-nodes"
+        }
+      ],
+      "hostElement": {
+        "name": "port"
+      },
+      "shadow": true
+    },
+    {
+      "tag": "kup-progress-bar",
+      "dependencies": [],
+      "componentClass": "KupProgressBar",
+      "componentPath": "components/kup-progress-bar/kup-progress-bar.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/kup-progress-bar/kup-progress-bar.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "label",
+          "type": "String",
+          "attr": "label"
+        },
+        {
+          "name": "value",
+          "type": "Number",
+          "attr": "value"
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "kup-radio",
+      "dependencies": [],
+      "componentClass": "KupRadio",
+      "componentPath": "components/kup-radio/kup-radio.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/kup-radio/kup-radio.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "direction",
+          "type": "String",
+          "attr": "direction",
+          "watch": [
+            "checkDirection"
+          ]
+        },
+        {
+          "name": "displayedField",
+          "type": "String",
+          "attr": "displayed-field"
+        },
+        {
+          "name": "initialValue",
+          "attr": "initial-value",
+          "watch": [
+            "reflectInitialValue"
+          ]
+        },
+        {
+          "name": "items",
+          "attr": "items"
+        },
+        {
+          "name": "label",
+          "type": "String",
+          "attr": "label"
+        },
+        {
+          "name": "radioName",
+          "type": "String",
+          "attr": "radio-name"
+        },
+        {
+          "name": "valueField",
+          "type": "String",
+          "attr": "value-field"
+        }
+      ],
+      "states": [
+        {
+          "name": "selectedRadio"
+        }
+      ],
+      "events": [
+        {
+          "event": "ketchupRadioChanged",
+          "cancelable": false
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "kup-text-input",
+      "dependencies": [],
+      "componentClass": "KupTextInput",
+      "componentPath": "components/kup-text-input/kup-text-input.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/kup-text-input/kup-text-input.scss"
           ]
         }
       },
@@ -790,6 +823,11 @@
           "attr": "initial-value"
         },
         {
+          "name": "inputType",
+          "type": "String",
+          "attr": "input-type"
+        },
+        {
           "name": "isClearable",
           "type": "Boolean",
           "attr": "is-clearable"
@@ -803,6 +841,10 @@
           "name": "maxLength",
           "type": "Number",
           "attr": "max-length"
+        },
+        {
+          "name": "obj",
+          "attr": "obj"
         }
       ],
       "states": [
@@ -836,37 +878,6 @@
         {
           "event": "ketchupTextInputUpdated",
           "cancelable": false
-        }
-      ],
-      "shadow": true
-    },
-    {
-      "tag": "my-component",
-      "dependencies": [],
-      "componentClass": "MyComponent",
-      "componentPath": "components/my-component/my-component.js",
-      "styles": {
-        "$": {
-          "stylePaths": [
-            "components/my-component/my-component.css"
-          ]
-        }
-      },
-      "props": [
-        {
-          "name": "first",
-          "type": "String",
-          "attr": "first"
-        },
-        {
-          "name": "last",
-          "type": "String",
-          "attr": "last"
-        },
-        {
-          "name": "middle",
-          "type": "String",
-          "attr": "middle"
         }
       ],
       "shadow": true

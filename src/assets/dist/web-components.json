@@ -1,7 +1,7 @@
 {
   "tags": [
     {
-      "label": "ketchup-btn",
+      "label": "kup-btn",
       "description": "",
       "attributes": []
     },
@@ -72,7 +72,7 @@
       ]
     },
     {
-      "label": "ketchup-chart",
+      "label": "kup-chart",
       "description": "",
       "attributes": [
         {
@@ -83,7 +83,7 @@
       ]
     },
     {
-      "label": "ketchup-combo",
+      "label": "kup-combo",
       "description": "",
       "attributes": [
         {
@@ -103,7 +103,7 @@
         },
         {
           "label": "use-portal",
-          "description": "If true, the combobox uses a Stencil portal to create the menu.\nPlease use this feature carefully, only if needed.",
+          "description": "If true, the combobox uses a Stencil portal to create the menu.\r\nPlease use this feature carefully, only if needed.",
           "required": false
         },
         {
@@ -133,6 +133,11 @@
       "label": "kup-data-table",
       "description": "",
       "attributes": [
+        {
+          "label": "expand-groups",
+          "description": "",
+          "required": false
+        },
         {
           "label": "global-filter",
           "description": "",
@@ -181,12 +186,12 @@
       ]
     },
     {
-      "label": "ketchup-fld",
+      "label": "kup-fld",
       "description": "",
       "attributes": [
         {
           "label": "config",
-          "description": "Data the FLD must parse to fully be configured.\nIt must be either an Object or a JSON parsable string",
+          "description": "Data the FLD must parse to fully be configured.\r\nIt must be either an Object or a JSON parsable string",
           "required": false
         },
         {
@@ -218,12 +223,12 @@
       ]
     },
     {
-      "label": "ketchup-html",
+      "label": "kup-html",
       "description": "",
       "attributes": [
         {
           "label": "is-button",
-          "description": "If true, the ketchup-html takes the shape of a button",
+          "description": "If true, the kup-html takes the shape of a button",
           "required": false
         },
         {
@@ -265,7 +270,7 @@
       ]
     },
     {
-      "label": "ketchup-portal-instance",
+      "label": "kup-portal-instance",
       "description": "",
       "attributes": [
         {
@@ -281,7 +286,7 @@
       ]
     },
     {
-      "label": "ketchup-portal",
+      "label": "kup-portal",
       "description": "",
       "attributes": [
         {
@@ -297,7 +302,23 @@
       ]
     },
     {
-      "label": "ketchup-radio",
+      "label": "kup-progress-bar",
+      "description": "",
+      "attributes": [
+        {
+          "label": "label",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "value",
+          "description": "",
+          "required": false
+        }
+      ]
+    },
+    {
+      "label": "kup-radio",
       "description": "",
       "attributes": [
         {
@@ -342,39 +363,23 @@
           "required": false
         },
         {
+          "label": "input-type",
+          "description": "Specify the type of input. Allowed values: password, text.",
+          "required": false
+        },
+        {
           "label": "is-clearable",
           "description": "Marks the field as clearable, allowing an icon to delete its content",
           "required": false
         },
         {
           "label": "label",
-          "description": "Label to describe the radio group",
+          "description": "Label to describe the text-input clear button group",
           "required": false
         },
         {
           "label": "max-length",
-          "description": "The max length of the text field.\nDefault value copied from here: https://www.w3schools.com/tags/att_input_maxlength.asp",
-          "required": false
-        }
-      ]
-    },
-    {
-      "label": "my-component",
-      "description": "",
-      "attributes": [
-        {
-          "label": "first",
-          "description": "The first name",
-          "required": false
-        },
-        {
-          "label": "last",
-          "description": "The last name",
-          "required": false
-        },
-        {
-          "label": "middle",
-          "description": "The middle name",
+          "description": "The max length of the text field.\r\nDefault value copied from here: https://www.w3schools.com/tags/att_input_maxlength.asp",
           "required": false
         }
       ]
