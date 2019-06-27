@@ -1,6 +1,9 @@
 export function isBar({ t, p }) {
     return 'J4' === t && 'BAR' === p;
 }
+export function isButton({ t, p }) {
+    return 'J4' === t && 'BTN' === p;
+}
 export function isIcon({ t, p }) {
     return 'J4' === t && 'ICO' === p;
 }

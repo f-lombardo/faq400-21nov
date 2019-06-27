@@ -6,6 +6,8 @@
 * @prop --int_tr-duration, --kup-text-input_transition-duration: Set all transitions duration
 * @prop --int_icon-color, --kup-text-input_icon-color: Set icon color
 * @prop --int_icon-color--hover, --kup-text-input_icon-color--hover: Set icon color when hovered
+* @prop --int_placeholder-color, --kup-text-input_placeholder-color: Set placeholder text color
+* @prop --int_background-color, --kup-text-input_background-color: Sets the background color of the input text
 */
 :host {
   --int_color: var(--kup-text-input_color, #000);
@@ -21,6 +23,8 @@
     --kup-text-input_icon-color--hover,
     #676767
   );
+  --int_placeholder-color: var(--kup-text-input_placeholder-color, #bebebe);
+  --int_background-color: var(--kup-text-input_background-color, transparent);
   display: inline-block;
 }
 
@@ -30,7 +34,7 @@ label {
 
 .kup-input-text {
   color: var(--int_color);
-  background-color: #ffffff;
+  background-color: var(--int_background-color);
   border: 1px solid var(--int_border-color);
   border-radius: 2px;
   box-sizing: border-box;
@@ -44,6 +48,9 @@ label {
   display: inline-block;
   position: relative;
   z-index: 0;
+}
+.kup-input-text::placeholder {
+  color: var(--int_placeholder-color);
 }
 .kup-input-text:hover, .kup-input-text:focus {
   border-color: var(--int_border-color--selected);

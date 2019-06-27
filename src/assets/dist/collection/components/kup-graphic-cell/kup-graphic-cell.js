@@ -1,6 +1,6 @@
 import { GraphicElement, Color } from './kup-graphic-cell-declarations';
 import { getColorFromString } from './kup-graphic-cell-helper';
-export class KetchupDataTable {
+export class KupGraphicCell {
     constructor() {
         this.height = 30;
         this.width = 300;

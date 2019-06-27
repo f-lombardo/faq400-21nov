@@ -8,6 +8,7 @@ export class KupTextInput {
         this.label = '';
         this.maxLength = 524288;
         this.debounce = 400;
+        this.placeholder = '';
         this.value = '';
         this.elementId = generateUniqueId('kup-input');
         this.classInputText = 'kup-input-text';
@@ -32,8 +33,8 @@ export class KupTextInput {
             value: this.value,
             oldValue: oldValue,
             info: {
-                obj: this.obj
-            }
+                obj: this.obj,
+            },
         });
         setTimeout(() => this.triggerFocus(), 10);
     }
@@ -44,8 +45,8 @@ export class KupTextInput {
                 value: this.value,
                 oldValue: this.value,
                 info: {
-                    obj: this.obj
-                }
+                    obj: this.obj,
+                },
             });
         }
     }
@@ -55,8 +56,8 @@ export class KupTextInput {
             value: target.value,
             oldValue: this.value,
             info: {
-                obj: this.obj
-            }
+                obj: this.obj,
+            },
         });
         this.value = target.value;
     }
@@ -66,8 +67,8 @@ export class KupTextInput {
             value: target.value,
             oldValue: this.value,
             info: {
-                obj: this.obj
-            }
+                obj: this.obj,
+            },
         });
         this.value = target.value;
     }
@@ -77,8 +78,8 @@ export class KupTextInput {
             value: target.value,
             oldValue: this.value,
             info: {
-                obj: this.obj
-            }
+                obj: this.obj,
+            },
         });
         this.value = target.value;
     }
@@ -96,7 +97,7 @@ export class KupTextInput {
             h("input", { id: this.elementId, class: this.classInputText +
                     (this.isClearable
                         ? ' ' + this.classInputText + '--clearable'
-                        : ''), maxlength: this.maxLength, ref: (el) => (this.textInput = el), tabindex: "0", type: this.inputType, value: this.value, onBlur: this.onInputBlurred.bind(this), onInput: this.onInputUpdated.bind(this), onFocus: this.onInputFocused.bind(this), onKeyDown: this.onKeyDown.bind(this) }),
+                        : ''), maxlength: this.maxLength, ref: (el) => (this.textInput = el), tabindex: "0", type: this.inputType, value: this.value, onBlur: this.onInputBlurred.bind(this), onInput: this.onInputUpdated.bind(this), onFocus: this.onInputFocused.bind(this), onKeyDown: this.onKeyDown.bind(this), placeholder: this.placeholder }),
             this.isClearable ? (h("button", { "aria-label": "Close", class: this.classInputText + '__clear', role: "button", onClick: this.onClearClick.bind(this) },
                 h("svg", { viewBox: "0 0 24 24" },
                     h("path", { d: "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" })))) : null));
@@ -135,6 +136,10 @@ export class KupTextInput {
         "obj": {
             "type": "Any",
             "attr": "obj"
+        },
+        "placeholder": {
+            "type": String,
+            "attr": "placeholder"
         },
         "triggerFocus": {
             "method": true

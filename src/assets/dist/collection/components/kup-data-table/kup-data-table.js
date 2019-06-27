@@ -29,6 +29,7 @@ export class KupDataTable {
         this.currentRowsPerPage = newValue;
     }
     expandGroupsHandler() {
+        this.groupState = {};
         this.forceGroupExpansion();
     }
     recalculateRows() {
@@ -132,12 +133,12 @@ export class KupDataTable {
     }
     forceGroupExpansion() {
         this.rows.forEach((row) => this.forceRowGroupExpansion(row));
-        console.log(this.groupState);
     }
     forceRowGroupExpansion(row) {
         if (!row.group) {
             return;
         }
+        row.group.expanded = true;
         let groupState = this.groupState[row.group.id];
         if (!groupState) {
             groupState = {
@@ -386,6 +387,17 @@ export class KupDataTable {
         }
         return colSpan;
     }
+    isGroupExpanded({ group }) {
+        if (!group) {
+            return false;
+        }
+        if (this.groupState[group.id]) {
+            return this.groupState[group.id].expanded;
+        }
+        else {
+            return false;
+        }
+    }
     renderHeader() {
         const hasCustomColumnsWidth = this.columnsWidth.length > 0;
         const dataColumns = this.getVisibleColumns().map((column) => {
@@ -521,7 +533,7 @@ export class KupDataTable {
                             } }),
                         row.group.label)));
             }
-            if (row.group.expanded) {
+            if (this.isGroupExpanded(row)) {
                 row.group.children
                     .map((r) => {
                     return this.renderRow(r, level + 1);

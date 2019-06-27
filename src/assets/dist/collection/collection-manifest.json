@@ -1,6 +1,86 @@
 {
   "components": [
     {
+      "tag": "kup-box",
+      "dependencies": [
+        "kup-button",
+        "kup-combo",
+        "kup-image",
+        "kup-text-input"
+      ],
+      "componentClass": "KupBox",
+      "componentPath": "components/kup-box/kup-box.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/kup-box/kup-box.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "columns",
+          "type": "Number",
+          "attr": "columns"
+        },
+        {
+          "name": "data",
+          "attr": "data",
+          "watch": [
+            "recalculateRows",
+            "onDataChanged"
+          ]
+        },
+        {
+          "name": "filterEnabled",
+          "type": "Boolean",
+          "attr": "filter-enabled"
+        },
+        {
+          "name": "layout",
+          "attr": "layout"
+        },
+        {
+          "name": "multiSelection",
+          "type": "Boolean",
+          "attr": "multi-selection"
+        },
+        {
+          "name": "sortBy",
+          "type": "String",
+          "mutable": true,
+          "attr": "sort-by",
+          "watch": [
+            "recalculateRows"
+          ]
+        },
+        {
+          "name": "sortEnabled",
+          "type": "Boolean",
+          "attr": "sort-enabled"
+        }
+      ],
+      "states": [
+        {
+          "name": "collapsedSection"
+        },
+        {
+          "name": "globalFilterValue"
+        }
+      ],
+      "events": [
+        {
+          "event": "kupBoxClicked",
+          "cancelable": false
+        },
+        {
+          "event": "kupBoxSelected",
+          "cancelable": false
+        }
+      ],
+      "shadow": true
+    },
+    {
       "tag": "kup-btn",
       "dependencies": [
         "kup-button"
@@ -110,7 +190,7 @@
       },
       "events": [
         {
-          "event": "ketchupButtonClicked"
+          "event": "kupButtonClicked"
         }
       ],
       "shadow": true
@@ -503,9 +583,84 @@
       "shadow": true
     },
     {
+      "tag": "kup-gauge",
+      "dependencies": [],
+      "componentClass": "KupGauge",
+      "componentPath": "components/kup-gauge/kup-gauge.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/kup-gauge/kup-gauge.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "arcThickness",
+          "type": "Number",
+          "attr": "arc-thickness"
+        },
+        {
+          "name": "colors",
+          "attr": "colors"
+        },
+        {
+          "name": "firstThreshold",
+          "type": "Number",
+          "attr": "first-threshold"
+        },
+        {
+          "name": "labelDistance",
+          "type": "Number",
+          "attr": "label-distance"
+        },
+        {
+          "name": "maxValue",
+          "type": "Number",
+          "attr": "max-value"
+        },
+        {
+          "name": "measurementUnit",
+          "type": "String",
+          "attr": "measurement-unit"
+        },
+        {
+          "name": "minValue",
+          "type": "Number",
+          "attr": "min-value"
+        },
+        {
+          "name": "secondThreshold",
+          "type": "Number",
+          "attr": "second-threshold"
+        },
+        {
+          "name": "showLabels",
+          "type": "Boolean",
+          "attr": "show-labels"
+        },
+        {
+          "name": "showValue",
+          "type": "Boolean",
+          "attr": "show-value"
+        },
+        {
+          "name": "size",
+          "type": "Number",
+          "attr": "size"
+        },
+        {
+          "name": "value",
+          "type": "Number",
+          "attr": "value"
+        }
+      ],
+      "shadow": true
+    },
+    {
       "tag": "kup-graphic-cell",
       "dependencies": [],
-      "componentClass": "KetchupDataTable",
+      "componentClass": "KupGraphicCell",
       "componentPath": "components/kup-graphic-cell/kup-graphic-cell.js",
       "styles": {},
       "props": [
@@ -570,6 +725,46 @@
         {
           "event": "ketchupHtmlLoaded",
           "cancelable": false
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "kup-image",
+      "dependencies": [],
+      "componentClass": "KupImage",
+      "componentPath": "components/kup-image/kup-image.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/kup-image/kup-image.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "alt",
+          "type": "String",
+          "attr": "alt"
+        },
+        {
+          "name": "badges",
+          "attr": "badges"
+        },
+        {
+          "name": "height",
+          "type": "Number",
+          "attr": "height"
+        },
+        {
+          "name": "src",
+          "type": "String",
+          "attr": "src"
+        },
+        {
+          "name": "width",
+          "type": "Number",
+          "attr": "width"
         }
       ],
       "shadow": true
@@ -845,6 +1040,11 @@
         {
           "name": "obj",
           "attr": "obj"
+        },
+        {
+          "name": "placeholder",
+          "type": "String",
+          "attr": "placeholder"
         }
       ],
       "states": [

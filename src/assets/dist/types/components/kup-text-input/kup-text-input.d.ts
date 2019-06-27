@@ -1,7 +1,7 @@
 import '../../stencil.core';
 import { EventEmitter } from '../../stencil.core';
 import { KetchupTextInputEvent } from './kup-text-input-declarations';
-import { GenericObject } from "../../types/GenericTypes";
+import { GenericObject } from '../../types/GenericTypes';
 export declare class KupTextInput {
     /**
      * Marks the field as clearable, allowing an icon to delete its content
@@ -34,6 +34,10 @@ export declare class KupTextInput {
      * ketchupTextInputUpdated and ketchupTextInputSubmit.
      */
     obj?: GenericObject;
+    /**
+     * text for input placeholder
+     */
+    placeholder: string;
     protected debounceChanged(): void;
     value: string;
     inputEl: HTMLElement;

@@ -14,7 +14,7 @@ export declare class KupButton {
     transparent: boolean;
     align: string;
     iconUrl: string;
-    ketchupButtonClicked: EventEmitter<{
+    kupButtonClicked: EventEmitter<{
         id: string;
     }>;
     onBtnClickedHandler(): void;

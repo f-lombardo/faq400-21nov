@@ -1,6 +1,6 @@
 import '../../stencil.core';
 import { GraphicElement, Color } from './kup-graphic-cell-declarations';
-export declare class KetchupDataTable {
+export declare class KupGraphicCell {
     value: string;
     height: number;
     width: number;
