@@ -9,7 +9,7 @@ export default class Dashboard extends Service {
     return new Promise(function(resolve, reject) {
       srv.doGet(srv.path + "/dashboard").then((data: any) => {
         if (data.rows) {
-          data.rows = data.rows.map((row: any) => {
+          data.rows.forEach((row: any) => {
             let cellSign: Cell = row.cells["£OAVIN"];
             cellSign = EnrichUtil.addObj(cellSign, "", "", "");
             let cellObj: Cell = row.cells["£OAVOT"];
@@ -41,7 +41,7 @@ export default class Dashboard extends Service {
     return new Promise(function(resolve, reject) {
       srv.doGet(srv.path + "/microserviceList").then((data: any) => {
         if (data.rows) {
-          data.rows = data.rows.map((row: any) => {
+          data.rows.forEach((row: any) => {
             let cellId: Cell = row.cells["IDMIC"];
             cellId = EnrichUtil.addObj(cellId, "", "", "");
             let cellDebug: Cell = row.cells["DEBUG"];
@@ -89,7 +89,7 @@ export default class Dashboard extends Service {
     return new Promise(function(resolve, reject) {
       srv.doGet(srv.path + "/a37MicroserviceList").then((data: any) => {
         if (data.rows) {
-          data.rows = data.rows.map((row: any) => {
+          data.rows.forEach((row: any) => {
             let cellId: Cell = row.cells["IDMIC"];
             cellId = EnrichUtil.addObj(cellId, "", "", "");
             let cellDebug: Cell = row.cells["DEBUG"];
@@ -137,7 +137,7 @@ export default class Dashboard extends Service {
     return new Promise(function(resolve, reject) {
       srv.doGet(srv.path + "/a38MicroserviceList").then((data: any) => {
         if (data.rows) {
-          data.rows = data.rows.map((row: any) => {
+          data.rows.forEach((row: any) => {
             let cellId: Cell = row.cells["IDMIC"];
             cellId = EnrichUtil.addObj(cellId, "", "", "");
             let cellDebug: Cell = row.cells["DEBUG"];

@@ -9,7 +9,7 @@ export default class A38Plugins extends Service {
     return new Promise(function(resolve, reject) {
       srv.doGet(srv.path + "/a38PluginList").then((data: any) => {
         if (data.rows) {
-          data.rows = data.rows.map((row: any) => {
+          data.rows.forEach((row: any) => {
             let conf: Cell = row.cells["CONF"];
             conf = EnrichUtil.addObj(conf, "", "", "");
             let txt: Cell = row.cells["TEXT"];
@@ -18,14 +18,58 @@ export default class A38Plugins extends Service {
             art = EnrichUtil.addObj(art, "", "", "");
             let version: Cell = row.cells["VERS"];
             version = EnrichUtil.addObj(version, "", "", "");
-            let stat: Cell = row.cells["STATUS"];
-            stat = EnrichUtil.addObj(stat, "", "", "");
+            let status: Cell = row.cells["STATUS"];
+            status = EnrichUtil.addObj(status, "J4", "ICO", "");
+            if (status.value == "true") {
+              status = EnrichUtil.setCellIcon(
+                status,
+                "mdi mdi-brightness-1",
+                "green"
+              );
+            } else {
+              status = EnrichUtil.setCellIcon(
+                status,
+                "mdi mdi-brightness-1",
+                "red"
+              );
+            }
             let on: Cell = row.cells["ONLINE"];
-            on = EnrichUtil.addObj(on, "", "", "");
+            on = EnrichUtil.addObj(on, "J4", "ICO", "");
+            if (on.value == "true") {
+              on = EnrichUtil.setCellIcon(on, "mdi mdi-brightness-1", "green");
+            } else {
+              on = EnrichUtil.setCellIcon(on, "mdi mdi-brightness-1", "red");
+            }
             let ready: Cell = row.cells["READY"];
-            ready = EnrichUtil.addObj(ready, "", "", "");
-            let war: Cell = row.cells["WAR"];
-            war = EnrichUtil.addObj(war, "", "", "");
+            ready = EnrichUtil.addObj(ready, "J4", "ICO", "");
+            if (ready.value == "true") {
+              ready = EnrichUtil.setCellIcon(
+                ready,
+                "mdi mdi-brightness-1",
+                "green"
+              );
+            } else {
+              ready = EnrichUtil.setCellIcon(
+                ready,
+                "mdi mdi-brightness-1",
+                "red"
+              );
+            }
+            let file: Cell = row.cells["WAR"];
+            file = EnrichUtil.addObj(file, "J4", "ICO", "");
+            if (file.value == "true") {
+              file = EnrichUtil.setCellIcon(
+                file,
+                "mdi mdi-brightness-1",
+                "green"
+              );
+            } else {
+              file = EnrichUtil.setCellIcon(
+                file,
+                "mdi mdi-brightness-1",
+                "red"
+              );
+            }
             let del: Cell = row.cells["DELO"];
             del = EnrichUtil.addObj(del, "", "", "");
             return row;

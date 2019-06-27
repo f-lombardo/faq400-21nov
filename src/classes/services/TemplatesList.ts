@@ -9,7 +9,7 @@ export default class TemplatesList extends Service {
     return new Promise(function(resolve, reject) {
       srv.doGet(srv.path + "/listTemplates").then((data: any) => {
         if (data.rows) {
-          data.rows = data.rows.map((row: any) => {
+          data.rows.forEach((row: any) => {
             let name: Cell = row.cells["NAME"];
             name = EnrichUtil.addObj(name, "", "", "");
             let date: Cell = row.cells["DATE"];

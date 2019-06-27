@@ -9,7 +9,7 @@ export default class A37Plugins extends Service {
     return new Promise(function(resolve, reject) {
       srv.doGet(srv.path + "/a37PluginList").then((data: any) => {
         if (data.rows) {
-          data.rows = data.rows.map((row: any) => {
+          data.rows.forEach((row: any) => {
             let plg: Cell = row.cells["CONF"];
             plg = EnrichUtil.addObj(plg, "", "", "");
             let txt: Cell = row.cells["TEXT"];
