@@ -1,6 +1,37 @@
 {
   "tags": [
     {
+      "label": "kup-box",
+      "description": "",
+      "attributes": [
+        {
+          "label": "columns",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "filter-enabled",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "multi-selection",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "sort-by",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "sort-enabled",
+          "description": "",
+          "required": false
+        }
+      ]
+    },
+    {
       "label": "kup-btn",
       "description": "",
       "attributes": []
@@ -202,6 +233,67 @@
       ]
     },
     {
+      "label": "kup-gauge",
+      "description": "",
+      "attributes": [
+        {
+          "label": "arc-thickness",
+          "description": "Sets how much the arc of the gauge should be thick.",
+          "required": false
+        },
+        {
+          "label": "first-threshold",
+          "description": "The first threshold, establishing the length of the first and second arc.",
+          "required": false
+        },
+        {
+          "label": "label-distance",
+          "description": "The distance the label and the value has from the gauge graph.",
+          "required": false
+        },
+        {
+          "label": "max-value",
+          "description": "The maximum value reachable in the current graph.",
+          "required": false
+        },
+        {
+          "label": "measurement-unit",
+          "description": "A string which will be appended to the displayed values of the component.",
+          "required": false
+        },
+        {
+          "label": "min-value",
+          "description": "The minimum value reachable in the current graph.",
+          "required": false
+        },
+        {
+          "label": "second-threshold",
+          "description": "The second threshold, establishing the length of the second and third arc.",
+          "required": false
+        },
+        {
+          "label": "show-labels",
+          "description": "If set to false, the maximum, minimum and threshold values of the gauge are not displayed.",
+          "required": false
+        },
+        {
+          "label": "show-value",
+          "description": "If set to false, the current value of the gauge is not displayed.",
+          "required": false
+        },
+        {
+          "label": "size",
+          "description": "Con be used change the viewbox of the SVG.\r\nBy manipulating this value, some customizations of the aspect of the gauge is achievable.",
+          "required": false
+        },
+        {
+          "label": "value",
+          "description": "The current value of the gauge.\r\nThe gauge's needle points to the percentage based on this prop.",
+          "required": false
+        }
+      ]
+    },
+    {
       "label": "kup-graphic-cell",
       "description": "",
       "attributes": [
@@ -239,6 +331,32 @@
         {
           "label": "src",
           "description": "The address which must be referenced by the iframe",
+          "required": false
+        }
+      ]
+    },
+    {
+      "label": "kup-image",
+      "description": "",
+      "attributes": [
+        {
+          "label": "alt",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "height",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "src",
+          "description": "",
+          "required": false
+        },
+        {
+          "label": "width",
+          "description": "",
           "required": false
         }
       ]
@@ -380,6 +498,11 @@
         {
           "label": "max-length",
           "description": "The max length of the text field.\r\nDefault value copied from here: https://www.w3schools.com/tags/att_input_maxlength.asp",
+          "required": false
+        },
+        {
+          "label": "placeholder",
+          "description": "text for input placeholder",
           "required": false
         }
       ]

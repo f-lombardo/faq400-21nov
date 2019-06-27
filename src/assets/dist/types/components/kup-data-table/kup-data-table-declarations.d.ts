@@ -9,6 +9,7 @@ export interface Row {
         [index: string]: Cell;
     };
     actions?: Array<RowAction>;
+    id?: string;
     group?: {
         id: string;
         parent: Row;
@@ -30,6 +31,7 @@ export interface Cell {
     value: string;
     style?: GenericMap;
     options?: boolean;
+    config?: any;
 }
 export interface GenericMap {
     [index: string]: string;

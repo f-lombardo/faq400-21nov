@@ -1,4 +1,4 @@
-import { generateUniqueId } from "../../utils/utils";
+import { generateUniqueId } from '../../utils/utils';
 export class KupFld {
     constructor() {
         this.config = '';
@@ -25,7 +25,7 @@ export class KupFld {
         }
         const keys = Object.keys(currentData);
         let propagate = {};
-        keys.forEach(key => {
+        keys.forEach((key) => {
             if (key in this) {
                 this[key] = currentData[key];
             }
@@ -44,7 +44,7 @@ export class KupFld {
             originalEvent: event,
             oldValue: this.currentValue,
             value,
-            info
+            info,
         });
         this.previousValue = this.currentValue;
         this.currentValue = value;
@@ -55,8 +55,10 @@ export class KupFld {
             value: this.currentValue,
             oldValue: this.previousValue,
             info: {
-                obj: event.detail.info && event.detail.info.obj ? event.detail.info.obj : undefined
-            }
+                obj: event.detail.info && event.detail.info.obj
+                    ? event.detail.info.obj
+                    : undefined,
+            },
         });
     }
     async getCurrentValue() {
@@ -68,12 +70,20 @@ export class KupFld {
         let label = null;
         let submit = null;
         if (this.label.trim().length) {
-            label =
-                h("label", { class: baseClass + '__label' + ' ' + baseClass + '--' + this.labelPos }, this.label);
+            label = (h("label", { class: baseClass +
+                    '__label' +
+                    ' ' +
+                    baseClass +
+                    '--' +
+                    this.labelPos }, this.label));
         }
         if (this.showSubmit) {
-            submit =
-                h("kup-button", { class: baseClass + '__submit' + ' ' + baseClass + '--' + this.submitPos, label: this.submitLabel, onKetchupButtonClicked: this.onSubmitInstance });
+            submit = (h("kup-button", { class: baseClass +
+                    '__submit' +
+                    ' ' +
+                    baseClass +
+                    '--' +
+                    this.submitPos, label: this.submitLabel, onKupButtonClicked: this.onSubmitInstance }));
         }
         const labelIsTop = this.labelPos === 'top';
         const submitIsTop = this.submitPos === 'top';

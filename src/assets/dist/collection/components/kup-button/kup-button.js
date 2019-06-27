@@ -9,7 +9,7 @@ export class KupButton {
         this.iconUrl = 'https://cdn.materialdesignicons.com/3.2.89/css/materialdesignicons.min.css';
     }
     onBtnClickedHandler() {
-        this.ketchupButtonClicked.emit({ id: this.ketchupButtonEl.dataset.id });
+        this.kupButtonClicked.emit({ id: this.ketchupButtonEl.dataset.id });
     }
     _isHint() {
         return 'Hint' === this.textmode;
@@ -58,7 +58,7 @@ export class KupButton {
         }
         return [
             h("link", { href: this.iconUrl, rel: "stylesheet", type: "text/css" }),
-            h("button", { class: btnClass, title: title, onClick: () => this.onBtnClickedHandler() },
+            h("button", { type: "button", class: btnClass, title: title, onClick: () => this.onBtnClickedHandler() },
                 icon,
                 btnLabel),
         ];
@@ -119,8 +119,8 @@ export class KupButton {
         }
     }; }
     static get events() { return [{
-            "name": "ketchupButtonClicked",
-            "method": "ketchupButtonClicked",
+            "name": "kupButtonClicked",
+            "method": "kupButtonClicked",
             "bubbles": true,
             "cancelable": true,
             "composed": true

@@ -1,10 +1,8 @@
 export function format(first, middle, last) {
-    return ((first || '') +
-        (middle ? ` ${middle}` : '') +
-        (last ? ` ${last}` : ''));
+    return ((first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : ''));
 }
-export function generateUniqueId(field = "def") {
-    return (new Date()).getTime() + field.trim().replace(/\s/g, '_');
+export function generateUniqueId(field = 'def') {
+    return new Date().getTime() + field.trim().replace(/\s/g, '_');
 }
 export function eventFromElement(element, eventSource) {
     while (eventSource) {
@@ -14,4 +12,10 @@ export function eventFromElement(element, eventSource) {
         eventSource = eventSource.parentElement;
     }
     return false;
+}
+export function generateRandomID() {
+    return ('_' +
+        Math.random()
+            .toString(36)
+            .substr(2, 9));
 }

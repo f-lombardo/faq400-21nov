@@ -45,7 +45,7 @@ export class KupBtn {
                         ? 'fillspace'
                         : '';
                     return (h("td", null,
-                        h("kup-button", { iconUrl: this.config.iconUrl, label: btn.value, iconClass: btn.iconClass, fillspace: this.config.fillspace, showtext: this.config.showtext, showicon: this.config.showicon, rounded: this.config.rounded, textmode: this.config.textmode, transparent: this.config.transparent, buttonClass: btnClass, flat: this.config.flat, "data-id": id++, onKetchupButtonClicked: (ev) => this.onBtnClicked(ev), align: this.config.align, class: cls })));
+                        h("kup-button", { iconUrl: this.config.iconUrl, label: btn.value, iconClass: btn.iconClass, fillspace: this.config.fillspace, showtext: this.config.showtext, showicon: this.config.showicon, rounded: this.config.rounded, textmode: this.config.textmode, transparent: this.config.transparent, buttonClass: btnClass, flat: this.config.flat, "data-id": id++, onKupButtonClicked: (ev) => this.onBtnClicked(ev), align: this.config.align, class: cls })));
                 });
                 return h("tr", null, btnsJsx);
             });

@@ -116,6 +116,7 @@ export declare class KupDataTable {
     private paginateRows;
     private getSortIcon;
     private calculateColspan;
+    private isGroupExpanded;
     private renderHeader;
     renderFooter(): JSXElements.HTMLAttributes<HTMLTableSectionElement> | null;
     private renderRow;

@@ -1,0 +1,1 @@
+function generateUniqueId(e){return void 0===e&&(e="def"),(new Date).getTime()+e.trim().replace(/\s/g,"_")}function eventFromElement(e,n){for(;n;){if(console.log(n),n===e)return!0;n=n.parentElement}return!1}function generateRandomID(){return"_"+Math.random().toString(36).substr(2,9)}export{generateUniqueId as a,generateRandomID as b,eventFromElement as c};
