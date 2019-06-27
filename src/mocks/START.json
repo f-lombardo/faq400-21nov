@@ -74,6 +74,17 @@
             "children": []
           },
           {
+            "value": "A38 plugins",
+            "options": true,
+            "obj": {
+              "t": "MB",
+              "p": "SCP_SCH",
+              "k": "A38"
+            },
+            "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
+            "children": []
+          },
+          {
             "value": "Queue rabbit",
             "options": true,
             "obj": {

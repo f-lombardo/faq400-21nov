@@ -16,20 +16,6 @@ export const DASHBOARD: any = JSON.parse(`
         "loaded": true,
         "layout": "row",
         "sections": [{
-            "id": "SDAS1A",
-            "components": [{
-              "type": "EXB",
-              "id": "TITDSH",
-              "title": "Dashboard",
-              "loaded": true,
-              "fun": "F(EXB;DASHBOARD;MCRSRVLIST)",
-              "options": {},
-              "data": {},
-              "messages": [],
-              "actions": {},
-              "variables": [],
-              "dynamisms": []
-            }]
           },
           {
             "id": "SDAS1B",
@@ -51,7 +37,22 @@ export const DASHBOARD: any = JSON.parse(`
       }]
     },
     {
-      "id": "SDAS2",
+      "id": "SDAS2A",
+            "components": [{
+              "type": "EXB",
+              "id": "TITDSH",
+              "title": "Dashboard",
+              "loaded": true,
+              "fun": "F(EXB;DASHBOARD;DSHLIST)",
+              "options": {},
+              "data": {},
+              "messages": [],
+              "actions": {},
+              "variables": [],
+              "dynamisms": []            }]
+          },
+    {
+      "id": "SDAS3",
       "components": [{
         "type": "EXD",
         "id": "SCHDS2",
@@ -60,13 +61,13 @@ export const DASHBOARD: any = JSON.parse(`
         "loaded": true,
         "layout": "row",
         "sections": [{
-            "id": "SDAS2A",
+            "id": "SDAS3A",
             "components": [{
               "type": "EXB",
               "id": "TIT37L",
               "title": "A37 List",
               "loaded": true,
-              "fun": "F(EXB;DASHBOARD;MCRSRVLIST)",
+              "fun": "F(EXB;DASHBOARD;A37LIST)",
               "options": {},
               "data": {},
               "messages": [],
@@ -76,13 +77,13 @@ export const DASHBOARD: any = JSON.parse(`
             }]
           },
           {
-            "id": "SDAS2B",
+            "id": "SDAS3B",
             "components": [{
               "type": "EXB",
               "id": "TIT38L",
               "title": "A38 List",
               "loaded": true,
-              "fun": "F(EXB;DASHBOARD;MCRSRVLIST)",
+              "fun": "F(EXB;DASHBOARD;A38LIST)",
               "options": {},
               "data": {},
               "messages": [],

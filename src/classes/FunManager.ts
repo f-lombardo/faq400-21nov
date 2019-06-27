@@ -4,6 +4,7 @@ import ServiceFactory from "./ServicesFactory";
 
 import { DASHBOARD } from "@/mocks/DASH";
 import { LIST } from "@/mocks/LIST";
+import { A38 } from "@/mocks/A38";
 import { A37 } from "@/mocks/A37";
 import { RABBIT } from "@/mocks/RABBIT";
 import { TODO } from "@/mocks/TODO";
@@ -30,6 +31,9 @@ export default class FunManager {
         }
         case "A37 plugins": {
           return A37;
+        }
+        case "A38 plugins": {
+          return A38;
         }
         case "Queue rabbit": {
           return RABBIT;
