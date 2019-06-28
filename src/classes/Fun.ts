@@ -42,7 +42,7 @@ export default class Fun {
     }
     this.objects = objs;
     // Notify
-    var funResult = notifyExpr.exec(fun);
+    funResult = notifyExpr.exec(fun);
     if (funResult) {
       const notifyResult = funResult[0];
       const notify = notifyResult.substring(
