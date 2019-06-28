@@ -59,6 +59,7 @@ export default class Webup extends VuexModule {
   @Mutation
   RELOAD_COMPONENT(payload: any) {
     // replace component
+    console.log("payload", payload);
     payload.comp.comp = payload.newComp;
   }
 

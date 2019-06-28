@@ -81,4 +81,22 @@ export default class A37Plugins extends Service {
       });
     });
   }
+
+  async StartAll(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      srv.doGet(srv.path + "/a37DeployAll").then((data: any) => {
+        resolve(data);
+      });
+    });
+  }
+
+  async StopAll(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      srv.doGet(srv.path + "/a37UndeployAll").then((data: any) => {
+        resolve(data);
+      });
+    });
+  }
 }

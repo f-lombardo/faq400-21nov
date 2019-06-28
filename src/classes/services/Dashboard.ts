@@ -30,7 +30,6 @@ export default class Dashboard extends Service {
             return row;
           });
         }
-        console.log(JSON.stringify(data));
         resolve(data);
       });
     });

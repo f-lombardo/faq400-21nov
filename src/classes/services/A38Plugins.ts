@@ -79,4 +79,22 @@ export default class A38Plugins extends Service {
       });
     });
   }
+
+  async StartAll(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      srv.doGet(srv.path + "/a38DeployAll").then((data: any) => {
+        resolve(data);
+      });
+    });
+  }
+
+  async StopAll(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      srv.doGet(srv.path + "/a38UndeployAll").then((data: any) => {
+        resolve(data);
+      });
+    });
+  }
 }

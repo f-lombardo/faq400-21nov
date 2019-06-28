@@ -23,30 +23,20 @@ export const A38: any = JSON.parse(`
             "options": true,
             "obj": "",
             "iconClass": "mdi mdi-play",
-            "children": [],
-            "exec": ""
+            "children": []
           },
           {
             "value": "Stop All",
             "options": true,
             "obj": "",
             "iconClass": "mdi mdi-stop",
-            "children": [],
-            "exec": ""
-          },
-          {
-            "value": "Delete All",
-            "options": true,
-            "obj": "",
-            "iconClass": "mdi mdi-window-close",
-            "children": [],
-            "exec": ""
+            "children": []
           }
         ],
         "variables": [],
         "dynamisms": [{
-          "event": "",
-          "exec": "",
+          "event": "click",
+          "exec": "F(FBK;A38;[K1]) NOTIFY(TITA38)",
           "targets": []
         }]
 		}
@@ -57,7 +47,7 @@ export const A38: any = JSON.parse(`
       "components": [
         {
           "type": "EXB",
-          "id": "TITA37",
+          "id": "TITA38",
           "title": "Lista plugin A38",
           "loaded": true,
           "fun": "F(EXD;A38;LIST)",

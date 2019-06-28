@@ -12,9 +12,9 @@ import { TODO } from "@/mocks/TODO";
 export default class FunManager {
   async execute(fun: Fun): Promise<any> {
     return new Promise(function(resolve) {
-      resolve(
-        new ServiceFactory().createService(fun.getService())[fun.getMethod()]()
-      );
+      let method = fun.getMethod().replace(/\s+/g, "");
+      let service = fun.getService().replace(/\s+/g, "");
+      resolve(new ServiceFactory().createService(service)[method]());
     });
   }
 
