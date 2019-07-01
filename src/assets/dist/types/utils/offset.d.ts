@@ -35,10 +35,10 @@ export interface ElementOffset {
  * @param [offsetEl] - An optional parameter to specify from which scrollable element calculations must take place. Default: document.documentElement. Change at your own risk and fault: see full comment.
  * @returns the position in pixel to apply to the third element to be placed correctly.
  */
-export declare function getElementOffset(el: HTMLElement, positioning?: {
+export declare function getElementOffset(el: HTMLElement | null, positioning?: {
     isRight: boolean;
     isTop: boolean;
-}, offsetEl?: HTMLElement): ElementOffset;
+}, offsetEl?: HTMLElement): ElementOffset | null;
 /**
  * Given an HTMLElement and a position object, sets given positions to that element, while setting the others to initial state.
  *

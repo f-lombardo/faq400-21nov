@@ -1,9 +1,9 @@
 <template>
-  <ketchup-btn
+  <kup-btn
     :buttons.prop="this.component.data"
     :config.prop="getOptions()"
-    @ketchupButtonClicked="onClick($event)"
-  ></ketchup-btn>
+    @kupButtonClicked="onClick($event)"
+  ></kup-btn>
 </template>
 
 <script lang="ts">
@@ -21,7 +21,6 @@ export default class BTN extends BasicComponent {
       ...this.getDynamisms("click"),
       ...this.getDynamisms("dblclick")
     ];
-
     if (dyns.length > 0) {
       dyns.forEach(d => {
         var dyn: Dynamism = this.createDynamism(d, $event);
@@ -55,4 +54,5 @@ export default class BTN extends BasicComponent {
     return dyn;
   }
 }
+//# sourceURL=settings.vue
 </script>

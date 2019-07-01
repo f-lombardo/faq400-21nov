@@ -1,0 +1,1 @@
+function t(t="def"){return(new Date).getTime()+t.trim().replace(/\s/g,"_")}function e(t,e){for(;e;){if(console.log(e),e===t)return!0;e=e.parentElement}return!1}function n(){return"_"+Math.random().toString(36).substr(2,9)}export{t as a,n as b,e as c};

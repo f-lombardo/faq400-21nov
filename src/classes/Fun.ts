@@ -4,10 +4,12 @@ import FunObject from "@/classes/FunObject";
 export default class Fun {
   private triad: Triad;
   private objects: FunObject[];
+  private notify: string | null = null;
 
   constructor(fun: string) {
     const funExpr: RegExp = new RegExp(/F\((.*?)\)/);
     const objExpr: RegExp = new RegExp(/\d\([^(]*\)/g);
+    const notifyExpr: RegExp = new RegExp(/NOTIFY\([^(]*\)/g);
     var funResult = funExpr.exec(fun);
     var triad: Triad;
     // F
@@ -39,10 +41,27 @@ export default class Fun {
       objs.push(new FunObject(code, triad));
     }
     this.objects = objs;
+    // Notify
+    funResult = notifyExpr.exec(fun);
+    if (funResult) {
+      const notifyResult = funResult[0];
+      const notify = notifyResult.substring(
+        notifyResult.indexOf("(") + 1,
+        notifyResult.indexOf(")")
+      );
+      if (notify) {
+        this.notify = notify;
+      }
+    }
   }
 
   isServiceExternal(): boolean {
     if (this.triad.service === "*SCO") return true;
+    return false;
+  }
+
+  isVoid(): boolean {
+    if (this.triad.service === "FBK") return true;
     return false;
   }
 
@@ -71,5 +90,9 @@ export default class Fun {
       }
     }
     return null;
+  }
+
+  getNotify(): string | null {
+    return this.notify;
   }
 }

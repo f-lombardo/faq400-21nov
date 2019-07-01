@@ -1,0 +1,34 @@
+/**
+* Css Properties
+* @prop --fld_comp-margin, --kup-fld_component-margin: Specifies internal margin between label, submit button and dynamic component
+*/
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  --fld_comp-margin: var(--kup-fld_component-margin, 8px);
+}
+
+.kup-fld__top-container {
+  align-items: center;
+  display: flex;
+  order: 0;
+  width: 100%;
+}
+.kup-fld__label {
+  margin: var(--fld_comp-margin);
+  order: 1;
+}
+.kup-fld__label.kup-fld--right {
+  order: 4;
+}
+.kup-fld__component {
+  margin: var(--fld_comp-margin);
+  order: 3;
+}
+.kup-fld__submit {
+  margin: var(--fld_comp-margin);
+  order: 2;
+}
+.kup-fld__submit.kup-fld--right {
+  order: 5;
+}
