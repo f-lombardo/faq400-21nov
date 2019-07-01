@@ -23,30 +23,20 @@ export const A37: any = JSON.parse(`
             "options": true,
             "obj": "",
             "iconClass": "mdi mdi-play",
-            "children": [],
-            "exec": ""
+            "children": []
           },
           {
             "value": "Stop All",
             "options": true,
             "obj": "",
             "iconClass": "mdi mdi-stop",
-            "children": [],
-            "exec": ""
-          },
-          {
-            "value": "Delete All",
-            "options": true,
-            "obj": "",
-            "iconClass": "mdi mdi-window-close",
-            "children": [],
-            "exec": ""
+            "children": []
           }
         ],
         "variables": [],
         "dynamisms": [{
-          "event": "",
-          "exec": "",
+          "event": "click",
+          "exec": "F(FBK;A37;[K1]) NOTIFY(TITA37)",
           "targets": []
         }]
 		}

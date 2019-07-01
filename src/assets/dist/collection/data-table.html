@@ -28,7 +28,9 @@
             <kup-data-table id="only-cols"></kup-data-table>
 
             <h1>Columns and rows</h1>
-            <kup-data-table id="basic-data"></kup-data-table>
+            <div style="width: 300px; overflow: auto;">
+                <kup-data-table id="basic-data"></kup-data-table
+            ></div>
         </div>
 
         <div class="filter-examples">
@@ -85,11 +87,10 @@
         <kup-data-table id="hidden-grid"></kup-data-table>
 
         <h1>SelectRow</h1>
-        <kup-data-table id="select-row">
-            <ul role="menubar" slot="FLD1-menu">
-                <li role="menuitem">Test!</li>
-            </ul>
-        </kup-data-table>
+        <kup-data-table id="select-row"></kup-data-table>
+
+        <h1>Graphic cells</h1>
+        <kup-data-table id="graphic-cells"></kup-data-table>
 
         <script src="/assets/data-table.js"></script>
     </body>

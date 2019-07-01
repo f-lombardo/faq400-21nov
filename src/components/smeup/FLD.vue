@@ -1,11 +1,11 @@
 <template>
   <!-- @ketchupFldChanged -->
-  <ketchup-fld
+  <kup-fld
     @ketchupFldChanged="onFldChange($event)"
     @ketchupFldSubmit="onClick($event)"
     :data.prop="getData()"
     :config.prop="getOptions()"
-  ></ketchup-fld>
+  ></kup-fld>
 </template>
 
 <script lang="ts">

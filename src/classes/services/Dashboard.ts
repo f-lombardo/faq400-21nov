@@ -1,9 +1,181 @@
 import Service from "@/classes/Service";
+import EnrichUtil from "../utils/EnrichUtil";
 
 export default class Dashboard extends Service {
   private path: string = "/gtw-hub/api/services";
 
-  async LIST(): Promise<any> {
-    return this.doGet(this.path + "/dashboard");
+  async DSHLIST(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      srv.doGet(srv.path + "/dashboard").then((data: any) => {
+        if (data.rows) {
+          data.rows.forEach((row: any) => {
+            let cellSign: Cell = row.cells["£OAVIN"];
+            cellSign = EnrichUtil.addObj(cellSign, "", "", "");
+            let cellObj: Cell = row.cells["£OAVOT"];
+            cellObj = EnrichUtil.addObj(cellObj, "", "", "");
+            let cellVal: Cell = row.cells["£OAVOV"];
+            cellVal = EnrichUtil.addObj(cellVal, "", "", "");
+            let cellDec: Cell = row.cells["£OAVSI"];
+            cellDec = EnrichUtil.addObj(cellDec, "", "", "");
+            let number: Cell = row.cells["£OAVON"];
+            number = EnrichUtil.addObj(number, "", "", "");
+            let cellNum: Cell = row.cells["£OAVAT"];
+            cellNum = EnrichUtil.addObj(cellNum, "", "", "");
+            let cellCat: Cell = row.cells["£OAVCT"];
+            cellCat = EnrichUtil.addObj(cellCat, "", "", "");
+            let cellOu: Cell = row.cells["£OAVAU"];
+            cellOu = EnrichUtil.addObj(cellOu, "", "", "");
+
+            return row;
+          });
+        }
+        resolve(data);
+      });
+    });
+  }
+
+  async MCRSRVLIST(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      srv.doGet(srv.path + "/microserviceList").then((data: any) => {
+        if (data.rows) {
+          data.rows.forEach((row: any) => {
+            let cellId: Cell = row.cells["IDMIC"];
+            cellId = EnrichUtil.addObj(cellId, "", "", "");
+            let cellDebug: Cell = row.cells["DEBUG"];
+            cellDebug = EnrichUtil.addObj(cellDebug, "", "", "");
+            let cellActive: Cell = row.cells["ACTIVE"];
+            cellActive = EnrichUtil.addObj(cellActive, "J4", "ICO", "");
+            if (cellActive.value == "true") {
+              cellActive = EnrichUtil.setCellIcon(
+                cellActive,
+                "mdi mdi-brightness-1",
+                "green"
+              );
+            } else {
+              cellActive = EnrichUtil.setCellIcon(
+                cellActive,
+                "mdi mdi-brightness-1",
+                "red"
+              );
+            }
+            let cellReady: Cell = row.cells["READY"];
+            cellReady = EnrichUtil.addObj(cellReady, "J4", "ICO", "");
+            if (cellReady.value == "true") {
+              cellReady = EnrichUtil.setCellIcon(
+                cellReady,
+                "mdi mdi-brightness-1",
+                "green"
+              );
+            } else {
+              cellReady = EnrichUtil.setCellIcon(
+                cellReady,
+                "mdi mdi-brightness-1",
+                "red"
+              );
+            }
+            return row;
+          });
+        }
+        resolve(data);
+      });
+    });
+  }
+
+  async A37LIST(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      srv.doGet(srv.path + "/a37MicroserviceList").then((data: any) => {
+        if (data.rows) {
+          data.rows.forEach((row: any) => {
+            let cellId: Cell = row.cells["IDMIC"];
+            cellId = EnrichUtil.addObj(cellId, "", "", "");
+            let cellDebug: Cell = row.cells["DEBUG"];
+            cellDebug = EnrichUtil.addObj(cellDebug, "", "", "");
+            let cellActive: Cell = row.cells["ACTIVE"];
+            cellActive = EnrichUtil.addObj(cellActive, "J4", "ICO", "");
+            if (cellActive.value == "true") {
+              cellActive = EnrichUtil.setCellIcon(
+                cellActive,
+                "mdi mdi-brightness-1",
+                "green"
+              );
+            } else {
+              cellActive = EnrichUtil.setCellIcon(
+                cellActive,
+                "mdi mdi-brightness-1",
+                "red"
+              );
+            }
+            let cellReady: Cell = row.cells["READY"];
+            cellReady = EnrichUtil.addObj(cellReady, "J4", "ICO", "");
+            if (cellReady.value == "true") {
+              cellReady = EnrichUtil.setCellIcon(
+                cellReady,
+                "mdi mdi-brightness-1",
+                "green"
+              );
+            } else {
+              cellReady = EnrichUtil.setCellIcon(
+                cellReady,
+                "mdi mdi-brightness-1",
+                "red"
+              );
+            }
+            return row;
+          });
+        }
+        resolve(data);
+      });
+    });
+  }
+
+  async A38LIST(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      srv.doGet(srv.path + "/a38MicroserviceList").then((data: any) => {
+        if (data.rows) {
+          data.rows.forEach((row: any) => {
+            let cellId: Cell = row.cells["IDMIC"];
+            cellId = EnrichUtil.addObj(cellId, "", "", "");
+            let cellDebug: Cell = row.cells["DEBUG"];
+            cellDebug = EnrichUtil.addObj(cellDebug, "", "", "");
+            let cellActive: Cell = row.cells["ACTIVE"];
+            cellActive = EnrichUtil.addObj(cellActive, "J4", "ICO", "");
+            if (cellActive.value == "true") {
+              cellActive = EnrichUtil.setCellIcon(
+                cellActive,
+                "mdi mdi-brightness-1",
+                "green"
+              );
+            } else {
+              cellActive = EnrichUtil.setCellIcon(
+                cellActive,
+                "mdi mdi-brightness-1",
+                "red"
+              );
+            }
+            let cellReady: Cell = row.cells["READY"];
+            cellReady = EnrichUtil.addObj(cellReady, "J4", "ICO", "");
+            if (cellReady.value == "true") {
+              cellReady = EnrichUtil.setCellIcon(
+                cellReady,
+                "mdi mdi-brightness-1",
+                "green"
+              );
+            } else {
+              cellReady = EnrichUtil.setCellIcon(
+                cellReady,
+                "mdi mdi-brightness-1",
+                "red"
+              );
+            }
+            return row;
+          });
+        }
+        resolve(data);
+      });
+    });
   }
 }

@@ -20,7 +20,9 @@ export default class DynamismManager {
     // check targets
     if (!dyn.targets || dyn.targets.length == 0) {
       // save variable in source
-      this._executeAssignmentsInTarget(dyn.source, dyn);
+      var target = comp.$store.getters["webup/getComponentById"](dyn.source.id);
+      this._executeAssignmentsInTarget(target, dyn);
+      //
     } else {
       dyn.targets
         .map(target => comp.$store.getters["webup/getComponentById"](target))
@@ -37,29 +39,22 @@ export default class DynamismManager {
           // get new component
           var fun: Fun = new Fun(evaluatedFun);
           var newComp: any;
-          // TODO refactor this
           if (fun.isServiceExternal()) {
             newComp = Vue.prototype.$funManager.getScript(fun);
             // reload component
-            comp.$store.dispatch("webup/reloadComponent", {
-              comp: c,
-              newComp
-            });
+            this._reloadComponent(comp.$store, c, newComp);
           } else {
             Vue.prototype.$funManager.execute(fun).then((data: any) => {
               c.component.data = data;
               newComp = c.component;
               // reload component
-              comp.$store.dispatch("webup/reloadComponent", {
-                comp: c,
-                newComp
-              });
+              this._reloadComponent(comp.$store, c, newComp);
             });
           }
         });
     }
     // exec
-    if (!dyn.targets && dyn.exec && dyn.exec !== "") {
+    if (dyn.targets.length == 0 && dyn.exec && dyn.exec != "") {
       const evaluatedFun = new ExpressionEvaluator().variableExpression(
         comp,
         dyn.exec
@@ -68,18 +63,43 @@ export default class DynamismManager {
     }
   }
 
-  private _execFun(comp: any, evaluatedFun: string) {
-    // TODO check fun virtuali?
+  private _reloadComponent(store: any, oldCompStore: any, newComp: any): void {
+    store.dispatch("webup/reloadComponent", {
+      comp: oldCompStore,
+      newComp
+    });
+  }
 
-    // load new exd
+  private _execFun(comp: any, evaluatedFun: string): void {
+    // TODO check fun virtuali?
     var fun: Fun = new Fun(evaluatedFun);
-    const newExd = Vue.prototype.$funManager.getScript(fun);
-    comp.$store.dispatch("webup/reloadExd", newExd);
+    if (fun.isServiceExternal) {
+      // load new exd
+      const newExd = Vue.prototype.$funManager.getScript(fun);
+      comp.$store.dispatch("webup/reloadExd", newExd);
+    }
+    if (fun.isVoid) {
+      Vue.prototype.$funManager.execute(fun);
+      /*
+      if (fun.getNotify()) {
+        var notifyComp = comp.$store.getters["webup/getComponentById"](
+          fun.getNotify()
+        );
+        if (notifyComp) {
+          var newComp: any;
+          Object.assign(newComp, notifyComp.comp);
+          newComp.component.title = "pippo";
+          newComp.component.id = "pippo";
+          this._reloadComponent(comp.$store, notifyComp, newComp);
+        }
+      }
+       */
+    }
   }
 
   private _executeAssignmentsInTarget(target: IBasic, dyn: Dynamism) {
     // variables from source component
-    if (dyn.source && dyn.source.variables) {
+    if (dyn.source && parseInt(dyn.source.variables.length) > 0) {
       for (let k in dyn.source.variables) {
         target.putVariable(k, dyn.source.variables[k]);
       }

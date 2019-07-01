@@ -1,4 +1,7 @@
 export function getElementOffset(el, positioning = { isRight: false, isTop: false }, offsetEl = document.documentElement) {
+    if (!el) {
+        return;
+    }
     let ret = {};
     let rect = el.getBoundingClientRect(), scrollLeft = offsetEl.scrollLeft, scrollTop = offsetEl.scrollTop;
     if (!positioning.isRight) {
@@ -21,7 +24,7 @@ export function setElementOffset(el, position) {
         style.left = position.left + 'px';
         style.right = 'initial';
     }
-    else if (style.right) {
+    else if (position.right) {
         style.right = position.right + 'px';
         style.left = 'initial';
     }
@@ -30,7 +33,7 @@ export function setElementOffset(el, position) {
         style.bottom = 'initial';
         style.transform = '';
     }
-    else if (style.bottom) {
+    else if (position.bottom) {
         style.top = position.bottom + 'px';
         style.bottom = 'initial';
         style.transform = 'translateY(-100%)';

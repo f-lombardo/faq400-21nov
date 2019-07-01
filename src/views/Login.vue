@@ -31,7 +31,7 @@ fieldset {
       <br />
       <kup-button
         label="LOGIN"
-        @ketchupButtonClicked="onClick($event)"
+        @kupButtonClicked="onClick($event)"
       ></kup-button>
     </fieldset>
     <label style="text-align:left;color:red;padding:4px;">{{ message }}</label>
