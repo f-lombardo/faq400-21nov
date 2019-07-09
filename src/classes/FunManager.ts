@@ -7,6 +7,7 @@ import { LIST } from "@/mocks/LIST";
 import { A38 } from "@/mocks/A38";
 import { A37 } from "@/mocks/A37";
 import { RABBIT } from "@/mocks/RABBIT";
+import { LOGS } from "@/mocks/LOGS";
 import { TODO } from "@/mocks/TODO";
 
 export default class FunManager {
@@ -37,6 +38,9 @@ export default class FunManager {
         }
         case "Queue rabbit": {
           return RABBIT;
+        }
+        case "Logs": {
+          return LOGS;
         }
         default: {
           return TODO;
