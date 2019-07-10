@@ -99,6 +99,17 @@ export function startScript(): any {
               },
               "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
               "children": []
+            },
+            {
+              "value": "Logs",
+              "options": true,
+              "obj": {
+                "t": "MB",
+                "p": "SCP_SCH",
+                "k": "LOGS"
+              },
+              "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
+              "children": []
             }
           ],
           "variables": [],

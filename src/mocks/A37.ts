@@ -31,6 +31,20 @@ export const A37: any = JSON.parse(`
             "obj": "",
             "iconClass": "mdi mdi-stop",
             "children": []
+          },
+          {
+            "value": "Create All Plugins",
+            "options": true,
+            "obj": "",
+            "iconClass": "mdi mdi-plus-circle",
+            "children": []
+          },
+          {
+            "value": "Delete All Plugins",
+            "options": true,
+            "obj": "",
+            "iconClass": "mdi mdi-delete",
+            "children": []
           }
         ],
         "variables": [],
