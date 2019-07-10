@@ -46,7 +46,7 @@ export default class Dashboard extends Service {
               let cellId: Cell = row.cells["IDMIC"];
               cellId = EnrichUtil.addObj(cellId, "", "", "");
               let cellDebug: Cell = row.cells["DEBUG"];
-              cellDebug = EnrichUtil.addObj(cellDebug, "", "", "");
+              cellDebug = EnrichUtil.addObj(cellDebug, "J1", "URL", "");
               let cellActive: Cell = row.cells["ACTIVE"];
               cellActive = EnrichUtil.addObj(cellActive, "J4", "ICO", "");
               if (cellActive.value == "true") {
@@ -96,7 +96,7 @@ export default class Dashboard extends Service {
               let cellId: Cell = row.cells["IDMIC"];
               cellId = EnrichUtil.addObj(cellId, "", "", "");
               let cellDebug: Cell = row.cells["DEBUG"];
-              cellDebug = EnrichUtil.addObj(cellDebug, "", "", "");
+              cellDebug = EnrichUtil.addObj(cellDebug, "J1", "URL", "");
               let cellActive: Cell = row.cells["ACTIVE"];
               cellActive = EnrichUtil.addObj(cellActive, "J4", "ICO", "");
               if (cellActive.value == "true") {
@@ -146,7 +146,7 @@ export default class Dashboard extends Service {
               let cellId: Cell = row.cells["IDMIC"];
               cellId = EnrichUtil.addObj(cellId, "", "", "");
               let cellDebug: Cell = row.cells["DEBUG"];
-              cellDebug = EnrichUtil.addObj(cellDebug, "", "", "");
+              cellDebug = EnrichUtil.addObj(cellDebug, "J1", "URL", "");
               let cellActive: Cell = row.cells["ACTIVE"];
               cellActive = EnrichUtil.addObj(cellActive, "J4", "ICO", "");
               if (cellActive.value == "true") {

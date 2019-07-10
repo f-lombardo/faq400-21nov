@@ -109,4 +109,26 @@ export default class A37Plugins extends Service {
         });
     });
   }
+
+  async CreateAllPlugins(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      srv
+        .doGet(srv.path + "/frontend/deployer/a37CreateAllPlugins")
+        .then((data: any) => {
+          resolve(data);
+        });
+    });
+  }
+
+  async DeleteAllPlugins(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      srv
+        .doGet(srv.path + "/frontend/deployer/a37DeleteAllPlugins")
+        .then((data: any) => {
+          resolve(data);
+        });
+    });
+  }
 }

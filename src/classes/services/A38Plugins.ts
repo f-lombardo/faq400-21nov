@@ -107,4 +107,26 @@ export default class A38Plugins extends Service {
         });
     });
   }
+
+  async CreateAllPlugins(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      srv
+        .doGet(srv.path + "/frontend/deployer/a38CreateAllPlugins")
+        .then((data: any) => {
+          resolve(data);
+        });
+    });
+  }
+
+  async DeleteAllPlugins(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      srv
+        .doGet(srv.path + "/frontend/deployer/a38DeleteAllPlugins")
+        .then((data: any) => {
+          resolve(data);
+        });
+    });
+  }
 }

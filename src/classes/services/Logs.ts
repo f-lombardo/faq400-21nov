@@ -21,7 +21,7 @@ export default class Logs extends Service {
             let size: Cell = row.cells["SIZE"];
             size = EnrichUtil.addObj(size, "", "", "");
             let link: Cell = row.cells["LINK"];
-            link = EnrichUtil.addObj(link, "", "", "");
+            link = EnrichUtil.addObj(link, "J1", "URL", "");
             let path: Cell = row.cells["PATH"];
             path = EnrichUtil.addObj(path, "", "", "");
             let view: Cell = row.cells["VIEW"];
