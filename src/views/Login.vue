@@ -26,6 +26,7 @@ fieldset {
         @ketchupTextInputUpdated="onFldChangePwd($event)"
         label="PASSWORD"
         is-clearable
+        input-type="password"
       ></kup-text-input>
       <br />
       <br />
