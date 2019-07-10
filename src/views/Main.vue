@@ -15,7 +15,7 @@ import { startScript } from "@/mocks/startScript";
 @Component({
   computed: {
     ...mapGetters({
-      mainComponent: "webup/mainComponent"
+      mainComponent: "mainComponent"
     })
   }
 })
@@ -31,7 +31,8 @@ export default class Main extends Vue {
      * L'oggetto ritornato sarà quindi nuovo ad ogni creazione del componente Main.
      */
     // save root in store
-    this.$store.commit("webup/SET_ROOT", startScript());
+    // this.$store.commit("webup/SET_ROOT", startScript());
+    this.$store.commit("setRoot", startScript());
   }
 }
 </script>

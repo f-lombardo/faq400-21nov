@@ -1,5 +1,3 @@
-import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
-
 import BasicComponent from "@/interfaces/BasicComponent";
 
 interface Component {
@@ -10,105 +8,75 @@ interface ComponentMap {
   [index: string]: Component;
 }
 
-@Module({
-  namespaced: true
-})
-export default class Webup extends VuexModule {
-  root: Component = {
+const state = {
+  root: <Component>{
     component: {
       id: "webup",
       loaded: true,
       variables: {}
     }
-  };
+  },
+  componentsById: <ComponentMap>{}
+};
 
-  componentsById: ComponentMap = {};
-
-  @Mutation
-  CLEAR_ROOT() {
-    this.root = { component: { id: "webup", loaded: true, variables: {} } };
-  }
-
-  /**
-   * Sets a new root for the component used in Main.vue component.
-   * @namespace SET_ROOT
-   * @param root - The new root component to set
-   */
-  @Mutation
-  SET_ROOT(root: any) {
-    this.root = root;
-  }
-
-  @Mutation
-  ADD_COMPONENT(comp: Component) {
+const mutations = {
+  clearRoot(state: any) {
+    state.root = { component: { id: "webup", loaded: true, variables: {} } };
+  },
+  setRoot(state: any, root: any) {
+    state.root = root;
+  },
+  addComponent(state: any, comp: Component) {
     if (comp.component.id) {
-      this.componentsById[comp.component.id] = comp;
+      state.componentsById[comp.component.id] = comp;
     }
-  }
-
-  @Mutation
-  REMOVE_COMPONENT(comp: Component) {
+  },
+  removeComponent(state: any, comp: Component) {
     if (comp.component.id) {
-      delete this.componentsById[comp.component.id];
+      delete state.componentsById[comp.component.id];
     }
-  }
-
-  /**
-   * FIXME this mutation is pontatially dangerous
-   * Use see comp link below for more details
-   * @namespace RELOAD_COMPONENT
-   * @param payload
-   * @see reloadComponent
-   * @see comp
-   */
-  @Mutation
-  RELOAD_COMPONENT(payload: any) {
+  },
+  reloadComponent(state: any, payload: any) {
     // replace component
     payload.comp.comp = payload.newComp;
   }
+};
 
-  @Action({ commit: "CLEAR_ROOT" })
-  clearState() {}
-
-  @Action({ commit: "ADD_COMPONENT" })
-  addComponent(payload: Component) {
-    return payload;
+const actions = {
+  clearState({ commit }: { commit: any }) {
+    commit("clearRoot");
+  },
+  addComponent({ commit }: { commit: any }, payload: Component) {
+    commit("addComponent", payload);
+  },
+  removeComponent({ commit }: { commit: any }, comp: Component) {
+    commit("removeComponent", comp);
+  },
+  reloadComponent(
+    { commit }: { commit: any },
+    payload: { comp: Component; newComp: any }
+  ) {
+    commit("reloadComponent", { comp: payload.comp, newComp: payload.newComp });
+  },
+  reloadExd({ commit }: { commit: any }, newExd: any) {
+    commit("setRoot", newExd);
   }
+};
 
-  @Action({ commit: "REMOVE_COMPONENT" })
-  removeComponent(comp: Component) {
-    return comp;
-  }
-
-  /**
-   * TODO
-   * Per come funziona webup, se al dinamismo non è associato nessun target ed è presente il parametro 'exec',
-   * allora il target è la scheda globale.
-   * In quel caso è necessario invocare la mutation SET_ROOT.
-   * Questa action va aggiornata di conseguenza.
-   *
-   * @namespace reloadComponent
-   * @param payload
-   * @see RELOAD_COMPONENT
-   * @see SET_ROOT
-   */
-  @Action({ commit: "RELOAD_COMPONENT" })
-  reloadComponent(payload: { comp: Component; newComp: any }) {
-    return { comp: payload.comp, newComp: payload.newComp };
-  }
-
-  @Action({ commit: "SET_ROOT" })
-  reloadExd(newExd: any) {
-    return newExd;
-  }
-
-  get getComponentById() {
+const getters = {
+  getComponentById(state: any) {
     return (key: string): any => {
-      return this.componentsById[key];
+      return state.componentsById[key];
     };
+  },
+  mainComponent(state: any) {
+    return state.root;
   }
+};
 
-  get mainComponent(): Component {
-    return this.root;
-  }
-}
+export default {
+  state,
+  mutations,
+  actions,
+  getters
+};

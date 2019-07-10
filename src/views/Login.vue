@@ -52,7 +52,8 @@ export default class Main extends Vue {
   created(): void {
     console.log("REST URL:", process.env.VUE_APP_SMEUP_REST_URL);
     console.log("RESET PAGE");
-    this.$store.dispatch("webup/clearState");
+    // this.$store.dispatch("webup/clearState");
+    this.$store.dispatch("clearState");
     this.$store.dispatch("user/setUser", {
       user: "",
       password: ""
