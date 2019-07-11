@@ -43,6 +43,9 @@ const mutations = {
 };
 
 const actions = {
+  setRoot({ commit }: { commit: any }, root: any) {
+    commit("setRoot", root);
+  },
   clearState({ commit }: { commit: any }) {
     commit("clearRoot");
   },
@@ -69,7 +72,7 @@ const getters = {
       return state.componentsById[key];
     };
   },
-  mainComponent(state: any) {
+  getRoot(state: any) {
     return state.root;
   }
 };

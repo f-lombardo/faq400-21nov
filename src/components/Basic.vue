@@ -93,15 +93,13 @@ export default class Basic extends VariableContext {
   private addComponent(): void {
     this.comp = this.component;
     // saving component in store
-    //this.$store.dispatch("webup/addComponent", this);
-    this.$store.dispatch("addComponent", this);
+    this.$store.dispatch("webup/addComponent", this);
   }
 
   protected destroyed(): void {
     if (this.component) {
       // remove component from store
-      //this.$store.dispatch("webup/removeComponent", this);
-      this.$store.dispatch("removeComponent", this);
+      this.$store.dispatch("webup/removeComponent", this);
     }
   }
 

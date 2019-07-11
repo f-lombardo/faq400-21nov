@@ -8,7 +8,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    webup,
+    webup: {
+      namespaced: true,
+      modules: {
+        webup
+      }
+    },
     user
   },
 

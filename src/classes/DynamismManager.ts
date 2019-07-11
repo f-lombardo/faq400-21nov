@@ -20,14 +20,12 @@ export default class DynamismManager {
     // check targets
     if (!dyn.targets || dyn.targets.length == 0) {
       // save variable in source
-      //var target = comp.$store.getters["webup/getComponentById"](dyn.source.id);
-      var target = comp.$store.getters.getComponentById(dyn.source.id);
+      var target = comp.$store.getters["webup/getComponentById"](dyn.source.id);
       this._executeAssignmentsInTarget(target, dyn);
       //
     } else {
       dyn.targets
-        // .map(target => comp.$store.getters["webup/getComponentById"](target))
-        .map(target => comp.$store.getters.getComponentById(target))
+        .map(target => comp.$store.getters["webup/getComponentById"](target))
         .filter((c: any) => c)
         .forEach((c: any) => {
           // save variables in target
@@ -66,8 +64,7 @@ export default class DynamismManager {
   }
 
   private _reloadComponent(store: any, oldCompStore: any, newComp: any): void {
-    // store.dispatch("webup/reloadComponent", {
-    store.dispatch("reloadComponent", {
+    store.dispatch("webup/reloadComponent", {
       comp: oldCompStore,
       newComp
     });
@@ -79,8 +76,7 @@ export default class DynamismManager {
     if (fun.isServiceExternal()) {
       // load new exd
       const newExd = Vue.prototype.$funManager.getScript(fun);
-      //comp.$store.dispatch("webup/reloadExd", newExd);
-      comp.$store.dispatch("reloadExd", newExd);
+      comp.$store.dispatch("webup/reloadExd", newExd);
     }
     if (fun.isVoid) {
       Vue.prototype.$funManager.execute(fun);
