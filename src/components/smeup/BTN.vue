@@ -17,42 +17,44 @@ export default class BTN extends BasicComponent {
   protected name = "BTN";
 
   private onClick($event: CustomEvent): void {
-    const dyns = [
-      ...this.getDynamisms("click"),
-      ...this.getDynamisms("dblclick")
+    const dynamisms = [
+      ...this.getDynamisms("click")
+      //TODO ...this.getDynamisms("dblclick")
     ];
-    if (dyns.length > 0) {
-      dyns.forEach(d => {
-        var dyn: Dynamism = this.createDynamism(d, $event);
-        this.$dynamismManager.execute(this, dyn);
+    var dynamism: Dynamism = new Dynamism("click");
+    if (dynamisms.length > 0) {
+      // TODO sistemare per quando si hanno più dinamismi
+      dynamisms.forEach(d => {
+        dynamism = this.createDynamism(d, $event);
       });
     } else {
-      // if there aren't dynamisms, check the single button's exec
+      // if there aren't dynamisms then check the single button's exec
       const exec = this.component.data[$event.detail.id].exec;
       if (exec) {
-        const d = new Dynamism("click");
-        d.exec = exec;
-        var dyn: Dynamism = this.createDynamism(d, $event);
-        this.$dynamismManager.execute(this, dyn);
+        dynamism.exec = exec;
+        dynamism = this.createDynamism(dynamism, $event);
       }
     }
+    this.$dynamismManager.execute(this, dynamism);
   }
 
   private createDynamism(d: Dynamism, $event: CustomEvent): Dynamism {
-    const dyn = new Dynamism(d.event);
-    dyn.source = this.comp;
-    dyn.targets = d.targets;
-    dyn.exec = d.exec;
+    const dynamism = new Dynamism(d.event);
+    dynamism.source = this.component;
+    dynamism.targets = d.targets;
+    dynamism.exec = d.exec;
 
     // adding implicit variables
-    dyn.addImplictVariable({ key: "T1", value: "" });
-    dyn.addImplictVariable({ key: "P1", value: "" });
-    dyn.addImplictVariable({
+    dynamism.addImplictVariable({ key: "T1", value: "" });
+    dynamism.addImplictVariable({ key: "P1", value: "" });
+    dynamism.addImplictVariable({
       key: "K1",
-      value: this.component.data[$event.detail.id].value
+      value: this.component.data[$event.detail.id].value // TODO Gestione Variable Manager
     });
-    return dyn;
+    return dynamism;
   }
 }
+
+// VSCode Debug
 //# sourceURL=settings.vue
 </script>

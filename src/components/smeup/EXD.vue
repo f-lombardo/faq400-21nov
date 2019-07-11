@@ -1,8 +1,12 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <div v-if="comp.loaded" :style="sectionStyle" class="scheda full-width">
+  <div
+    v-if="this.component.loaded"
+    :style="sectionStyle"
+    class="scheda full-width"
+  >
     <!-- {{ this.comp.title }} -->
     <smeup-section
-      v-for="section in comp.sections"
+      v-for="section in this.component.sections"
       :key="section.id"
       :component="section"
     />
@@ -23,7 +27,7 @@ export default class EXD extends BasicComponent {
 
   private get sectionStyle(): object {
     return {
-      flexDirection: this.comp.layout ? this.comp.layout : "column"
+      flexDirection: this.component.layout ? this.component.layout : "column"
     };
   }
 }

@@ -1,7 +1,8 @@
 import BasicComponent from "@/interfaces/BasicComponent";
 
 interface Component {
-  component: BasicComponent;
+  // VueComponent
+  component: BasicComponent; // Component
 }
 
 interface ComponentMap {
@@ -26,20 +27,28 @@ const mutations = {
   setRoot(state: any, root: any) {
     state.root = root;
   },
-  addComponent(state: any, comp: Component) {
-    if (comp.component.id) {
-      state.componentsById[comp.component.id] = comp;
+  addComponent(state: any, vueComponent: Component) {
+    // add vue component in componentsById
+    if (vueComponent.component.id) {
+      state.componentsById[vueComponent.component.id] = vueComponent;
     }
   },
-  removeComponent(state: any, comp: Component) {
-    if (comp.component.id) {
-      delete state.componentsById[comp.component.id];
+  removeComponent(state: any, vueComponent: Component) {
+    // remove vue component from componentsById
+    if (vueComponent.component.id) {
+      delete state.componentsById[vueComponent.component.id];
     }
   },
-  reloadComponent(state: any, payload: any) {
+  reloadComponent(state: any, component: BasicComponent) {
+    // reload component
+    // TODO ricerco all'interno di state.root il componente per id
+    // sostituisco data (o tutto il componente???)
+  }
+  /*
+  replaceComponent(state: any, payload: any) {
     // replace component
     payload.comp.comp = payload.newComp;
-  }
+  } */
 };
 
 const actions = {
@@ -49,21 +58,25 @@ const actions = {
   clearState({ commit }: { commit: any }) {
     commit("clearRoot");
   },
-  addComponent({ commit }: { commit: any }, payload: Component) {
-    commit("addComponent", payload);
+  addComponent({ commit }: { commit: any }, vueComponent: Component) {
+    commit("addComponent", vueComponent);
   },
-  removeComponent({ commit }: { commit: any }, comp: Component) {
-    commit("removeComponent", comp);
+  removeComponent({ commit }: { commit: any }, vueComponent: Component) {
+    commit("removeComponent", vueComponent);
   },
-  reloadComponent(
+  reloadComponent({ commit }: { commit: any }, component: Component) {
+    commit("reloadComponent", component);
+  }
+  /*
+  replaceComponent(
     { commit }: { commit: any },
     payload: { comp: Component; newComp: any }
   ) {
-    commit("reloadComponent", { comp: payload.comp, newComp: payload.newComp });
-  },
-  reloadExd({ commit }: { commit: any }, newExd: any) {
-    commit("setRoot", newExd);
-  }
+    commit("replaceComponent", {
+      comp: payload.comp,
+      newComp: payload.newComp
+    });
+  }, */
 };
 
 const getters = {

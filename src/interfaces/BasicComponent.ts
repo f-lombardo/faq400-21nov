@@ -3,4 +3,5 @@ export default interface BasicComponent {
   loaded: boolean;
   variables: any;
   title?: string;
+  data?: any;
 }
