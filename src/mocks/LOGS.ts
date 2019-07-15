@@ -1,7 +1,7 @@
 export const LOGS: any = JSON.parse(`
 {
   "type": "EXD",
-  "id": "LOGS",
+  "id": "SCHINF",
   "title": "Logs list",
   "loaded": true,
   "layout": "column",

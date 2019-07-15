@@ -10,15 +10,7 @@ import { startScript } from "@/mocks/startScript";
 
 @Component
 export default class Main extends Vue {
-  //public root: any = this.$store.getters["webup/getRoot"];
-
-  get root() {
-    return this.$store.getters["webup/getRoot"];
-  }
-
-  set root(script) {
-    this.$store.dispatch("webup/setRoot", script);
-  }
+  public root: any = startScript();
 
   private created() {
     /**
@@ -28,8 +20,6 @@ export default class Main extends Vue {
      * Quando l'applicazione verrà completata, va inserita nel created la chiamata REST che recupera il JSON dello script di scheda.
      * L'oggetto ritornato sarà quindi nuovo ad ogni creazione del componente Main.
      */
-    // save root in store
-    this.root = startScript();
     // save main in store
     this.$store.dispatch("webup/setMain", this);
   }

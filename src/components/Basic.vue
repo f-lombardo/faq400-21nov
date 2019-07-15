@@ -14,34 +14,37 @@ import VariableContext from "@/classes/VariableContext";
 export default class Basic extends VariableContext {
   @Prop() protected component: any;
 
-  // protected name: string = "";
-
   private implicitVariables?: ImplicitVariable[];
 
   protected created(): void {
     if (this.component) {
-      if (this.component.loaded == true && this._hasFun()) {
-        var fun: Fun = new Fun(this.component.fun);
-        // TODO modificare questa parte. *SCO dev'essere un servizio come gli altri.
-        // Quindi ci sarà solo l'execute come metodo
+      if (this.component.loaded == true && this.hasFun()) {
         this.addComponent();
-        if (fun.isServiceExternal()) {
-          this.component = this.$funManager.getScript(fun);
-          this.reloadComponent();
-        } else {
-          Vue.prototype.$funManager.execute(fun).then((data: any) => {
-            this.component.data = data;
-            this.reloadComponent();
-          });
-        }
+        this._execFun();
       } else {
         this.addComponent();
       }
     }
   }
 
-  private _hasFun(): boolean {
+  protected mounted(): void {
+    this.$on("execOwnFun", this._execFun);
+  }
+
+  public hasFun(): boolean {
     return this.component.fun && this.component.fun != "";
+  }
+
+  private _execFun(): void {
+    var fun: Fun = new Fun(this.component.fun);
+    if (fun.isServiceExternal()) {
+      this.component = this.$funManager.getScript(fun);
+      this.reloadComponent();
+    } else {
+      Vue.prototype.$funManager.execute(fun).then((data: any) => {
+        this.reloadDataComponent(data);
+      });
+    }
   }
 
   protected addComponent(): void {
@@ -51,7 +54,21 @@ export default class Basic extends VariableContext {
 
   protected reloadComponent(): void {
     // reload component in root store
-    this.$store.dispatch("webup/reloadComponent", this.component);
+    this.$store.dispatch("webup/reloadComponent", this.component).then(() => {
+      this.$forceUpdate();
+    });
+  }
+
+  protected reloadDataComponent(data: any): void {
+    // reload data component in root store
+    this.$store
+      .dispatch("webup/reloadDataComponent", {
+        data,
+        id: this.component.id
+      })
+      .then(() => {
+        this.$forceUpdate();
+      });
   }
 
   protected destroyed(): void {
@@ -59,9 +76,10 @@ export default class Basic extends VariableContext {
       // remove component from store
       this.$store.dispatch("webup/removeComponent", this);
     }
+    this.$off("execOwnFun");
   }
 
-  public getOptions(): any {
+  public getOptions() {
     // TODO questo sara' da rivedere quando gestiremo i setup 'correttamente'
     if (this.component.options && this.component.type) {
       if (this.component.type === "FLD")
@@ -71,15 +89,14 @@ export default class Basic extends VariableContext {
     return {};
   }
 
-  public getData(): any {
-    console.log("DATA", this.component.data);
+  public getData() {
     if (this.component.data) {
       return this.component.data;
     }
     return {};
   }
 
-  protected hasDynamisms() {
+  protected hasDynamisms(): boolean {
     return (
       this.component != null &&
       this.component.dynamisms &&

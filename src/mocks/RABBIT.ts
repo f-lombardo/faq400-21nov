@@ -1,7 +1,7 @@
 export const RABBIT: any = JSON.parse(`
 {
   "type": "EXD",
-  "id": "RABBIT",
+  "id": "SCHINF",
   "title": "Rabbit queue gateway",
   "loaded": true,
   "layout": "column",

@@ -57,7 +57,13 @@ const mutations = {
       component2update = Object.assign(component2update, component);
     }
     state.main.root = rootCopy;
-    state.main.$forceUpdate();
+  },
+  reloadDataComponent(state: any, payload: any) {
+    // reload data component
+    let component2update = _getComponent(payload.id, state.main.root);
+    if (component2update) {
+      component2update.data = payload.data;
+    }
   }
 };
 
@@ -79,6 +85,9 @@ const actions = {
   },
   reloadComponent({ commit }: { commit: any }, component: Component) {
     commit("reloadComponent", component);
+  },
+  reloadDataComponent({ commit }: { commit: any }, payload: any) {
+    commit("reloadDataComponent", payload);
   }
 };
 
@@ -89,7 +98,6 @@ const getters = {
     };
   },
   getRoot(state: any) {
-    console.log("GET");
     return state.main.root;
   }
 };

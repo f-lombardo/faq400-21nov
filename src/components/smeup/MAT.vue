@@ -1,7 +1,7 @@
 <template>
   <div v-if="this.component && this.component.loaded">
     <h2>{{ this.component.title }}</h2>
-    <kup-data-table :data.prop="getData()"></kup-data-table>
+    <kup-data-table :data.prop="component.data"></kup-data-table>
   </div>
 </template>
 

@@ -1,19 +1,19 @@
 export const TODO: any = JSON.parse(`
   {
     "type": "EXD",
-    "id": "exd2",
+    "id": "SCHINF",
     "title": "",
-    "fun": "F(EXD;*SCO;) 2(MB;SCP_SCH;[K1])",
+    "fun": "",
     "loaded": true,
     "layout": "column",
     "sections": [{
-      "key": "sec4",
+      "key": "SECTODO",
       "id": "",
       "layout": "",
       "dim": "",
       "components": [{
         "type": "LAB",
-        "id": "lbl2",
+        "id": "LBLTODO",
         "title": "",
         "loaded": true,
         "data": [{

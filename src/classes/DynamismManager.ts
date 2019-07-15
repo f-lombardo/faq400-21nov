@@ -52,7 +52,7 @@ export default class DynamismManager {
             // reload component
             this._reloadComponent(vueComponent.$store, newComponent);
           } else {
-            this._getDataThenReload(vueComponent.$store, fun, c.component);
+            this._getDataThenReload(vueComponent.$store, fun, c);
           }
         });
     }
@@ -66,16 +66,36 @@ export default class DynamismManager {
     }
   }
 
-  private _getDataThenReload(store: any, fun: Fun, component: BasicComponent) {
+  private _getDataThenReload(store: any, fun: Fun, vueComponent: any) {
     Vue.prototype.$funManager.execute(fun).then((data: any) => {
-      component.data = data;
       // reload component
-      this._reloadComponent(store, component);
+      this._reloadDataComponent(store, {
+        data,
+        vueComponent
+      });
     });
   }
 
   private _reloadComponent(store: any, component: BasicComponent): void {
+    // get VueComponent
+    const vueComponent = store.getters["webup/getComponentById"](component.id);
     store.dispatch("webup/reloadComponent", component);
+    if (vueComponent) {
+      vueComponent.$forceUpdate();
+    } else {
+      alert("Component " + component.id + " not found.");
+    }
+  }
+
+  private _reloadDataComponent(store: any, payload: any): void {
+    store
+      .dispatch("webup/reloadDataComponent", {
+        data: payload.data,
+        id: payload.vueComponent.component.id
+      })
+      .then(() => {
+        payload.vueComponent.$forceUpdate();
+      });
   }
 
   private _execFun(vueComponent: any, evaluatedFun: string): void {
@@ -86,22 +106,19 @@ export default class DynamismManager {
       // TODO ma è giusta questa cosa qui? Mi ritorna sempre la scheda da sostituire alla root?
       const newEXD = Vue.prototype.$funManager.getScript(fun);
       vueComponent.$store.dispatch("webup/setRoot", newEXD);
+      // TODO verificare se bisogna fare forceUpdate su MainComponent
     }
     if (fun.isVoid()) {
-      Vue.prototype.$funManager.execute(fun);
-      if (fun.getNotify()) {
-        const notifyComponent = vueComponent.$store.getters[
-          "webup/getComponentById"
-        ](fun.getNotify());
-        if (notifyComponent && notifyComponent.component.fun) {
-          fun = new Fun(notifyComponent.component.fun);
-          this._getDataThenReload(
-            vueComponent.$store,
-            fun,
-            notifyComponent.component
-          );
+      Vue.prototype.$funManager.execute(fun).then(() => {
+        if (fun.getNotify()) {
+          const notifyVueComponent = vueComponent.$store.getters[
+            "webup/getComponentById"
+          ](fun.getNotify());
+          if (notifyVueComponent && notifyVueComponent.hasFun()) {
+            notifyVueComponent.$emit("execOwnFun");
+          }
         }
-      }
+      });
     }
   }
 

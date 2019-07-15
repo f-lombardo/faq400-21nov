@@ -1,7 +1,7 @@
 export const A38: any = JSON.parse(`
 {
   "type": "EXD",
-  "id": "A38",
+  "id": "SCHINF",
   "title": "Plugin A38 gateway",
   "loaded": true,
   "layout": "column",
@@ -57,7 +57,7 @@ export const A38: any = JSON.parse(`
       ]
     },
 	{
-      "id": "S2A",
+      "id": "S2",
       "components": [
         {
           "type": "EXB",

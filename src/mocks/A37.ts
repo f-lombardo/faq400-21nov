@@ -1,7 +1,7 @@
 export const A37: any = JSON.parse(`
 {
   "type": "EXD",
-  "id": "A37",
+  "id": "SCHINF",
   "title": "Plugin A37 gateway",
   "loaded": true,
   "layout": "column",
