@@ -66,6 +66,14 @@ export default class DynamismManager {
     }
   }
 
+  private _getDataThenReload(store: any, fun: Fun, component: BasicComponent) {
+    Vue.prototype.$funManager.execute(fun).then((data: any) => {
+      component.data = data;
+      // reload component
+      this._reloadComponent(store, component);
+    });
+  }
+
   private _reloadComponent(store: any, component: BasicComponent): void {
     store.dispatch("webup/reloadComponent", component);
   }
@@ -95,14 +103,6 @@ export default class DynamismManager {
         }
       }
     }
-  }
-
-  private _getDataThenReload(store: any, fun: Fun, component: BasicComponent) {
-    Vue.prototype.$funManager.execute(fun).then((data: any) => {
-      component.data = data;
-      // reload component
-      this._reloadComponent(store, component);
-    });
   }
 
   private _executeAssignmentsInTarget(vueTarget: IBasic, dynamism: Dynamism) {

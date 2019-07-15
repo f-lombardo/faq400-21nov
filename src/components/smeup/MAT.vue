@@ -1,6 +1,6 @@
 <template>
-  <div v-if="this.comp && this.comp.loaded">
-    <h2>{{ this.comp.title }}</h2>
+  <div v-if="this.component && this.component.loaded">
+    <h2>{{ this.component.title }}</h2>
     <kup-data-table :data.prop="getData()"></kup-data-table>
   </div>
 </template>

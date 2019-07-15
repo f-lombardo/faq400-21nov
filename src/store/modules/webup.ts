@@ -10,8 +10,8 @@ interface ComponentMap {
 }
 
 const state = {
-  root: <Component>{
-    component: {
+  main: {
+    root: <BasicComponent>{
       id: "webup",
       loaded: true,
       variables: {}
@@ -22,10 +22,19 @@ const state = {
 
 const mutations = {
   clearRoot(state: any) {
-    state.root = { component: { id: "webup", loaded: true, variables: {} } };
+    state.main = {
+      root: <BasicComponent>{
+        id: "webup",
+        loaded: true,
+        variables: {}
+      }
+    };
   },
   setRoot(state: any, root: any) {
-    state.root = root;
+    state.main.root = root;
+  },
+  setMain(state: any, mainComponent: any) {
+    state.main = mainComponent;
   },
   addComponent(state: any, vueComponent: Component) {
     // add vue component in componentsById
@@ -40,22 +49,26 @@ const mutations = {
     }
   },
   reloadComponent(state: any, component: BasicComponent) {
+    // copy root
+    const rootCopy = { ...state.main.root };
     // reload component
-    // TODO ricerco all'interno di state.root il componente per id
-    // sostituisco data (o tutto il componente???)
+    let component2update = _getComponent(component.id, rootCopy);
+    if (component2update) {
+      component2update = Object.assign(component2update, component);
+    }
+    state.main.root = rootCopy;
+    state.main.$forceUpdate();
   }
-  /*
-  replaceComponent(state: any, payload: any) {
-    // replace component
-    payload.comp.comp = payload.newComp;
-  } */
 };
 
 const actions = {
   setRoot({ commit }: { commit: any }, root: any) {
     commit("setRoot", root);
   },
-  clearState({ commit }: { commit: any }) {
+  setMain({ commit }: { commit: any }, mainComponent: any) {
+    commit("setMain", mainComponent);
+  },
+  clearRoot({ commit }: { commit: any }) {
     commit("clearRoot");
   },
   addComponent({ commit }: { commit: any }, vueComponent: Component) {
@@ -67,16 +80,6 @@ const actions = {
   reloadComponent({ commit }: { commit: any }, component: Component) {
     commit("reloadComponent", component);
   }
-  /*
-  replaceComponent(
-    { commit }: { commit: any },
-    payload: { comp: Component; newComp: any }
-  ) {
-    commit("replaceComponent", {
-      comp: payload.comp,
-      newComp: payload.newComp
-    });
-  }, */
 };
 
 const getters = {
@@ -86,9 +89,42 @@ const getters = {
     };
   },
   getRoot(state: any) {
-    return state.root;
+    console.log("GET");
+    return state.main.root;
   }
 };
+
+function _getComponent(
+  id: string,
+  currentNode: BasicComponent
+): BasicComponent | null {
+  var i, children, currentChild, result;
+  if (id == currentNode.id) {
+    return currentNode;
+  } else {
+    children = _getChildren(currentNode);
+    for (i = 0; i < children.length; i += 1) {
+      currentChild = children[i];
+      result = _getComponent(id, currentChild);
+      if (result != null) {
+        return result;
+      }
+    }
+    return null;
+  }
+}
+
+const EXD_TYPE: string = "EXD";
+
+function _getChildren(component: BasicComponent): BasicComponent[] {
+  var components: BasicComponent[] = [];
+  if (component.type === EXD_TYPE) {
+    component.sections.forEach((section: any) => {
+      components = [...section.components, ...components];
+    });
+  }
+  return components;
+}
 
 export default {
   state,

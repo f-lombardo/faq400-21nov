@@ -72,6 +72,7 @@ export default class Basic extends VariableContext {
   }
 
   public getData(): any {
+    console.log("DATA", this.component.data);
     if (this.component.data) {
       return this.component.data;
     }

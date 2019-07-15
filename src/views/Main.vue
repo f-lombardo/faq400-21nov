@@ -1,9 +1,5 @@
 <template>
-  <component
-    :is="mainComponent.type"
-    :component="mainComponent"
-    :key="mainComponent.id"
-  ></component>
+  <component :is="root.type" :component="root" :key="root.id"></component>
 </template>
 
 <script lang="ts">
@@ -12,15 +8,17 @@ import { mapGetters } from "vuex";
 
 import { startScript } from "@/mocks/startScript";
 
-@Component({
-  computed: {
-    ...mapGetters({
-      mainComponent: "webup/getRoot"
-    })
-  }
-})
+@Component
 export default class Main extends Vue {
-  mainComponent: any;
+  //public root: any = this.$store.getters["webup/getRoot"];
+
+  get root() {
+    return this.$store.getters["webup/getRoot"];
+  }
+
+  set root(script) {
+    this.$store.dispatch("webup/setRoot", script);
+  }
 
   private created() {
     /**
@@ -31,7 +29,9 @@ export default class Main extends Vue {
      * L'oggetto ritornato sarà quindi nuovo ad ogni creazione del componente Main.
      */
     // save root in store
-    this.$store.dispatch("webup/setRoot", startScript());
+    this.root = startScript();
+    // save main in store
+    this.$store.dispatch("webup/setMain", this);
   }
 }
 </script>
