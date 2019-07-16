@@ -8,6 +8,20 @@ export default class Dashboard extends Service {
     var srv = this;
     return new Promise(function(resolve, reject) {
       srv.doGet(srv.path + "/frontend/hub/dashboard").then((data: any) => {
+        if (data.columns) {
+          data.columns.forEach((column: any) => {
+            if (
+              column.name == "£OAVON" ||
+              column.name == "£OAVAT" ||
+              column.name == "£OAVCT" ||
+              column.name == "£OAVCU"
+            ) {
+              column.visible = true;
+            }
+            return column;
+          });
+        }
+
         if (data.rows) {
           data.rows.forEach((row: any) => {
             let cellSign: Cell = row.cells["£OAVIN"];
