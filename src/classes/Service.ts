@@ -1,6 +1,6 @@
 import Vue from "vue";
 
-export default class Dashboard {
+export default class Service {
   protected async doGet(path: string): Promise<any> {
     return new Promise(function(resolve, reject) {
       Vue.prototype.$SmeUP.axiosInstance
