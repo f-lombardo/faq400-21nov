@@ -8,6 +8,22 @@ export default class Logs extends Service {
     var srv = this;
     return new Promise(function(resolve, reject) {
       srv.doGet(srv.path + "/frontend/logger/logList").then((data: any) => {
+        if (data.columns) {
+          data.columns.unshift({ name: "BT03", title: "" });
+          data.columns.unshift({ name: "BT02", title: "" });
+          data.columns.unshift({ name: "BT01", title: "" });
+          data.columns.forEach((column: any) => {
+            if (
+              column.name == "LINK" ||
+              column.name == "PATH" ||
+              column.name == "VIEW"
+            ) {
+              column.visible = false;
+            }
+            return column;
+          });
+        }
+
         if (data.rows) {
           data.rows.forEach((row: any) => {
             let name: Cell = row.cells["NAME"];
@@ -26,6 +42,41 @@ export default class Logs extends Service {
             path = EnrichUtil.addObj(path, "", "", "");
             let view: Cell = row.cells["VIEW"];
             view = EnrichUtil.addObj(view, "", "", "");
+
+            // Buttons
+            // Button 01
+            var action = view.value;
+            let button01: Cell = {
+              value: "",
+              obj: { t: "J4", p: "ICO", k: "" }
+            };
+            button01 = EnrichUtil.setCellIcon(
+              button01,
+              "mdi mdi-file-document",
+              ""
+            );
+            row.cells["BT01"] = button01;
+
+            // Button 02
+            var action = link.value;
+            let button02: Cell = {
+              value: "",
+              obj: { t: "J4", p: "ICO", k: "" }
+            };
+            button02 = EnrichUtil.setCellIcon(button02, "mdi mdi-download", "");
+            row.cells["BT02"] = button02;
+
+            // Button 03
+            var action =
+              srv.path + "/frontend/logger/deleteLogFile/" + name.value;
+
+            let button03: Cell = {
+              value: "",
+              obj: { t: "J4", p: "ICO", k: "" }
+            };
+            button03 = EnrichUtil.setCellIcon(button03, "mdi mdi-delete", "");
+            row.cells["BT03"] = button03;
+
             return row;
           });
         }
