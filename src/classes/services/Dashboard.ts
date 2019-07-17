@@ -14,9 +14,9 @@ export default class Dashboard extends Service {
               column.name == "£OAVON" ||
               column.name == "£OAVAT" ||
               column.name == "£OAVCT" ||
-              column.name == "£OAVCU"
+              column.name == "£OAVAU"
             ) {
-              column.visible = true;
+              column.visible = false;
             }
             return column;
           });

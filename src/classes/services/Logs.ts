@@ -18,7 +18,7 @@ export default class Logs extends Service {
               column.name == "PATH" ||
               column.name == "VIEW"
             ) {
-              column.visible = true;
+              column.visible = false;
             }
             return column;
           });
