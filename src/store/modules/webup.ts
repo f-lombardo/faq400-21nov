@@ -99,6 +99,9 @@ const getters = {
   },
   getRoot(state: any) {
     return state.main.root;
+  },
+  getMain(state: any) {
+    return state.main;
   }
 };
 
