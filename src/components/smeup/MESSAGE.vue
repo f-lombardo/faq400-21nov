@@ -8,14 +8,6 @@
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 
-/*
-@Component({
-  computed: {
-    //TODO
-    show: {}
-  }
-})
-*/
 @Component
 export default class MESSAGE extends Vue {
   @Prop() public text: string = "";
@@ -31,31 +23,12 @@ export default class MESSAGE extends Vue {
       this.show = val;
     }
   }
-  //TODO $emit quando show ridiventa false
+  //$emit quando show ridiventa false
   @Watch("show")
   onShowChanged(val: boolean, oldVal: boolean) {
     if (!val) {
       this.$emit("showFalse");
     }
   }
-
-  // export default {
-  /*
-[Vue warn]: Avoid mutating a prop directly since the value will be overwritten whenever the parent component re-renders.
-Instead, use a data or computed property based on the prop's value.
-Prop being mutated: "visible"
-https://stackoverflow.com/questions/43959824/instead-use-a-data-or-computed-property-based-on-the-props-value-vue-js
-https://michaelnthiessen.com/avoid-mutating-prop-directly/
-
-  data() {
-    return {
-      snackbar: false,
-      color: "",
-      mode: "",
-      timeout: 6000,
-      text: "Hello, I'm a snackbar"
-    };
-  }*/
-  // }
 }
 </script>
