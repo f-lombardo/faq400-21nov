@@ -5,7 +5,7 @@
     <message
       :visible="getMessageVisible()"
       :text="getMessageText()"
-      @showFalse="setMessageVisible(false)"
+      @onShowFalse="setMessageVisible(false)"
     ></message>
   </div>
 </template>

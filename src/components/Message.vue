@@ -27,7 +27,7 @@ export default class MESSAGE extends Vue {
   @Watch("show")
   onShowChanged(val: boolean, oldVal: boolean) {
     if (!val) {
-      this.$emit("showFalse");
+      this.$emit("onShowFalse");
     }
   }
 
