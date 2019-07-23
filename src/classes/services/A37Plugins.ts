@@ -1,7 +1,5 @@
 import Service from "@/classes/Service";
 import EnrichUtil from "../utils/EnrichUtil";
-import Vue from "vue";
-
 export default class A37Plugins extends Service {
   private path: string = "/gtw-hub/api/services";
 
@@ -95,8 +93,6 @@ export default class A37Plugins extends Service {
       srv
         .doGet(srv.path + "/frontend/deployer/a37DeployAll")
         .then((data: any) => {
-          //alert(data.messages[0].text);
-          Vue.prototype.$messageManager.show(data);
           resolve(data);
         });
     });

@@ -2,11 +2,11 @@
   <div>
     <component :is="root.type" :component="root" :key="root.id"></component>
     <!--   -->
-    <MESSAGE
+    <message
       :visible="getMessageVisible()"
       :text="getMessageText()"
       @showFalse="setMessageVisible(false)"
-    ></MESSAGE>
+    ></message>
   </div>
 </template>
 
@@ -16,11 +16,11 @@ import { mapGetters } from "vuex";
 
 import { startScript } from "@/mocks/startScript";
 
-import MESSAGE from "@/components/smeup/MESSAGE.vue";
+import message from "@/components/Message.vue";
 
 @Component({
   components: {
-    MESSAGE
+    message
   }
 })
 export default class Main extends Vue {
