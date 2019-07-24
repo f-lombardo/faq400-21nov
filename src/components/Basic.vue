@@ -28,7 +28,7 @@ export default class Basic extends VariableContext {
   }
 
   protected mounted(): void {
-    this.$on("execOwnFun", this._execFun);
+    this.$on("onExecFun", this._execFun);
   }
 
   public hasFun(): boolean {
@@ -76,7 +76,7 @@ export default class Basic extends VariableContext {
       // remove component from store
       this.$store.dispatch("webup/removeComponent", this);
     }
-    this.$off("execOwnFun");
+    this.$off("onExecFun");
   }
 
   public getOptions() {

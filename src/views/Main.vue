@@ -2,11 +2,15 @@
   <div>
     <component :is="root.type" :component="root" :key="root.id"></component>
     <!--   -->
-    <message
-      :visible="getMessageVisible()"
-      :text="getMessageText()"
-      @onShowFalse="setMessageVisible(false)"
-    ></message>
+    <smeup-message
+      :visible="this.message.visible"
+      :text="this.message.text"
+      @onShowFalse="
+        setMessage({
+          visible: false
+        })
+      "
+    ></smeup-message>
   </div>
 </template>
 
@@ -16,17 +20,21 @@ import { mapGetters } from "vuex";
 
 import { startScript } from "@/mocks/startScript";
 
-import message from "@/components/Message.vue";
+import smeupMessage from "@/components/Message.vue";
+
+import Message from "../interfaces/Message";
 
 @Component({
   components: {
-    message
+    smeupMessage
   }
 })
 export default class Main extends Vue {
   public root: any = startScript();
-  public messageText: string = "";
-  public messageVisible: boolean = false;
+  public message: Message = {
+    text: "",
+    visible: false
+  };
 
   private created() {
     /**
@@ -40,17 +48,8 @@ export default class Main extends Vue {
     this.$store.dispatch("webup/setMain", this);
   }
 
-  public getMessageVisible(): boolean {
-    return this.messageVisible;
-  }
-  public setMessageVisible(visible: boolean) {
-    this.messageVisible = visible;
-  }
-  public getMessageText(): string {
-    return this.messageText;
-  }
-  public setMessageText(msg: string) {
-    this.messageText = msg;
+  public setMessage(message: Message): void {
+    this.message = message;
   }
 }
 </script>

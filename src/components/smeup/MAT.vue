@@ -9,7 +9,7 @@
         show-icon="true"
         rounded="true"
         showtext="false"
-        @kupButtonClicked="onClick($event)"
+        @kupButtonClicked="onClickRefresh($event)"
       ></kup-button>
     </div>
 
@@ -25,8 +25,8 @@ import BasicComponent from "@/components/Basic.vue"; // @ is an alias to /src
 export default class MAT extends BasicComponent {
   protected name = "MAT";
 
-  private onClick() {
-    this.$emit("execOwnFun");
+  private onClickRefresh() {
+    this.$emit("onExecFun");
   }
 }
 </script>

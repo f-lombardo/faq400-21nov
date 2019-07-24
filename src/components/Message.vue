@@ -9,7 +9,7 @@
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 
 @Component
-export default class MESSAGE extends Vue {
+export default class Message extends Vue {
   @Prop() public text: string = "";
   @Prop() public visible: boolean = false;
 
