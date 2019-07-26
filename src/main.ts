@@ -11,6 +11,7 @@ import "./smeupComponents";
 import DynamismManager from "./classes/DynamismManager";
 import FunManager from "./classes/FunManager";
 import MessageManager from "./classes/MessageManager";
+import ScriptService from "./classes/services/ScriptService";
 
 import "vuetify/dist/vuetify.min.css"; // Ensure you are using css-loader
 import "@mdi/font/css/materialdesignicons.min.css";
@@ -19,8 +20,10 @@ Vue.use(Vuetify);
 
 Vue.config.productionTip = false;
 
-//axios.defaults.baseURL = "https://webuptest.smeup.com/gtw";
+// axios.defaults.baseURL = "https://webuptest.smeup.com/gtw";
 
+// script service
+Vue.prototype.$scriptManager = new ScriptService();
 // adding fun manager to Vue
 Vue.prototype.$funManager = new FunManager();
 // adding dynamism manager to Vue

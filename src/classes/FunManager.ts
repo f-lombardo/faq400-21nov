@@ -1,14 +1,8 @@
+import { Vue } from "vue-property-decorator";
+
 import Fun from "@/classes/Fun";
 import FunObject from "./FunObject";
 import ServiceFactory from "./ServicesFactory";
-
-import { DASHBOARD } from "@/mocks/DASH";
-import { LIST } from "@/mocks/LIST";
-import { A38 } from "@/mocks/A38";
-import { A37 } from "@/mocks/A37";
-import { RABBIT } from "@/mocks/RABBIT";
-import { LOGS } from "@/mocks/LOGS";
-import { TODO } from "@/mocks/TODO";
 
 export default class FunManager {
   async execute(fun: Fun): Promise<any> {
@@ -19,33 +13,11 @@ export default class FunManager {
     });
   }
 
-  getScript(fun: Fun): any {
-    // TODO Gestire l'importazione dinamica dello script
+  async getScript(fun: Fun): Promise<any> {
     var obj2: FunObject | null = fun.getObject(2);
     if (obj2) {
-      switch (obj2.getMethod()) {
-        case "Dashboard": {
-          return DASHBOARD;
-        }
-        case "Templates list": {
-          return LIST;
-        }
-        case "A37 plugins": {
-          return A37;
-        }
-        case "A38 plugins": {
-          return A38;
-        }
-        case "Queue rabbit": {
-          return RABBIT;
-        }
-        case "Logs": {
-          return LOGS;
-        }
-        default: {
-          return TODO;
-        }
-      }
+      let scriptName = obj2.getMethod().replace(/\s+/g, "");
+      return await Vue.prototype.$scriptManager.getScript(scriptName);
     }
   }
 }

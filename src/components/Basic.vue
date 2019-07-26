@@ -1,9 +1,8 @@
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { Component, Prop, Watch } from "vue-property-decorator";
 import { mapActions } from "vuex";
 
 import Fun from "@/classes/Fun";
-import FunManager from "@/classes/FunManager";
 import Dynamism from "@/classes/Dynamism";
 import ImplicitVariable from "@/interfaces/ImplicitVariable";
 
@@ -38,10 +37,16 @@ export default class Basic extends VariableContext {
   private _execFun(): void {
     var fun: Fun = new Fun(this.component.fun);
     if (fun.isServiceExternal()) {
-      this.component = this.$funManager.getScript(fun);
-      this.reloadComponent();
+      this.$funManager
+        .getScript(fun)
+        .then((data: any) => {
+          this.reloadComponent();
+        })
+        .catch(err => {
+          console.log(err);
+        });
     } else {
-      Vue.prototype.$funManager.execute(fun).then((data: any) => {
+      this.$funManager.execute(fun).then((data: any) => {
         this.reloadDataComponent(data);
       });
     }
