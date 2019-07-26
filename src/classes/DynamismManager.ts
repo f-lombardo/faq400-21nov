@@ -123,6 +123,9 @@ export default class DynamismManager {
   }
 
   private _executeAssignmentsInTarget(vueTarget: IBasic, dynamism: Dynamism) {
+    if (!vueTarget) {
+      return;
+    }
     // variables from source component
     if (dynamism.source && parseInt(dynamism.source.variables.length) > 0) {
       for (let k in dynamism.source.variables) {

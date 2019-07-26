@@ -36,7 +36,8 @@ export default class QueueRabbit extends Service {
 
               // Buttons
               // Button 01
-              var action = srv.path + "/frontend/hub/queuepurge/" + name.value;
+              var action01 =
+                srv.path + "/frontend/hub/queuepurge/" + name.value;
               let button01: Cell = {
                 value: "",
                 obj: { t: "J4", p: "ICO", k: "" }
@@ -45,7 +46,8 @@ export default class QueueRabbit extends Service {
               row.cells["BT01"] = button01;
 
               // Button 02
-              var action = srv.path + "/frontend/hub/queuedelete/" + name.value;
+              var action02 =
+                srv.path + "/frontend/hub/queuedelete/" + name.value;
               let button02: Cell = {
                 value: "",
                 obj: { t: "J4", p: "ICO", k: "" }
