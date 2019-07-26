@@ -26,6 +26,7 @@ fieldset {
         @ketchupTextInputUpdated="onFldChangePwd($event)"
         label="PASSWORD"
         is-clearable
+        input-type="password"
       ></kup-text-input>
       <br />
       <br />
@@ -49,9 +50,9 @@ export default class Main extends Vue {
   private message: string = "";
 
   created(): void {
-    console.log("REST URL:", process.env.VUE_APP_SMEUP_REST_URL);
-    console.log("RESET PAGE");
-    this.$store.dispatch("webup/clearState");
+    // console.log("REST URL:", process.env.VUE_APP_SMEUP_REST_URL);
+    // console.log("RESET PAGE");
+    this.$store.dispatch("webup/clearRoot");
     this.$store.dispatch("user/setUser", {
       user: "",
       password: ""
@@ -60,13 +61,13 @@ export default class Main extends Vue {
 
   private onFldChangeUser($event: CustomEvent): void {
     this.userValue = $event.detail.value;
-    console.log("USER CHANGED", $event.detail);
+    // console.log("USER CHANGED", $event.detail);
     this.message = "";
   }
 
   private onFldChangePwd($event: CustomEvent): void {
     this.pwdValue = $event.detail.value;
-    console.log("PWD CHANGED", $event.detail);
+    // console.log("PWD CHANGED", $event.detail);
     this.message = "";
   }
 
@@ -79,7 +80,7 @@ export default class Main extends Vue {
           password: this.pwdValue
         })
         .then(() => {
-          console.log("LOGGED IN");
+          // console.log("LOGGED IN");
           this.$router.push("/");
         });
     } else {

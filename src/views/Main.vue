@@ -1,9 +1,17 @@
 <template>
-  <component
-    :is="mainComponent.type"
-    :component="mainComponent"
-    :key="mainComponent.id"
-  ></component>
+  <div>
+    <component :is="root.type" :component="root" :key="root.id"></component>
+    <!--   -->
+    <smeup-message
+      :visible="this.message.visible"
+      :text="this.message.text"
+      @onShowFalse="
+        setMessage({
+          visible: false
+        })
+      "
+    ></smeup-message>
+  </div>
 </template>
 
 <script lang="ts">
@@ -12,15 +20,21 @@ import { mapGetters } from "vuex";
 
 import { startScript } from "@/mocks/startScript";
 
+import smeupMessage from "@/components/Message.vue";
+
+import Message from "../interfaces/Message";
+
 @Component({
-  computed: {
-    ...mapGetters({
-      mainComponent: "webup/mainComponent"
-    })
+  components: {
+    smeupMessage
   }
 })
 export default class Main extends Vue {
-  mainComponent: any;
+  public root: any = startScript();
+  public message: Message = {
+    text: "",
+    visible: false
+  };
 
   private created() {
     /**
@@ -30,8 +44,12 @@ export default class Main extends Vue {
      * Quando l'applicazione verrà completata, va inserita nel created la chiamata REST che recupera il JSON dello script di scheda.
      * L'oggetto ritornato sarà quindi nuovo ad ogni creazione del componente Main.
      */
-    // save root in store
-    this.$store.commit("webup/SET_ROOT", startScript());
+    // save main in store
+    this.$store.dispatch("webup/setMain", this);
+  }
+
+  public setMessage(message: Message): void {
+    this.message = message;
   }
 }
 </script>

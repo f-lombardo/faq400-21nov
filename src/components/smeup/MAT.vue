@@ -1,7 +1,19 @@
 <template>
-  <div v-if="this.comp && this.comp.loaded">
-    <h2>{{ this.comp.title }}</h2>
-    <kup-data-table :data.prop="getData()"></kup-data-table>
+  <div v-if="this.component && this.component.loaded">
+    <div style="display:flex;">
+      <h2 style="float:left;width:100%">{{ this.component.title }}</h2>
+      <kup-button
+        style="float:right"
+        label="Refresh"
+        icon-class="mdi mdi-refresh"
+        show-icon="true"
+        rounded="true"
+        showtext="false"
+        @kupButtonClicked="onClickRefresh($event)"
+      ></kup-button>
+    </div>
+
+    <kup-data-table :data.prop="component.data"></kup-data-table>
   </div>
 </template>
 
@@ -12,5 +24,9 @@ import BasicComponent from "@/components/Basic.vue"; // @ is an alias to /src
 @Component
 export default class MAT extends BasicComponent {
   protected name = "MAT";
+
+  private onClickRefresh() {
+    this.$emit("onExecFun");
+  }
 }
 </script>

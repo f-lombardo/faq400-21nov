@@ -61,7 +61,7 @@ export default class Fun {
   }
 
   isVoid(): boolean {
-    if (this.triad.service === "FBK") return true;
+    if (this.triad.component === "FBK") return true;
     return false;
   }
 

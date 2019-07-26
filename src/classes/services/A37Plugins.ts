@@ -1,6 +1,5 @@
 import Service from "@/classes/Service";
 import EnrichUtil from "../utils/EnrichUtil";
-
 export default class A37Plugins extends Service {
   private path: string = "/gtw-hub/api/services";
 

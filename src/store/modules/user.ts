@@ -16,7 +16,7 @@ export default class UserLogged extends VuexModule {
 
   @Mutation
   SET_USER(user: User) {
-    console.log("SET_USER: ", user);
+    // console.log("SET_USER: ", user);
     this.user = user;
   }
 

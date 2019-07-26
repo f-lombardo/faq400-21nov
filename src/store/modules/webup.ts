@@ -1,114 +1,145 @@
-import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
-
 import BasicComponent from "@/interfaces/BasicComponent";
 
 interface Component {
-  component: BasicComponent;
+  // VueComponent
+  component: BasicComponent; // Component
 }
 
 interface ComponentMap {
   [index: string]: Component;
 }
 
-@Module({
-  namespaced: true
-})
-export default class Webup extends VuexModule {
-  root: Component = {
-    component: {
+const state = {
+  main: {
+    root: <BasicComponent>{
       id: "webup",
       loaded: true,
       variables: {}
     }
-  };
+  },
+  componentsById: <ComponentMap>{}
+};
 
-  componentsById: ComponentMap = {};
-
-  @Mutation
-  CLEAR_ROOT() {
-    this.root = { component: { id: "webup", loaded: true, variables: {} } };
-  }
-
-  /**
-   * Sets a new root for the component used in Main.vue component.
-   * @namespace SET_ROOT
-   * @param root - The new root component to set
-   */
-  @Mutation
-  SET_ROOT(root: any) {
-    this.root = root;
-  }
-
-  @Mutation
-  ADD_COMPONENT(comp: Component) {
-    if (comp.component.id) {
-      this.componentsById[comp.component.id] = comp;
-    }
-  }
-
-  @Mutation
-  REMOVE_COMPONENT(comp: Component) {
-    if (comp.component.id) {
-      delete this.componentsById[comp.component.id];
-    }
-  }
-
-  /**
-   * FIXME this mutation is pontatially dangerous
-   * Use see comp link below for more details
-   * @namespace RELOAD_COMPONENT
-   * @param payload
-   * @see reloadComponent
-   * @see comp
-   */
-  @Mutation
-  RELOAD_COMPONENT(payload: any) {
-    // replace component
-    payload.comp.comp = payload.newComp;
-  }
-
-  @Action({ commit: "CLEAR_ROOT" })
-  clearState() {}
-
-  @Action({ commit: "ADD_COMPONENT" })
-  addComponent(payload: Component) {
-    return payload;
-  }
-
-  @Action({ commit: "REMOVE_COMPONENT" })
-  removeComponent(comp: Component) {
-    return comp;
-  }
-
-  /**
-   * TODO
-   * Per come funziona webup, se al dinamismo non è associato nessun target ed è presente il parametro 'exec',
-   * allora il target è la scheda globale.
-   * In quel caso è necessario invocare la mutation SET_ROOT.
-   * Questa action va aggiornata di conseguenza.
-   *
-   * @namespace reloadComponent
-   * @param payload
-   * @see RELOAD_COMPONENT
-   * @see SET_ROOT
-   */
-  @Action({ commit: "RELOAD_COMPONENT" })
-  reloadComponent(payload: { comp: Component; newComp: any }) {
-    return { comp: payload.comp, newComp: payload.newComp };
-  }
-
-  @Action({ commit: "SET_ROOT" })
-  reloadExd(newExd: any) {
-    return newExd;
-  }
-
-  get getComponentById() {
-    return (key: string): any => {
-      return this.componentsById[key];
+const mutations = {
+  clearRoot(state: any) {
+    state.main = {
+      root: <BasicComponent>{
+        id: "webup",
+        loaded: true,
+        variables: {}
+      }
     };
+  },
+  setRoot(state: any, root: any) {
+    state.main.root = root;
+  },
+  setMain(state: any, mainComponent: any) {
+    state.main = mainComponent;
+  },
+  addComponent(state: any, vueComponent: Component) {
+    // add vue component in componentsById
+    if (vueComponent.component.id) {
+      state.componentsById[vueComponent.component.id] = vueComponent;
+    }
+  },
+  removeComponent(state: any, vueComponent: Component) {
+    // remove vue component from componentsById
+    if (vueComponent.component.id) {
+      delete state.componentsById[vueComponent.component.id];
+    }
+  },
+  reloadComponent(state: any, component: BasicComponent) {
+    // copy root
+    const rootCopy = { ...state.main.root };
+    // reload component
+    let component2update = _getComponent(component.id, rootCopy);
+    if (component2update) {
+      component2update = Object.assign(component2update, component);
+    }
+    state.main.root = rootCopy;
+  },
+  reloadDataComponent(state: any, payload: any) {
+    // reload data component
+    let component2update = _getComponent(payload.id, state.main.root);
+    if (component2update) {
+      component2update.data = payload.data;
+    }
   }
+};
 
-  get mainComponent(): Component {
-    return this.root;
+const actions = {
+  setRoot({ commit }: { commit: any }, root: any) {
+    commit("setRoot", root);
+  },
+  setMain({ commit }: { commit: any }, mainComponent: any) {
+    commit("setMain", mainComponent);
+  },
+  clearRoot({ commit }: { commit: any }) {
+    commit("clearRoot");
+  },
+  addComponent({ commit }: { commit: any }, vueComponent: Component) {
+    commit("addComponent", vueComponent);
+  },
+  removeComponent({ commit }: { commit: any }, vueComponent: Component) {
+    commit("removeComponent", vueComponent);
+  },
+  reloadComponent({ commit }: { commit: any }, component: Component) {
+    commit("reloadComponent", component);
+  },
+  reloadDataComponent({ commit }: { commit: any }, payload: any) {
+    commit("reloadDataComponent", payload);
+  }
+};
+
+const getters = {
+  getComponentById(state: any) {
+    return (key: string): any => {
+      return state.componentsById[key];
+    };
+  },
+  getRoot(state: any) {
+    return state.main.root;
+  },
+  getMain(state: any) {
+    return state.main;
+  }
+};
+
+function _getComponent(
+  id: string,
+  currentNode: BasicComponent
+): BasicComponent | null {
+  var i, children, currentChild, result;
+  if (id == currentNode.id) {
+    return currentNode;
+  } else {
+    children = _getChildren(currentNode);
+    for (i = 0; i < children.length; i += 1) {
+      currentChild = children[i];
+      result = _getComponent(id, currentChild);
+      if (result != null) {
+        return result;
+      }
+    }
+    return null;
   }
 }
+
+const EXD_TYPE: string = "EXD";
+
+function _getChildren(component: BasicComponent): BasicComponent[] {
+  var components: BasicComponent[] = [];
+  if (component.type === EXD_TYPE) {
+    component.sections.forEach((section: any) => {
+      components = [...section.components, ...components];
+    });
+  }
+  return components;
+}
+
+export default {
+  state,
+  mutations,
+  actions,
+  getters
+};

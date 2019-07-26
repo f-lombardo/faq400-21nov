@@ -10,6 +10,7 @@ import "./smeupComponents";
 
 import DynamismManager from "./classes/DynamismManager";
 import FunManager from "./classes/FunManager";
+import MessageManager from "./classes/MessageManager";
 
 import "vuetify/dist/vuetify.min.css"; // Ensure you are using css-loader
 import "@mdi/font/css/materialdesignicons.min.css";
@@ -24,6 +25,9 @@ Vue.config.productionTip = false;
 Vue.prototype.$funManager = new FunManager();
 // adding dynamism manager to Vue
 Vue.prototype.$dynamismManager = new DynamismManager();
+// messages manager
+Vue.prototype.$messageManager = new MessageManager();
+
 //initial context
 Vue.prototype.$SmeUP = {
   GTWFrontend: {
