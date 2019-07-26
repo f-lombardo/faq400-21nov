@@ -7,7 +7,7 @@ export const A38: any = JSON.parse(`
   "layout": "column",
   "sections": [
     {
-      "id": "SA371",
+      "id": "SA381",
       "components": [
         {
         "type": "BTN",
@@ -71,7 +71,7 @@ export const A38: any = JSON.parse(`
       ]
     },
 	{
-      "id": "S2",
+      "id": "SA382",
       "components": [
         {
           "type": "EXB",

@@ -90,7 +90,7 @@ export default class A37Plugins extends Service {
 
               // Buttons
               // Button 01
-              var action =
+              var action01 =
                 srv.path + "/frontend/deployer/a37deploy/" + plg.value;
 
               let button01: Cell = {
@@ -101,7 +101,7 @@ export default class A37Plugins extends Service {
               row.cells["BT01"] = button01;
 
               // Button 02
-              var action =
+              var action02 =
                 srv.path + "/frontend/deployer/a37undeploy/" + plg.value;
               let button02: Cell = {
                 value: "",
@@ -111,7 +111,7 @@ export default class A37Plugins extends Service {
               row.cells["BT02"] = button02;
 
               // Button 03
-              var action =
+              var action03 =
                 srv.path + "/frontend/deployer/a37refresh/" + plg.value;
               let button03: Cell = {
                 value: "",
@@ -125,7 +125,7 @@ export default class A37Plugins extends Service {
               row.cells["BT03"] = button03;
 
               // Button 04
-              var action =
+              var action04 =
                 srv.path +
                 "/frontend/deployer/a37createFromTemplate/" +
                 plg.value;
@@ -141,7 +141,7 @@ export default class A37Plugins extends Service {
               row.cells["BT04"] = button04;
 
               // Button 05
-              var action =
+              var action05 =
                 srv.path + "/frontend/deployer/a37deletePlugin/" + plg.value;
               let button05: Cell = {
                 value: "",

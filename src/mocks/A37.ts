@@ -71,7 +71,7 @@ export const A37: any = JSON.parse(`
       ]
     },
 	{
-      "id": "S2",
+      "id": "SA372",
       "components": [
         {
           "type": "EXB",

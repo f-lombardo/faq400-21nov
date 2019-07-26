@@ -45,7 +45,7 @@ export default class Logs extends Service {
 
             // Buttons
             // Button 01
-            var action = view.value;
+            var action01 = view.value;
             let button01: Cell = {
               value: "",
               obj: { t: "J4", p: "ICO", k: "" }
@@ -58,7 +58,7 @@ export default class Logs extends Service {
             row.cells["BT01"] = button01;
 
             // Button 02
-            var action = link.value;
+            var action02 = link.value;
             let button02: Cell = {
               value: "",
               obj: { t: "J4", p: "ICO", k: "" }
@@ -67,7 +67,7 @@ export default class Logs extends Service {
             row.cells["BT02"] = button02;
 
             // Button 03
-            var action =
+            var action03 =
               srv.path + "/frontend/logger/deleteLogFile/" + name.value;
 
             let button03: Cell = {
