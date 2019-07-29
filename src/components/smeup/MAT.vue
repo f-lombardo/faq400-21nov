@@ -1,7 +1,8 @@
 <template>
   <div v-if="this.component && this.component.loaded">
     <div style="display:flex;">
-      <h2 style="float:left;width:100%">{{ this.component.title }}</h2>
+      <h2 style="float:left">{{ this.component.title }}</h2>
+      <div style="float:left">&nbsp;&nbsp;&nbsp;</div>
       <kup-button
         style="float:right"
         label="Refresh"
