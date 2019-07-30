@@ -35,15 +35,12 @@ Vue.prototype.$messageManager = new MessageManager();
 Vue.prototype.$SmeUP = {
   GTWFrontend: {
     urls: {
-      urlREST: process.env.VUE_APP_SMEUP_REST_URL
+      config: "http://localhost:3000/config/",
+      rest: "http://localhost:8096/"
     }
   },
   axiosInstance: axios
 };
-
-//axios.defaults.baseURL
-Vue.prototype.$SmeUP.axiosInstance.defaults.baseURL =
-  Vue.prototype.$SmeUP.GTWFrontend.urls.urlREST;
 
 const Instance = new Vue({
   router,

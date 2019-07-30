@@ -1,9 +1,10 @@
 import Service from "@/classes/Service";
+import Vue from "vue";
 
 export default class ScriptService extends Service {
-  private _serverConfigURL: string = "http://localhost:3000/config/";
-
   public async getScript(scriptName: string) {
-    return await this.doGet(this._serverConfigURL + scriptName);
+    return await this.doGet(
+      Vue.prototype.$SmeUP.GTWFrontend.urls.config + scriptName
+    );
   }
 }
