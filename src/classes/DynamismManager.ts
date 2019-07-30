@@ -48,9 +48,15 @@ export default class DynamismManager {
           // con *SCO come servizio uguale agli altri
           // TODO esportare execute fun in un private method per riutilizzarlo
           if (fun.isServiceExternal()) {
-            const newComponent = Vue.prototype.$funManager.getScript(fun);
-            // reload component
-            this._reloadComponent(vueComponent.$store, newComponent);
+            Vue.prototype.$funManager
+              .getScript(fun)
+              .then((newComponent: any) => {
+                // reload component
+                this._reloadComponent(vueComponent.$store, newComponent);
+              })
+              .catch((err: any) => {
+                console.log(err);
+              });
           } else {
             this._getDataThenReload(vueComponent.$store, fun, c);
           }
@@ -104,9 +110,15 @@ export default class DynamismManager {
     if (fun.isServiceExternal()) {
       // load new component
       // TODO ma è giusta questa cosa qui? Mi ritorna sempre la scheda da sostituire alla root?
-      const newEXD = Vue.prototype.$funManager.getScript(fun);
-      vueComponent.$store.dispatch("webup/setRoot", newEXD);
-      // TODO verificare se bisogna fare forceUpdate su MainComponent
+      Vue.prototype.$funManager
+        .getScript(fun)
+        .then((newEXD: any) => {
+          vueComponent.$store.dispatch("webup/setRoot", newEXD);
+          // TODO verificare se bisogna fare forceUpdate su MainComponent
+        })
+        .catch((err: any) => {
+          console.log(err);
+        });
     }
     if (fun.isVoid()) {
       Vue.prototype.$funManager.execute(fun).then(() => {
