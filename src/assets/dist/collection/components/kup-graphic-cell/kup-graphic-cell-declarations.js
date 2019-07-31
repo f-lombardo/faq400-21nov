@@ -15,6 +15,7 @@ export class GraphicElement {
                 this.initShape(marker);
             }
             else if (marker.toUpperCase().startsWith('BCOLOR;')) {
+                // TODO ?
             }
             else {
                 this.initColor(marker);
@@ -89,6 +90,7 @@ export class GraphicElement {
         const vRgb = [];
         let vError = false;
         let vColorKey = null;
+        // red
         let vIndex = color.indexOf('R');
         if (vIndex > -1) {
             vColorKey = color.substring(vIndex + 1, vIndex + 4);
@@ -97,6 +99,7 @@ export class GraphicElement {
                 vError = true;
             }
         }
+        // green
         vIndex = color.indexOf('G');
         if (vIndex > -1) {
             vColorKey = color.substring(vIndex + 1, vIndex + 4);
@@ -105,6 +108,7 @@ export class GraphicElement {
                 vError = true;
             }
         }
+        // blue
         vIndex = color.indexOf('B');
         if (vIndex > -1) {
             vColorKey = color.substring(vIndex + 1, vIndex + 4);
@@ -117,16 +121,19 @@ export class GraphicElement {
             const vIndexR = color.indexOf('R');
             const vIndexG = color.indexOf('G');
             const vIndexB = color.indexOf('B');
+            // check R
             vColorKey = color.substring(vIndexR + 1, vIndexG);
             vRgb[0] = parseInt(vColorKey);
             if (isNaN(vRgb[0])) {
                 vError = true;
             }
+            // Check G
             vColorKey = color.substring(vIndexG + 1, vIndexB);
             vRgb[1] = parseInt(vColorKey);
             if (isNaN(vRgb[1])) {
                 vError = true;
             }
+            // Check B
             vColorKey = color.substring(vIndexB + 1);
             vRgb[2] = parseInt(vColorKey);
             if (isNaN(vRgb[2])) {
@@ -136,6 +143,7 @@ export class GraphicElement {
                 return false;
             }
         }
+        // Check if all values are between 0 and 255
         if (vRgb[0] < 0 ||
             vRgb[0] > 255 ||
             vRgb[1] < 0 ||
@@ -144,6 +152,7 @@ export class GraphicElement {
             vRgb[2] > 255) {
             return false;
         }
+        // All good
         return true;
     }
     getHeight() {

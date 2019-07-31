@@ -1,4 +1,3 @@
-import '../../stencil.core';
 import { EventEmitter } from '../../stencil.core';
 export declare class KupHtml {
     /**
@@ -23,5 +22,5 @@ export declare class KupHtml {
      */
     ketchupHtmlLoaded: EventEmitter;
     onFrameLoaded(): void;
-    render(): JSX.Element;
+    render(): any;
 }

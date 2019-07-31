@@ -1,10 +1,6 @@
-import '../../stencil.core';
+import { JSX } from '../../stencil.core';
 import { ElementOffset } from "../../utils/offset";
 export declare class KupPortal {
-    /**
-     * Reference to the html element from which CSS Custom Properties must be derived
-     */
-    cssVarsRef: HTMLElement;
     /**
      * Tells the portal instance if it can be visible or not
      */
@@ -18,6 +14,11 @@ export declare class KupPortal {
      */
     nodes: JSX.Element[] | JSX.Element;
     /**
+     * Reference to the html element which is using the portal.
+     * It must be a root of a web component.
+     */
+    portalParentRef: HTMLElement;
+    /**
      * Calculated offset of where the portal must be positioned
      */
     refOffset: ElementOffset;
@@ -28,10 +29,12 @@ export declare class KupPortal {
     /**
      * A style node to be copied into the KetchupPortalInstance
      */
-    styleNode: HTMLStyleElement;
+    styleNode: HTMLStyleElement | null;
     instance: HTMLKupPortalInstanceElement;
+    supportsShadowRoot: boolean;
+    supportsAdoptedStyle: boolean;
     componentWillLoad(): void;
-    componentWillUpdate(): void;
+    componentWillRender(): void;
     componentDidUnload(): void;
     onPortalRootNodeChange(newValue: any): void;
     computeCssVars(el: HTMLElement, props: string[]): void;

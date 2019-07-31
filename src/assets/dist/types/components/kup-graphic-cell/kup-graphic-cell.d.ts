@@ -1,4 +1,3 @@
-import '../../stencil.core';
 import { GraphicElement, Color } from './kup-graphic-cell-declarations';
 export declare class KupGraphicCell {
     value: string;
@@ -29,5 +28,5 @@ export declare class KupGraphicCell {
     drawArrow(sep: string): void;
     drawGrid(sep: string): void;
     drawSeparator(sep: string): void;
-    render(): JSX.Element;
+    render(): any;
 }

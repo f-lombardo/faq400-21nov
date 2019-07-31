@@ -34,15 +34,24 @@ label {
 
 .kup-input-text {
   color: var(--int_color);
-  background-color: var(--int_background-color);
-  border: 1px solid var(--int_border-color);
-  border-radius: 2px;
-  box-sizing: border-box;
+  background-color: transparent;
+  border: none;
   outline: none;
   padding: 4px 6px;
   position: relative;
   transition: background-color var(--int_tr-duration);
   z-index: 0;
+}
+.kup-input-text__input-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: var(--int_background-color);
+  border: 1px solid var(--int_border-color);
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+.kup-input-text__input-wrapper.focused {
+  border-color: var(--int_border-color--selected);
 }
 .kup-input-text__container {
   display: inline-block;
@@ -52,12 +61,6 @@ label {
 .kup-input-text::placeholder {
   color: var(--int_placeholder-color);
 }
-.kup-input-text:hover, .kup-input-text:focus {
-  border-color: var(--int_border-color--selected);
-}
-.kup-input-text--clearable {
-  padding-right: calc( 6px + 4px * 2 + var(--int_font-size) );
-}
 .kup-input-text__clear {
   align-items: center;
   background-color: transparent;
@@ -65,13 +68,8 @@ label {
   cursor: pointer;
   display: inline-flex;
   justify-content: center;
-  margin: 0;
   outline: none;
   padding: 4px;
-  position: absolute;
-  right: 6px;
-  top: 50%;
-  transform: translateY(-50%);
   z-index: 1;
 }
 .kup-input-text__clear > svg {

@@ -1,5 +1,7 @@
+import { h } from '@stencil/core';
 export class KupBtn {
     constructor() {
+        // setup props
         this.config = {};
     }
     onBtnClicked(event) {
@@ -14,6 +16,7 @@ export class KupBtn {
                 this.buttons.forEach((btn, index) => {
                     const mod = index % this.config.columns;
                     if (mod === 0) {
+                        // new row
                         buttonsInGrid.push([]);
                     }
                     buttonsInGrid[buttonsInGrid.length - 1].push(btn);
@@ -57,6 +60,11 @@ export class KupBtn {
         if (!this.config.horizontal) {
             compClass += ' vertical';
         }
+        //- Composes the style of the button -
+        // TODO this is how currently JSX can set custom CSS vars. Check periodically for a better way
+        // It simply sets them in style inside the html. Not the most elegant way,
+        // https://medium.com/geckoboard-under-the-hood/how-we-made-our-product-more-personalized-with-css-variables-and-react-b29298fde608
+        // https://medium.com/fbdevclagos/how-to-leverage-styled-components-and-css-variables-to-build-truly-reusable-components-in-react-4bbf50467666
         const commonStyle = {};
         if (this.config.btnStyle) {
             if (this.config.btnStyle.fontColor) {
@@ -89,18 +97,51 @@ export class KupBtn {
     }
     static get is() { return "kup-btn"; }
     static get encapsulation() { return "shadow"; }
+    static get originalStyleUrls() { return {
+        "$": ["kup-btn.scss"]
+    }; }
+    static get styleUrls() { return {
+        "$": ["kup-btn.css"]
+    }; }
     static get properties() { return {
         "buttons": {
-            "type": "Any",
-            "attr": "buttons"
+            "type": "unknown",
+            "mutable": false,
+            "complexType": {
+                "original": "any[]",
+                "resolved": "any[]",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            }
         },
         "config": {
-            "type": "Any",
-            "attr": "config"
-        },
-        "selectedBtnIndex": {
-            "state": true
+            "type": "unknown",
+            "mutable": false,
+            "complexType": {
+                "original": "ButtonConfig",
+                "resolved": "ButtonConfig",
+                "references": {
+                    "ButtonConfig": {
+                        "location": "import",
+                        "path": "./kup-btn-declarations"
+                    }
+                }
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "defaultValue": "{}"
         }
     }; }
-    static get style() { return "/**style-placeholder:kup-btn:**/"; }
+    static get states() { return {
+        "selectedBtnIndex": {}
+    }; }
 }

@@ -1,3 +1,4 @@
+import { h } from '@stencil/core';
 export class KupDash {
     constructor() {
         this.layout = '1';
@@ -82,6 +83,7 @@ export class KupDash {
                         h("slot", { name: "descr" }))));
                 break;
             default:
+                // layout 1
                 content = (h("div", null,
                     h("div", { class: "descr" },
                         h("slot", { name: "descr" })),
@@ -95,22 +97,64 @@ export class KupDash {
     }
     static get is() { return "kup-dash"; }
     static get encapsulation() { return "shadow"; }
+    static get originalStyleUrls() { return {
+        "$": ["kup-dash.scss"]
+    }; }
+    static get styleUrls() { return {
+        "$": ["kup-dash.css"]
+    }; }
     static get properties() { return {
-        "fontsize": {
-            "type": String,
-            "attr": "fontsize"
-        },
         "layout": {
-            "type": String,
-            "attr": "layout"
+            "type": "string",
+            "mutable": false,
+            "complexType": {
+                "original": "string",
+                "resolved": "string",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "layout",
+            "reflect": false,
+            "defaultValue": "'1'"
+        },
+        "fontsize": {
+            "type": "string",
+            "mutable": false,
+            "complexType": {
+                "original": "string",
+                "resolved": "string",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "fontsize",
+            "reflect": false,
+            "defaultValue": "''"
         }
     }; }
     static get events() { return [{
-            "name": "ketchupDashClicked",
             "method": "ketchupDashClicked",
+            "name": "ketchupDashClicked",
             "bubbles": true,
             "cancelable": true,
-            "composed": true
+            "composed": true,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "complexType": {
+                "original": "{\t\t\r\n    }",
+                "resolved": "{}",
+                "references": {}
+            }
         }]; }
-    static get style() { return "/**style-placeholder:kup-dash:**/"; }
 }

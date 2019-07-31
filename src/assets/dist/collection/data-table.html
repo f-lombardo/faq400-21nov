@@ -16,7 +16,8 @@
             type="text/css"
         />
 
-        <script src="/build/mycomponent.js"></script>
+        <script type="module" src="/build/mycomponent.esm.js"></script>
+        <script nomodule src="/build/mycomponent.js"></script>
     </head>
 
     <body>
@@ -29,7 +30,7 @@
 
             <h1>Columns and rows</h1>
             <div style="width: 300px; overflow: auto;">
-                <kup-data-table id="basic-data"></kup-data-table
+                <kup-data-table id="basic-data" enable-sortable-columns></kup-data-table
             ></div>
         </div>
 

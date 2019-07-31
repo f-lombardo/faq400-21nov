@@ -1,3 +1,6 @@
-import { ChartConfig } from './kup-chart-declarations';
-export declare const convertColumns: (data: any, config: ChartConfig) => string[];
-export declare const convertRows: (data: any, series: string[]) => any[];
+import { Column, DataTable } from '../kup-data-table/kup-data-table-declarations';
+export declare const convertColumns: (data: DataTable, { series, axis }: {
+    series: any;
+    axis: any;
+}) => Column[];
+export declare const convertRows: (data: any, columns: Column[], showMarks: boolean) => any[];

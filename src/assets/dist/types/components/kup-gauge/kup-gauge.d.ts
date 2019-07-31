@@ -1,4 +1,3 @@
-import '../../stencil.core';
 export declare class KupGauge {
     /**
      * Sets how much the arc of the gauge should be thick.
@@ -39,9 +38,13 @@ export declare class KupGauge {
      */
     secondThreshold?: number;
     /**
-     * If set to false, the maximum, minimum and threshold values of the gauge are not displayed.
+     * If set to false, threshold values of the gauge are not displayed.
      */
     showLabels: boolean;
+    /**
+     * If set to false, the maximum and minimum values of the gauge are not displayed.
+     */
+    showMaxmin: boolean;
     /**
      * If set to false, the current value of the gauge is not displayed.
      */
@@ -58,6 +61,24 @@ export declare class KupGauge {
      * The gauge's needle points to the percentage based on this prop.
      */
     value: number;
+    /**
+     * The current size of gauge's value.
+     * Correct values are: 0,1,2 or 3.
+     */
+    valueSize: number;
+    /**
+     * if true, shows a rounded needle.
+     */
+    needleCircle: boolean;
+    /**
+     * if true, ignore threasholds in gauge and show
+     * colored value's arc.
+     */
+    onlyValue: boolean;
+    /**
+     * Set Width gauge.
+     */
+    widthComponent: string;
     private arcGenerator;
     /**
      * Holds the maximum positive interval.
@@ -77,6 +98,7 @@ export declare class KupGauge {
      * @see kup-gauge.maxValuePositive
      */
     calculateValuePercentage(valueToPercentage?: number): number;
+    calculateValueFontSize(): string;
     /**
      * Provided all the necessary data, returns the string necessary for a <path/> element to build the gauge needle.
      * @param needleLength - A pure number of viewbox units indicating the needle lenght.
@@ -87,5 +109,5 @@ export declare class KupGauge {
      * @returns {string}
      */
     paintNeedle(needleLength: number, needleBaseRadius: number, centerX: number, centerY: number, rotationPercentage?: number): string;
-    render(): JSX.Element;
+    render(): any;
 }

@@ -1,3 +1,4 @@
+import { h } from '@stencil/core';
 export class KupPaginator {
     constructor() {
         this.max = 0;
@@ -15,6 +16,7 @@ export class KupPaginator {
         if (this.isPrevPageDisabled()) {
             return;
         }
+        // fire next page event
         this.kupPageChanged.emit({
             newPage: this.currentPage - 1,
         });
@@ -23,6 +25,7 @@ export class KupPaginator {
         if (this.isNextPageDisabled()) {
             return;
         }
+        // fire next page event
         this.kupPageChanged.emit({
             newPage: this.currentPage + 1,
         });
@@ -37,6 +40,7 @@ export class KupPaginator {
             newRowsPerPage: parseInt(target.value),
         });
     }
+    // render functions
     getGoToPageOptions(maxNumberOfPage) {
         const goToPageOptions = [];
         goToPageOptions.push(h("option", { value: "1", selected: this.currentPage === 1 }, "1"));
@@ -56,6 +60,7 @@ export class KupPaginator {
                 rowsPerPageOptions.push(h("option", { value: i, selected: i === this.selectedPerPage }, i));
                 i = i * 2;
             }
+            // adding 'max' option
             rowsPerPageOptions.push(h("option", { value: this.max, selected: this.max === this.perPage }, this.max));
         }
         else {
@@ -89,42 +94,122 @@ export class KupPaginator {
                 h("span", { class: "nextPageGroup" },
                     "Numero risultati: ",
                     this.max),
+                h("slot", { name: "more-results" }),
                 "Mostra",
                 h("select", { onChange: (e) => this.onRowsPerPage(e) }, rowsPerPageOptions),
                 "righe per pagina")));
     }
     static get is() { return "kup-paginator"; }
     static get encapsulation() { return "shadow"; }
+    static get originalStyleUrls() { return {
+        "$": ["kup-paginator.scss"]
+    }; }
+    static get styleUrls() { return {
+        "$": ["kup-paginator.css"]
+    }; }
     static get properties() { return {
-        "currentPage": {
-            "type": Number,
-            "attr": "current-page"
-        },
         "max": {
-            "type": Number,
-            "attr": "max"
+            "type": "number",
+            "mutable": false,
+            "complexType": {
+                "original": "number",
+                "resolved": "number",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "max",
+            "reflect": false,
+            "defaultValue": "0"
         },
         "perPage": {
-            "type": Number,
-            "attr": "per-page"
+            "type": "number",
+            "mutable": false,
+            "complexType": {
+                "original": "number",
+                "resolved": "number",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "per-page",
+            "reflect": false,
+            "defaultValue": "10"
         },
         "selectedPerPage": {
-            "type": Number,
-            "attr": "selected-per-page"
+            "type": "number",
+            "mutable": false,
+            "complexType": {
+                "original": "number",
+                "resolved": "number",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "selected-per-page",
+            "reflect": false,
+            "defaultValue": "10"
+        },
+        "currentPage": {
+            "type": "number",
+            "mutable": false,
+            "complexType": {
+                "original": "number",
+                "resolved": "number",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "current-page",
+            "reflect": false,
+            "defaultValue": "1"
         }
     }; }
     static get events() { return [{
-            "name": "kupPageChanged",
             "method": "kupPageChanged",
+            "name": "kupPageChanged",
             "bubbles": true,
             "cancelable": false,
-            "composed": true
+            "composed": true,
+            "docs": {
+                "tags": [],
+                "text": "When the current page change"
+            },
+            "complexType": {
+                "original": "{ newPage: number }",
+                "resolved": "{ newPage: number; }",
+                "references": {}
+            }
         }, {
-            "name": "kupRowsPerPageChanged",
             "method": "kupRowsPerPageChanged",
+            "name": "kupRowsPerPageChanged",
             "bubbles": true,
             "cancelable": false,
-            "composed": true
+            "composed": true,
+            "docs": {
+                "tags": [],
+                "text": "When the rows per page change"
+            },
+            "complexType": {
+                "original": "{ newRowsPerPage: number }",
+                "resolved": "{ newRowsPerPage: number; }",
+                "references": {}
+            }
         }]; }
-    static get style() { return "/**style-placeholder:kup-paginator:**/"; }
 }

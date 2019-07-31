@@ -13,9 +13,3 @@ export function eventFromElement(element, eventSource) {
     }
     return false;
 }
-export function generateRandomID() {
-    return ('_' +
-        Math.random()
-            .toString(36)
-            .substr(2, 9));
-}

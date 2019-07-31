@@ -1,8 +1,13 @@
+export interface DataTable {
+    columns?: Array<Column>;
+    rows?: Array<Row>;
+}
 export interface Column {
     name: string;
     title: string;
     size?: number;
     visible?: boolean;
+    hideValuesRepetitions?: boolean;
 }
 export interface Row {
     cells: {
@@ -17,10 +22,16 @@ export interface Row {
         expanded: boolean;
         label: string;
         children: Array<Row>;
+        obj: {
+            t: string;
+            p: string;
+            k: string;
+        };
         totals: {
             [index: string]: number;
         };
     };
+    readOnly?: boolean;
 }
 export interface Cell {
     obj: {
@@ -32,6 +43,10 @@ export interface Cell {
     style?: GenericMap;
     options?: boolean;
     config?: any;
+}
+export interface TableData {
+    columns?: Array<Column>;
+    rows?: Array<Row>;
 }
 export interface GenericMap {
     [index: string]: string;
@@ -70,4 +85,19 @@ export declare enum ShowGrid {
     ROW = "Row",
     COL = "Col",
     COMPLETE = "Complete"
+}
+export interface KupDataTableCellButtonClick {
+    cell: Cell;
+    column: Column;
+    row: Row;
+}
+export declare enum LoadMoreMode {
+    CONSTANT = "constant",
+    CONSTANT_INCREMENT = "constant_increment",
+    PROGRESSIVE_THRESHOLD = "progressive_threshold"
+}
+export declare const KupDataTableColumnDragType = "text/kup-data-table-column-drag";
+export interface KupDataTableSortedColumnIndexes {
+    receivingColumnIndex: number;
+    sortedColumnIndex: number;
 }
