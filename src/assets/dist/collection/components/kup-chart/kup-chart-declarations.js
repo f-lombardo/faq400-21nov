@@ -15,3 +15,8 @@ export var ChartType;
     ChartType["Unk"] = "Unk";
     ChartType["Vbar"] = "Vbar";
 })(ChartType || (ChartType = {}));
+export var ChartAspect;
+(function (ChartAspect) {
+    ChartAspect["D2"] = "2D";
+    ChartAspect["D3"] = "3D";
+})(ChartAspect || (ChartAspect = {}));

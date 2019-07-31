@@ -1,1 +1,0 @@
-mycomponent.loadBundle("chunk-2a6f2324.js",["exports"],function(e){e.generateUniqueId=function(e){return void 0===e&&(e="def"),(new Date).getTime()+e.trim().replace(/\s/g,"_")},e.generateRandomID=function(){return"_"+Math.random().toString(36).substr(2,9)},e.eventFromElement=function(e,n){for(;n;){if(console.log(n),n===e)return!0;n=n.parentElement}return!1}});

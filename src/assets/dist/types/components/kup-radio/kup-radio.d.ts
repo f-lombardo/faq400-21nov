@@ -1,4 +1,3 @@
-import '../../stencil.core';
 import { EventEmitter } from '../../stencil.core';
 import { KetchupRadioElement, KetchupRadioChangeEvent } from "./kup-radio-declarations";
 export declare class KupRadio {
@@ -39,6 +38,6 @@ export declare class KupRadio {
      * */
     ketchupRadioChanged: EventEmitter<KetchupRadioChangeEvent>;
     onRadioChanged(radio: KetchupRadioElement): void;
-    radioElementsComposer(): JSX.Element[];
-    render(): JSX.Element;
+    radioElementsComposer(): any[];
+    render(): any;
 }

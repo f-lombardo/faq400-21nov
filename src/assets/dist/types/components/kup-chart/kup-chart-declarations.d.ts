@@ -1,17 +1,4 @@
-export interface ChartConfig {
-    type: ChartType;
-    axe: string;
-    series: Array<string>;
-    asp?: string;
-    colors?: Array<string>;
-    height?: number;
-    width?: number;
-    leg?: boolean;
-    stacked?: boolean;
-    title?: string;
-    titleColor?: string;
-    titleSize?: string;
-}
+import { Column, Row } from '../kup-data-table/kup-data-table-declarations';
 export declare enum ChartType {
     Area = "Area",
     Bubble = "Bubble",
@@ -27,4 +14,29 @@ export declare enum ChartType {
     Scatter = "Scatter",
     Unk = "Unk",
     Vbar = "Vbar"
+}
+export declare enum ChartAspect {
+    D2 = "2D",
+    D3 = "3D"
+}
+export interface ChartOptions {
+    is3D: boolean;
+    colors?: string[];
+    width?: number;
+    height?: number;
+    legend?: {
+        position: string;
+    };
+    isStacked?: boolean;
+    title?: string;
+    titleTextStyle?: {
+        color?: string;
+        fontSize?: number;
+    };
+    series?: any;
+}
+export interface ChartClickedEvent {
+    datetime?: string;
+    column?: Column;
+    row?: Row;
 }

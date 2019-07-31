@@ -1,4 +1,3 @@
-import '../../stencil.core';
 import { EventEmitter } from '../../stencil.core';
 import { ComboItem, ComboPosition, KetchupComboEvent } from './kup-combo-declarations';
 import { GenericObject } from "../../types/GenericTypes";
@@ -53,6 +52,8 @@ export declare class KupCombo {
     clickFunction: any;
     comboText: HTMLInputElement;
     comboPosition: ComboPosition;
+    constructedStyleSheet: any;
+    internalCssVars: string[];
     baseClass: string;
     componentWillLoad(): void;
     componentDidLoad(): void;
@@ -61,12 +62,12 @@ export declare class KupCombo {
      * Programmatically close the combo box
      * @method closeCombo
      */
-    closeCombo(): void;
+    closeCombo(): Promise<void>;
     /**
      * Programmatically opens the combo box
      * @method openCombo
      */
-    openCombo(): void;
+    openCombo(): Promise<void>;
     reflectInitialValue(newValue: ComboItem | null, oldValue?: ComboItem): void;
     reflectValueField(newValue: string): void;
     calcBoxPosition(): {
@@ -116,6 +117,6 @@ export declare class KupCombo {
      */
     ketchupComboSelected: EventEmitter<KetchupComboEvent>;
     onComboSelected(item: ComboItem | null, oldItem: ComboItem | null): void;
-    composeList(): JSX.Element;
-    render(): JSX.Element[];
+    composeList(): any;
+    render(): any[];
 }

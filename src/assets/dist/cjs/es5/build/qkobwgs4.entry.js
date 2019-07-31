@@ -1,5 +1,0 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var mycomponent_core_js_1 = require("../mycomponent.core.js");
-var KupProgressBar = function () { function e() { this.value = 0, this.label = ""; } return e.prototype.render = function () { return mycomponent_core_js_1.h("div", { id: "progress-bar" }, mycomponent_core_js_1.h("div", { id: "value", style: { width: this.value + "%" } }), mycomponent_core_js_1.h("div", { id: "label" }, this.label)); }, Object.defineProperty(e, "is", { get: function () { return "kup-progress-bar"; }, enumerable: !0, configurable: !0 }), Object.defineProperty(e, "encapsulation", { get: function () { return "shadow"; }, enumerable: !0, configurable: !0 }), Object.defineProperty(e, "properties", { get: function () { return { label: { type: String, attr: "label" }, value: { type: Number, attr: "value" } }; }, enumerable: !0, configurable: !0 }), Object.defineProperty(e, "style", { get: function () { return ""; }, enumerable: !0, configurable: !0 }), e; }();
-exports.KupProgressBar = KupProgressBar;

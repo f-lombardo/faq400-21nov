@@ -1,4 +1,3 @@
-import '../../stencil.core';
 import { Badge } from './kup-image-declarations';
 export declare class KupImage {
     src: string;
@@ -6,5 +5,5 @@ export declare class KupImage {
     width: number;
     height: number;
     badges: Badge[];
-    render(): JSX.Element;
+    render(): any;
 }

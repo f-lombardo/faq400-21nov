@@ -1,5 +1,6 @@
-import '../../stencil.core';
+import { JSX } from '../../stencil.core';
 export declare class KupPortalInstance {
+    additionalAdoptedStyleSheets: CSSStyleSheet[];
     /**
      * Specifies if the current portal instance should be displayed or not.
      */
@@ -12,7 +13,9 @@ export declare class KupPortalInstance {
      * Virtual node list the KetchupPortalInstance must render
      */
     vNodes?: JSX.Element[] | JSX.Element;
-    componentWillUpdate(): void;
     port: HTMLElement;
+    initialStyleSheets: CSSStyleSheet[];
+    componentWillRender(): void;
+    componentDidUpdate(): void;
     render(): JSX.Element | JSX.Element[];
 }

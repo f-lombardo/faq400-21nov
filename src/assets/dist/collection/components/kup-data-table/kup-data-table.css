@@ -1,38 +1,62 @@
 @import url(https://cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css);
 /**
-* @prop --int_stronger-color, --kup-data-table_stronger-color: Set text color
-* @prop --int_hover-color, --kup-data-table_hover-color: Set text color when hover on row
-* @prop --int_hover-background-color, --kup-data-table_hover-background-color: Set background color when hover on row
+* @prop --int_background-color, --kup-data-table_background-color: background-color of the whole component (paginator and table).
+* @prop --int_border-color, --kup-data-table_border-color: border-color for the whole table.
+* @prop --int_box-shadow, --kup-data-table_box-shadow: common box-shadow used by the table.
+* @prop --int_color, --kup-data-table_color: Text color of the column menu when hovering a header cell.
+* @prop --int_drag-over--allowed, --kup-data-table_drag-over--allowed: the color of the cell when the drop of the drag is allowed.
+* @prop --int_drag-over--forbidden, --kup-data-table_drag-over--forbidden: the color of the cell when the drop of the drag is forbidden.
+* @prop --int_filter-border-color, --kup-data-table_filter-border-color: Sets border color onto kup-text-input elements used to filter rows.
+* @prop --int_filter-background-color, --kup-data-table_filter-background-color: Sets background color onto kup-text-input elements used to filter rows.
+* @prop --int_group-background-color, --kup-data-table_group-background-color: background-color when grouping elements.
+* @prop --int_group-border-color, --kup-data-table_group-border-color: TODO check where used.
+* @prop --int_hover-color, --kup-data-table_hover-color: text color of a row when it's selected or hovered.
+* @prop --int_head-background-color, --kup-data-table_head-background-color: Background color of the table header.
+* @prop --int_header-offset, --kup-data-table_header-offset: Top offset of the thead when table header must be persistent. Default: 50px;
+* @prop --int_hover-background-color, --kup-data-table_hover-background-color: background-color of a row when it's selected or hovered.
+* @prop --int_icons-color, --kup-data-table_icons-color: Color of a table icon.
+* @prop --int_icons-hover-color, --kup-data-table_icons-hover-color: Color of a hovered icon.
+* @prop --int_font-size, --kup-data-table_font-size: Sets basic font size.
+* @prop --int_main-color, --kup-data-table_main-color: Set text color. Has the precedence.
+* @prop --int_stronger-color, --kup-data-table_stronger-color: Set text color on the whole table element.
+* @prop --int_text-on-main-color, --kup-data-table_text-on-main-color: Color of the grouping chips of a column.
 */
 :host {
   --int_background-color: var(--kup-data-table_background-color, #ffffff);
-  --int_main-color: var(--kup-data-table_main-color, #6aaaa7);
-  --int_text-on-main-color: var(--kup-data-table_text-on-main-color, #ffffff);
-  --int_color: var(--kup-data-table_color, #545454);
-  --int_stronger-color: var(--kup-data-table_stronger-color, #111111);
-  --int_hover-color: var(--kup-data-table_hover-color, #545454);
-  --int_hover-background-color: var(
-    --kup-data-table_hover-background-color,
-    #e0e0e0
-  );
   --int_border-color: var(--kup-data-table_border-color, #000000);
-  --int_head-background-color: var(
-    --kup-data-table_head-background-color,
-    #f5f5f5
-  );
-  --int_group-background-color: var(
-    --kup-data-table_group-background-color,
-    #f5f5f5
-  );
-  --int_group-border-color: var(--kup-data-table_group-border-color, #6aaaa7);
-  --int_filter-border-color: var(--kup-data-table_filter-border-color, #dadada);
-  --int_icons-color: var(--kup-data-table_icons-color, #808080);
-  --int_icons-hover-color: var(--kup-data-table_icons-hover-color, #a0a0a0);
   --int_box-shadow: var(
     --kup-data-table_box-shadow,
     0px 0px 7.5px 0px rgba(128, 128, 128, 0.5)
   );
+  --int_color: var(--kup-data-table_color, $mainTextColor);
+  --int_drag-over--allowed: var(--kup-data-table_drag-over--allowed, rgba(78, 144, 143, 0.24));
+  --int_drag-over--forbidden: var(--kup-data-table_drag-over--forbidden, rgba(240, 66, 60, 0.24));
+  --int_filter-border-color: var(--kup-data-table_filter-border-color, #d0d0d0);
+  --int_filter-background-color: var(
+    --kup-data-table_filter-background-color,
+    white
+  );
+  --int_group-background-color: var(
+    --kup-data-table_group-background-color,
+    #f9f9f9
+  );
+  --int_group-border-color: var(--kup-data-table_group-border-color, #6aaaa7);
+  --int_hover-color: var(--kup-data-table_hover-color, $mainTextColor);
+  --int_head-background-color: var(
+    --kup-data-table_head-background-color,
+    #f9f9f9
+  );
+  --int_header-offset: var(--kup-data-table_header-offset, 50px);
+  --int_hover-background-color: var(
+    --kup-data-table_hover-background-color,
+    #e0e0e0
+  );
+  --int_icons-color: var(--kup-data-table_icons-color, #808080);
+  --int_icons-hover-color: var(--kup-data-table_icons-hover-color, #a0a0a0);
   --int_font-size: var(--kup-data-table_font-size, 1rem);
+  --int_main-color: var(--kup-data-table_main-color, #6aaaa7);
+  --int_stronger-color: var(--kup-data-table_stronger-color, #111111);
+  --int_text-on-main-color: var(--kup-data-table_text-on-main-color, #ffffff);
 }
 
 #data-table-wrapper {
@@ -50,6 +74,15 @@
   border-collapse: collapse;
   text-align: left;
   font-size: var(--int_font-size);
+  /**
+   * When the header must be persistent (sticky)
+   * There is an issue with borders not being moved alongside the content.
+   * To prevent horrible renders we move border declarations on other elements
+   * Border top gets set on the table itself.
+   * thead hosts the lateral borders.
+   * tbody sets border-top.
+   * Header cells get set to sticky positioning.
+   */
 }
 #data-table-wrapper table th,
 #data-table-wrapper table td {
@@ -74,6 +107,7 @@
 }
 #data-table-wrapper table th kup-text-input.datatable-filter {
   --int_border-color: var(--int_filter-border-color);
+  --int_background-color: var(--int_filter-background-color);
 }
 #data-table-wrapper table th input {
   display: block;
@@ -81,11 +115,39 @@
 #data-table-wrapper table thead {
   background: var(--int_head-background-color);
   border: 1px solid var(--int_border-color);
-  border-bottom: 3px solid var(--int_border-color);
   font-size: 115%;
 }
 #data-table-wrapper table thead th {
   position: relative;
+}
+#data-table-wrapper table thead[columns-dragging] [drag-over] {
+  background-color: var(--int_drag-over--allowed);
+}
+#data-table-wrapper table thead[columns-dragging] [drag-over] > * {
+  pointer-events: none;
+}
+#data-table-wrapper table thead[columns-dragging] [drag-over][drag-starter] {
+  background-color: var(--int_drag-over--forbidden);
+}
+#data-table-wrapper table.persistent-header {
+  border-top: 1px solid var(--int_border-color);
+  position: relative;
+}
+#data-table-wrapper table.persistent-header thead {
+  border-color: var(--int_border-color);
+  border-style: solid;
+  border-width: 0 1px 0;
+}
+#data-table-wrapper table.persistent-header thead th {
+  background-color: var(--int_head-background-color);
+  box-shadow: var(--int_box-shadow);
+  position: -webkit-sticky;
+  position: sticky;
+  top: var(--int_header-offset);
+  will-change: transform;
+}
+#data-table-wrapper table.persistent-header tbody {
+  border-top: 3px solid var(--int_border-color);
 }
 #data-table-wrapper table tbody {
   border: 1px solid var(--int_border-color);
@@ -254,4 +316,24 @@
   0% {
     opacity: 0;
   }
+}
+.load-more-records {
+  background-color: transparent;
+  border: 0 none;
+  color: var(--int_icons-color);
+  cursor: pointer;
+  display: inline-block;
+  font-size: calc(var(--int_font-size) *1.2);
+  height: calc(var(--int_font-size) *1.2);
+  margin: 0 6px;
+  padding: 0;
+  transition: color 0.3s;
+  width: calc(var(--int_font-size) *1.2);
+}
+.load-more-records:hover {
+  color: var(--int_icons-hover-color);
+}
+.load-more-records::before {
+  height: inherit;
+  width: inherit;
 }

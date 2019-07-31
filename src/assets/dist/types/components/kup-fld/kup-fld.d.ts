@@ -1,8 +1,8 @@
 import { EventEmitter } from '../../stencil.core';
-import { KetchupFldChangeEvent, KetchupFldSubmitEvent } from './kup-fld-declarations';
-import { KetchupTextInputEvent } from '../kup-text-input/kup-text-input-declarations';
-import { KetchupRadioChangeEvent } from '../kup-radio/kup-radio-declarations';
-import { KetchupComboEvent } from '../kup-combo/kup-combo-declarations';
+import { KetchupFldChangeEvent, KetchupFldSubmitEvent } from "./kup-fld-declarations";
+import { KetchupTextInputEvent } from "../kup-text-input/kup-text-input-declarations";
+import { KetchupRadioChangeEvent } from "../kup-radio/kup-radio-declarations";
+import { KetchupComboEvent } from "../kup-combo/kup-combo-declarations";
 export declare class KupFld {
     /**
      * Data the FLD must parse to fully be configured.

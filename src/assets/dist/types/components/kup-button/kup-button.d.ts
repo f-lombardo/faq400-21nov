@@ -1,4 +1,3 @@
-import '../../stencil.core';
 import { EventEmitter } from '../../stencil.core';
 export declare class KupButton {
     ketchupButtonEl: HTMLElement;
@@ -19,5 +18,5 @@ export declare class KupButton {
     }>;
     onBtnClickedHandler(): void;
     _isHint(): boolean;
-    render(): JSX.Element[];
+    render(): any[];
 }

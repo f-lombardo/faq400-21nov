@@ -1,3 +1,4 @@
+import { h } from '@stencil/core';
 import { GraphicElement, Color } from './kup-graphic-cell-declarations';
 import { getColorFromString } from './kup-graphic-cell-helper';
 export class KupGraphicCell {
@@ -12,9 +13,11 @@ export class KupGraphicCell {
     onValueChange() {
         this.draw();
     }
+    // lifecycle
     componentDidLoad() {
         this.draw();
     }
+    // private methods
     draw() {
         if (!this.value) {
             return;
@@ -60,6 +63,7 @@ export class KupGraphicCell {
                 ]);
                 return elem;
             });
+            // first element -> setting background
             if (index === 0 && vBGColorMarker !== this.background_color) {
                 const bgColor = getColorFromString(vBGColorMarker.substring('BCOLOR;'.length));
                 this.drawRect(0, 0, this.canvas.width, this.canvas.height, bgColor);
@@ -77,6 +81,7 @@ export class KupGraphicCell {
                         startX = this.getNewStarXFromTrir(startX, elem);
                         break;
                     default:
+                        // bar
                         startX = this.getNewStarXFromBar(startX, elem);
                         break;
                 }
@@ -219,18 +224,62 @@ export class KupGraphicCell {
     static get is() { return "kup-graphic-cell"; }
     static get encapsulation() { return "shadow"; }
     static get properties() { return {
-        "height": {
-            "type": Number,
-            "attr": "height"
-        },
         "value": {
-            "type": String,
-            "attr": "value",
-            "watchCallbacks": ["onValueChange"]
+            "type": "string",
+            "mutable": false,
+            "complexType": {
+                "original": "string",
+                "resolved": "string",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "value",
+            "reflect": false
+        },
+        "height": {
+            "type": "number",
+            "mutable": false,
+            "complexType": {
+                "original": "number",
+                "resolved": "number",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "height",
+            "reflect": false,
+            "defaultValue": "30"
         },
         "width": {
-            "type": Number,
-            "attr": "width"
+            "type": "number",
+            "mutable": false,
+            "complexType": {
+                "original": "number",
+                "resolved": "number",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "width",
+            "reflect": false,
+            "defaultValue": "300"
         }
     }; }
+    static get watchers() { return [{
+            "propName": "value",
+            "methodName": "onValueChange"
+        }]; }
 }

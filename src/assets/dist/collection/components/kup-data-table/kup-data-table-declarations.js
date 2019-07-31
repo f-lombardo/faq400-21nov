@@ -22,3 +22,12 @@ export var ShowGrid;
     ShowGrid["COL"] = "Col";
     ShowGrid["COMPLETE"] = "Complete";
 })(ShowGrid || (ShowGrid = {}));
+//---- *NEXT functionalit AKA load more ----
+export var LoadMoreMode;
+(function (LoadMoreMode) {
+    LoadMoreMode["CONSTANT"] = "constant";
+    LoadMoreMode["CONSTANT_INCREMENT"] = "constant_increment";
+    LoadMoreMode["PROGRESSIVE_THRESHOLD"] = "progressive_threshold";
+})(LoadMoreMode || (LoadMoreMode = {}));
+//---- Sortable Columns Functionality ----
+export const KupDataTableColumnDragType = 'text/kup-data-table-column-drag';

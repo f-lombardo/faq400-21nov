@@ -1,3 +1,4 @@
+import { h } from '@stencil/core';
 export class KupButton {
     constructor() {
         this.flat = false;
@@ -65,65 +66,240 @@ export class KupButton {
     }
     static get is() { return "kup-button"; }
     static get encapsulation() { return "shadow"; }
+    static get originalStyleUrls() { return {
+        "$": ["kup-button.scss"]
+    }; }
+    static get styleUrls() { return {
+        "$": ["kup-button.css"]
+    }; }
     static get properties() { return {
-        "align": {
-            "type": String,
-            "attr": "align"
-        },
-        "buttonClass": {
-            "type": String,
-            "attr": "button-class"
-        },
-        "fillspace": {
-            "type": Boolean,
-            "attr": "fillspace"
-        },
         "flat": {
-            "type": Boolean,
-            "attr": "flat"
-        },
-        "iconClass": {
-            "type": String,
-            "attr": "icon-class"
-        },
-        "iconUrl": {
-            "type": String,
-            "attr": "icon-url"
-        },
-        "ketchupButtonEl": {
-            "elementRef": true
+            "type": "boolean",
+            "mutable": false,
+            "complexType": {
+                "original": "boolean",
+                "resolved": "boolean",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "flat",
+            "reflect": false,
+            "defaultValue": "false"
         },
         "label": {
-            "type": String,
-            "attr": "label"
+            "type": "string",
+            "mutable": false,
+            "complexType": {
+                "original": "string",
+                "resolved": "string",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "label",
+            "reflect": false
         },
-        "rounded": {
-            "type": Boolean,
-            "attr": "rounded"
+        "buttonClass": {
+            "type": "string",
+            "mutable": false,
+            "complexType": {
+                "original": "string",
+                "resolved": "string",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "button-class",
+            "reflect": false
         },
-        "showicon": {
-            "type": Boolean,
-            "attr": "showicon"
+        "iconClass": {
+            "type": "string",
+            "mutable": false,
+            "complexType": {
+                "original": "string",
+                "resolved": "string",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "icon-class",
+            "reflect": false
+        },
+        "fillspace": {
+            "type": "boolean",
+            "mutable": false,
+            "complexType": {
+                "original": "boolean",
+                "resolved": "boolean",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "fillspace",
+            "reflect": false,
+            "defaultValue": "false"
         },
         "showtext": {
-            "type": Boolean,
-            "attr": "showtext"
+            "type": "boolean",
+            "mutable": false,
+            "complexType": {
+                "original": "boolean",
+                "resolved": "boolean",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "showtext",
+            "reflect": false,
+            "defaultValue": "true"
+        },
+        "showicon": {
+            "type": "boolean",
+            "mutable": false,
+            "complexType": {
+                "original": "boolean",
+                "resolved": "boolean",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "showicon",
+            "reflect": false,
+            "defaultValue": "true"
+        },
+        "rounded": {
+            "type": "boolean",
+            "mutable": false,
+            "complexType": {
+                "original": "boolean",
+                "resolved": "boolean",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "rounded",
+            "reflect": false,
+            "defaultValue": "false"
         },
         "textmode": {
-            "type": String,
-            "attr": "textmode"
+            "type": "string",
+            "mutable": false,
+            "complexType": {
+                "original": "string",
+                "resolved": "string",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "textmode",
+            "reflect": false
         },
         "transparent": {
-            "type": Boolean,
-            "attr": "transparent"
+            "type": "boolean",
+            "mutable": false,
+            "complexType": {
+                "original": "boolean",
+                "resolved": "boolean",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "transparent",
+            "reflect": false,
+            "defaultValue": "false"
+        },
+        "align": {
+            "type": "string",
+            "mutable": false,
+            "complexType": {
+                "original": "string",
+                "resolved": "string",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "align",
+            "reflect": false
+        },
+        "iconUrl": {
+            "type": "string",
+            "mutable": false,
+            "complexType": {
+                "original": "string",
+                "resolved": "string",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "icon-url",
+            "reflect": false,
+            "defaultValue": "'https://cdn.materialdesignicons.com/3.2.89/css/materialdesignicons.min.css'"
         }
     }; }
     static get events() { return [{
-            "name": "kupButtonClicked",
             "method": "kupButtonClicked",
+            "name": "kupButtonClicked",
             "bubbles": true,
             "cancelable": true,
-            "composed": true
+            "composed": true,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "complexType": {
+                "original": "{\r\n        id: string;\r\n    }",
+                "resolved": "{ id: string; }",
+                "references": {}
+            }
         }]; }
-    static get style() { return "/**style-placeholder:kup-button:**/"; }
+    static get elementRef() { return "ketchupButtonEl"; }
 }

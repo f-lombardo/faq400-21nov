@@ -1,4 +1,3 @@
-import '../../stencil.core';
 import { EventEmitter } from '../../stencil.core';
 export declare class KupPaginator {
     max: number;
@@ -25,5 +24,5 @@ export declare class KupPaginator {
     private onRowsPerPage;
     private getGoToPageOptions;
     private getRowsPerPageOptions;
-    render(): JSX.Element;
+    render(): any;
 }

@@ -1,4 +1,3 @@
-import '../../stencil.core';
 import { EventEmitter } from '../../stencil.core';
 import { KetchupTextInputEvent } from './kup-text-input-declarations';
 import { GenericObject } from '../../types/GenericTypes';
@@ -43,6 +42,7 @@ export declare class KupTextInput {
     inputEl: HTMLElement;
     elementId: string;
     textInput: HTMLInputElement;
+    inputWrapperEl: HTMLDivElement;
     classInputText: string;
     componentWillLoad(): void;
     componentDidLoad(): void;
@@ -50,7 +50,7 @@ export declare class KupTextInput {
      * Triggers the focus event on the input text
      * @method triggerFocus
      */
-    triggerFocus(): void;
+    triggerFocus(): Promise<void>;
     /**
      * Clear the current content inside the the text input
      */
@@ -84,5 +84,5 @@ export declare class KupTextInput {
     onInputUpdated(event: UIEvent & {
         target: HTMLInputElement;
     }): void;
-    render(): JSX.Element;
+    render(): any;
 }
