@@ -1,4 +1,6 @@
 import Vue from "vue";
+import IMessage from "@/interfaces/IMessage";
+import Message from "./Message";
 
 export default class Service {
   protected async doGet(path: string): Promise<any> {
@@ -22,12 +24,24 @@ export default class Service {
     });
   }
 
-  // TODO refactorizzare
-  private _showMessages(messages: any): void {
-    // TODO message non dev'essere any, creare apposita interfaccia
-    messages.forEach((message: any) => {
-      // TODO gestire tutte le proprietà di message, non solo text
-      Vue.prototype.$messageManager.show(message.text);
+  private _showMessages(messages: IMessage[]): void {
+    /*
+    {
+      "messages": [
+        {
+          "gravity": "INFO",
+          "text": "All plugins are going to start",
+          "fullText": "",
+          "level": 50,
+          "type": "INFO",
+          "mode": "TN"
+        }
+      ]
+    }
+    */
+    messages.forEach((rawMessage: IMessage) => {
+      let message: Message = new Message(rawMessage);
+      Vue.prototype.$messageManager.show(message);
     });
   }
 }

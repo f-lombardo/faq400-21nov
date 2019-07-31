@@ -1,13 +1,10 @@
 import Vue from "vue";
 import store from "../store/store";
+import Message from "./Message";
 
 export default class MessageManager extends Vue {
-  // TODO gestire tutte le proprietà di message, non solo text
-  show(text: string): void {
+  show(message: Message): void {
     var main = store.getters["webup/getMain"];
-    main.setMessage({
-      visible: true,
-      text
-    });
+    main.setMessage(message);
   }
 }

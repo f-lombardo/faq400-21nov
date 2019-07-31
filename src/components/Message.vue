@@ -1,16 +1,17 @@
 <template>
-  <v-snackbar v-model="show" :top="top" :timeout="timeout" color="#4E908F">
-    {{ text }}
+  <v-snackbar v-model="show" :top="top" :timeout="timeout" :color="color()">
+    {{ message.text }}
     <v-btn dark flat @click="_setShow(false)">Close</v-btn>
   </v-snackbar>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
+import Message from "@/classes/Message";
 
 @Component
-export default class Message extends Vue {
-  @Prop() public text: string = "";
+export default class MESSAGE extends Vue {
+  @Prop({ default: new Message(null) }) public message!: Message;
   @Prop() public visible: boolean = false;
 
   public timeout: number = 3000;
@@ -24,6 +25,7 @@ export default class Message extends Vue {
     }
   }
 
+  //emit quando show ridiventa false
   @Watch("show")
   onShowChanged(val: boolean, oldVal: boolean) {
     if (!val) {
@@ -33,6 +35,22 @@ export default class Message extends Vue {
 
   private _setShow(value: boolean) {
     this.show = value;
+  }
+
+  color(): string {
+    /*
+  --btn_color-info: var(--kup-color-info,#6a8fd1);
+  --btn_color-danger: var(--kup-danger-danger,#f0423c);
+  --btn_color-warning: var(--kup-info-color,#ffd454);
+  */
+    if (this.message) {
+      if (this.message.isError()) {
+        return "#f0423c";
+      } else if (this.message.isWarning()) {
+        return "#ffd454";
+      }
+    }
+    return "#6a8fd1";
   }
 }
 </script>
