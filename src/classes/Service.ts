@@ -1,6 +1,12 @@
 import Vue from "vue";
 
 export default class Service {
+  object1: String = "";
+
+  constructor(obj1: String) {
+    this.object1 = obj1;
+  }
+
   protected async doGet(path: string): Promise<any> {
     const service = this;
     return new Promise(function(resolve, reject) {

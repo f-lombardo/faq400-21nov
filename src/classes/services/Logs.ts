@@ -47,14 +47,10 @@ export default class Logs extends Service {
             // Button 01
             var action01 = view.value;
             let button01: Cell = {
-              value: "",
-              obj: { t: "J4", p: "ICO", k: "" }
+              value: "View log",
+              obj: { t: "J4", p: "BTN", k: "F(FBK;LOGS;VIEWLOG) 1(;;[NAME])" },
+              config: { showtext: false, icon: "mdi mdi-file-document" }
             };
-            button01 = EnrichUtil.setCellIcon(
-              button01,
-              "mdi mdi-file-document",
-              ""
-            );
             row.cells["BT01"] = button01;
 
             // Button 02
@@ -82,6 +78,15 @@ export default class Logs extends Service {
         }
         resolve(data);
       });
+    });
+  }
+
+  async VIEWLOG(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      if (confirm("Are you sure?")) {
+        alert(srv.object1);
+      }
     });
   }
 }
