@@ -3,10 +3,13 @@ import IMessage from "@/interfaces/IMessage";
 import Message from "./Message";
 
 export default class Service {
-  protected async doGet(path: string): Promise<any> {
+  protected async doGet(path: string, configInstance?: boolean): Promise<any> {
     const service = this;
+    const axiosInstance = configInstance
+      ? Vue.prototype.$SmeUP.axiosConfigInstance
+      : Vue.prototype.$SmeUP.axiosInstance;
     return new Promise(function(resolve, reject) {
-      Vue.prototype.$SmeUP.axiosInstance
+      axiosInstance
         .get(path)
         .then((res: any) => {
           // eslint-disable-next-line
