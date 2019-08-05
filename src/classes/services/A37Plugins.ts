@@ -15,6 +15,12 @@ export default class A37Plugins extends Service {
             data.columns.unshift({ name: "BT03", title: "" });
             data.columns.unshift({ name: "BT02", title: "" });
             data.columns.unshift({ name: "BT01", title: "" });
+            data.columns.forEach((column: any) => {
+              if (column.name == "ARTIF" || column.name == "VERS") {
+                column.visible = false;
+              }
+              return column;
+            });
           }
 
           if (data.rows) {
@@ -84,70 +90,69 @@ export default class A37Plugins extends Service {
                 );
               }
               let dexter: Cell = row.cells["EXT"];
-              dexter = EnrichUtil.addObj(dexter, "", "", "");
+              dexter = EnrichUtil.addObj(dexter, "V2", "SI/NO", dexter.value);
               let del: Cell = row.cells["DELO"];
-              del = EnrichUtil.addObj(del, "", "", "");
+              del = EnrichUtil.addObj(del, "V2", "SI/NO", del.value);
 
               // Buttons
               // Button 01
-              var action01 =
-                srv.path + "/frontend/deployer/a37deploy/" + plg.value;
-
               let button01: Cell = {
-                value: "",
-                obj: { t: "J4", p: "ICO", k: "" }
+                value: "Start plugin",
+                obj: {
+                  t: "J4",
+                  p: "BTN",
+                  k: "F(FBK;A37;STARTPLG) 1(;;[CONF]) NOTIFY(TITA37)"
+                },
+                config: { showtext: false, icon: "mdi mdi-play" }
               };
-              button01 = EnrichUtil.setCellIcon(button01, "mdi mdi-play", "");
               row.cells["BT01"] = button01;
 
               // Button 02
-              var action02 =
-                srv.path + "/frontend/deployer/a37undeploy/" + plg.value;
               let button02: Cell = {
-                value: "",
-                obj: { t: "J4", p: "ICO", k: "" }
+                value: "Stop plugin",
+                obj: {
+                  t: "J4",
+                  p: "BTN",
+                  k: "F(FBK;A37;STOPPLG) 1(;;[CONF]) NOTIFY(TITA37)"
+                },
+                config: { showtext: false, icon: "mdi mdi-stop" }
               };
-              button02 = EnrichUtil.setCellIcon(button02, "mdi mdi-stop", "");
               row.cells["BT02"] = button02;
 
               // Button 03
-              var action03 =
-                srv.path + "/frontend/deployer/a37refresh/" + plg.value;
               let button03: Cell = {
-                value: "",
-                obj: { t: "J4", p: "ICO", k: "" }
+                value: "Refresh configuration plugin",
+                obj: {
+                  t: "J4",
+                  p: "BTN",
+                  k: "F(FBK;A37;REFRESHPLG) 1(;;[CONF]) NOTIFY(TITA37)"
+                },
+                config: { showtext: false, icon: "mdi mdi-refresh" }
               };
-              button03 = EnrichUtil.setCellIcon(
-                button03,
-                "mdi mdi-refresh",
-                ""
-              );
               row.cells["BT03"] = button03;
 
               // Button 04
-              var action04 =
-                srv.path +
-                "/frontend/deployer/a37createFromTemplate/" +
-                plg.value;
               let button04: Cell = {
-                value: "",
-                obj: { t: "J4", p: "ICO", k: "" }
+                value: "Create plugin from template",
+                obj: {
+                  t: "J4",
+                  p: "BTN",
+                  k: "F(FBK;A37;CREATEPLG) 1(;;[CONF]) NOTIFY(TITA37)"
+                },
+                config: { showtext: false, icon: "mdi mdi-plus-circle-outline" }
               };
-              button04 = EnrichUtil.setCellIcon(
-                button04,
-                "mdi mdi-plus-circle-outline",
-                ""
-              );
               row.cells["BT04"] = button04;
 
               // Button 05
-              var action05 =
-                srv.path + "/frontend/deployer/a37deletePlugin/" + plg.value;
               let button05: Cell = {
-                value: "",
-                obj: { t: "J4", p: "ICO", k: "" }
+                value: "Create plugin from template",
+                obj: {
+                  t: "J4",
+                  p: "BTN",
+                  k: "F(FBK;A37;DELETEPLG) 1(;;[CONF]) NOTIFY(TITA37)"
+                },
+                config: { showtext: false, icon: "mdi mdi-delete" }
               };
-              button05 = EnrichUtil.setCellIcon(button05, "mdi mdi-delete", "");
               row.cells["BT05"] = button05;
 
               return row;
@@ -229,6 +234,75 @@ export default class A37Plugins extends Service {
       if (confirm("Are you sure?")) {
         srv
           .doGet(srv.path + "/frontend/deployer/a37DeleteAllPlugins")
+          .then((data: any) => {
+            resolve(data);
+          });
+      }
+    });
+  }
+
+  // Rows buttons
+
+  async STARTPLG(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      if (confirm("Are you sure?")) {
+        srv
+          .doGet(srv.path + "/frontend/deployer/a37deploy/" + srv.object1)
+          .then((data: any) => {
+            resolve(data);
+          });
+      }
+    });
+  }
+
+  async STOPPLG(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      if (confirm("Are you sure?")) {
+        srv
+          .doGet(srv.path + "/frontend/deployer/a37undeploy/" + srv.object1)
+          .then((data: any) => {
+            resolve(data);
+          });
+      }
+    });
+  }
+
+  async REFRESHPLG(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      if (confirm("Are you sure?")) {
+        srv
+          .doGet(srv.path + "/frontend/deployer/a37refresh/" + srv.object1)
+          .then((data: any) => {
+            resolve(data);
+          });
+      }
+    });
+  }
+
+  async CREATEPLG(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      if (confirm("Are you sure?")) {
+        srv
+          .doGet(
+            srv.path + "/frontend/deployer/a37createFromTemplate/" + srv.object1
+          )
+          .then((data: any) => {
+            resolve(data);
+          });
+      }
+    });
+  }
+
+  async DELETEPLG(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      if (confirm("Are you sure?")) {
+        srv
+          .doGet(srv.path + "/frontend/deployer/a37deletePlugin/" + srv.object1)
           .then((data: any) => {
             resolve(data);
           });

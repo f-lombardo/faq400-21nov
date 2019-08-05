@@ -29,7 +29,7 @@ export default class Logs extends Service {
             let name: Cell = row.cells["NAME"];
             name = EnrichUtil.addObj(name, "", "", "");
             let date: Cell = row.cells["DATE"];
-            date = EnrichUtil.addObj(date, "", "", "");
+            date = EnrichUtil.addObj(date, "D8", "", "");
             let time: Cell = row.cells["TIME"];
             time = EnrichUtil.addObj(time, "", "", "");
             let type: Cell = row.cells["TYPE"];
@@ -45,32 +45,31 @@ export default class Logs extends Service {
 
             // Buttons
             // Button 01
-            var action01 = view.value;
             let button01: Cell = {
               value: "View log",
-              obj: { t: "J4", p: "BTN", k: "F(FBK;LOGS;VIEWLOG) 1(;;[NAME])" },
+              obj: { t: "J4", p: "BTN", k: "F(FBK;LOGS;OPNPATH) 1(;;[VIEW])" },
               config: { showtext: false, icon: "mdi mdi-file-document" }
             };
             row.cells["BT01"] = button01;
 
             // Button 02
-            var action02 = link.value;
             let button02: Cell = {
-              value: "",
-              obj: { t: "J4", p: "ICO", k: "" }
+              value: "View log",
+              obj: { t: "J4", p: "BTN", k: "F(FBK;LOGS;OPNPATH) 1(;;[LINK])" },
+              config: { showtext: false, icon: "mdi mdi-download" }
             };
-            button02 = EnrichUtil.setCellIcon(button02, "mdi mdi-download", "");
             row.cells["BT02"] = button02;
 
             // Button 03
-            var action03 =
-              srv.path + "/frontend/logger/deleteLogFile/" + name.value;
-
             let button03: Cell = {
-              value: "",
-              obj: { t: "J4", p: "ICO", k: "" }
+              value: "View log",
+              obj: {
+                t: "J4",
+                p: "BTN",
+                k: "F(FBK;LOGS;DELETELOG) 1(;;[NAME]) NOTIFY(TITLOG)"
+              },
+              config: { showtext: false, icon: "mdi mdi-delete" }
             };
-            button03 = EnrichUtil.setCellIcon(button03, "mdi mdi-delete", "");
             row.cells["BT03"] = button03;
 
             return row;
@@ -81,11 +80,23 @@ export default class Logs extends Service {
     });
   }
 
-  async VIEWLOG(): Promise<any> {
+  async OPNPATH(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      const url = <string>srv.object1;
+      window.open(url, "_blank");
+    });
+  }
+
+  async DELETELOG(): Promise<any> {
     var srv = this;
     return new Promise(function(resolve, reject) {
       if (confirm("Are you sure?")) {
-        alert(srv.object1);
+        srv
+          .doGet(srv.path + "/frontend/logger/deleteLogFile/" + srv.object1)
+          .then((data: any) => {
+            resolve(data);
+          });
       }
     });
   }
