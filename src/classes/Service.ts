@@ -1,4 +1,6 @@
 import Vue from "vue";
+import IMessage from "@/interfaces/IMessage";
+import Message from "./Message";
 
 export default class Service {
   object1: String = "";
@@ -6,11 +8,13 @@ export default class Service {
   constructor(obj1: String) {
     this.object1 = obj1;
   }
-
-  protected async doGet(path: string): Promise<any> {
+  protected async doGet(path: string, configInstance?: boolean): Promise<any> {
     const service = this;
+    const axiosInstance = configInstance
+      ? Vue.prototype.$SmeUP.axiosConfigInstance
+      : Vue.prototype.$SmeUP.axiosInstance;
     return new Promise(function(resolve, reject) {
-      Vue.prototype.$SmeUP.axiosInstance
+      axiosInstance
         .get(path)
         .then((res: any) => {
           // eslint-disable-next-line
@@ -28,12 +32,24 @@ export default class Service {
     });
   }
 
-  // TODO refactorizzare
-  private _showMessages(messages: any): void {
-    // TODO message non dev'essere any, creare apposita interfaccia
-    messages.forEach((message: any) => {
-      // TODO gestire tutte le proprietà di message, non solo text
-      Vue.prototype.$messageManager.show(message.text);
+  private _showMessages(messages: IMessage[]): void {
+    /*
+    {
+      "messages": [
+        {
+          "gravity": "INFO",
+          "text": "All plugins are going to start",
+          "fullText": "",
+          "level": 50,
+          "type": "INFO",
+          "mode": "TN"
+        }
+      ]
+    }
+    */
+    messages.forEach((rawMessage: IMessage) => {
+      let message: Message = new Message(rawMessage);
+      Vue.prototype.$messageManager.show(message);
     });
   }
 }

@@ -31,15 +31,22 @@ Vue.prototype.$dynamismManager = new DynamismManager();
 // messages manager
 Vue.prototype.$messageManager = new MessageManager();
 
-//initial context
+// axios instance fro config
+var axiosConfigInstance = axios.create({
+  baseURL: process.env.VUE_APP_SMEUP_CONFIG_URL
+});
+
+// initial context
 Vue.prototype.$SmeUP = {
   GTWFrontend: {
     urls: {
-      config: "http://localhost:3000/config/",
-      rest: "http://localhost:8096/"
+      config: process.env.VUE_APP_SMEUP_CONFIG_URL,
+      rest: ""
     }
   },
-  axiosInstance: axios
+  // axios instance for REST calls
+  axiosInstance: axios,
+  axiosConfigInstance
 };
 
 const Instance = new Vue({
