@@ -7,16 +7,16 @@ import ServiceFactory from "./ServicesFactory";
 export default class FunManager {
   async execute(fun: Fun): Promise<any> {
     return new Promise(function(resolve) {
-      let method = fun.getMethod().replace(/\s+/g, "");
       let service = fun.getService().replace(/\s+/g, "");
+      let method = fun.getMethod().replace(/\s+/g, "");
+      /*
       let object1String: String = "";
       let obj1: FunObject | null = fun.getObject(1);
       if (obj1) {
         object1String = obj1.getMethod();
       }
-      resolve(
-        new ServiceFactory().createService(service, object1String)[method]()
-      );
+      */
+      resolve(new ServiceFactory().createService(service, fun)[method]());
     });
   }
 

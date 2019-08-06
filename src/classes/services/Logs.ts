@@ -83,7 +83,7 @@ export default class Logs extends Service {
   async OPNPATH(): Promise<any> {
     var srv = this;
     return new Promise(function(resolve, reject) {
-      const url = <string>srv.object1;
+      const url = <string>srv.getObjectCode(1);
       window.open(url, "_blank");
     });
   }
@@ -93,7 +93,9 @@ export default class Logs extends Service {
     return new Promise(function(resolve, reject) {
       if (confirm("Are you sure?")) {
         srv
-          .doGet(srv.path + "/frontend/logger/deleteLogFile/" + srv.object1)
+          .doGet(
+            srv.path + "/frontend/logger/deleteLogFile/" + srv.getObjectCode(1)
+          )
           .then((data: any) => {
             resolve(data);
           });

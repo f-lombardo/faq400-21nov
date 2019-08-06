@@ -2,12 +2,14 @@ import IMessage from "@/interfaces/IMessage";
 
 export default class Message {
   private text: string = "";
-  private type: string = "";
+  private gravity: string = "";
 
   constructor(rawMessage: IMessage | null) {
     if (rawMessage != null) {
       this.text = rawMessage.text;
-      this.type = rawMessage.type;
+      if (rawMessage.gravity) {
+        this.gravity = rawMessage.gravity;
+      }
     }
   }
 
@@ -16,12 +18,12 @@ export default class Message {
   }
 
   isInfo(): boolean {
-    return "INFO" == this.type || "" == this.type || null == this.type;
+    return "INFO" == this.gravity || "" == this.gravity || null == this.gravity;
   }
   isError(): boolean {
-    return "ERROR" == this.type;
+    return "ERROR" == this.gravity;
   }
   isWarning(): boolean {
-    return "WARNING" == this.type;
+    return "WARNING" == this.gravity;
   }
 }

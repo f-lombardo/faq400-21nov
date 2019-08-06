@@ -1,5 +1,6 @@
 import Service from "@/classes/Service";
 import EnrichUtil from "../utils/EnrichUtil";
+import FunObject from "../FunObject";
 export default class A37Plugins extends Service {
   private path: string = "/gtw-hub/api/services";
 
@@ -247,8 +248,13 @@ export default class A37Plugins extends Service {
     var srv = this;
     return new Promise(function(resolve, reject) {
       if (confirm("Are you sure?")) {
+        let k1: String = "";
+        let obj1: FunObject | null = srv.fun.getObject(1);
+        if (obj1) {
+          k1 = obj1.getMethod();
+        }
         srv
-          .doGet(srv.path + "/frontend/deployer/a37deploy/" + srv.object1)
+          .doGet(srv.path + "/frontend/deployer/a37deploy/" + k1)
           .then((data: any) => {
             resolve(data);
           });
@@ -261,7 +267,9 @@ export default class A37Plugins extends Service {
     return new Promise(function(resolve, reject) {
       if (confirm("Are you sure?")) {
         srv
-          .doGet(srv.path + "/frontend/deployer/a37undeploy/" + srv.object1)
+          .doGet(
+            srv.path + "/frontend/deployer/a37undeploy/" + srv.getObjectCode(1)
+          )
           .then((data: any) => {
             resolve(data);
           });
@@ -274,7 +282,9 @@ export default class A37Plugins extends Service {
     return new Promise(function(resolve, reject) {
       if (confirm("Are you sure?")) {
         srv
-          .doGet(srv.path + "/frontend/deployer/a37refresh/" + srv.object1)
+          .doGet(
+            srv.path + "/frontend/deployer/a37refresh/" + srv.getObjectCode(1)
+          )
           .then((data: any) => {
             resolve(data);
           });
@@ -288,7 +298,9 @@ export default class A37Plugins extends Service {
       if (confirm("Are you sure?")) {
         srv
           .doGet(
-            srv.path + "/frontend/deployer/a37createFromTemplate/" + srv.object1
+            srv.path +
+              "/frontend/deployer/a37createFromTemplate/" +
+              srv.getObjectCode(1)
           )
           .then((data: any) => {
             resolve(data);
@@ -302,7 +314,11 @@ export default class A37Plugins extends Service {
     return new Promise(function(resolve, reject) {
       if (confirm("Are you sure?")) {
         srv
-          .doGet(srv.path + "/frontend/deployer/a37deletePlugin/" + srv.object1)
+          .doGet(
+            srv.path +
+              "/frontend/deployer/a37deletePlugin/" +
+              srv.getObjectCode(1)
+          )
           .then((data: any) => {
             resolve(data);
           });

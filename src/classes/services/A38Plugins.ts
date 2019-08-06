@@ -246,7 +246,9 @@ export default class A38Plugins extends Service {
     return new Promise(function(resolve, reject) {
       if (confirm("Are you sure?")) {
         srv
-          .doGet(srv.path + "/frontend/deployer/a38deploy/" + srv.object1)
+          .doGet(
+            srv.path + "/frontend/deployer/a38deploy/" + srv.getObjectCode(1)
+          )
           .then((data: any) => {
             resolve(data);
           });
@@ -259,7 +261,9 @@ export default class A38Plugins extends Service {
     return new Promise(function(resolve, reject) {
       if (confirm("Are you sure?")) {
         srv
-          .doGet(srv.path + "/frontend/deployer/a38undeploy/" + srv.object1)
+          .doGet(
+            srv.path + "/frontend/deployer/a38undeploy/" + srv.getObjectCode(1)
+          )
           .then((data: any) => {
             resolve(data);
           });
@@ -272,7 +276,9 @@ export default class A38Plugins extends Service {
     return new Promise(function(resolve, reject) {
       if (confirm("Are you sure?")) {
         srv
-          .doGet(srv.path + "/frontend/deployer/a38refresh/" + srv.object1)
+          .doGet(
+            srv.path + "/frontend/deployer/a38refresh/" + srv.getObjectCode(1)
+          )
           .then((data: any) => {
             resolve(data);
           });
@@ -286,7 +292,9 @@ export default class A38Plugins extends Service {
       if (confirm("Are you sure?")) {
         srv
           .doGet(
-            srv.path + "/frontend/deployer/a38createFromTemplate/" + srv.object1
+            srv.path +
+              "/frontend/deployer/a38createFromTemplate/" +
+              srv.getObjectCode(1)
           )
           .then((data: any) => {
             resolve(data);
@@ -300,7 +308,11 @@ export default class A38Plugins extends Service {
     return new Promise(function(resolve, reject) {
       if (confirm("Are you sure?")) {
         srv
-          .doGet(srv.path + "/frontend/deployer/a38deletePlugin/" + srv.object1)
+          .doGet(
+            srv.path +
+              "/frontend/deployer/a38deletePlugin/" +
+              srv.getObjectCode(1)
+          )
           .then((data: any) => {
             resolve(data);
           });
