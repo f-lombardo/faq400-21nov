@@ -45,33 +45,37 @@ export default class MAT extends BasicComponent {
   }
 
   private _onRowClicked($event: any): void {
-    //    console.log("Test evento", $event);
-    //    console.log($event.detail.cell.obj.k);
-
     // Verifico se nella stringa sono presenti vaariabili nella forma [xxxx]
-    var funString = $event.detail.cell.obj.k;
+    var fun: Fun = new Fun(
+      this.resolveVariableFields($event.detail.cell.obj.k, $event.detail.row)
+    );
+    this.$funManager.execute(fun);
+  }
+
+  private resolveVariableFields(fun: string, row: any): string {
+    //    alert("Original Fun: " + fun);
     var ok: boolean = true;
     var init = 0;
     var variable = "";
     var num01 = 0;
     var num02 = 0;
-    //    alert("Original Fun: " + $event.detail.cell.obj.k);
+
     while (ok) {
       //      alert(init);
       variable = "";
-      num01 = funString.indexOf("[", init);
+      num01 = fun.indexOf("[", init);
       num02 = 0;
       if (num01 != -1) {
-        num02 = funString.indexOf("]", num01);
+        num02 = fun.indexOf("]", num01);
         if (num02 != -1) {
-          variable = funString.substring(num01 + 1, num02);
-          const value = $event.detail.row.cells[variable];
+          variable = fun.substring(num01 + 1, num02);
+          const value = row.cells[variable];
           if (value) {
             //            alert(value.value);
-            funString = funString.replace("[" + variable + "]", value.value);
+            fun = fun.replace("[" + variable + "]", value.value);
           } else {
             // verificare se corretto
-            funString = funString.replace("[" + variable + "]", "");
+            fun = fun.replace("[" + variable + "]", "");
           }
           init = num02;
         }
@@ -80,22 +84,8 @@ export default class MAT extends BasicComponent {
       }
     }
 
-    //    alert("Trasformed Fun: " + funString);
-
-    var fun: Fun = new Fun(funString);
-    var obj1: FunObject | null = fun.getObject(1);
-    if (obj1) {
-      if (obj1.getMethod().startsWith("[") && obj1.getMethod().endsWith("]")) {
-        var name = obj1.getMethod().replace(/[\[\]']+/g, "");
-        var value = $event.detail.row.cells[name].value;
-        var replaceFun = $event.detail.cell.obj.k.replace(
-          obj1.getMethod(),
-          value
-        );
-        fun = new Fun(replaceFun);
-      }
-    }
-    this.$funManager.execute(fun);
+    //    alert("Trasformed Fun: " + fun);
+    return fun;
   }
 }
 </script>
