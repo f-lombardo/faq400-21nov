@@ -1,8 +1,19 @@
 import Vue from "vue";
 import IMessage from "@/interfaces/IMessage";
 import Message from "./Message";
+import Fun from "@/classes/Fun";
+import FunObject from "./FunObject";
 
 export default class Service {
+  fun: Fun;
+
+  constructor(fun: Fun | null) {
+    if (fun) {
+      this.fun = fun;
+    } else {
+      this.fun = new Fun("F(;;)");
+    }
+  }
   protected async doGet(path: string, configInstance?: boolean): Promise<any> {
     const service = this;
     const axiosInstance = configInstance
@@ -46,5 +57,15 @@ export default class Service {
       let message: Message = new Message(rawMessage);
       Vue.prototype.$messageManager.show(message);
     });
+  }
+
+  public getObjectCode(code: Number): String {
+    var objectCode = "";
+    this.fun.getObject(code);
+    var objx: FunObject | null = this.fun.getObject(code);
+    if (objx) {
+      objectCode = objx.getMethod().replace(/\s+/g, "");
+    }
+    return objectCode;
   }
 }

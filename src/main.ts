@@ -23,7 +23,7 @@ Vue.config.productionTip = false;
 // axios.defaults.baseURL = "https://webuptest.smeup.com/gtw";
 
 // script service
-Vue.prototype.$scriptManager = new ScriptService();
+Vue.prototype.$scriptManager = new ScriptService(null);
 // adding fun manager to Vue
 Vue.prototype.$funManager = new FunManager();
 // adding dynamism manager to Vue

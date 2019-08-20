@@ -36,23 +36,27 @@ export default class QueueRabbit extends Service {
 
               // Buttons
               // Button 01
-              var action01 =
-                srv.path + "/frontend/hub/queuepurge/" + name.value;
               let button01: Cell = {
-                value: "",
-                obj: { t: "J4", p: "ICO", k: "" }
+                value: "Start plugin",
+                obj: {
+                  t: "J4",
+                  p: "BTN",
+                  k: "F(FBK;RABBIT;PURGEQUEUE) 1(;;[NAME]) NOTIFY(TITRAB)"
+                },
+                config: { showtext: false, icon: "mdi mdi-broom" }
               };
-              button01 = EnrichUtil.setCellIcon(button01, "mdi mdi-broom", "");
               row.cells["BT01"] = button01;
 
               // Button 02
-              var action02 =
-                srv.path + "/frontend/hub/queuedelete/" + name.value;
               let button02: Cell = {
-                value: "",
-                obj: { t: "J4", p: "ICO", k: "" }
+                value: "Start plugin",
+                obj: {
+                  t: "J4",
+                  p: "BTN",
+                  k: "F(FBK;RABBIT;DELETEQUEUE) 1(;;[NAME]) NOTIFY(TITRAB)"
+                },
+                config: { showtext: false, icon: "mdi mdi-delete" }
               };
-              button02 = EnrichUtil.setCellIcon(button02, "mdi mdi-delete", "");
               row.cells["BT02"] = button02;
 
               return row;
@@ -60,6 +64,32 @@ export default class QueueRabbit extends Service {
           }
           resolve(data);
         });
+    });
+  }
+
+  async PURGEQUEUE(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      if (confirm("Are you sure?")) {
+        srv
+          .doGet(srv.path + "/frontend/hub/queuepurge/" + srv.getObjectCode(1))
+          .then((data: any) => {
+            resolve(data);
+          });
+      }
+    });
+  }
+
+  async DELETEQUEUE(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      if (confirm("Are you sure?")) {
+        srv
+          .doGet(srv.path + "/frontend/hub/queuedelete/" + srv.getObjectCode(1))
+          .then((data: any) => {
+            resolve(data);
+          });
+      }
     });
   }
 }

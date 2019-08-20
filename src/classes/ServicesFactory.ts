@@ -4,27 +4,28 @@ import A38Plugins from "./services/A38Plugins";
 import A37Plugins from "./services/A37Plugins";
 import QueueRabbit from "./services/QueueRabbit";
 import Logs from "./services/Logs";
+import Fun from "./Fun";
 
 export default class ServiceFactory {
-  public createService(key: string): any {
+  public createService(key: string, fun: Fun): any {
     switch (key) {
       case "DASHBOARD": {
-        return new Dashboard();
+        return new Dashboard(fun);
       }
       case "LISTTEMPLATE": {
-        return new TemplatesList();
+        return new TemplatesList(fun);
       }
       case "A38": {
-        return new A38Plugins();
+        return new A38Plugins(fun);
       }
       case "A37": {
-        return new A37Plugins();
+        return new A37Plugins(fun);
       }
       case "RABBIT": {
-        return new QueueRabbit();
+        return new QueueRabbit(fun);
       }
       case "LOGS": {
-        return new Logs();
+        return new Logs(fun);
       }
       default: {
         //TODO
