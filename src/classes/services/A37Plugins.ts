@@ -91,9 +91,9 @@ export default class A37Plugins extends Service {
                 );
               }
               let dexter: Cell = row.cells["EXT"];
-              dexter = EnrichUtil.addObj(dexter, "V2", "SI/NO", dexter.value);
+              dexter = EnrichUtil.addObj(dexter, "V2", "SI/NO", "");
               let del: Cell = row.cells["DELO"];
-              del = EnrichUtil.addObj(del, "V2", "SI/NO", del.value);
+              del = EnrichUtil.addObj(del, "V2", "SI/NO", "");
 
               // Buttons
               // Button 01

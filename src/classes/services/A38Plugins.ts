@@ -91,7 +91,7 @@ export default class A38Plugins extends Service {
                 );
               }
               let del: Cell = row.cells["DELO"];
-              del = EnrichUtil.addObj(del, "V2", "SI/NO", del.value);
+              del = EnrichUtil.addObj(del, "V2", "SI/NO", "");
 
               // Buttons
               // Button 01

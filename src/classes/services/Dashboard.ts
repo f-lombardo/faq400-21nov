@@ -12,8 +12,10 @@ export default class Dashboard extends Service {
           data.columns.forEach((column: any) => {
             if (
               column.name == "£OAVON" ||
+              column.name == "£OAVOT" ||
               column.name == "£OAVAT" ||
               column.name == "£OAVCT" ||
+              column.name == "£OAVSI" ||
               column.name == "£OAVAU"
             ) {
               column.visible = false;
@@ -29,7 +31,14 @@ export default class Dashboard extends Service {
             let cellObj: Cell = row.cells["£OAVOT"];
             cellObj = EnrichUtil.addObj(cellObj, "", "", "");
             let cellVal: Cell = row.cells["£OAVOV"];
-            cellVal = EnrichUtil.addObj(cellVal, "", "", "");
+            if (cellObj) {
+              cellVal = EnrichUtil.addObj(
+                cellVal,
+                cellObj.value.substr(0, 2),
+                cellObj.value.substr(2, 12),
+                ""
+              );
+            }
             let cellDec: Cell = row.cells["£OAVSI"];
             cellDec = EnrichUtil.addObj(cellDec, "", "", "");
             let number: Cell = row.cells["£OAVON"];

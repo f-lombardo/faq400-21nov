@@ -16,6 +16,7 @@
 
     <kup-data-table
       :data.prop="component.data"
+      :rowsPerPage.prop="50"
       :columnsWidth.prop="_getColumnsWidth()"
       @kupCellButtonClicked="_onRowClicked($event)"
     ></kup-data-table>
