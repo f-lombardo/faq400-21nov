@@ -20,8 +20,6 @@ Vue.use(Vuetify);
 
 Vue.config.productionTip = false;
 
-// axios.defaults.baseURL = "https://webuptest.smeup.com/gtw";
-
 // script service
 Vue.prototype.$scriptManager = new ScriptService(null);
 // adding fun manager to Vue
