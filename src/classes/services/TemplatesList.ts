@@ -28,12 +28,15 @@ export default class TemplatesList extends Service {
               size = EnrichUtil.addObj(size, "", "", "");
 
               // Button 01
-              //              var value = srv.path + "/frontend/resource/deleteTemplate/" + name.value;
               let button01: Cell = {
-                value: "",
-                obj: { t: "J4", p: "ICO", k: "" }
+                value: "Delete plugin",
+                obj: {
+                  t: "J4",
+                  p: "BTN",
+                  k: "F(FBK;LISTTEMPLATE;DELETETMPL) 1(;;[NAME]) NOTIFY(TMPLIS)"
+                },
+                config: { showtext: false, icon: "mdi mdi-delete" }
               };
-              button01 = EnrichUtil.setCellIcon(button01, "mdi mdi-delete", "");
               row.cells["BT01"] = button01;
 
               return row;
@@ -41,6 +44,25 @@ export default class TemplatesList extends Service {
           }
           resolve(data);
         });
+    });
+  }
+
+  // Rows buttons
+
+  async DELETETMPL(): Promise<any> {
+    var srv = this;
+    return new Promise(function(resolve, reject) {
+      if (confirm("Are you sure?")) {
+        srv
+          .doGet(
+            srv.path +
+              "/frontend/resource/deleteTemplate/" +
+              srv.getObjectCode(1)
+          )
+          .then((data: any) => {
+            resolve(data);
+          });
+      }
     });
   }
 }
