@@ -29,7 +29,7 @@ export default class Logs extends Service {
             let name: Cell = row.cells["NAME"];
             name = EnrichUtil.addObj(name, "", "", "");
             let date: Cell = row.cells["DATE"];
-            date = EnrichUtil.addObj(date, "D8", "", "");
+            date = EnrichUtil.addObj(date, "D8", "*YYMD", "");
             let time: Cell = row.cells["TIME"];
             time = EnrichUtil.addObj(time, "", "", "");
             let type: Cell = row.cells["TYPE"];
