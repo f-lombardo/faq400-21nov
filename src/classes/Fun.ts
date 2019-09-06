@@ -44,21 +44,6 @@ export default class Fun {
   }
 
   parseNotify(fun: string): string {
-    /*
-    const notifyExpr: RegExp = new RegExp(/NOTIFY\([^(]*\)/g);
-    var funResult = notifyExpr.exec(fun);
-    if (funResult) {
-      const notifyResult = funResult[0];
-      const notify = notifyResult.substring(
-        notifyResult.indexOf("(") + 1,
-        notifyResult.indexOf(")")
-      );
-      if (notify) {
-        return notify;
-      }
-    }
-    return "";
-    */
     return this.parseBetweenBrackets("NOTIFY", fun);
   }
 
@@ -81,48 +66,18 @@ export default class Fun {
         objs.push(new FunObject(code, triad));
       });
     }
-    /**
-  while ((funResult = objExpr.exec(fun)) !== null) {
-    console.log("FunObject parser", funResult);
-    //
-    const objsSplitted = funResult[0].split("(");
-    const code = parseInt(objsSplitted[0].trim(), 10);
-    const codeSplitted = objsSplitted[1].split(";");
-    const component = codeSplitted[0];
-    const service = codeSplitted[1];
-    const method = codeSplitted[2].slice(0, codeSplitted[2].length - 1);
-    const triad = { component, service, method };
-    objs.push(new FunObject(code, triad));
-  }
-  /**/
     return objs;
   }
 
   parseUISetup(fun: string): FunUIsetup | null {
     //https://stackoverflow.com/questions/2403122/regular-expression-to-extract-text-between-square-brackets
+    //https://developer.mozilla.org/it/docs/Web/JavaScript/Guida/Espressioni_Regolari
     var sgMatch = fun.match(new RegExp(/SG\((.*?)\)\)/g));
     if (sgMatch) {
       var block: string = sgMatch[0];
       var sg: string = block.substr(3, block.length - 4);
       //
       var slowF: string = this.parseBetweenBrackets("SlowF", sg);
-      /*
-      var slowFMatch = new RegExp(/SlowF\([^(]*\)/g).exec(sg); //confirmation required
-      if (
-        slowFMatch &&
-        slowFMatch[0].substr(6, slowFMatch[0].length - 7) === "Yes"
-      ) {
-        var msg = "";
-        var msgMatch = new RegExp(/Msg\([^(]*\)/g).exec(sg); //confirmation message
-        if (msgMatch) {
-          msg = msgMatch[0].substr(4, msgMatch[0].length - 5);
-        }
-        var msg2 = "";
-        var msg2Match = new RegExp(/Msg2\([^(]*\)/g).exec(sg); //confirmation message 2
-        if (msg2Match) {
-          msg2 = msg2Match[0].substr(5, msg2Match[0].length - 6);
-        }
-        */
       if (slowF) {
         var msg: string = this.parseBetweenBrackets("Msg", sg);
         var msg2: string = this.parseBetweenBrackets("Msg2", sg);
