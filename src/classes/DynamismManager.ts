@@ -127,7 +127,7 @@ export default class DynamismManager {
             "webup/getComponentById"
           ](fun.getNotify());
           if (notifyVueComponent && notifyVueComponent.hasFun()) {
-            notifyVueComponent.$emit("execOwnFun");
+            notifyVueComponent.$emit("onExecFun");
           }
         }
       });

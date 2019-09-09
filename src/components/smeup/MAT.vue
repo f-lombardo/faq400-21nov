@@ -46,15 +46,33 @@ export default class MAT extends BasicComponent {
   }
 
   private _onRowClicked($event: any): void {
-    // Verifico se nella stringa sono presenti vaariabili nella forma [xxxx]
+    // TODO qui va creato un dinamismo
+
+    // Verifico se nella stringa sono presenti variabili nella forma [xxxx]
     var fun: Fun = new Fun(
       this.resolveVariableFields($event.detail.cell.obj.k, $event.detail.row)
     );
-    this.$funManager.execute(fun);
+    const sleep = (milliseconds: number) => {
+      return new Promise(resolve => setTimeout(resolve, milliseconds));
+    };
+    // TODO Refactor. Non va bene la ripetizione qui. DRY
+    this.$funManager.execute(fun).then(() => {
+      if (fun.getNotify()) {
+        const notifyVueComponent = this.$store.getters[
+          "webup/getComponentById"
+        ](fun.getNotify());
+        // TODO togliere la sleep quando verrà gestito "refresh" in options
+        if (notifyVueComponent && notifyVueComponent.hasFun()) {
+          sleep(5000).then(() => {
+            notifyVueComponent.$emit("onExecFun");
+          });
+        }
+      }
+    });
   }
 
   private resolveVariableFields(fun: string, row: any): string {
-    //    alert("Original Fun: " + fun);
+    // console.log("Original Fun: " + fun);
     var ok: boolean = true;
     var init = 0;
     var variable = "";
@@ -62,7 +80,7 @@ export default class MAT extends BasicComponent {
     var num02 = 0;
 
     while (ok) {
-      //      alert(init);
+      // console.log(init);
       variable = "";
       num01 = fun.indexOf("[", init);
       num02 = 0;
@@ -72,10 +90,10 @@ export default class MAT extends BasicComponent {
           variable = fun.substring(num01 + 1, num02);
           const value = row.cells[variable];
           if (value) {
-            //            alert(value.value);
+            // console.log(value.value);
             fun = fun.replace("[" + variable + "]", value.value);
           } else {
-            // verificare se corretto
+            // TODO verificare se corretto
             fun = fun.replace("[" + variable + "]", "");
           }
           init = num02;
@@ -85,7 +103,7 @@ export default class MAT extends BasicComponent {
       }
     }
 
-    //    alert("Trasformed Fun: " + fun);
+    // console.log("Trasformed Fun: " + fun);
     return fun;
   }
 }
