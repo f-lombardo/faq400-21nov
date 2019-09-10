@@ -14,12 +14,24 @@ export default class Basic extends VariableContext {
   @Prop() protected component: any;
 
   private implicitVariables?: ImplicitVariable[];
+  private timer?: number;
 
   protected created(): void {
     if (this.component) {
       if (this.component.loaded == true && this.hasFun()) {
         this.addComponent();
         this._execFun();
+        if (
+          this.component.options &&
+          this.component.options.refresh &&
+          !isNaN(this.component.options.refresh)
+        ) {
+          // console.log("SET AUTO REFRESH COMPONENT " + this.component.id);
+          this.timer = setInterval(
+            this._execFun,
+            this.component.options.refresh
+          );
+        }
       } else {
         this.addComponent();
       }
@@ -35,6 +47,7 @@ export default class Basic extends VariableContext {
   }
 
   private _execFun(): void {
+    // console.log("EXECUTE FUN COMPONENT " + this.component.id);
     var fun: Fun = new Fun(this.component.fun);
     if (fun.isServiceExternal()) {
       this.$funManager
@@ -74,6 +87,17 @@ export default class Basic extends VariableContext {
       .then(() => {
         this.$forceUpdate();
       });
+  }
+
+  protected cancelAutoRefresh() {
+    // console.log("DESTROY AUTO REFRESH COMPONENT " + this.component.id);
+    clearInterval(this.timer);
+  }
+
+  protected beforeDestroy() {
+    if (this.timer) {
+      this.cancelAutoRefresh();
+    }
   }
 
   protected destroyed(): void {
