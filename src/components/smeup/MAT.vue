@@ -52,9 +52,6 @@ export default class MAT extends BasicComponent {
     var fun: Fun = new Fun(
       this.resolveVariableFields($event.detail.cell.obj.k, $event.detail.row)
     );
-    const sleep = (milliseconds: number) => {
-      return new Promise(resolve => setTimeout(resolve, milliseconds));
-    };
     // TODO Refactor. Non va bene la ripetizione qui. DRY
     this.$funManager.execute(fun).then(() => {
       if (fun.getNotify()) {
@@ -63,9 +60,7 @@ export default class MAT extends BasicComponent {
         ](fun.getNotify());
         // TODO togliere la sleep quando verrà gestito "refresh" in options
         if (notifyVueComponent && notifyVueComponent.hasFun()) {
-          sleep(5000).then(() => {
-            notifyVueComponent.$emit("onExecFun");
-          });
+          notifyVueComponent.$emit("onExecFun");
         }
       }
     });
