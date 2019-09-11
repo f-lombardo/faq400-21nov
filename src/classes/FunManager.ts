@@ -4,7 +4,6 @@ import Fun from "@/classes/Fun";
 import FunObject from "./FunObject";
 import ServiceFactory from "./ServicesFactory";
 import Message from "./Message";
-import A37Plugins from "./services/A37Plugins";
 
 export default class FunManager {
   async execute(fun: Fun): Promise<any> {
@@ -28,7 +27,7 @@ export default class FunManager {
             type: "CONFIRM",
             text: uisup.getMsg()
           }),
-          service[method].bind()
+          service[method].bind(service)
         );
         resolve();
       } else {

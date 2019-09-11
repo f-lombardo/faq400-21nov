@@ -38,6 +38,7 @@ export default class Main extends Vue {
   public messageVisible: boolean = false;
   public dialogMessage: Message = new Message(null);
   public dialogVisible: boolean = false;
+  private dialogUnsubFunc: any = null;
 
   private created() {
     // get script
@@ -72,10 +73,11 @@ export default class Main extends Vue {
     console.log("getDialogMessage()", this.dialogMessage);
     return this.dialogMessage;
   }
-  public setDialogMessage(message: Message): void {
+  public setDialogMessage(message: Message, unsubFunc: any): void {
     this.dialogMessage = message;
     this.dialogVisible = true;
-    //console.log("setDialogMessage()", message);
+    this.dialogUnsubFunc = unsubFunc.unsubscribe.bind(Vue.prototype.$eventBus);
+    console.log("setDialogMessage()->unsubFunc", unsubFunc);
   }
   public getDialogVisible(): boolean {
     //console.log("getDialogVisible()", this.dialogVisible);
@@ -83,9 +85,13 @@ export default class Main extends Vue {
   }
   public setDialogVisible(visible: boolean) {
     this.dialogVisible = visible;
+    //if (visible && this.dialogUnsubFunc) {
+    //  this.dialogUnsubFunc.unsubscribe();
+    //}
   }
   public setDialogConfirm() {
     Vue.prototype.$eventBus.publish("dialog", null);
+    this.dialogUnsubFunc();
   }
 
   /**/

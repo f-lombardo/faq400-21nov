@@ -166,87 +166,30 @@ export default class A37Plugins extends Service {
 
   async StartAll(): Promise<any> {
     return this.doGet(A37Plugins.PATH + "/frontend/deployer/a37DeployAll");
-    /*
-
-    var srv = new Service(null); // this;
-    return new Promise(function(resolve, reject) {
-      //if (confirm("Are you sure?")) {
-      console.log("srv", srv);
-      srv
-        .doGet(A37Plugins.PATH + "/frontend/deployer/a37DeployAll")
-        .then((data: any) => {
-          console.log("§StartAll§", data);
-          resolve(data);
-        });
-      //}
-      }
-    );
-      */
   }
 
   async StopAll(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(A37Plugins.PATH + "/frontend/deployer/a37UndeployAll")
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(A37Plugins.PATH + "/frontend/deployer/a37UndeployAll");
   }
 
   async UpdateAllConfigurations(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(A37Plugins.PATH + "/frontend/config/a37updateAllConfigs")
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(A37Plugins.PATH + "/frontend/config/a37updateAllConfigs");
   }
 
   async DeleteAllConfigurations(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(A37Plugins.PATH + "/frontend/config/a37deleteAllConfigs")
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(A37Plugins.PATH + "/frontend/config/a37deleteAllConfigs");
   }
 
   async CreateAllPlugins(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(A37Plugins.PATH + "/frontend/deployer/a37CreateAllPlugins")
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(
+      A37Plugins.PATH + "/frontend/deployer/a37CreateAllPlugins"
+    );
   }
 
   async DeleteAllPlugins(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(A37Plugins.PATH + "/frontend/deployer/a37DeleteAllPlugins")
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(
+      A37Plugins.PATH + "/frontend/deployer/a37DeleteAllPlugins"
+    );
   }
 
   // Rows buttons
