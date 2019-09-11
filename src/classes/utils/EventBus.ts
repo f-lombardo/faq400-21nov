@@ -13,7 +13,7 @@ export default class EventBus {
     /**/
     return {
       unsubscribe: function unsubscribe() {
-        console.log("DELETING...", eventType, id);
+        console.log("EventBus->unsubscribing:", eventType, id);
         //this.subscriptions[eventType][id]);
         delete this.subscriptions[eventType][id];
         if (

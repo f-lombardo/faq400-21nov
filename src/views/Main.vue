@@ -11,7 +11,7 @@
     <smeup-dialog
       :visible="getDialogVisible()"
       :message="getDialogMessage()"
-      @onShowFalse="setDialogVisible(false)"
+      @onCancel="setDialogVisible(false)"
       @onConfirm="setDialogConfirm()"
     ></smeup-dialog>
   </div>
@@ -70,14 +70,14 @@ export default class Main extends Vue {
 
   /**/
   public getDialogMessage(): Message {
-    console.log("getDialogMessage()", this.dialogMessage);
+    //console.log("getDialogMessage()", this.dialogMessage);
     return this.dialogMessage;
   }
   public setDialogMessage(message: Message, unsubFunc: any): void {
     this.dialogMessage = message;
     this.dialogVisible = true;
     this.dialogUnsubFunc = unsubFunc.unsubscribe.bind(Vue.prototype.$eventBus);
-    console.log("setDialogMessage()->unsubFunc", unsubFunc);
+    //console.log("setDialogMessage()->unsubFunc", unsubFunc);
   }
   public getDialogVisible(): boolean {
     //console.log("getDialogVisible()", this.dialogVisible);
@@ -85,13 +85,14 @@ export default class Main extends Vue {
   }
   public setDialogVisible(visible: boolean) {
     this.dialogVisible = visible;
-    //if (visible && this.dialogUnsubFunc) {
-    //  this.dialogUnsubFunc.unsubscribe();
-    //}
+    if (!visible && this.dialogUnsubFunc) {
+      this.dialogUnsubFunc();
+    }
   }
   public setDialogConfirm() {
+    this.dialogVisible = false;
     Vue.prototype.$eventBus.publish("dialog", null);
-    this.dialogUnsubFunc();
+    this.dialogUnsubFunc(); //___sembra non funzionare
   }
 
   /**/

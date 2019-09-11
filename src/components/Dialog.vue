@@ -1,12 +1,13 @@
 <template>
   <v-dialog v-model="show" hide-overlay persistent width="300">
     <v-card :color="color()">
-      <v-card-title class="headline">{{ message.text }}</v-card-title>
-      <v-card-text>[... Action details ...]</v-card-text>
+      <!--  font-weight-bold text--primary -->
+      <v-card-title class="headline font-weight-bold">ATTENZIONE</v-card-title>
+      <v-card-text class="headline">{{ message.text }}</v-card-text>
       <v-card-actions>
         <div class="flex-grow-1"></div>
-        <v-btn text @click="_setShow(false)">Disagree</v-btn>
-        <v-btn text @click="_setConfirm()">Agree</v-btn>
+        <v-btn text @click="_cancel(false)">Annulla</v-btn>
+        <v-btn text @click="_confirm()">OK</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -25,28 +26,21 @@ export default class DIALOG extends Vue {
 
   @Watch("visible")
   onVisibleChanged(val: boolean, oldVal: boolean) {
-    console.log("onVisibleChanged", val, oldVal);
+    //console.log("onVisibleChanged", val, oldVal);
     if (val && !oldVal) {
       this._setShow(val);
     }
-  }
-
-  //emit quando show ridiventa false
-  @Watch("show")
-  onShowChanged(val: boolean, oldVal: boolean) {
-    console.log("onShowChanged", val, oldVal);
-    //if (!val) {
-    this.$emit("onShowFalse");
-    //} else if (!this.message.isConfirm()) {
-    //  setTimeout(() => (this.show = false), this.timeout);
-    //}
   }
 
   private _setShow(value: boolean) {
     this.show = value;
   }
 
-  private _setConfirm() {
+  private _cancel() {
+    this._setShow(false);
+    this.$emit("onCancel");
+  }
+  private _confirm() {
     this._setShow(false);
     this.$emit("onConfirm");
   }

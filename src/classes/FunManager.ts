@@ -18,7 +18,7 @@ export default class FunManager {
         object1String = obj1.getMethod();
       }
       */
-      console.log("§FUN§", fun);
+      //console.log("§FUN§", fun);
       const service = new ServiceFactory().createService(serviceName, fun);
       const uisup = fun.getUISetup();
       if (uisup && uisup.isConfirmationRequired()) {
