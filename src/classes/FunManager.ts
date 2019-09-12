@@ -11,14 +11,6 @@ export default class FunManager {
       //remove all whitespace chars
       const serviceName = fun.getService().replace(/\s+/g, "");
       const method = fun.getMethod().replace(/\s+/g, "");
-      /*
-      let object1String: String = "";
-      let obj1: FunObject | null = fun.getObject(1);
-      if (obj1) {
-        object1String = obj1.getMethod();
-      }
-      */
-      //console.log("§FUN§", fun);
       const service = new ServiceFactory().createService(serviceName, fun);
       const uisup = fun.getUISetup();
       if (uisup && uisup.isConfirmationRequired()) {
