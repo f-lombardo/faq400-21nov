@@ -1,14 +1,15 @@
 import Service from "@/classes/Service";
 import EnrichUtil from "../utils/EnrichUtil";
+import UIMsg from "../utils/UIMsg";
 
 export default class A38Plugins extends Service {
-  private path: string = "/gtw-hub/api/services";
+  private static PATH: string = "/gtw-hub/api/services";
 
   async LIST(): Promise<any> {
     var srv = this;
     return new Promise(function(resolve, reject) {
       srv
-        .doGet(srv.path + "/frontend/deployer/a38PluginList")
+        .doGet(A38Plugins.PATH + "/frontend/deployer/a38PluginList")
         .then((data: any) => {
           if (data.columns) {
             data.columns.unshift({ name: "BT05", title: "" });
@@ -100,7 +101,10 @@ export default class A38Plugins extends Service {
                 obj: {
                   t: "J4",
                   p: "BTN",
-                  k: "F(FBK;A38;STARTPLG) 1(;;[CONF]) NOTIFY(TITA38)"
+                  k:
+                    "F(FBK;A38;STARTPLG) 1(;;[CONF]) SG(SlowF(Yes) Msg(" +
+                    UIMsg.MSG_CONFIRM +
+                    ")) NOTIFY(TITA38)"
                 },
                 config: { showtext: false, icon: "mdi mdi-play" }
               };
@@ -112,7 +116,10 @@ export default class A38Plugins extends Service {
                 obj: {
                   t: "J4",
                   p: "BTN",
-                  k: "F(FBK;A38;STOPPLG) 1(;;[CONF]) NOTIFY(TITA38)"
+                  k:
+                    "F(FBK;A38;STOPPLG) 1(;;[CONF]) SG(SlowF(Yes) Msg(" +
+                    UIMsg.MSG_CONFIRM +
+                    ")) NOTIFY(TITA38)"
                 },
                 config: { showtext: false, icon: "mdi mdi-stop" }
               };
@@ -124,7 +131,10 @@ export default class A38Plugins extends Service {
                 obj: {
                   t: "J4",
                   p: "BTN",
-                  k: "F(FBK;A38;REFRESHPLG) 1(;;[CONF]) NOTIFY(TITA38)"
+                  k:
+                    "F(FBK;A38;REFRESHPLG) 1(;;[CONF]) SG(SlowF(Yes) Msg(" +
+                    UIMsg.MSG_CONFIRM +
+                    ")) NOTIFY(TITA38)"
                 },
                 config: { showtext: false, icon: "mdi mdi-refresh" }
               };
@@ -136,7 +146,10 @@ export default class A38Plugins extends Service {
                 obj: {
                   t: "J4",
                   p: "BTN",
-                  k: "F(FBK;A38;CREATEPLG) 1(;;[CONF]) NOTIFY(TITA38)"
+                  k:
+                    "F(FBK;A38;CREATEPLG) 1(;;[CONF]) SG(SlowF(Yes) Msg(" +
+                    UIMsg.MSG_CONFIRM +
+                    ")) NOTIFY(TITA38)"
                 },
                 config: { showtext: false, icon: "mdi mdi-plus-circle-outline" }
               };
@@ -148,7 +161,10 @@ export default class A38Plugins extends Service {
                 obj: {
                   t: "J4",
                   p: "BTN",
-                  k: "F(FBK;A38;DELETEPLG) 1(;;[CONF]) NOTIFY(TITA38)"
+                  k:
+                    "F(FBK;A38;DELETEPLG) 1(;;[CONF]) SG(SlowF(Yes) Msg(" +
+                    UIMsg.MSG_CONFIRM +
+                    ")) NOTIFY(TITA38)"
                 },
                 config: { showtext: false, icon: "mdi mdi-delete" }
               };
@@ -162,161 +178,68 @@ export default class A38Plugins extends Service {
   }
 
   async StartAll(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(srv.path + "/frontend/deployer/a38DeployAll")
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(A38Plugins.PATH + "/frontend/deployer/a38DeployAll");
   }
 
   async StopAll(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(srv.path + "/frontend/deployer/a38UndeployAll")
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(A38Plugins.PATH + "/frontend/deployer/a38UndeployAll");
   }
 
   async UpdateAllConfigurations(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(srv.path + "/frontend/config/a38updateAllConfigs")
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(A38Plugins.PATH + "/frontend/config/a38updateAllConfigs");
   }
 
   async DeleteAllConfigurations(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(srv.path + "/frontend/config/a38deleteAllConfigs")
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(A38Plugins.PATH + "/frontend/config/a38deleteAllConfigs");
   }
 
   async CreateAllPlugins(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(srv.path + "/frontend/deployer/a38CreateAllPlugins")
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(
+      A38Plugins.PATH + "/frontend/deployer/a38CreateAllPlugins"
+    );
   }
 
   async DeleteAllPlugins(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(srv.path + "/frontend/deployer/a38DeleteAllPlugins")
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(
+      A38Plugins.PATH + "/frontend/deployer/a38DeleteAllPlugins"
+    );
   }
 
   // Rows buttons
 
   async STARTPLG(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(
-            srv.path + "/frontend/deployer/a38deploy/" + srv.getObjectCode(1)
-          )
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(
+      A38Plugins.PATH + "/frontend/deployer/a38deploy/" + this.getObjectCode(1)
+    );
   }
 
   async STOPPLG(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(
-            srv.path + "/frontend/deployer/a38undeploy/" + srv.getObjectCode(1)
-          )
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(
+      A38Plugins.PATH +
+        "/frontend/deployer/a38undeploy/" +
+        this.getObjectCode(1)
+    );
   }
 
   async REFRESHPLG(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(
-            srv.path + "/frontend/deployer/a38refresh/" + srv.getObjectCode(1)
-          )
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(
+      A38Plugins.PATH + "/frontend/deployer/a38refresh/" + this.getObjectCode(1)
+    );
   }
 
   async CREATEPLG(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(
-            srv.path +
-              "/frontend/deployer/a38createFromTemplate/" +
-              srv.getObjectCode(1)
-          )
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(
+      A38Plugins.PATH +
+        "/frontend/deployer/a38createFromTemplate/" +
+        this.getObjectCode(1)
+    );
   }
 
   async DELETEPLG(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(
-            srv.path +
-              "/frontend/deployer/a38deletePlugin/" +
-              srv.getObjectCode(1)
-          )
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(
+      A38Plugins.PATH +
+        "/frontend/deployer/a38deletePlugin/" +
+        this.getObjectCode(1)
+    );
   }
 }

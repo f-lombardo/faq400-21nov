@@ -11,10 +11,12 @@ import "./smeupComponents";
 import DynamismManager from "./classes/DynamismManager";
 import FunManager from "./classes/FunManager";
 import MessageManager from "./classes/MessageManager";
+import DialogManager from "./classes/DialogManager";
 import ScriptService from "./classes/services/ScriptService";
 
 import "vuetify/dist/vuetify.min.css"; // Ensure you are using css-loader
 import "@mdi/font/css/materialdesignicons.min.css";
+import EventBus from "./classes/utils/EventBus";
 
 Vue.use(Vuetify);
 
@@ -28,6 +30,8 @@ Vue.prototype.$funManager = new FunManager();
 Vue.prototype.$dynamismManager = new DynamismManager();
 // messages manager
 Vue.prototype.$messageManager = new MessageManager();
+Vue.prototype.$dialogManager = new DialogManager();
+Vue.prototype.$eventBus = new EventBus();
 
 // axios instance fro config
 var axiosConfigInstance = axios.create({

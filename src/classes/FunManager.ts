@@ -3,13 +3,28 @@ import { Vue } from "vue-property-decorator";
 import Fun from "@/classes/Fun";
 import FunObject from "./FunObject";
 import ServiceFactory from "./ServicesFactory";
+import Message from "./Message";
 
 export default class FunManager {
   async execute(fun: Fun): Promise<any> {
     return new Promise(function(resolve) {
-      let service = fun.getService().replace(/\s+/g, "");
-      let method = fun.getMethod().replace(/\s+/g, "");
-      resolve(new ServiceFactory().createService(service, fun)[method]());
+      //remove all whitespace chars
+      const serviceName = fun.getService().replace(/\s+/g, "");
+      const method = fun.getMethod().replace(/\s+/g, "");
+      const service = new ServiceFactory().createService(serviceName, fun);
+      const uisup = fun.getUISetup();
+      if (uisup && uisup.isConfirmationRequired()) {
+        Vue.prototype.$dialogManager.confirm(
+          new Message({
+            type: "CONFIRM",
+            text: uisup.getMsg()
+          }),
+          service[method].bind(service)
+        );
+        resolve();
+      } else {
+        resolve(service[method]());
+      }
     });
   }
 

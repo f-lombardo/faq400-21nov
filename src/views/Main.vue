@@ -7,6 +7,13 @@
       :message="getMessage()"
       @onShowFalse="setMessageVisible(false)"
     ></smeup-message>
+    <!--   -->
+    <smeup-dialog
+      :visible="getDialogVisible()"
+      :message="getDialogMessage()"
+      @onCancel="setDialogVisible(false)"
+      @onConfirm="setDialogConfirm()"
+    ></smeup-dialog>
   </div>
 </template>
 
@@ -15,18 +22,23 @@ import { Component, Vue } from "vue-property-decorator";
 import { mapGetters } from "vuex";
 
 import smeupMessage from "@/components/Message.vue";
+import smeupDialog from "@/components/Dialog.vue";
 
 import Message from "@/classes/Message";
 
 @Component({
   components: {
-    smeupMessage
+    smeupMessage,
+    smeupDialog
   }
 })
 export default class Main extends Vue {
   public root: any = "";
   public message: Message = new Message(null);
   public messageVisible: boolean = false;
+  public dialogMessage: Message = new Message(null);
+  public dialogVisible: boolean = false;
+  private dialogUnsubFunc: any = null;
 
   private created() {
     // get script
@@ -41,7 +53,7 @@ export default class Main extends Vue {
     // save main in store
     this.$store.dispatch("webup/setMain", this);
   }
-
+  /**/
   public getMessage(): Message {
     return this.message;
   }
@@ -55,5 +67,34 @@ export default class Main extends Vue {
   public setMessageVisible(visible: boolean) {
     this.messageVisible = visible;
   }
+
+  /**/
+  public getDialogMessage(): Message {
+    //console.log("getDialogMessage()", this.dialogMessage);
+    return this.dialogMessage;
+  }
+  public setDialogMessage(message: Message, unsubFunc: any): void {
+    this.dialogMessage = message;
+    this.dialogVisible = true;
+    this.dialogUnsubFunc = unsubFunc.unsubscribe.bind(Vue.prototype.$eventBus);
+    //console.log("setDialogMessage()->unsubFunc", unsubFunc);
+  }
+  public getDialogVisible(): boolean {
+    //console.log("getDialogVisible()", this.dialogVisible);
+    return this.dialogVisible;
+  }
+  public setDialogVisible(visible: boolean) {
+    this.dialogVisible = visible;
+    if (!visible && this.dialogUnsubFunc) {
+      this.dialogUnsubFunc();
+    }
+  }
+  public setDialogConfirm() {
+    this.dialogVisible = false;
+    Vue.prototype.$eventBus.publish("dialog", null);
+    this.dialogUnsubFunc(); //___sembra non funzionare
+  }
+
+  /**/
 }
 </script>

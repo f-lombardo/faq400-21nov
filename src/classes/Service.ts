@@ -14,11 +14,14 @@ export default class Service {
       this.fun = new Fun("F(;;)");
     }
   }
-  protected async doGet(path: string, configInstance?: boolean): Promise<any> {
+  public async doGet(path: string, configInstance?: boolean): Promise<any> {
     const service = this;
     const axiosInstance = configInstance
       ? Vue.prototype.$SmeUP.axiosConfigInstance
       : Vue.prototype.$SmeUP.axiosInstance;
+
+    console.log("[Service->doGet]", path);
+
     return new Promise(function(resolve, reject) {
       axiosInstance
         .get(path)
