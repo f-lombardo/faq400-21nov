@@ -48,7 +48,7 @@ export default class Basic extends VariableContext {
 
   private _execFun(): void {
     // console.log("EXECUTE FUN COMPONENT " + this.component.id);
-    var fun: Fun = new Fun(this.component.fun);
+    const fun: Fun = new Fun(this.component.fun);
     if (fun.isServiceExternal()) {
       this.$funManager
         .getScript(fun)

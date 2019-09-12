@@ -34,7 +34,7 @@ Vue.prototype.$dialogManager = new DialogManager();
 Vue.prototype.$eventBus = new EventBus();
 
 // axios instance fro config
-var axiosConfigInstance = axios.create({
+const axiosConfigInstance = axios.create({
   baseURL: process.env.VUE_APP_SMEUP_CONFIG_URL
 });
 

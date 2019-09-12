@@ -74,7 +74,7 @@ export default class Main extends Vue {
   private onClick($event: CustomEvent): void {
     this.message = "";
     if (this.userValue == "admin" && this.pwdValue == "admin123") {
-      var xxx = this.$store
+      this.$store
         .dispatch("user/setUser", {
           name: this.userValue,
           password: this.pwdValue

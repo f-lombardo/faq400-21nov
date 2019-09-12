@@ -4,7 +4,7 @@ import Message from "./Message";
 
 export default class MessageManager extends Vue {
   show(message: Message): void {
-    var main = store.getters["webup/getMain"];
+    const main = store.getters["webup/getMain"];
     main.setMessage(message);
   }
 }

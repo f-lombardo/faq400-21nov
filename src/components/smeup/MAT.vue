@@ -49,7 +49,7 @@ export default class MAT extends BasicComponent {
     // TODO qui va creato un dinamismo
 
     // Verifico se nella stringa sono presenti variabili nella forma [xxxx]
-    var fun: Fun = new Fun(
+    const fun: Fun = new Fun(
       this.resolveVariableFields($event.detail.cell.obj.k, $event.detail.row)
     );
     // TODO Refactor. Non va bene la ripetizione qui. DRY
@@ -67,15 +67,13 @@ export default class MAT extends BasicComponent {
   }
 
   private resolveVariableFields(fun: string, row: any): string {
-    // console.log("Original Fun: " + fun);
-    var ok: boolean = true;
-    var init = 0;
-    var variable = "";
-    var num01 = 0;
-    var num02 = 0;
+    let ok: boolean = true;
+    let init = 0;
+    let variable = "";
+    let num01 = 0;
+    let num02 = 0;
 
     while (ok) {
-      // console.log(init);
       variable = "";
       num01 = fun.indexOf("[", init);
       num02 = 0;
@@ -85,7 +83,6 @@ export default class MAT extends BasicComponent {
           variable = fun.substring(num01 + 1, num02);
           const value = row.cells[variable];
           if (value) {
-            // console.log(value.value);
             fun = fun.replace("[" + variable + "]", value.value);
           } else {
             // TODO verificare se corretto
@@ -98,7 +95,7 @@ export default class MAT extends BasicComponent {
       }
     }
 
-    // console.log("Trasformed Fun: " + fun);
+    // Trasformed Fun
     return fun;
   }
 }

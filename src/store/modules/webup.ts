@@ -109,7 +109,7 @@ function _getComponent(
   id: string,
   currentNode: BasicComponent
 ): BasicComponent | null {
-  var i, children, currentChild, result;
+  let i, children, currentChild, result;
   if (id == currentNode.id) {
     return currentNode;
   } else {
@@ -128,7 +128,7 @@ function _getComponent(
 const EXD_TYPE: string = "EXD";
 
 function _getChildren(component: BasicComponent): BasicComponent[] {
-  var components: BasicComponent[] = [];
+  let components: BasicComponent[] = [];
   if (component.type === EXD_TYPE) {
     component.sections.forEach((section: any) => {
       components = [...section.components, ...components];

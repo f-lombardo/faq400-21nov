@@ -5,7 +5,7 @@ export default class Dashboard extends Service {
   private path: string = "/gtw-hub/api/services";
 
   async DSHLIST(): Promise<any> {
-    var srv = this;
+    const srv = this;
     return new Promise(function(resolve, reject) {
       srv.doGet(srv.path + "/frontend/hub/dashboard").then((data: any) => {
         if (data.columns) {
@@ -59,7 +59,7 @@ export default class Dashboard extends Service {
   }
 
   async MCRSRVLIST(): Promise<any> {
-    var srv = this;
+    const srv = this;
     return new Promise(function(resolve, reject) {
       srv
         .doGet(srv.path + "/frontend/hub/microserviceList")
@@ -109,7 +109,7 @@ export default class Dashboard extends Service {
   }
 
   async A37LIST(): Promise<any> {
-    var srv = this;
+    const srv = this;
     return new Promise(function(resolve, reject) {
       srv
         .doGet(srv.path + "/frontend/hub/a37MicroserviceList")
@@ -159,7 +159,7 @@ export default class Dashboard extends Service {
   }
 
   async A38LIST(): Promise<any> {
-    var srv = this;
+    const srv = this;
     return new Promise(function(resolve, reject) {
       srv
         .doGet(srv.path + "/frontend/hub/a38MicroserviceList")

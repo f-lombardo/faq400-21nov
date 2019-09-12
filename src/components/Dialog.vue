@@ -26,7 +26,6 @@ export default class DIALOG extends Vue {
 
   @Watch("visible")
   onVisibleChanged(val: boolean, oldVal: boolean) {
-    //console.log("onVisibleChanged", val, oldVal);
     if (val && !oldVal) {
       this._setShow(val);
     }

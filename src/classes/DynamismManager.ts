@@ -43,7 +43,7 @@ export default class DynamismManager {
             c.component.fun
           );
           // execute the fun
-          var fun: Fun = new Fun(evaluatedFun);
+          const fun: Fun = new Fun(evaluatedFun);
           // TODO sistemare anche qui il discorso del getscript che deve diventare execute
           // con *SCO come servizio uguale agli altri
           // TODO esportare execute fun in un private method per riutilizzarlo
@@ -106,7 +106,7 @@ export default class DynamismManager {
 
   private _execFun(vueComponent: any, evaluatedFun: string): void {
     // TODO check fun virtuali?
-    var fun: Fun = new Fun(evaluatedFun);
+    const fun: Fun = new Fun(evaluatedFun);
     if (fun.isServiceExternal()) {
       // load new component
       // TODO ma è giusta questa cosa qui? Mi ritorna sempre la scheda da sostituire alla root?

@@ -6,7 +6,7 @@ export default class TemplatesList extends Service {
   private static PATH: string = "/gtw-hub/api/services";
 
   async LIST(): Promise<any> {
-    var srv = this;
+    const srv = this;
     return new Promise(function(resolve, reject) {
       srv
         .doGet(TemplatesList.PATH + "/frontend/resource/listTemplates")
