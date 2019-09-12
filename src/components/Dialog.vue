@@ -2,11 +2,11 @@
   <v-dialog v-model="show" hide-overlay persistent width="300">
     <v-card :color="color()">
       <!--  font-weight-bold text--primary -->
-      <v-card-title class="headline font-weight-bold">ATTENZIONE</v-card-title>
+      <v-card-title class="headline font-weight-bold">WARNING</v-card-title>
       <v-card-text class="headline">{{ message.text }}</v-card-text>
       <v-card-actions>
         <div class="flex-grow-1"></div>
-        <v-btn text @click="_cancel(false)">Annulla</v-btn>
+        <v-btn text @click="_cancel(false)">Cancel</v-btn>
         <v-btn text @click="_confirm()">OK</v-btn>
       </v-card-actions>
     </v-card>

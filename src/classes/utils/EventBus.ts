@@ -8,12 +8,12 @@ export default class EventBus {
     if (!this.subscriptions[eventType]) this.subscriptions[eventType] = {};
     this.subscriptions[eventType][id] = callback;
 
-    console.log("EventBus->subscriptions", this.subscriptions);
+    //console.log("EventBus->subscriptions", this.subscriptions);
     //return id;
     /**/
     return {
       unsubscribe: function unsubscribe() {
-        console.log("EventBus->unsubscribing:", eventType, id);
+        //console.log("EventBus->unsubscribing:", eventType, id);
         //this.subscriptions[eventType][id]);
         delete this.subscriptions[eventType][id];
         if (

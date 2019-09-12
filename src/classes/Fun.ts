@@ -9,7 +9,7 @@ export default class Fun {
   private uiSetup: FunUIsetup | null = null;
 
   constructor(fun: string) {
-    console.log("Fun constructor", fun);
+    //console.log("Fun constructor", fun);
     // F
     this.triad = this.parseTriad(fun);
     // Objects
@@ -19,7 +19,7 @@ export default class Fun {
     //Setup Grafico
     this.uiSetup = this.parseUISetup(fun);
 
-    console.log("Fun constructed", this);
+    //console.log("Fun constructed", this);
   }
 
   parseTriad(fun: string): Triad {
@@ -54,7 +54,7 @@ export default class Fun {
     var objectsMatch = fun.match(objExpr);
     if (objectsMatch) {
       objectsMatch.forEach(element => {
-        console.log("FunObject:", element);
+        //console.log("FunObject:", element);
         //
         const objsSplitted = element.split("(");
         const code = parseInt(objsSplitted[0].trim(), 10); //remove space

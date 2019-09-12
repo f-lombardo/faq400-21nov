@@ -1,6 +1,7 @@
 import Service from "@/classes/Service";
 import EnrichUtil from "../utils/EnrichUtil";
 import FunObject from "../FunObject";
+import UIMsg from "../utils/UIMsg";
 export default class A37Plugins extends Service {
   private static PATH: string = "/gtw-hub/api/services";
 
@@ -102,7 +103,10 @@ export default class A37Plugins extends Service {
                 obj: {
                   t: "J4",
                   p: "BTN",
-                  k: "F(FBK;A37;STARTPLG) 1(;;[CONF]) NOTIFY(TITA37)"
+                  k:
+                    "F(FBK;A37;STARTPLG) 1(;;[CONF]) SG(SlowF(Yes) Msg(" +
+                    UIMsg.MSG_CONFIRM +
+                    ")) NOTIFY(TITA37)"
                 },
                 config: { showtext: false, icon: "mdi mdi-play" }
               };
@@ -114,7 +118,10 @@ export default class A37Plugins extends Service {
                 obj: {
                   t: "J4",
                   p: "BTN",
-                  k: "F(FBK;A37;STOPPLG) 1(;;[CONF]) NOTIFY(TITA37)"
+                  k:
+                    "F(FBK;A37;STOPPLG) 1(;;[CONF]) SG(SlowF(Yes) Msg(" +
+                    UIMsg.MSG_CONFIRM +
+                    ")) NOTIFY(TITA37)"
                 },
                 config: { showtext: false, icon: "mdi mdi-stop" }
               };
@@ -126,7 +133,10 @@ export default class A37Plugins extends Service {
                 obj: {
                   t: "J4",
                   p: "BTN",
-                  k: "F(FBK;A37;REFRESHPLG) 1(;;[CONF]) NOTIFY(TITA37)"
+                  k:
+                    "F(FBK;A37;REFRESHPLG) 1(;;[CONF]) SG(SlowF(Yes) Msg(" +
+                    UIMsg.MSG_CONFIRM +
+                    ")) NOTIFY(TITA37)"
                 },
                 config: { showtext: false, icon: "mdi mdi-refresh" }
               };
@@ -138,7 +148,10 @@ export default class A37Plugins extends Service {
                 obj: {
                   t: "J4",
                   p: "BTN",
-                  k: "F(FBK;A37;CREATEPLG) 1(;;[CONF]) NOTIFY(TITA37)"
+                  k:
+                    "F(FBK;A37;CREATEPLG) 1(;;[CONF]) SG(SlowF(Yes) Msg(" +
+                    UIMsg.MSG_CONFIRM +
+                    ")) NOTIFY(TITA37)"
                 },
                 config: { showtext: false, icon: "mdi mdi-plus-circle-outline" }
               };
@@ -146,11 +159,14 @@ export default class A37Plugins extends Service {
 
               // Button 05
               let button05: Cell = {
-                value: "Create plugin from template",
+                value: "Delete plugin",
                 obj: {
                   t: "J4",
                   p: "BTN",
-                  k: "F(FBK;A37;DELETEPLG) 1(;;[CONF]) NOTIFY(TITA37)"
+                  k:
+                    "F(FBK;A37;DELETEPLG) 1(;;[CONF]) SG(SlowF(Yes) Msg(" +
+                    UIMsg.MSG_CONFIRM +
+                    ")) NOTIFY(TITA37)"
                 },
                 config: { showtext: false, icon: "mdi mdi-delete" }
               };
@@ -197,86 +213,46 @@ export default class A37Plugins extends Service {
   async STARTPLG(): Promise<any> {
     var srv = this;
     return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        let k1: String = "";
-        let obj1: FunObject | null = srv.fun.getObject(1);
-        if (obj1) {
-          k1 = obj1.getMethod();
-        }
-        srv
-          .doGet(A37Plugins.PATH + "/frontend/deployer/a37deploy/" + k1)
-          .then((data: any) => {
-            resolve(data);
-          });
+      let k1: String = "";
+      let obj1: FunObject | null = srv.fun.getObject(1);
+      if (obj1) {
+        k1 = obj1.getMethod();
       }
+      srv
+        .doGet(A37Plugins.PATH + "/frontend/deployer/a37deploy/" + k1)
+        .then((data: any) => {
+          resolve(data);
+        });
     });
   }
 
   async STOPPLG(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(
-            A37Plugins.PATH +
-              "/frontend/deployer/a37undeploy/" +
-              srv.getObjectCode(1)
-          )
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(
+      A37Plugins.PATH +
+        "/frontend/deployer/a37undeploy/" +
+        this.getObjectCode(1)
+    );
   }
 
   async REFRESHPLG(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(
-            A37Plugins.PATH +
-              "/frontend/deployer/a37refresh/" +
-              srv.getObjectCode(1)
-          )
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(
+      A37Plugins.PATH + "/frontend/deployer/a37refresh/" + this.getObjectCode(1)
+    );
   }
 
   async CREATEPLG(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(
-            A37Plugins.PATH +
-              "/frontend/deployer/a37createFromTemplate/" +
-              srv.getObjectCode(1)
-          )
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(
+      A37Plugins.PATH +
+        "/frontend/deployer/a37createFromTemplate/" +
+        this.getObjectCode(1)
+    );
   }
 
   async DELETEPLG(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(
-            A37Plugins.PATH +
-              "/frontend/deployer/a37deletePlugin/" +
-              srv.getObjectCode(1)
-          )
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(
+      A37Plugins.PATH +
+        "/frontend/deployer/a37deletePlugin/" +
+        this.getObjectCode(1)
+    );
   }
 }

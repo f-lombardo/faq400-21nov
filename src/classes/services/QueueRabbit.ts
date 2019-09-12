@@ -1,15 +1,16 @@
 import Service from "@/classes/Service";
 import EnrichUtil from "../utils/EnrichUtil";
 import { convertRows } from "@/assets/dist/types/components/kup-chart/kup-chart-builder";
+import UIMsg from "../utils/UIMsg";
 
 export default class QueueRabbit extends Service {
-  private path: string = "/gtw-hub/api/services";
+  private static PATH: string = "/gtw-hub/api/services";
 
   async LIST(): Promise<any> {
     var srv = this;
     return new Promise(function(resolve, reject) {
       srv
-        .doGet(srv.path + "/frontend/hub/rabbitQueueList")
+        .doGet(QueueRabbit.PATH + "/frontend/hub/rabbitQueueList")
         .then((data: any) => {
           if (data.columns) {
             data.columns.unshift({ name: "BT02", title: "" });
@@ -37,11 +38,14 @@ export default class QueueRabbit extends Service {
               // Buttons
               // Button 01
               let button01: Cell = {
-                value: "Start plugin",
+                value: "Purge queue",
                 obj: {
                   t: "J4",
                   p: "BTN",
-                  k: "F(FBK;RABBIT;PURGEQUEUE) 1(;;[NAME]) NOTIFY(TITRAB)"
+                  k:
+                    "F(FBK;RABBIT;PURGEQUEUE) 1(;;[NAME]) SG(SlowF(Yes) Msg(" +
+                    UIMsg.MSG_CONFIRM +
+                    ")) NOTIFY(TITRAB)"
                 },
                 config: { showtext: false, icon: "mdi mdi-broom" }
               };
@@ -49,11 +53,14 @@ export default class QueueRabbit extends Service {
 
               // Button 02
               let button02: Cell = {
-                value: "Start plugin",
+                value: "Delete queue",
                 obj: {
                   t: "J4",
                   p: "BTN",
-                  k: "F(FBK;RABBIT;DELETEQUEUE) 1(;;[NAME]) NOTIFY(TITRAB)"
+                  k:
+                    "F(FBK;RABBIT;DELETEQUEUE) 1(;;[NAME]) SG(SlowF(Yes) Msg(" +
+                    UIMsg.MSG_CONFIRM +
+                    ")) NOTIFY(TITRAB)"
                 },
                 config: { showtext: false, icon: "mdi mdi-delete" }
               };
@@ -68,28 +75,14 @@ export default class QueueRabbit extends Service {
   }
 
   async PURGEQUEUE(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(srv.path + "/frontend/hub/queuepurge/" + srv.getObjectCode(1))
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(
+      QueueRabbit.PATH + "/frontend/hub/queuepurge/" + this.getObjectCode(1)
+    );
   }
 
   async DELETEQUEUE(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(srv.path + "/frontend/hub/queuedelete/" + srv.getObjectCode(1))
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(
+      QueueRabbit.PATH + "/frontend/hub/queuedelete/" + this.getObjectCode(1)
+    );
   }
 }

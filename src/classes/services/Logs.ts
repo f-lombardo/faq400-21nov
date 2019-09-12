@@ -1,13 +1,14 @@
 import Service from "@/classes/Service";
 import EnrichUtil from "../utils/EnrichUtil";
+import UIMsg from "../utils/UIMsg";
 
 export default class Logs extends Service {
-  private path: string = "/gtw-hub/api/services";
+  private static PATH: string = "/gtw-hub/api/services";
 
   async LIST(): Promise<any> {
     var srv = this;
     return new Promise(function(resolve, reject) {
-      srv.doGet(srv.path + "/frontend/logger/logList").then((data: any) => {
+      srv.doGet(Logs.PATH + "/frontend/logger/logList").then((data: any) => {
         if (data.columns) {
           data.columns.unshift({ name: "BT03", title: "" });
           data.columns.unshift({ name: "BT02", title: "" });
@@ -54,7 +55,7 @@ export default class Logs extends Service {
 
             // Button 02
             let button02: Cell = {
-              value: "View log",
+              value: "Download log",
               obj: { t: "J4", p: "BTN", k: "F(FBK;LOGS;OPNPATH) 1(;;[LINK])" },
               config: { showtext: false, icon: "mdi mdi-download" }
             };
@@ -62,11 +63,14 @@ export default class Logs extends Service {
 
             // Button 03
             let button03: Cell = {
-              value: "View log",
+              value: "Delete log",
               obj: {
                 t: "J4",
                 p: "BTN",
-                k: "F(FBK;LOGS;DELETELOG) 1(;;[NAME]) NOTIFY(TITLOG)"
+                k:
+                  "F(FBK;LOGS;DELETELOG) 1(;;[NAME]) SG(SlowF(Yes) Msg(" +
+                  UIMsg.MSG_CONFIRM +
+                  ")) NOTIFY(TITLOG)"
               },
               config: { showtext: false, icon: "mdi mdi-delete" }
             };
@@ -89,17 +93,8 @@ export default class Logs extends Service {
   }
 
   async DELETELOG(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(
-            srv.path + "/frontend/logger/deleteLogFile/" + srv.getObjectCode(1)
-          )
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(
+      Logs.PATH + "/frontend/logger/deleteLogFile/" + this.getObjectCode(1)
+    );
   }
 }

@@ -1,14 +1,15 @@
 import Service from "@/classes/Service";
 import EnrichUtil from "../utils/EnrichUtil";
+import UIMsg from "../utils/UIMsg";
 
 export default class TemplatesList extends Service {
-  private path: string = "/gtw-hub/api/services";
+  private static PATH: string = "/gtw-hub/api/services";
 
   async LIST(): Promise<any> {
     var srv = this;
     return new Promise(function(resolve, reject) {
       srv
-        .doGet(srv.path + "/frontend/resource/listTemplates")
+        .doGet(TemplatesList.PATH + "/frontend/resource/listTemplates")
         .then((data: any) => {
           if (data.columns) {
             data.columns.unshift({ name: "BT01", title: "" });
@@ -29,11 +30,14 @@ export default class TemplatesList extends Service {
 
               // Button 01
               let button01: Cell = {
-                value: "Delete plugin",
+                value: "Delete template",
                 obj: {
                   t: "J4",
                   p: "BTN",
-                  k: "F(FBK;LISTTEMPLATE;DELETETMPL) 1(;;[NAME]) NOTIFY(TMPLIS)"
+                  k:
+                    "F(FBK;LISTTEMPLATE;DELETETMPL) 1(;;[NAME]) SG(SlowF(Yes) Msg(" +
+                    UIMsg.MSG_CONFIRM +
+                    ")) NOTIFY(TMPLIS)"
                 },
                 config: { showtext: false, icon: "mdi mdi-delete" }
               };
@@ -48,21 +52,11 @@ export default class TemplatesList extends Service {
   }
 
   // Rows buttons
-
   async DELETETMPL(): Promise<any> {
-    var srv = this;
-    return new Promise(function(resolve, reject) {
-      if (confirm("Are you sure?")) {
-        srv
-          .doGet(
-            srv.path +
-              "/frontend/resource/deleteTemplate/" +
-              srv.getObjectCode(1)
-          )
-          .then((data: any) => {
-            resolve(data);
-          });
-      }
-    });
+    return this.doGet(
+      TemplatesList.PATH +
+        "/frontend/resource/deleteTemplate/" +
+        this.getObjectCode(1)
+    );
   }
 }

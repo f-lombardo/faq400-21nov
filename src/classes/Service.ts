@@ -20,7 +20,7 @@ export default class Service {
       ? Vue.prototype.$SmeUP.axiosConfigInstance
       : Vue.prototype.$SmeUP.axiosInstance;
 
-    console.log("§doGet§", path);
+    console.log("[Service->doGet]", path);
 
     return new Promise(function(resolve, reject) {
       axiosInstance
