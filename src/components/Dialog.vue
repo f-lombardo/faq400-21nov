@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="show" hide-overlay persistent width="300">
+  <v-dialog v-model="show" persistent width="300">
     <v-card :color="color()">
       <!--  font-weight-bold text--primary -->
       <v-card-title class="headline font-weight-bold">WARNING</v-card-title>
