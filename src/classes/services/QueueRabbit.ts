@@ -7,7 +7,7 @@ export default class QueueRabbit extends Service {
   private static PATH: string = "/gtw-hub/api/services";
 
   async LIST(): Promise<any> {
-    var srv = this;
+    const srv = this;
     return new Promise(function(resolve, reject) {
       srv
         .doGet(QueueRabbit.PATH + "/frontend/hub/rabbitQueueList")

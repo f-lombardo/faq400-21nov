@@ -9,23 +9,20 @@ export default class Fun {
   private uiSetup: FunUIsetup | null = null;
 
   constructor(fun: string) {
-    //console.log("Fun constructor", fun);
     // F
     this.triad = this.parseTriad(fun);
     // Objects
     this.objects = this.parseObjects(fun);
     // Notify
     this.notify = this.parseNotify(fun);
-    //Setup Grafico
+    // Setup Grafico
     this.uiSetup = this.parseUISetup(fun);
-
-    //console.log("Fun constructed", this);
   }
 
   parseTriad(fun: string): Triad {
     const funExpr: RegExp = new RegExp(/F\((.*?)\)/);
-    var funResult = funExpr.exec(fun);
-    var triad: Triad;
+    const funResult = funExpr.exec(fun);
+    let triad: Triad;
     if (funResult) {
       const triadResult: string[] = funResult[1].split(";");
       triad = {
@@ -50,12 +47,10 @@ export default class Fun {
   parseObjects(fun: string): FunObject[] {
     const objExpr: RegExp = new RegExp(/\s\d\([^(]*\)/g); //space+digit otherwise match also Msg2()
     /**/
-    var objs: FunObject[] = [];
-    var objectsMatch = fun.match(objExpr);
+    const objs: FunObject[] = [];
+    const objectsMatch = fun.match(objExpr);
     if (objectsMatch) {
       objectsMatch.forEach(element => {
-        //console.log("FunObject:", element);
-        //
         const objsSplitted = element.split("(");
         const code = parseInt(objsSplitted[0].trim(), 10); //remove space
         const codeSplitted = objsSplitted[1].split(";");
@@ -72,15 +67,15 @@ export default class Fun {
   parseUISetup(fun: string): FunUIsetup | null {
     //https://stackoverflow.com/questions/2403122/regular-expression-to-extract-text-between-square-brackets
     //https://developer.mozilla.org/it/docs/Web/JavaScript/Guida/Espressioni_Regolari
-    var sgMatch = fun.match(new RegExp(/SG\((.*?)\)\)/g));
+    const sgMatch = fun.match(new RegExp(/SG\((.*?)\)\)/g));
     if (sgMatch) {
-      var block: string = sgMatch[0];
-      var sg: string = block.substr(3, block.length - 4);
+      const block: string = sgMatch[0];
+      const sg: string = block.substr(3, block.length - 4);
       //
-      var slowF: string = this.parseBetweenBrackets("SlowF", sg);
+      const slowF: string = this.parseBetweenBrackets("SlowF", sg);
       if (slowF) {
-        var msg: string = this.parseBetweenBrackets("Msg", sg);
-        var msg2: string = this.parseBetweenBrackets("Msg2", sg);
+        const msg: string = this.parseBetweenBrackets("Msg", sg);
+        const msg2: string = this.parseBetweenBrackets("Msg2", sg);
         return new FunUIsetup()
           .setConfirmationRequired(true)
           .setMsg(msg)
@@ -93,7 +88,7 @@ export default class Fun {
 
   parseBetweenBrackets(key: string, string: string): string {
     //i.e. key="Msg", string="Msg(prova)"
-    var match = new RegExp(key + "\\([^(]*\\)").exec(string);
+    const match = new RegExp(key + "\\([^(]*\\)").exec(string);
     if (match) {
       return match[0].substr(key.length + 1, match[0].length - key.length - 2);
     }
@@ -127,7 +122,7 @@ export default class Fun {
   }
 
   getObject(code: Number): FunObject | null {
-    var obj;
+    let obj;
     for (let index = 0; index < this.objects.length; index++) {
       obj = this.objects[index];
       if (obj.getCode() === code) {

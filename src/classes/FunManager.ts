@@ -29,10 +29,10 @@ export default class FunManager {
   }
 
   async getScript(fun: Fun): Promise<any> {
-    var obj2: FunObject | null = fun.getObject(2);
+    const obj2: FunObject | null = fun.getObject(2);
     if (obj2) {
       let scriptName = obj2.getMethod().replace(/\s+/g, "");
-      return await Vue.prototype.$scriptManager.getScript(scriptName);
+      return Vue.prototype.$scriptManager.getScript(scriptName);
     }
   }
 }

@@ -20,8 +20,6 @@ export default class Service {
       ? Vue.prototype.$SmeUP.axiosConfigInstance
       : Vue.prototype.$SmeUP.axiosInstance;
 
-    console.log("[Service->doGet]", path);
-
     return new Promise(function(resolve, reject) {
       axiosInstance
         .get(path)
@@ -63,12 +61,11 @@ export default class Service {
   }
 
   public getObjectCode(code: Number): String {
-    var objectCode = "";
     this.fun.getObject(code);
-    var objx: FunObject | null = this.fun.getObject(code);
+    const objx: FunObject | null = this.fun.getObject(code);
     if (objx) {
-      objectCode = objx.getMethod().replace(/\s+/g, "");
+      return objx.getMethod().replace(/\s+/g, "");
     }
-    return objectCode;
+    return "";
   }
 }

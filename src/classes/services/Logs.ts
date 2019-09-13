@@ -6,7 +6,7 @@ export default class Logs extends Service {
   private static PATH: string = "/gtw-hub/api/services";
 
   async LIST(): Promise<any> {
-    var srv = this;
+    const srv = this;
     return new Promise(function(resolve, reject) {
       srv.doGet(Logs.PATH + "/frontend/logger/logList").then((data: any) => {
         if (data.columns) {
@@ -85,7 +85,7 @@ export default class Logs extends Service {
   }
 
   async OPNPATH(): Promise<any> {
-    var srv = this;
+    const srv = this;
     return new Promise(function(resolve, reject) {
       const url = <string>srv.getObjectCode(1);
       window.open(url, "_blank");

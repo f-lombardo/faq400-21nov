@@ -6,7 +6,7 @@ export default class A37Plugins extends Service {
   private static PATH: string = "/gtw-hub/api/services";
 
   async LIST(): Promise<any> {
-    var srv = this;
+    const srv = this;
     return new Promise(function(resolve, reject) {
       srv
         .doGet(A37Plugins.PATH + "/frontend/deployer/a37PluginList")
@@ -211,7 +211,7 @@ export default class A37Plugins extends Service {
   // Rows buttons
 
   async STARTPLG(): Promise<any> {
-    var srv = this;
+    const srv = this;
     return new Promise(function(resolve, reject) {
       let k1: String = "";
       let obj1: FunObject | null = srv.fun.getObject(1);

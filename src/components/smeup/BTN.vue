@@ -21,7 +21,7 @@ export default class BTN extends BasicComponent {
       ...this.getDynamisms("click")
       //TODO ...this.getDynamisms("dblclick")
     ];
-    var dynamism: Dynamism = new Dynamism("click");
+    let dynamism: Dynamism = new Dynamism("click");
     if (dynamisms.length > 0) {
       // TODO sistemare per quando si hanno più dinamismi
       dynamisms.forEach(d => {
