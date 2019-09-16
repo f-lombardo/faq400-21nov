@@ -28,6 +28,7 @@ import { Component } from "vue-property-decorator";
 import BasicComponent from "@/components/Basic.vue"; // @ is an alias to /src
 import Fun from "@/classes/Fun";
 import FunObject from "@/classes/FunObject";
+import Dynamism from "@/classes/Dynamism";
 
 @Component
 export default class MAT extends BasicComponent {
@@ -46,24 +47,14 @@ export default class MAT extends BasicComponent {
   }
 
   private _onRowClicked($event: any): void {
-    // TODO qui va creato un dinamismo
-
     // Verifico se nella stringa sono presenti variabili nella forma [xxxx]
-    const fun: Fun = new Fun(
-      this.resolveVariableFields($event.detail.cell.obj.k, $event.detail.row)
+    var stringFun = this.resolveVariableFields(
+      $event.detail.cell.obj.k,
+      $event.detail.row
     );
-    // TODO Refactor. Non va bene la ripetizione qui. DRY
-    this.$funManager.execute(fun).then(() => {
-      if (fun.getNotify()) {
-        const notifyVueComponent = this.$store.getters[
-          "webup/getComponentById"
-        ](fun.getNotify());
-        // TODO togliere la sleep quando verrà gestito "refresh" in options
-        if (notifyVueComponent && notifyVueComponent.hasFun()) {
-          notifyVueComponent.$emit("onExecFun");
-        }
-      }
-    });
+    var dynamism: Dynamism = new Dynamism("click");
+    dynamism = this.createDynamism(dynamism, stringFun);
+    this.$dynamismManager.execute(this, dynamism);
   }
 
   private resolveVariableFields(fun: string, row: any): string {
@@ -97,6 +88,14 @@ export default class MAT extends BasicComponent {
 
     // Trasformed Fun
     return fun;
+  }
+
+  private createDynamism(d: Dynamism, fun: string): Dynamism {
+    const dynamism = new Dynamism(d.event);
+    dynamism.source = this.component;
+    dynamism.targets = d.targets;
+    dynamism.exec = fun;
+    return dynamism;
   }
 }
 </script>
