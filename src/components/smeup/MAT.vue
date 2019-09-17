@@ -18,6 +18,7 @@
       :data.prop="component.data"
       :rowsPerPage.prop="50"
       :columnsWidth.prop="_getColumnsWidth()"
+      :sort.prop="_getColumnsSort()"
       @kupCellButtonClicked="_onRowClicked($event)"
     ></kup-data-table>
   </div>
@@ -39,10 +40,18 @@ export default class MAT extends BasicComponent {
   }
 
   private _getColumnsWidth() {
-    if (this.component.options.EXB) {
-      return this.component.options.EXB.default.columnsWidth;
+    if (this.component.options.columnsWidth) {
+      return this.component.options.columnsWidth;
     } else {
-      return {};
+      return "[]";
+    }
+  }
+
+  private _getColumnsSort() {
+    if (this.component.options.sort) {
+      return this.component.options.sort;
+    } else {
+      return "[]";
     }
   }
 
