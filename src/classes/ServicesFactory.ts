@@ -4,6 +4,7 @@ import A38Plugins from "./services/A38Plugins";
 import A37Plugins from "./services/A37Plugins";
 import QueueRabbit from "./services/QueueRabbit";
 import Logs from "./services/Logs";
+import A37Statistics from "./services/A37Statistics";
 import Fun from "./Fun";
 
 export default class ServiceFactory {
@@ -20,6 +21,9 @@ export default class ServiceFactory {
       }
       case "A37": {
         return new A37Plugins(fun);
+      }
+      case "A37STATISTICS": {
+        return new A37Statistics(fun);
       }
       case "RABBIT": {
         return new QueueRabbit(fun);
