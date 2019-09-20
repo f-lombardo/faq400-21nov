@@ -28,13 +28,13 @@ export default class A37Plugins extends Service {
           if (data.rows) {
             data.rows.forEach((row: any) => {
               let plg: Cell = row.cells["CONF"];
-              plg = EnrichUtil.addObj(plg, "", "", "");
+              plg = EnrichUtil.addObj(plg, "", "", plg.value);
               let txt: Cell = row.cells["TEXT"];
-              txt = EnrichUtil.addObj(txt, "", "", "");
+              txt = EnrichUtil.addObj(txt, "", "", txt.value);
               let art: Cell = row.cells["ARTIF"];
-              art = EnrichUtil.addObj(art, "", "", "");
+              art = EnrichUtil.addObj(art, "", "", art.value);
               let version: Cell = row.cells["VERS"];
-              version = EnrichUtil.addObj(version, "", "", "");
+              version = EnrichUtil.addObj(version, "", "", version.value);
               let status: Cell = row.cells["STATUS"];
               status = EnrichUtil.addObj(status, "J4", "ICO", "");
               if (status.value == "true") {

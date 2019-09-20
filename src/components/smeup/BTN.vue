@@ -40,7 +40,7 @@ export default class BTN extends BasicComponent {
 
   private createDynamism(d: Dynamism, $event: CustomEvent): Dynamism {
     const dynamism = new Dynamism(d.event);
-    dynamism.source = this.component;
+    dynamism.source = this.component.id;
     dynamism.targets = d.targets;
     dynamism.exec = d.exec;
 

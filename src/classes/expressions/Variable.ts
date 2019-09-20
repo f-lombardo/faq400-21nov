@@ -9,6 +9,6 @@ export default class Variable implements SubExpression {
   }
 
   evaluate(context: IVariableContext): string {
-    return context.variables[this.value];
+    return context.findValue(this.value);
   }
 }
