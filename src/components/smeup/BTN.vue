@@ -1,9 +1,11 @@
 <template>
-  <kup-btn
-    :buttons.prop="this.component.data"
-    :config.prop="getOptions()"
-    @kupButtonClicked="onClick($event)"
-  ></kup-btn>
+  <div v-if="this.component && this.component.loaded">
+    <kup-btn
+      :buttons.prop="this.component.data"
+      :config.prop="getOptions()"
+      @kupButtonClicked="onClick($event)"
+    ></kup-btn>
+  </div>
 </template>
 
 <script lang="ts">
