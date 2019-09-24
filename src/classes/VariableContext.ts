@@ -92,10 +92,7 @@ export default abstract class VariableContext extends Vue
 
       if (context) {
         assignments.sec.forEach(secAssignment => {
-          const evaluatedName = this.exprEvaluator.variableExpression(
-            this,
-            secAssignment.name
-          );
+          const evaluatedName = secAssignment.name;
 
           const evaluatedValue = this.exprEvaluator.variableExpression(
             this,
@@ -112,10 +109,7 @@ export default abstract class VariableContext extends Vue
 
       if (context) {
         assignments.sch.forEach(schAssignment => {
-          const evaluatedName = this.exprEvaluator.variableExpression(
-            this,
-            schAssignment.name
-          );
+          const evaluatedName = schAssignment.name;
 
           const evaluatedValue = this.exprEvaluator.variableExpression(
             this,
@@ -132,10 +126,7 @@ export default abstract class VariableContext extends Vue
       const context = this.findLastContainingType(ContextType.SCH);
       if (context) {
         assignments.loo.forEach(looAssignment => {
-          const evaluatedName = this.exprEvaluator.variableExpression(
-            this,
-            looAssignment.name
-          );
+          const evaluatedName = looAssignment.name;
 
           const evaluatedValue = this.exprEvaluator.variableExpression(
             this,
