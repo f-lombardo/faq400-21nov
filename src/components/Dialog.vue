@@ -1,9 +1,9 @@
 <template>
-  <v-dialog v-model="show" persistent width="300">
+  <v-dialog v-model="show" persistent>
     <v-card :color="color()">
       <!--  font-weight-bold text--primary -->
-      <v-card-title class="headline font-weight-bold">WARNING</v-card-title>
-      <v-card-text class="headline">{{ message.text }}</v-card-text>
+      <v-card-title class="dialog-title">WARNING</v-card-title>
+      <v-card-text class="dialog-text">{{ message.text }}</v-card-text>
       <v-card-actions>
         <div class="flex-grow-1"></div>
         <v-btn text @click="_cancel(false)">Cancel</v-btn>
@@ -52,12 +52,12 @@ export default class DIALOG extends Vue {
   */
     if (this.message) {
       if (this.message.isError()) {
-        return "#f0423c";
+        return "error";
       } else if (this.message.isWarning()) {
-        return "#ffd454";
+        return "warning";
       }
     }
-    return "#6a8fd1";
+    return "all-good";
   }
 }
 </script>
