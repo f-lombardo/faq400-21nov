@@ -48,7 +48,7 @@ export class KupChip {
                 "text": ""
             },
             "attribute": "closable",
-            "reflect": false,
+            "reflect": true,
             "defaultValue": "false"
         },
         "disabled": {
@@ -66,7 +66,7 @@ export class KupChip {
                 "text": ""
             },
             "attribute": "disabled",
-            "reflect": false,
+            "reflect": true,
             "defaultValue": "false"
         }
     }; }

@@ -1,16 +1,26 @@
 import { h } from '@stencil/core';
+import { PaginatorMode } from './kup-paginator-declarations';
 export class KupPaginator {
     constructor() {
         this.max = 0;
         this.perPage = 10;
         this.selectedPerPage = 10;
         this.currentPage = 1;
+        this.mode = PaginatorMode.FULL;
     }
     isPrevPageDisabled() {
         return this.currentPage == 1;
     }
     isNextPageDisabled() {
         return this.currentPage * this.perPage >= this.max;
+    }
+    onPageChange(event) {
+        event.stopPropagation();
+        if (event.detail.value) {
+            this.kupPageChanged.emit({
+                newPage: event.detail.value['id'],
+            });
+        }
     }
     onPrevPage() {
         if (this.isPrevPageDisabled()) {
@@ -30,43 +40,48 @@ export class KupPaginator {
             newPage: this.currentPage + 1,
         });
     }
-    onGoToPage({ target }) {
-        this.kupPageChanged.emit({
-            newPage: parseInt(target.value),
-        });
-    }
-    onRowsPerPage({ target }) {
-        this.kupRowsPerPageChanged.emit({
-            newRowsPerPage: parseInt(target.value),
-        });
+    onRowsPerPage(event) {
+        event.stopPropagation();
+        if (event.detail.value) {
+            this.kupRowsPerPageChanged.emit({
+                newRowsPerPage: event.detail.value.id,
+            });
+        }
     }
     // render functions
-    getGoToPageOptions(maxNumberOfPage) {
-        const goToPageOptions = [];
-        goToPageOptions.push(h("option", { value: "1", selected: this.currentPage === 1 }, "1"));
-        for (let i = 2; i <= maxNumberOfPage; i++) {
-            goToPageOptions.push(h("option", { value: i, selected: this.currentPage === i }, i));
+    getGoToPageItems(maxNumberOfPage) {
+        const goToPageItems = [];
+        for (let i = 1; i <= maxNumberOfPage; i++) {
+            const item = {};
+            item['id'] = i;
+            goToPageItems.push(item);
         }
-        return goToPageOptions;
+        return goToPageItems;
     }
-    getRowsPerPageOptions() {
-        const rowsPerPageOptions = [];
-        if (this.currentPage != this.max) {
+    getRowsPerPageItems() {
+        const rowsPerPageItems = [];
+        if (this.currentPage !== this.max) {
             let i = this.perPage;
             if (i === 0) {
-                return rowsPerPageOptions;
+                return rowsPerPageItems;
             }
             while (i < this.max) {
-                rowsPerPageOptions.push(h("option", { value: i, selected: i === this.selectedPerPage }, i));
+                rowsPerPageItems.push({
+                    id: i,
+                });
                 i = i * 2;
             }
             // adding 'max' option
-            rowsPerPageOptions.push(h("option", { value: this.max, selected: this.max === this.perPage }, this.max));
+            rowsPerPageItems.push({
+                id: this.max,
+            });
         }
         else {
-            rowsPerPageOptions.push(h("option", { value: this.perPage, selected: true }, this.perPage));
+            rowsPerPageItems.push({
+                id: this.perPage,
+            });
         }
-        return rowsPerPageOptions;
+        return rowsPerPageItems;
     }
     render() {
         let prevPageClassName = 'mdi mdi-chevron-left';
@@ -78,26 +93,32 @@ export class KupPaginator {
             nextPageClassName += ' disabled';
         }
         const maxNumberOfPage = Math.ceil(this.max / this.selectedPerPage);
-        const goToPageOptions = this.getGoToPageOptions(maxNumberOfPage);
-        const rowsPerPageOptions = this.getRowsPerPageOptions();
+        const goToPageItems = this.getGoToPageItems(maxNumberOfPage);
+        const rowsPerPageItems = this.getRowsPerPageItems();
         return (h("div", { id: "paginator" },
             h("div", { class: "align-left" },
                 "Pagina",
                 h("span", { class: "prev-page" },
                     h("icon", { className: prevPageClassName, onclick: () => this.onPrevPage() })),
-                h("select", { onChange: (e) => this.onGoToPage(e) }, goToPageOptions),
+                h("kup-combo", { usePortal: true, items: goToPageItems, isFilterable: false, initialValue: {
+                        id: this.currentPage,
+                    }, onKetchupComboSelected: (e) => this.onPageChange(e) }),
                 h("span", { class: "next-page" },
                     h("icon", { className: nextPageClassName, onclick: () => this.onNextPage() })),
-                "Di ",
-                maxNumberOfPage),
+                h("span", { class: "number-of-pages" },
+                    "di ",
+                    maxNumberOfPage)),
             h("div", { class: "align-right" },
                 h("span", { class: "nextPageGroup" },
                     "Numero risultati: ",
                     this.max),
                 h("slot", { name: "more-results" }),
                 "Mostra",
-                h("select", { onChange: (e) => this.onRowsPerPage(e) }, rowsPerPageOptions),
-                "righe per pagina")));
+                h("kup-combo", { usePortal: true, items: rowsPerPageItems, isFilterable: false, initialValue: {
+                        id: this.perPage,
+                    }, onKetchupComboSelected: (e) => this.onRowsPerPage(e) }),
+                h("span", { class: "rows-per-page" }, "righe per pagina"),
+                h("slot", { name: "right" }))));
     }
     static get is() { return "kup-paginator"; }
     static get encapsulation() { return "shadow"; }
@@ -179,6 +200,29 @@ export class KupPaginator {
             "attribute": "current-page",
             "reflect": false,
             "defaultValue": "1"
+        },
+        "mode": {
+            "type": "string",
+            "mutable": false,
+            "complexType": {
+                "original": "PaginatorMode",
+                "resolved": "PaginatorMode.FULL | PaginatorMode.SIMPLE",
+                "references": {
+                    "PaginatorMode": {
+                        "location": "import",
+                        "path": "./kup-paginator-declarations"
+                    }
+                }
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "mode",
+            "reflect": true,
+            "defaultValue": "PaginatorMode.FULL"
         }
     }; }
     static get events() { return [{

@@ -34,7 +34,7 @@ export declare class KupPortal {
     supportsShadowRoot: boolean;
     supportsAdoptedStyle: boolean;
     componentWillLoad(): void;
-    componentWillRender(): void;
+    componentDidUpdate(): void;
     componentDidUnload(): void;
     onPortalRootNodeChange(newValue: any): void;
     computeCssVars(el: HTMLElement, props: string[]): void;

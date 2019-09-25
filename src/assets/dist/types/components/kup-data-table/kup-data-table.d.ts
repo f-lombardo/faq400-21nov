@@ -78,6 +78,8 @@ export declare class KupDataTable {
      */
     private openedMenu;
     private density;
+    private topDensityPanelVisible;
+    private botDensityPanelVisible;
     rowsPerPageHandler(newValue: number): void;
     expandGroupsHandler(): void;
     recalculateRows(): void;
@@ -159,8 +161,10 @@ export declare class KupDataTable {
     }>;
     kupCellButtonClicked: EventEmitter<KupDataTableCellButtonClick>;
     kupDataTableSortedColumn: EventEmitter<KupDataTableSortedColumnIndexes>;
+    onDocumentClick: () => void;
     componentWillLoad(): void;
     componentDidLoad(): void;
+    componentDidUnload(): void;
     private getColumns;
     private getVisibleColumns;
     private getGroupByName;
@@ -170,9 +174,11 @@ export declare class KupDataTable {
     private isGrouping;
     private hasRowActions;
     private removeGroup;
+    private removeGroupFromRow;
     private hasTotals;
     private forceGroupExpansion;
     private forceRowGroupExpansion;
+    private adjustPaginator;
     private onColumnSort;
     private onFilterChange;
     private onGlobalFilterChange;
@@ -195,14 +201,13 @@ export declare class KupDataTable {
     private adjustGroupState;
     private adjustGroupStateFromRow;
     private sortRows;
-    private paginateRows;
     private getSortIcon;
     private calculateColspan;
     private isGroupExpanded;
-    private styleHasBorderRadius;
     private handleColumnSort;
     private moveSortedColumns;
     defaultSortingFunction(columns: Column[], receivingColumnIndex: number, sortedColumnIndex: number, useNewObject?: boolean): Promise<Column[]>;
+    private toggleDensityVisibility;
     private renderHeader;
     renderFooter(): any;
     private renderRow;
@@ -218,5 +223,7 @@ export declare class KupDataTable {
      */
     private renderCell;
     private renderLoadMoreButton;
+    private renderPaginator;
+    private renderDensityPanel;
     render(): any;
 }

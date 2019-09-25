@@ -35,7 +35,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import { r as registerInstance, c as createEvent, h } from './chunk-1851c479.js';
 import './chunk-d8060b98.js';
-import { f as filterRows, s as sortRows, d as isImage, j as isButton, k as createJ4objButtonConfig, r as isProgressBar, o as numeral, a as SortMode } from './chunk-08b2255d.js';
+import { f as filterRows, p as paginateRows, s as sortRows, e as isImage, k as isButton, l as createJ4objButtonConfig, u as isProgressBar, n as numeral, i as isIcon, a as SortMode } from './chunk-6abc1eda.js';
+import { P as PaginatorMode } from './chunk-8cdcd574.js';
 var KupBox = /** @class */ (function () {
     function KupBox(hostRef) {
         registerInstance(this, hostRef);
@@ -64,11 +65,21 @@ var KupBox = /** @class */ (function () {
          * will be displayed on the right of every box
          */
         this.enableRowActions = false;
+        /**
+         * Enables pagination
+         */
+        this.pagination = false;
+        /**
+         * Number of boxes per page
+         */
+        this.pageSize = 10;
         this.globalFilterValue = '';
         this.collapsedSection = {};
         this.selectedRows = [];
+        this.currentPage = 1;
         this.visibleColumns = [];
         this.rows = [];
+        this.filteredRows = [];
         this.kupBoxClicked = createEvent(this, "kupBoxClicked", 6);
         this.kupBoxSelected = createEvent(this, "kupBoxSelected", 6);
         this.kupAutoBoxSelect = createEvent(this, "kupAutoBoxSelect", 6);
@@ -131,7 +142,7 @@ var KupBox = /** @class */ (function () {
         return this.data && this.data.rows ? this.data.rows : [];
     };
     KupBox.prototype.initRows = function () {
-        var filteredRows = this.getRows();
+        this.filteredRows = this.getRows();
         if (this.filterEnabled && this.globalFilterValue) {
             var visibleCols = this.visibleColumns;
             var size = visibleCols.length;
@@ -141,9 +152,12 @@ var KupBox = /** @class */ (function () {
                 columnNames.push(visibleCols[cnt++].name);
             }
             // filtering rows
-            filteredRows = filterRows(filteredRows, null, this.globalFilterValue, columnNames);
+            this.filteredRows = filterRows(this.filteredRows, null, this.globalFilterValue, columnNames);
         }
-        this.rows = this.sortRows(filteredRows);
+        this.rows = this.sortRows(this.filteredRows);
+        if (this.pagination) {
+            this.rows = paginateRows(this.rows, this.currentPage, this.pageSize);
+        }
     };
     KupBox.prototype.sortRows = function (rows) {
         var sortedRows = rows;
@@ -351,6 +365,10 @@ var KupBox = /** @class */ (function () {
         }
         this.rowActionMenuOpened = null;
     };
+    KupBox.prototype.handlePageChanged = function (_a) {
+        var detail = _a.detail;
+        this.currentPage = detail.newPage;
+    };
     // render methods
     KupBox.prototype.renderRow = function (row) {
         var _this = this;
@@ -550,6 +568,9 @@ var KupBox = /** @class */ (function () {
                     }
                     boContent = (h("div", { style: wrapperStyle }, h("kup-progress-bar", { value: value, labelText: labelText, hideLabel: hideLabel })));
                 }
+                else if (isIcon(cell.obj)) {
+                    boContent = h("span", { class: "icon " + cell.value });
+                }
                 else {
                     boContent = cell.value;
                 }
@@ -583,6 +604,10 @@ var KupBox = /** @class */ (function () {
                 ,
                 onKetchupTextInputUpdated: function (event) { return _this.onGlobalFilterChange(event); } }, h("svg", { slot: "left", version: "1.1", width: "18", height: "18", viewBox: "0 0 24 24" }, h("path", { d: "M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" })))));
         }
+        var paginator = null;
+        if (this.pagination) {
+            paginator = (h("kup-paginator", { max: this.filteredRows.length, perPage: this.pageSize, currentPage: this.currentPage, onKupPageChanged: function (e) { return _this.handlePageChanged(e); }, mode: PaginatorMode.SIMPLE }));
+        }
         var boxContent = null;
         if (this.rows.length === 0) {
             boxContent = h("p", { id: "empty-data-message" }, "Empty data");
@@ -599,13 +624,16 @@ var KupBox = /** @class */ (function () {
         var containerStyle = {
             'grid-template-columns': "repeat(" + this.columns + ", 1fr)",
         };
-        return (h("div", null, sortPanel, filterPanel, h("div", { id: "box-container", style: containerStyle }, boxContent)));
+        return (h("div", null, sortPanel, filterPanel, paginator, h("div", { id: "box-container", style: containerStyle }, boxContent)));
     };
     Object.defineProperty(KupBox, "watchers", {
         get: function () {
             return {
                 "globalFilterValue": ["recalculateRows"],
                 "sortBy": ["recalculateRows"],
+                "pagination": ["recalculateRows"],
+                "pageSize": ["recalculateRows"],
+                "currentPage": ["recalculateRows"],
                 "data": ["onDataChanged"],
                 "layout": ["onLayoutChanged"],
                 "selectBox": ["onSelectBoxChanged"]

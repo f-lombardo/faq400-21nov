@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
-import { eventFromElement } from "../../utils/utils";
-import { getElementOffset } from "../../utils/offset";
+import { eventFromElement } from '../../utils/utils';
+import { getElementOffset } from '../../utils/offset';
 /*
  * TODO: Control if there can be issues with z-index and elements not correctly triggering the functions to close the combo box list
  * See this article here to use the method to get the current position and avoid opening the menu in the wrong direction
@@ -20,6 +20,10 @@ export class KupCombo {
          * Marks the field as clearable, allowing an icon to delete its content
          */
         this.isClearable = false;
+        /**
+         * Marks the field as filterable, allowing an input text to filter the options
+         */
+        this.isFilterable = true;
         /**
          * Items which can be selected
          */
@@ -58,13 +62,30 @@ export class KupCombo {
         // Determines the position on which the menu will be open
         this.comboPosition = {
             isRight: false,
-            isTop: false
+            isTop: false,
         };
         // Variable to hold Constructed Style Sheet
         // TODO check if there is a better typing.
         this.constructedStyleSheet = null;
         // For CSS vars
-        this.internalCssVars = ['--cmb_font-size', '--cmb_border-color', '--cmb_border-color--selected', '--cmb_tr-duration', '--cmb_icon-color', '--cmb_icon-color--hover', '--cmb_menu-background'];
+        this.internalCssVars = [
+            '--cmb_font-size',
+            '--cmb_border-color',
+            '--cmb_border-color--selected',
+            '--cmb_tr-duration',
+            '--cmb_icon-color',
+            '--cmb_icon-color--hover',
+            '--cmb_menu-background',
+            '--cmb_menu-background--hover',
+            '--kup-combo_menu_text',
+            '--kup-combo_menu_text--hover',
+            '--cmb_background-color',
+            '--cmb_background-color--hover',
+            '--cmb_text-color',
+            '--cmb_text-color--hover',
+            '--cmb_border-radius',
+            '--cmb_box-shadow',
+        ];
         //-- Constants --
         this.baseClass = 'kup-combo';
     }
@@ -102,7 +123,8 @@ export class KupCombo {
     // Always reflect changes of initialValue to value element
     reflectInitialValue(newValue, oldValue) {
         // When a new initial value is passed, we control that the new item is different from the old one before updating the state
-        if (!oldValue || newValue[this.valueField] !== oldValue[this.valueField]) {
+        if (!oldValue ||
+            newValue[this.valueField] !== oldValue[this.valueField]) {
             this.onComboSelected(newValue, oldValue);
         }
     }
@@ -114,10 +136,10 @@ export class KupCombo {
     calcBoxPosition() {
         const windowX = document.documentElement.clientWidth;
         const windowY = document.documentElement.clientHeight;
-        const { height, left, top, width } = this.comboText.getBoundingClientRect();
+        const { height, left, top, width, } = this.comboText.getBoundingClientRect();
         return {
             isRight: left + width / 2 > windowX / 2,
-            isTop: top + height / 2 > windowY / 2
+            isTop: top + height / 2 > windowY / 2,
         };
     }
     //---- Events and handlers ----
@@ -158,13 +180,15 @@ export class KupCombo {
             response = await this.portalRef.getPortalInstance();
         }
         try {
-            if (event.composedPath().indexOf(this.comboEl) < 0 && event.composedPath().indexOf(response) < 0) {
+            if (event.composedPath().indexOf(this.comboEl) < 0 &&
+                event.composedPath().indexOf(response) < 0) {
                 this.closeCombo();
             }
         }
         catch (e) {
             const ele = event.target;
-            if (!eventFromElement(this.comboEl, ele) && !eventFromElement(response, ele)) {
+            if (!eventFromElement(this.comboEl, ele) &&
+                !eventFromElement(response, ele)) {
                 this.closeCombo();
             }
         }
@@ -191,8 +215,8 @@ export class KupCombo {
             value: item,
             oldValue: oldItem,
             info: {
-                obj: this.obj
-            }
+                obj: this.obj,
+            },
         });
         // Updates corresponding fields
         this.selected = item;
@@ -201,35 +225,52 @@ export class KupCombo {
     //---- Rendering functions ----
     // Creates the menu and its items
     composeList() {
-        return h("div", { class: this.baseClass + '__menu' + (this.isOpen ? ' is-open' : '') +
-                (this.comboPosition.isRight ? ' is-right' : '') + (this.comboPosition.isTop ? ' is-top' : '')
-                + (this.usePortal ? ' is-using-portal' : '') },
-            h("div", { class: this.baseClass + '__filter' },
-                h("kup-text-input", { onKetchupTextInputUpdated: this.onFilterUpdate.bind(this) })),
-            h("ul", { class: this.baseClass + '__list' }, this.items.filter(item => !this.filter || item[this.displayedField].toLowerCase().indexOf(this.filter) >= 0)
-                .map(item => h("li", { onClick: () => this.onItemSelected(item) },
-                h("span", null, item[this.displayedField])))));
+        let filter = null;
+        if (this.isFilterable) {
+            filter = (h("div", { class: this.baseClass + '__filter' },
+                h("kup-text-input", { onKetchupTextInputUpdated: this.onFilterUpdate.bind(this) })));
+        }
+        return (h("div", { class: this.baseClass +
+                '__menu' +
+                (this.isOpen ? ' is-open' : '') +
+                (this.comboPosition.isRight ? ' is-right' : '') +
+                (this.comboPosition.isTop ? ' is-top' : '') +
+                (this.usePortal ? ' is-using-portal' : '') },
+            filter,
+            h("ul", { class: this.baseClass + '__list' }, this.items
+                .filter((item) => !this.filter ||
+                item[this.displayedField]
+                    .toLowerCase()
+                    .indexOf(this.filter) >= 0)
+                .map((item) => (h("li", { onClick: () => this.onItemSelected(item) },
+                h("span", null, item[this.displayedField])))))));
     }
     render() {
         const containerClass = this.baseClass + '__container';
-        return ([
-            h("div", { class: containerClass + (this.isClearable ? ' ' + containerClass + '--clearable' : ''), ref: (el) => this.comboText = el },
+        return [
+            h("div", { class: containerClass +
+                    (this.isClearable
+                        ? ' ' + containerClass + '--clearable'
+                        : ''), ref: (el) => (this.comboText = el) },
                 h("span", { class: this.baseClass + '__current-value', onClick: this.onComboClick.bind(this) },
-                    this.selected ? this.selected[this.displayedField] : '',
-                    h("svg", { class: this.baseClass + '__icon ' + this.baseClass + '__chevron' + (this.isOpen ? ' ' + this.baseClass + '__chevron--open' : ''), viewBox: "0 0 24 24" },
-                        h("path", { d: "M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" }))),
-                this.isClearable ?
-                    h("button", { "aria-label": "Close", class: this.baseClass + '__clear', role: "button", onClick: this.onClearClick.bind(this) },
-                        h("svg", { class: this.baseClass + '__icon', viewBox: "0 0 24 24" },
-                            h("path", { d: "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" }))) :
-                    null),
-            this.usePortal ?
-                h("kup-portal", { isVisible: this.isOpen, mirroredCssVars: this.internalCssVars, nodes: this.composeList(), portalParentRef: this.comboEl, ref: el => this.portalRef = el, 
-                    // Notice that the portal offset MUST be calculated considering the menu button, not the whole web component
-                    refOffset: getElementOffset(this.comboText, this.comboPosition), styleNode: this.comboEl.shadowRoot.querySelector('style') })
-                :
-                    this.composeList()
-        ]);
+                    h("span", { class: "value-text" }, this.selected
+                        ? this.selected[this.displayedField]
+                        : ''),
+                    h("svg", { class: this.baseClass +
+                            '__icon ' +
+                            this.baseClass +
+                            '__chevron' +
+                            (this.isOpen
+                                ? ' ' + this.baseClass + '__chevron--open'
+                                : ''), version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+                        h("path", { d: "M7,10L12,15L17,10H7Z" }))),
+                this.isClearable ? (h("button", { "aria-label": "Close", class: this.baseClass + '__clear', role: "button", onClick: this.onClearClick.bind(this) },
+                    h("svg", { class: this.baseClass + '__icon', viewBox: "0 0 24 24" },
+                        h("path", { d: "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" })))) : null),
+            this.usePortal ? (h("kup-portal", { isVisible: this.isOpen, mirroredCssVars: this.internalCssVars, nodes: this.composeList(), portalParentRef: this.comboEl, ref: (el) => (this.portalRef = el), 
+                // Notice that the portal offset MUST be calculated considering the menu button, not the whole web component
+                refOffset: getElementOffset(this.comboText, this.comboPosition), styleNode: this.comboEl.shadowRoot.querySelector('style') })) : (this.composeList()),
+        ];
     }
     static get is() { return "kup-combo"; }
     static get encapsulation() { return "shadow"; }
@@ -297,6 +338,24 @@ export class KupCombo {
             "reflect": false,
             "defaultValue": "false"
         },
+        "isFilterable": {
+            "type": "boolean",
+            "mutable": false,
+            "complexType": {
+                "original": "boolean",
+                "resolved": "boolean",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": "Marks the field as filterable, allowing an input text to filter the options"
+            },
+            "attribute": "is-filterable",
+            "reflect": true,
+            "defaultValue": "true"
+        },
         "items": {
             "type": "unknown",
             "mutable": false,
@@ -353,7 +412,7 @@ export class KupCombo {
             "optional": true,
             "docs": {
                 "tags": [],
-                "text": "An arbitrary object object which can be passed to the component.\r\nIt will be returned when ketchupComboSelected event is fired, inside detail.info.obj"
+                "text": "An arbitrary object object which can be passed to the component.\nIt will be returned when ketchupComboSelected event is fired, inside detail.info.obj"
             }
         },
         "valueField": {
@@ -389,7 +448,7 @@ export class KupCombo {
                         "text": "kup-portal readme for more details.",
                         "name": "see"
                     }],
-                "text": "If true, the combobox uses a Stencil portal to create the menu.\r\nPlease use this feature carefully, only if needed."
+                "text": "If true, the combobox uses a Stencil portal to create the menu.\nPlease use this feature carefully, only if needed."
             },
             "attribute": "use-portal",
             "reflect": false,
