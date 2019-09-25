@@ -2,37 +2,6 @@ export interface DataTable {
     columns?: Array<Column>;
     rows?: Array<Row>;
 }
-export interface Column {
-    name: string;
-    title: string;
-    size?: number;
-    visible?: boolean;
-    hideValuesRepetitions?: boolean;
-}
-export interface Row {
-    cells: {
-        [index: string]: Cell;
-    };
-    actions?: Array<RowAction>;
-    id?: string;
-    group?: {
-        id: string;
-        parent: Row;
-        column: string;
-        expanded: boolean;
-        label: string;
-        children: Array<Row>;
-        obj: {
-            t: string;
-            p: string;
-            k: string;
-        };
-        totals: {
-            [index: string]: number;
-        };
-    };
-    readOnly?: boolean;
-}
 export interface Cell {
     obj: {
         t: string;
@@ -43,6 +12,39 @@ export interface Cell {
     style?: GenericMap;
     options?: boolean;
     config?: any;
+}
+export interface CellsHolder {
+    [index: string]: Cell;
+}
+export interface Column {
+    name: string;
+    title: string;
+    size?: number;
+    visible?: boolean;
+    hideValuesRepetitions?: boolean;
+}
+export interface Row {
+    cells: CellsHolder;
+    actions?: Array<RowAction>;
+    id?: string;
+    group?: RowGroup;
+    readOnly?: boolean;
+}
+export interface RowGroup {
+    id: string;
+    parent: Row;
+    column: string;
+    expanded: boolean;
+    label: string;
+    children: Array<Row>;
+    obj: {
+        t: string;
+        p: string;
+        k: string;
+    };
+    totals: {
+        [index: string]: number;
+    };
 }
 export interface TableData {
     columns?: Array<Column>;

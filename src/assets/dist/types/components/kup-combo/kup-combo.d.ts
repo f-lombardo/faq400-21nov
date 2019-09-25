@@ -1,6 +1,6 @@
 import { EventEmitter } from '../../stencil.core';
 import { ComboItem, ComboPosition, KetchupComboEvent } from './kup-combo-declarations';
-import { GenericObject } from "../../types/GenericTypes";
+import { GenericObject } from '../../types/GenericTypes';
 export declare class KupCombo {
     /**
      * Chooses which field of an item object should be used to create the list and be filtered.
@@ -14,6 +14,10 @@ export declare class KupCombo {
      * Marks the field as clearable, allowing an icon to delete its content
      */
     isClearable: boolean;
+    /**
+     * Marks the field as filterable, allowing an input text to filter the options
+     */
+    isFilterable: boolean;
     /**
      * Items which can be selected
      */

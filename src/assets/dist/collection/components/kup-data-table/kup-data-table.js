@@ -1,6 +1,7 @@
 import { h } from '@stencil/core';
+import numeral from 'numeral';
 import { LoadMoreMode, PaginatorPos, ShowGrid, SortMode, KupDataTableColumnDragType, } from './kup-data-table-declarations';
-import { calcTotals, filterRows, groupRows, sortRows, getColumnByName, } from './kup-data-table-helper';
+import { calcTotals, filterRows, groupRows, sortRows, getColumnByName, paginateRows, styleHasBorderRadius, } from './kup-data-table-helper';
 import { isBar, isButton, isCheckbox, isIcon, isImage, isLink, isNumber, isVoCodver, createJ4objButtonConfig, } from '../../utils/object-utils';
 export class KupDataTable {
     constructor() {
@@ -52,7 +53,7 @@ export class KupDataTable {
          */
         this.showHeader = true;
         this.showFilters = false;
-        this.showGrid = ShowGrid.COMPLETE;
+        this.showGrid = ShowGrid.ROW;
         /**
          * If set to true, displays the button to load more records.
          */
@@ -75,6 +76,8 @@ export class KupDataTable {
          */
         this.openedMenu = null;
         this.density = 'medium';
+        this.topDensityPanelVisible = false;
+        this.botDensityPanelVisible = false;
         this.renderedRows = [];
         this.loadMoreEventCounter = 0;
         this.loadMoreEventPreviousQuantity = 0;
@@ -104,6 +107,10 @@ export class KupDataTable {
          * @private
          */
         this.dragStarterAttribute = 'drag-starter';
+        this.onDocumentClick = () => {
+            this.topDensityPanelVisible = false;
+            this.botDensityPanelVisible = false;
+        };
     }
     rowsPerPageHandler(newValue) {
         this.currentRowsPerPage = newValue;
@@ -142,6 +149,7 @@ export class KupDataTable {
         }
     }
     componentDidLoad() {
+        document.addEventListener('click', this.onDocumentClick);
         // observing table
         // this.theadObserver.observe(this.theadRef);
         // automatic row selection
@@ -154,6 +162,9 @@ export class KupDataTable {
                 });
             }
         }
+    }
+    componentDidUnload() {
+        document.removeEventListener('click', this.onDocumentClick);
     }
     getColumns() {
         return this.data && this.data.columns
@@ -210,7 +221,7 @@ export class KupDataTable {
         this.footer = calcTotals(this.rows, this.totals);
         this.groupRows();
         this.sortRows();
-        this.paginatedRows = this.paginateRows(this.rows);
+        this.paginatedRows = paginateRows(this.rows, this.currentPage, this.currentRowsPerPage);
     }
     filterRows() {
         this.rows = filterRows(this.getRows(), this.filters, this.globalFilterValue, this.getVisibleColumns().map((c) => c.name));
@@ -225,6 +236,27 @@ export class KupDataTable {
         // resetting group state
         this.groupState = {};
         const index = this.groups.indexOf(group);
+        if (index >= 0) {
+            // removing group from prop
+            this.groups.splice(index, 1);
+            this.groups = [...this.groups];
+        }
+    }
+    removeGroupFromRow(group) {
+        if (!group) {
+            return;
+        }
+        // resetting group state
+        this.groupState = {};
+        // search group
+        let index = -1;
+        for (let i = 0; i < this.groups.length; i++) {
+            const g = this.groups[i];
+            if (g.column === group.column) {
+                index = i;
+                break;
+            }
+        }
         if (index >= 0) {
             // removing group from prop
             this.groups.splice(index, 1);
@@ -258,6 +290,15 @@ export class KupDataTable {
         this.groupState[row.group.id] = groupState;
         if (row.group.children) {
             row.group.children.forEach((childRow) => this.forceRowGroupExpansion(childRow));
+        }
+    }
+    adjustPaginator() {
+        const numberOfRows = this.rows.length;
+        // check if current page is valid
+        const numberOfPages = Math.ceil(numberOfRows / this.currentRowsPerPage);
+        if (this.currentPage > numberOfPages) {
+            // reset page
+            this.currentPage = 1;
         }
     }
     // event listeners
@@ -320,6 +361,7 @@ export class KupDataTable {
     }
     handleRowsPerPageChanged({ detail }) {
         this.currentRowsPerPage = detail.newRowsPerPage;
+        this.adjustPaginator();
     }
     onRowClick(event, row) {
         // selecting row
@@ -465,7 +507,7 @@ export class KupDataTable {
             buttonEvent.stopPropagation();
         }
         else {
-            throw "kup-data-table error: missing event";
+            throw 'kup-data-table error: missing event';
         }
         this.kupCellButtonClicked.emit({
             cell,
@@ -535,11 +577,6 @@ export class KupDataTable {
     sortRows() {
         this.rows = sortRows(this.rows, this.sort);
     }
-    paginateRows(rows) {
-        const start = this.currentPage * this.currentRowsPerPage -
-            this.currentRowsPerPage;
-        return rows.slice(start, start + this.currentRowsPerPage);
-    }
     getSortIcon(columnName) {
         // check if column in sort array
         for (let sortObj of this.sort) {
@@ -577,18 +614,14 @@ export class KupDataTable {
             return false;
         }
     }
-    styleHasBorderRadius(cell) {
-        if (cell && cell.style && cell.style.borderRadius) {
-            return true;
-        }
-        return false;
-    }
     //==== Column sort order methods ====
     handleColumnSort(receivingColumn, sortedColumn) {
         // Get receiving column position
-        const receivingColIndex = this.data.columns.findIndex(col => col.name === receivingColumn.name && col.title === receivingColumn.title);
+        const receivingColIndex = this.data.columns.findIndex((col) => col.name === receivingColumn.name &&
+            col.title === receivingColumn.title);
         // Get sorted column current position
-        const sortedColIndex = this.data.columns.findIndex(col => col.name === sortedColumn.name && col.title === sortedColumn.title);
+        const sortedColIndex = this.data.columns.findIndex((col) => col.name === sortedColumn.name &&
+            col.title === sortedColumn.title);
         // Moves the sortedColumn into the correct position
         if (this.sortableColumnsMutateData) {
             this.moveSortedColumns(this.data.columns, receivingColIndex, sortedColIndex);
@@ -608,6 +641,17 @@ export class KupDataTable {
         this.moveSortedColumns(toSort, receivingColumnIndex, sortedColumnIndex);
         return toSort;
     }
+    toggleDensityVisibility(event, top) {
+        event.stopPropagation();
+        if (top) {
+            this.topDensityPanelVisible = !this.topDensityPanelVisible;
+            this.botDensityPanelVisible = false;
+        }
+        else {
+            this.topDensityPanelVisible = false;
+            this.botDensityPanelVisible = !this.botDensityPanelVisible;
+        }
+    }
     //======== render methods ========
     renderHeader() {
         const hasCustomColumnsWidth = this.columnsWidth.length > 0;
@@ -619,7 +663,7 @@ export class KupDataTable {
                 if (this.filters && this.filters[column.name]) {
                     filterValue = this.filters[column.name];
                 }
-                filter = (h("div", { onMouseEnter: () => this.onColumnMouseLeave(column.name), onMouseLeave: () => this.onColumnMouseEnter(column.name) },
+                filter = (h("div", null,
                     h("kup-text-input", { class: "datatable-filter", initialValue: filterValue, "data-col": column.name, onKetchupTextInputUpdated: (e) => {
                             this.onFilterChange(e, column.name);
                         } })));
@@ -627,7 +671,7 @@ export class KupDataTable {
             // sort
             let sort = null;
             if (this.sortEnabled) {
-                sort = (h("span", { class: "column-sort", onMouseEnter: () => this.onColumnMouseLeave(column.name), onMouseLeave: () => this.onColumnMouseEnter(column.name) },
+                sort = (h("span", { class: "column-sort" },
                     h("span", { role: "button", "aria-label": "Sort column" // TODO
                         , class: 'mdi ' + this.getSortIcon(column.name), onClick: (e) => this.onColumnSort(e, column.name) })));
             }
@@ -692,7 +736,8 @@ export class KupDataTable {
                             const overElement = e.target;
                             overElement.setAttribute(this.dragOverAttribute, '');
                             // If element can have a drop effect
-                            if (!overElement.hasAttribute(this.dragStarterAttribute) && this.columnsAreBeingDragged) {
+                            if (!overElement.hasAttribute(this.dragStarterAttribute) &&
+                                this.columnsAreBeingDragged) {
                                 e.preventDefault(); // Mandatory to allow drop
                                 e.dataTransfer.effectAllowed = 'move';
                             }
@@ -777,7 +822,7 @@ export class KupDataTable {
                 // empty group
                 return null;
             }
-            let icon = 'mdi mdi-chevron-' + (row.group.expanded ? 'right' : 'down');
+            const icon = row.group.expanded ? (h("path", { d: "M19,13H5V11H19V13Z" })) : (h("path", { d: "M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" }));
             const jsxRows = [];
             let indent = [];
             for (let i = 0; i < level; i++) {
@@ -789,12 +834,21 @@ export class KupDataTable {
                 const colSpan = this.multiSelection ? 2 : 1;
                 cells.push(h("td", { colSpan: colSpan },
                     indent,
-                    h("span", { role: "button", "aria-label": "Row expander" // TODO change this label
-                        , class: icon, onClick: (e) => {
-                            e.stopPropagation();
-                            this.onRowExpand(row);
-                        } }),
-                    row.group.label));
+                    h("span", { class: "group-cell-content" },
+                        h("span", { role: "button", "aria-label": "Row expander" // TODO change this label
+                            , tabindex: "0", onClick: (e) => {
+                                e.stopPropagation();
+                                this.onRowExpand(row);
+                            } },
+                            h("svg", { width: "24", height: "24", viewBox: "0 0 24 24", class: "group-expander" }, icon)),
+                        row.group.label,
+                        h("span", { role: "button", "aria-label": "Remove group" // TODO change this label
+                            , tabindex: "0", onClick: (e) => {
+                                e.stopPropagation();
+                                this.removeGroupFromRow(row.group);
+                            } },
+                            h("svg", { width: "24", height: "24", viewBox: "0 0 24 24", class: "group-remove" },
+                                h("path", { d: "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" }))))));
                 for (let column of visibleColumns) {
                     cells.push(h("td", { class: "total" }, row.group.totals[column.name]));
                 }
@@ -804,12 +858,21 @@ export class KupDataTable {
                 jsxRows.push(h("tr", { class: "group", onClick: () => this.onRowExpand(row) },
                     h("td", { colSpan: this.calculateColspan() },
                         indent,
-                        h("span", { role: "button", "aria-label": "Row expander" // TODO change this label
-                            , class: `row-expander ${icon}`, onClick: (e) => {
-                                e.stopPropagation();
-                                this.onRowExpand(row);
-                            } }),
-                        row.group.label)));
+                        h("span", { class: "group-cell-content" },
+                            h("span", { role: "button", "aria-label": "Row expander" // TODO change this label
+                                , tabindex: "0", onClick: (e) => {
+                                    e.stopPropagation();
+                                    this.onRowExpand(row);
+                                } },
+                                h("svg", { width: "24", height: "24", viewBox: "0 0 24 24", class: "group-expander" }, icon)),
+                            h("span", { class: "text" }, row.group.label),
+                            h("span", { role: "button", "aria-label": "Remove group" // TODO change this label
+                                , tabindex: "0", onClick: (e) => {
+                                    e.stopPropagation();
+                                    this.removeGroupFromRow(row.group);
+                                } },
+                                h("svg", { width: "24", height: "24", viewBox: "0 0 24 24", class: "group-remove" },
+                                    h("path", { d: "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" })))))));
             }
             // if group is expanded, add children
             if (this.isGroupExpanded(row)) {
@@ -849,7 +912,11 @@ export class KupDataTable {
                  * 3 - Column has to hide repetitions but the value of the previous row is not equal to the current row cell.
                  * @todo Move this rendering, if possible, inside renderCell()
                  */
-                if (cell.options && (!hideValuesRepetitions || (hideValuesRepetitions && (!previousRow || previousRow.cells[name].value !== cell.value)))) {
+                if (cell.options &&
+                    (!hideValuesRepetitions ||
+                        (hideValuesRepetitions &&
+                            (!previousRow ||
+                                previousRow.cells[name].value !== cell.value)))) {
                     options = (h("span", { class: "options", role: "button", "aria-label": "Opzioni oggetto", title: "Opzioni oggetto", onClick: () => this.onOptionClicked(name, row) },
                         h("i", { class: "mdi mdi-settings" })));
                 }
@@ -857,13 +924,15 @@ export class KupDataTable {
                 // The previous value must be passed only if repeated values can be hidden and we have a previous row.
                 {
                     row,
-                    column: currentColumn
-                }, hideValuesRepetitions && previousRow ? previousRow.cells[name].value : null);
+                    column: currentColumn,
+                }, hideValuesRepetitions && previousRow
+                    ? previousRow.cells[name].value
+                    : null);
                 const cellClass = {
                     number: isNumber(cell.obj),
                 };
                 let cellStyle = null;
-                if (!this.styleHasBorderRadius(cell)) {
+                if (!styleHasBorderRadius(cell)) {
                     cellStyle = cell.style;
                 }
                 return (h("td", { "data-column": name, style: cellStyle, class: cellClass },
@@ -893,7 +962,7 @@ export class KupDataTable {
                 }
                 else {
                     // adding expander
-                    rowActionExpander = (h("span", { title: "Espandi voci", class: `row-action mdi mdi-chevron-right`, onClick: (e) => this.onRowActionExpanderClick(e, row), role: "button", "aria-label": "Espandi voci", "aria-pressed": "false" }));
+                    rowActionExpander = (h("span", { title: "Espandi voci", class: `row-action mdi mdi-chevron-right`, onClick: (e) => this.onRowActionExpanderClick(e, row), role: "button", "aria-label": "Espandi voci" }));
                 }
                 rowActionsCell = (h("td", null,
                     defaultRowActions,
@@ -917,7 +986,7 @@ export class KupDataTable {
                     index,
                     row,
                     type,
-                }), role: "button", "aria-label": action.text, "aria-pressed": "false" }));
+                }), role: "button", "aria-label": action.text }));
         });
     }
     /**
@@ -930,12 +999,24 @@ export class KupDataTable {
      * @param cellData.row - The row object to which the cell belongs.
      */
     renderCell(cell, column, cellData, previousRowCellValue) {
+        const clazz = {
+            'cell-content': true,
+        };
         // When the previous row value is different from the current value, we can show the current value.
         const valueToDisplay = previousRowCellValue !== cell.value ? cell.value : '';
         // Sets the default value
         let content = valueToDisplay;
         if (isIcon(cell.obj) || isVoCodver(cell.obj)) {
             content = h("span", { class: valueToDisplay });
+        }
+        else if (isNumber(cell.obj)) {
+            content = valueToDisplay;
+            if (content) {
+                const cellValue = numeral(cell.obj.k).value();
+                if (cellValue < 0) {
+                    clazz['negative-number'] = true;
+                }
+            }
         }
         else if (isImage(cell.obj)) {
             content = (h("img", { src: valueToDisplay, alt: "", width: "64", height: "64" }));
@@ -944,7 +1025,11 @@ export class KupDataTable {
             content = (h("a", { href: valueToDisplay, target: "_blank" }, valueToDisplay));
         }
         else if (isCheckbox(cell.obj)) {
-            content = h("kup-checkbox", { checked: !!cell.obj.k, disabled: cellData && cellData.row && cellData.row.hasOwnProperty('readOnly') ? cellData.row.readOnly : true });
+            content = (h("kup-checkbox", { checked: !!cell.obj.k, disabled: cellData &&
+                    cellData.row &&
+                    cellData.row.hasOwnProperty('readOnly')
+                    ? cellData.row.readOnly
+                    : true }));
         }
         else if (isButton(cell.obj)) {
             /**
@@ -985,14 +1070,54 @@ export class KupDataTable {
         // }
         // if cell.style has border, apply style to cellcontent
         let style = null;
-        if (this.styleHasBorderRadius(cell)) {
+        if (styleHasBorderRadius(cell)) {
             style = cell.style;
         }
-        return (h("span", { class: "cell-content", style: style }, content));
+        return (h("span", { class: clazz, style: style }, content));
     }
     renderLoadMoreButton(isSlotted = true) {
         const label = 'Carica altri dati';
         return (h("button", { "aria-label": label, class: "load-more-records mdi mdi-plus-circle", role: "button", slot: isSlotted ? 'more-results' : null, tabindex: "0", title: label, onClick: () => this.onLoadMoreClick() }));
+    }
+    renderPaginator(top) {
+        return (h("div", { class: "paginator-wrapper" },
+            h("kup-paginator", { id: top ? 'top-paginator' : 'bottom-paginator', max: this.rows.length, perPage: this.rowsPerPage, selectedPerPage: this.currentRowsPerPage, currentPage: this.currentPage, onKupPageChanged: (e) => this.handlePageChanged(e), onKupRowsPerPageChanged: (e) => this.handleRowsPerPageChanged(e) }, this.showLoadMore ? this.renderLoadMoreButton() : null),
+            this.renderDensityPanel(top)));
+    }
+    renderDensityPanel(top) {
+        return (h("div", { class: "density-panel" },
+            h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+                h("path", { d: "M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" })),
+            h("div", { role: "button", tabindex: "0", onClick: (e) => this.toggleDensityVisibility(e, top) },
+                h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+                    h("path", { d: "M7,10L12,15L17,10H7Z" }))),
+            h("div", { class: {
+                    'density-panel-overlay': true,
+                    open: top
+                        ? this.topDensityPanelVisible
+                        : this.botDensityPanelVisible,
+                } },
+                h("div", { class: {
+                        wrapper: true,
+                        active: this.density === 'big',
+                    }, onClick: () => (this.density = 'big'), role: "button", tabindex: "0", "aria-pressed": this.density === 'big' ? 'true' : 'false' },
+                    h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+                        h("path", { d: "M3,4H21V8H3V4M3,10H21V14H3V10M3,16H21V20H3V16Z" })),
+                    "Bassa"),
+                h("div", { class: {
+                        wrapper: true,
+                        active: this.density === 'medium',
+                    }, onClick: () => (this.density = 'medium'), role: "button", tabindex: "0", "aria-pressed": this.density === 'medium' ? 'true' : 'false' },
+                    h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+                        h("path", { d: "M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" })),
+                    "Media"),
+                h("div", { class: {
+                        wrapper: true,
+                        active: this.density === 'small',
+                    }, onClick: () => (this.density = 'small'), role: "button", tabindex: "0", "aria-pressed": this.density === 'small' ? 'true' : 'false' },
+                    h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+                        h("path", { d: "M3,3H21V5H3V3M3,7H21V9H3V7M3,11H21V13H3V11M3,15H21V17H3V15M3,19H21V21H3V19Z" })),
+                    "Alta"))));
     }
     render() {
         // resetting rows
@@ -1030,21 +1155,19 @@ export class KupDataTable {
         let paginatorTop = null;
         if (PaginatorPos.TOP === this.paginatorPos ||
             PaginatorPos.BOTH === this.paginatorPos) {
-            paginatorTop = (h("kup-paginator", { id: "top-paginator", max: this.rows.length, perPage: this.rowsPerPage, selectedPerPage: this.currentRowsPerPage, currentPage: this.currentPage, onKupPageChanged: (e) => this.handlePageChanged(e), onKupRowsPerPageChanged: (e) => this.handleRowsPerPageChanged(e) }, this.showLoadMore ? this.renderLoadMoreButton() : null));
+            paginatorTop = this.renderPaginator(true);
         }
         let paginatorBottom = null;
         if (PaginatorPos.BOTTOM === this.paginatorPos ||
             PaginatorPos.BOTH === this.paginatorPos) {
-            paginatorBottom = (h("kup-paginator", { id: "bottom-paginator", max: this.rows.length, perPage: this.rowsPerPage, selectedPerPage: this.currentRowsPerPage, currentPage: this.currentPage, onKupPageChanged: (e) => this.handlePageChanged(e), onKupRowsPerPageChanged: (e) => this.handleRowsPerPageChanged(e) }, this.showLoadMore ? this.renderLoadMoreButton() : null));
+            paginatorBottom = this.renderPaginator(false);
         }
         let groupChips = null;
         if (this.isGrouping()) {
             const chips = this.groups.map((group) => {
                 const column = getColumnByName(this.getColumns(), group.column);
                 if (column) {
-                    return (h("div", { class: "group-chip", tabIndex: 0, onClick: () => this.removeGroup(group) },
-                        h("span", { class: "mdi mdi-close-circle" }),
-                        column.title));
+                    return (h("kup-chip", { closable: true, onClose: () => this.removeGroup(group) }, column.title));
                 }
                 else {
                     return null;
@@ -1052,10 +1175,6 @@ export class KupDataTable {
             });
             groupChips = h("div", { id: "group-chips" }, chips);
         }
-        const densityPanel = (h("div", { id: "density-panel" },
-            h("kup-button", { class: { active: this.density === 'small' }, iconClass: "mdi mdi-format-align-justify", onClick: () => (this.density = 'small') }),
-            h("kup-button", { class: { active: this.density === 'medium' }, iconClass: "mdi mdi-menu", onClick: () => (this.density = 'medium') }),
-            h("kup-button", { class: { active: this.density === 'big' }, iconClass: "mdi mdi-view-sequential", onClick: () => (this.density = 'big') })));
         const tableClass = {
             'column-separation': ShowGrid.COMPLETE === this.showGrid ||
                 ShowGrid.COL === this.showGrid,
@@ -1067,12 +1186,11 @@ export class KupDataTable {
         return (h("div", { id: "data-table-wrapper" },
             h("div", { class: "above-wrapper" },
                 paginatorTop,
-                globalFilter,
-                densityPanel),
+                globalFilter),
             h("div", { class: "below-wrapper" },
                 groupChips,
                 h("table", { class: tableClass },
-                    h("thead", { hidden: !this.showHeader, ref: (el) => this.theadRef = el },
+                    h("thead", { hidden: !this.showHeader, ref: (el) => (this.theadRef = el) },
                         h("tr", null, header)),
                     h("tbody", null, rows),
                     footer)),
@@ -1091,7 +1209,7 @@ export class KupDataTable {
             "type": "unknown",
             "mutable": false,
             "complexType": {
-                "original": "Array<{\r\n        column: string;\r\n        width: number;\r\n    }>",
+                "original": "Array<{\n        column: string;\n        width: number;\n    }>",
                 "resolved": "{ column: string; width: number; }[]",
                 "references": {
                     "Array": {
@@ -1250,7 +1368,7 @@ export class KupDataTable {
                         "text": "https://caniuse.com/#feat=css-sticky",
                         "name": "see"
                     }],
-                "text": "If table header is visible and this prop is set to true, the header will be visible while scrolling the table.\r\nTo make this work, it must be configured together with the data-table CSS property --kup-data-table_header-offset.\r\nIt uses CSS position: sticky."
+                "text": "If table header is visible and this prop is set to true, the header will be visible while scrolling the table.\nTo make this work, it must be configured together with the data-table CSS property --kup-data-table_header-offset.\nIt uses CSS position: sticky."
             },
             "attribute": "header-is-persistent",
             "reflect": true,
@@ -1310,7 +1428,7 @@ export class KupDataTable {
                         "text": "loadMoreLimit",
                         "name": "see"
                     }],
-                "text": "The number of records which will be requested to be downloaded when clicking on the load more button.\r\n\r\nThis property is regulated also by loadMoreMode."
+                "text": "The number of records which will be requested to be downloaded when clicking on the load more button.\n\nThis property is regulated also by loadMoreMode."
             },
             "attribute": "load-more-step",
             "reflect": false,
@@ -1339,7 +1457,7 @@ export class KupDataTable {
                         "text": "loadMoreLimit",
                         "name": "see"
                     }],
-                "text": "Establish the modality of how many new records will be downloaded.\r\n\r\nThis property is regulated also by loadMoreStep."
+                "text": "Establish the modality of how many new records will be downloaded.\n\nThis property is regulated also by loadMoreStep."
             },
             "attribute": "load-more-mode",
             "reflect": false,
@@ -1486,7 +1604,7 @@ export class KupDataTable {
             },
             "attribute": "show-grid",
             "reflect": false,
-            "defaultValue": "ShowGrid.COMPLETE"
+            "defaultValue": "ShowGrid.ROW"
         },
         "showLoadMore": {
             "type": "boolean",
@@ -1560,7 +1678,7 @@ export class KupDataTable {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": "If set to true, when a column is dragged to be sorted the component directly mutates the data.columns property\r\nand then fires the event"
+                "text": "If set to true, when a column is dragged to be sorted the component directly mutates the data.columns property\nand then fires the event"
             },
             "attribute": "sortable-columns-mutate-data",
             "reflect": false,
@@ -1594,7 +1712,9 @@ export class KupDataTable {
         "selectedRows": {},
         "groupState": {},
         "openedMenu": {},
-        "density": {}
+        "density": {},
+        "topDensityPanelVisible": {},
+        "botDensityPanelVisible": {}
     }; }
     static get events() { return [{
             "method": "kupAutoRowSelect",
@@ -1607,7 +1727,7 @@ export class KupDataTable {
                 "text": "When a row is auto selected via selectRow prop"
             },
             "complexType": {
-                "original": "{\r\n        selectedRow: Row;\r\n    }",
+                "original": "{\n        selectedRow: Row;\n    }",
                 "resolved": "{ selectedRow: Row; }",
                 "references": {
                     "Row": {
@@ -1627,7 +1747,7 @@ export class KupDataTable {
                 "text": "When a row is selected"
             },
             "complexType": {
-                "original": "{\r\n        selectedRows: Array<Row>;\r\n        clickedColumn: string;\r\n    }",
+                "original": "{\n        selectedRows: Array<Row>;\n        clickedColumn: string;\n    }",
                 "resolved": "{ selectedRows: Row[]; clickedColumn: string; }",
                 "references": {
                     "Array": {
@@ -1650,7 +1770,7 @@ export class KupDataTable {
                 "text": "When cell option is clicked"
             },
             "complexType": {
-                "original": "{\r\n        column: string;\r\n        row: Row;\r\n    }",
+                "original": "{\n        column: string;\n        row: Row;\n    }",
                 "resolved": "{ column: string; row: Row; }",
                 "references": {
                     "Row": {
@@ -1685,7 +1805,7 @@ export class KupDataTable {
                 "text": "When a row action is clicked"
             },
             "complexType": {
-                "original": "{\r\n        type: 'default' | 'variable' | 'expander';\r\n        row: Row;\r\n        action?: RowAction;\r\n        index?: number;\r\n    }",
+                "original": "{\n        type: 'default' | 'variable' | 'expander';\n        row: Row;\n        action?: RowAction;\n        index?: number;\n    }",
                 "resolved": "{ type: \"default\" | \"variable\" | \"expander\"; row: Row; action?: RowAction; index?: number; }",
                 "references": {
                     "Row": {
@@ -1709,7 +1829,7 @@ export class KupDataTable {
                 "text": ""
             },
             "complexType": {
-                "original": "{\r\n        loadItems: number;\r\n    }",
+                "original": "{\n        loadItems: number;\n    }",
                 "resolved": "{ loadItems: number; }",
                 "references": {}
             }

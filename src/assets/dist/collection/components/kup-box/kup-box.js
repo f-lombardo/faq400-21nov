@@ -1,8 +1,9 @@
 import { h } from '@stencil/core';
 import numeral from 'numeral';
 import { SortMode, } from '../kup-data-table/kup-data-table-declarations';
-import { isImage, isButton, createJ4objButtonConfig, isProgressBar, } from '../../utils/object-utils';
-import { filterRows, sortRows } from '../kup-data-table/kup-data-table-helper';
+import { isImage, isButton, createJ4objButtonConfig, isProgressBar, isIcon, } from '../../utils/object-utils';
+import { filterRows, sortRows, paginateRows, } from '../kup-data-table/kup-data-table-helper';
+import { PaginatorMode } from '../kup-paginator/kup-paginator-declarations';
 export class KupBox {
     constructor() {
         /**
@@ -30,11 +31,21 @@ export class KupBox {
          * will be displayed on the right of every box
          */
         this.enableRowActions = false;
+        /**
+         * Enables pagination
+         */
+        this.pagination = false;
+        /**
+         * Number of boxes per page
+         */
+        this.pageSize = 10;
         this.globalFilterValue = '';
         this.collapsedSection = {};
         this.selectedRows = [];
+        this.currentPage = 1;
         this.visibleColumns = [];
         this.rows = [];
+        this.filteredRows = [];
     }
     recalculateRows() {
         this.initRows();
@@ -87,7 +98,7 @@ export class KupBox {
         return this.data && this.data.rows ? this.data.rows : [];
     }
     initRows() {
-        let filteredRows = this.getRows();
+        this.filteredRows = this.getRows();
         if (this.filterEnabled && this.globalFilterValue) {
             const visibleCols = this.visibleColumns;
             let size = visibleCols.length;
@@ -97,9 +108,12 @@ export class KupBox {
                 columnNames.push(visibleCols[cnt++].name);
             }
             // filtering rows
-            filteredRows = filterRows(filteredRows, null, this.globalFilterValue, columnNames);
+            this.filteredRows = filterRows(this.filteredRows, null, this.globalFilterValue, columnNames);
         }
-        this.rows = this.sortRows(filteredRows);
+        this.rows = this.sortRows(this.filteredRows);
+        if (this.pagination) {
+            this.rows = paginateRows(this.rows, this.currentPage, this.pageSize);
+        }
     }
     sortRows(rows) {
         let sortedRows = rows;
@@ -303,6 +317,9 @@ export class KupBox {
             }
         }
         this.rowActionMenuOpened = null;
+    }
+    handlePageChanged({ detail }) {
+        this.currentPage = detail.newPage;
     }
     // render methods
     renderRow(row) {
@@ -521,6 +538,9 @@ export class KupBox {
                     boContent = (h("div", { style: wrapperStyle },
                         h("kup-progress-bar", { value: value, labelText: labelText, hideLabel: hideLabel })));
                 }
+                else if (isIcon(cell.obj)) {
+                    boContent = h("span", { class: `icon ${cell.value}` });
+                }
                 else {
                     boContent = cell.value;
                 }
@@ -556,6 +576,10 @@ export class KupBox {
                     h("svg", { slot: "left", version: "1.1", width: "18", height: "18", viewBox: "0 0 24 24" },
                         h("path", { d: "M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" })))));
         }
+        let paginator = null;
+        if (this.pagination) {
+            paginator = (h("kup-paginator", { max: this.filteredRows.length, perPage: this.pageSize, currentPage: this.currentPage, onKupPageChanged: (e) => this.handlePageChanged(e), mode: PaginatorMode.SIMPLE }));
+        }
         let boxContent = null;
         if (this.rows.length === 0) {
             boxContent = h("p", { id: "empty-data-message" }, "Empty data");
@@ -575,6 +599,7 @@ export class KupBox {
         return (h("div", null,
             sortPanel,
             filterPanel,
+            paginator,
             h("div", { id: "box-container", style: containerStyle }, boxContent)));
     }
     static get is() { return "kup-box"; }
@@ -766,18 +791,55 @@ export class KupBox {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": "If enabled, a button to load / display the row actions\r\nwill be displayed on the right of every box"
+                "text": "If enabled, a button to load / display the row actions\nwill be displayed on the right of every box"
             },
             "attribute": "enable-row-actions",
             "reflect": false,
             "defaultValue": "false"
+        },
+        "pagination": {
+            "type": "boolean",
+            "mutable": false,
+            "complexType": {
+                "original": "boolean",
+                "resolved": "boolean",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": "Enables pagination"
+            },
+            "attribute": "pagination",
+            "reflect": true,
+            "defaultValue": "false"
+        },
+        "pageSize": {
+            "type": "number",
+            "mutable": false,
+            "complexType": {
+                "original": "number",
+                "resolved": "number",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": "Number of boxes per page"
+            },
+            "attribute": "page-size",
+            "reflect": true,
+            "defaultValue": "10"
         }
     }; }
     static get states() { return {
         "globalFilterValue": {},
         "collapsedSection": {},
         "selectedRows": {},
-        "rowActionMenuOpened": {}
+        "rowActionMenuOpened": {},
+        "currentPage": {}
     }; }
     static get events() { return [{
             "method": "kupBoxClicked",
@@ -790,7 +852,7 @@ export class KupBox {
                 "text": "Triggered when a box is clicked"
             },
             "complexType": {
-                "original": "{\r\n        row: BoxRow;\r\n        column?: string;\r\n    }",
+                "original": "{\n        row: BoxRow;\n        column?: string;\n    }",
                 "resolved": "{ row: BoxRow; column?: string; }",
                 "references": {
                     "BoxRow": {
@@ -810,7 +872,7 @@ export class KupBox {
                 "text": "Triggered when the multi selection checkbox changes value"
             },
             "complexType": {
-                "original": "{\r\n        rows: BoxRow[];\r\n    }",
+                "original": "{\n        rows: BoxRow[];\n    }",
                 "resolved": "{ rows: BoxRow[]; }",
                 "references": {
                     "BoxRow": {
@@ -830,7 +892,7 @@ export class KupBox {
                 "text": "Triggered when a box is auto selected via selectBox prop"
             },
             "complexType": {
-                "original": "{\r\n        row: BoxRow;\r\n    }",
+                "original": "{\n        row: BoxRow;\n    }",
                 "resolved": "{ row: BoxRow; }",
                 "references": {
                     "BoxRow": {
@@ -850,7 +912,7 @@ export class KupBox {
                 "text": "When the row menu action icon is clicked"
             },
             "complexType": {
-                "original": "{\r\n        row: BoxRow;\r\n    }",
+                "original": "{\n        row: BoxRow;\n    }",
                 "resolved": "{ row: BoxRow; }",
                 "references": {
                     "BoxRow": {
@@ -870,7 +932,7 @@ export class KupBox {
                 "text": "When the row menu action icon is clicked"
             },
             "complexType": {
-                "original": "{\r\n        row: BoxRow;\r\n        action: RowAction;\r\n        index: number;\r\n    }",
+                "original": "{\n        row: BoxRow;\n        action: RowAction;\n        index: number;\n    }",
                 "resolved": "{ row: BoxRow; action: RowAction; index: number; }",
                 "references": {
                     "BoxRow": {
@@ -921,6 +983,15 @@ export class KupBox {
             "methodName": "recalculateRows"
         }, {
             "propName": "sortBy",
+            "methodName": "recalculateRows"
+        }, {
+            "propName": "pagination",
+            "methodName": "recalculateRows"
+        }, {
+            "propName": "pageSize",
+            "methodName": "recalculateRows"
+        }, {
+            "propName": "currentPage",
             "methodName": "recalculateRows"
         }, {
             "propName": "data",

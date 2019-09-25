@@ -165,7 +165,7 @@ class KupButton {
         ];
     }
     get ketchupButtonEl() { return getElement(this); }
-    static get style() { return ":host{--btn_font-style:var(--kup-button_font-style,\"normal\");--btn_font-size:var(--kup-button_font-size,14px);--btn_font-weight:var(--kup-button_font-weight,400);--btn_font-family:var(--kup-button_font-family,inherit);--btn_icon-size:var(--kup-button_icon-size,18px);--btn_main-color:var(--kup-button_main-color,#4e908f);--btn_text-color:var(--kup-button_text-color,#fff);--btn_text-color--transparent:var(--kup-button_text-color--transparent,grey);--btn_text-decoration:var(--kup-button_text-decoration,\"none\");--btn_icon-color:var(--kup-button_icon-color,#fff);--btn_icon--transparent:var(--kup-button_icon-color--transparent,grey);--btn_animation-duration:var(--kup-button_animation-duration,0.3s);--btn_border-color:var(--kup-button_border-color,#4e908f);--btn_opacity:var(--kup-button_opacity,1);--btn_box-shadow:var(--kup-button_box-shadow,0px 0px 7.5px 0px hsla(0,0%,50.2%,0.5));--btn_border:var(--kup-button_border,none);--btn_color-info:var(--kup-color-info,#6a8fd1);--btn_color-danger:var(--kup-danger-danger,#f0423c);--btn_color-danger--hover:var(--kup-danger-color--hover,#d91e18);--btn_color-warning:var(--kup-info-color,#ffd454);--btn_color-selected:var(--kup-info-color,#ffc107)}:host(.fillspace) button{width:100%}button{outline:none;opacity:var(--btn_opacity);background:var(--btn_main-color);border-radius:2px;border:var(--btn_border);-webkit-box-shadow:none;box-shadow:none;color:var(--btn_text-color);cursor:pointer;font-family:var(--btn_font-family);font-size:var(--btn_font-size);font-weight:var(--btn_font-weight);line-height:30px;padding:0 8px;text-align:center;-webkit-transition:opacity .2s ease-in-out,-webkit-box-shadow var(--btn_animation-duration);transition:opacity .2s ease-in-out,-webkit-box-shadow var(--btn_animation-duration);transition:box-shadow var(--btn_animation-duration),opacity .2s ease-in-out;transition:box-shadow var(--btn_animation-duration),opacity .2s ease-in-out,-webkit-box-shadow var(--btn_animation-duration);white-space:nowrap}button:hover{-webkit-box-shadow:var(--btn_box-shadow);box-shadow:var(--btn_box-shadow)}button>.button-icon{display:block;color:var(--btn_icon-color);fill:var(--btn_icon-color);float:left;width:var(--btn_icon-size)}button>.button-text{font-style:var(--btn_font-style);-webkit-text-decoration:var(--btn_text-decoration);text-decoration:var(--btn_text-decoration)}button.rounded{border-radius:15px}button.transparent{background-color:transparent;border:1px solid var(--btn_border-color);color:var(--btn_text-color--transparent)}button.transparent>.button-icon{color:var(--btn_icon-color--transparent);fill:var(--btn_icon-color--transparent)}button.btn-info{background:var(--btn_color-info)}button.btn-danger{background:var(--btn_color-danger)}button.btn-danger:hover{background:var(--btn_color-danger--hover)}button.btn-warning{background:var(--btn_color-warning)}button.btn-selected{background:var(--btn_color-selected)}button.flat-btn{background:none;border:none;color:var(--btn_main-color)}button.flat-btn:hover{-webkit-box-shadow:none;box-shadow:none}button.flat-btn .button-text{text-decoration:underline}button.flat-btn>.button-icon{color:var(--btn_main-color);fill:var(--btn_main-color)}button.align-right{text-align:right}button.align-right>.button-icon{float:right}button.align-left{text-align:left}button.fillspace{width:100%}"; }
+    static get style() { return ":host{--btn_font-style:var(--kup-button_font-style,\"normal\");--btn_font-size:var(--kup-button_font-size,14px);--btn_font-weight:var(--kup-button_font-weight,400);--btn_font-family:var(--kup-button_font-family,inherit);--btn_icon-size:var(--kup-button_icon-size,18px);--btn_main-color:var(--kup-button_main-color,#4e908f);--btn_text-color:var(--kup-button_text-color,#fff);--btn_text-color--transparent:var(--kup-button_text-color--transparent,grey);--btn_text-decoration:var(--kup-button_text-decoration,\"none\");--btn_icon-color:var(--kup-button_icon-color,#fff);--btn_icon--transparent:var(--kup-button_icon-color--transparent,grey);--btn_animation-duration:var(--kup-button_animation-duration,0.3s);--btn_border-color:var(--kup-button_border-color,#4e908f);--btn_opacity:var(--kup-button_opacity,1);--btn_box-shadow:var(--kup-button_box-shadow,0px 0px 7.5px 0px hsla(0,0%,50.2%,0.5));--btn_border:var(--kup-button_border,none);--btn_border-radius:var(--kup-button_border-radius,2px);--btn_color-info:var(--kup-color-info,#6a8fd1);--btn_color-danger:var(--kup-danger-danger,#f0423c);--btn_color-danger--hover:var(--kup-danger-color--hover,#d91e18);--btn_color-warning:var(--kup-info-color,#ffd454);--btn_color-selected:var(--kup-info-color,#ffc107)}:host(.fillspace) button{width:100%}button{outline:none;opacity:var(--btn_opacity);background:var(--btn_main-color);border-radius:var(--btn_border-radius);border:var(--btn_border);-webkit-box-shadow:none;box-shadow:none;color:var(--btn_text-color);cursor:pointer;font-family:var(--btn_font-family);font-size:var(--btn_font-size);font-weight:var(--btn_font-weight);line-height:30px;padding:0 8px;text-align:center;-webkit-transition:opacity .2s ease-in-out,-webkit-box-shadow var(--btn_animation-duration);transition:opacity .2s ease-in-out,-webkit-box-shadow var(--btn_animation-duration);transition:box-shadow var(--btn_animation-duration),opacity .2s ease-in-out;transition:box-shadow var(--btn_animation-duration),opacity .2s ease-in-out,-webkit-box-shadow var(--btn_animation-duration);white-space:nowrap}button:hover{-webkit-box-shadow:var(--btn_box-shadow);box-shadow:var(--btn_box-shadow)}button>.button-icon{display:block;color:var(--btn_icon-color);fill:var(--btn_icon-color);float:left;width:var(--btn_icon-size)}button>.button-text{font-style:var(--btn_font-style);-webkit-text-decoration:var(--btn_text-decoration);text-decoration:var(--btn_text-decoration)}button.rounded{border-radius:15px}button.transparent{background-color:transparent;border:1px solid var(--btn_border-color);color:var(--btn_text-color--transparent)}button.transparent>.button-icon{color:var(--btn_icon-color--transparent);fill:var(--btn_icon-color--transparent)}button.btn-info{background:var(--btn_color-info)}button.btn-danger{background:var(--btn_color-danger)}button.btn-danger:hover{background:var(--btn_color-danger--hover)}button.btn-warning{background:var(--btn_color-warning)}button.btn-selected{background:var(--btn_color-selected)}button.flat-btn{background:none;border:none;color:var(--btn_main-color)}button.flat-btn:hover{-webkit-box-shadow:none;box-shadow:none}button.flat-btn .button-text{text-decoration:underline}button.flat-btn>.button-icon{color:var(--btn_main-color);fill:var(--btn_main-color)}button.align-right{text-align:right}button.align-right>.button-icon{float:right}button.align-left{text-align:left}button.fillspace{width:100%}"; }
 }
 
 class KupCheckbox {
@@ -279,7 +279,7 @@ function getElementOffset(el, positioning = { isRight: false, isTop: false }, of
     }
     else {
         // If right positioned
-        ret.right = offsetEl.scrollWidth - rect.left - rect.width;
+        ret.right = offsetEl.offsetWidth - rect.left - rect.width;
     }
     // If positioned on the bottom of the el element
     if (!positioning.isTop) {
@@ -350,6 +350,10 @@ class KupCombo {
          */
         this.isClearable = false;
         /**
+         * Marks the field as filterable, allowing an input text to filter the options
+         */
+        this.isFilterable = true;
+        /**
          * Items which can be selected
          */
         this.items = [];
@@ -387,13 +391,30 @@ class KupCombo {
         // Determines the position on which the menu will be open
         this.comboPosition = {
             isRight: false,
-            isTop: false
+            isTop: false,
         };
         // Variable to hold Constructed Style Sheet
         // TODO check if there is a better typing.
         this.constructedStyleSheet = null;
         // For CSS vars
-        this.internalCssVars = ['--cmb_font-size', '--cmb_border-color', '--cmb_border-color--selected', '--cmb_tr-duration', '--cmb_icon-color', '--cmb_icon-color--hover', '--cmb_menu-background'];
+        this.internalCssVars = [
+            '--cmb_font-size',
+            '--cmb_border-color',
+            '--cmb_border-color--selected',
+            '--cmb_tr-duration',
+            '--cmb_icon-color',
+            '--cmb_icon-color--hover',
+            '--cmb_menu-background',
+            '--cmb_menu-background--hover',
+            '--kup-combo_menu_text',
+            '--kup-combo_menu_text--hover',
+            '--cmb_background-color',
+            '--cmb_background-color--hover',
+            '--cmb_text-color',
+            '--cmb_text-color--hover',
+            '--cmb_border-radius',
+            '--cmb_box-shadow',
+        ];
         //-- Constants --
         this.baseClass = 'kup-combo';
         this.ketchupComboSelected = createEvent(this, "ketchupComboSelected", 6);
@@ -432,7 +453,8 @@ class KupCombo {
     // Always reflect changes of initialValue to value element
     reflectInitialValue(newValue, oldValue) {
         // When a new initial value is passed, we control that the new item is different from the old one before updating the state
-        if (!oldValue || newValue[this.valueField] !== oldValue[this.valueField]) {
+        if (!oldValue ||
+            newValue[this.valueField] !== oldValue[this.valueField]) {
             this.onComboSelected(newValue, oldValue);
         }
     }
@@ -444,10 +466,10 @@ class KupCombo {
     calcBoxPosition() {
         const windowX = document.documentElement.clientWidth;
         const windowY = document.documentElement.clientHeight;
-        const { height, left, top, width } = this.comboText.getBoundingClientRect();
+        const { height, left, top, width, } = this.comboText.getBoundingClientRect();
         return {
             isRight: left + width / 2 > windowX / 2,
-            isTop: top + height / 2 > windowY / 2
+            isTop: top + height / 2 > windowY / 2,
         };
     }
     //---- Events and handlers ----
@@ -488,13 +510,15 @@ class KupCombo {
             response = await this.portalRef.getPortalInstance();
         }
         try {
-            if (event.composedPath().indexOf(this.comboEl) < 0 && event.composedPath().indexOf(response) < 0) {
+            if (event.composedPath().indexOf(this.comboEl) < 0 &&
+                event.composedPath().indexOf(response) < 0) {
                 this.closeCombo();
             }
         }
         catch (e) {
             const ele = event.target;
-            if (!eventFromElement(this.comboEl, ele) && !eventFromElement(response, ele)) {
+            if (!eventFromElement(this.comboEl, ele) &&
+                !eventFromElement(response, ele)) {
                 this.closeCombo();
             }
         }
@@ -521,8 +545,8 @@ class KupCombo {
             value: item,
             oldValue: oldItem,
             info: {
-                obj: this.obj
-            }
+                obj: this.obj,
+            },
         });
         // Updates corresponding fields
         this.selected = item;
@@ -531,31 +555,48 @@ class KupCombo {
     //---- Rendering functions ----
     // Creates the menu and its items
     composeList() {
-        return h("div", { class: this.baseClass + '__menu' + (this.isOpen ? ' is-open' : '') +
-                (this.comboPosition.isRight ? ' is-right' : '') + (this.comboPosition.isTop ? ' is-top' : '')
-                + (this.usePortal ? ' is-using-portal' : '') }, h("div", { class: this.baseClass + '__filter' }, h("kup-text-input", { onKetchupTextInputUpdated: this.onFilterUpdate.bind(this) })), h("ul", { class: this.baseClass + '__list' }, this.items.filter(item => !this.filter || item[this.displayedField].toLowerCase().indexOf(this.filter) >= 0)
-            .map(item => h("li", { onClick: () => this.onItemSelected(item) }, h("span", null, item[this.displayedField])))));
+        let filter = null;
+        if (this.isFilterable) {
+            filter = (h("div", { class: this.baseClass + '__filter' }, h("kup-text-input", { onKetchupTextInputUpdated: this.onFilterUpdate.bind(this) })));
+        }
+        return (h("div", { class: this.baseClass +
+                '__menu' +
+                (this.isOpen ? ' is-open' : '') +
+                (this.comboPosition.isRight ? ' is-right' : '') +
+                (this.comboPosition.isTop ? ' is-top' : '') +
+                (this.usePortal ? ' is-using-portal' : '') }, filter, h("ul", { class: this.baseClass + '__list' }, this.items
+            .filter((item) => !this.filter ||
+            item[this.displayedField]
+                .toLowerCase()
+                .indexOf(this.filter) >= 0)
+            .map((item) => (h("li", { onClick: () => this.onItemSelected(item) }, h("span", null, item[this.displayedField])))))));
     }
     render() {
         const containerClass = this.baseClass + '__container';
-        return ([
-            h("div", { class: containerClass + (this.isClearable ? ' ' + containerClass + '--clearable' : ''), ref: (el) => this.comboText = el }, h("span", { class: this.baseClass + '__current-value', onClick: this.onComboClick.bind(this) }, this.selected ? this.selected[this.displayedField] : '', h("svg", { class: this.baseClass + '__icon ' + this.baseClass + '__chevron' + (this.isOpen ? ' ' + this.baseClass + '__chevron--open' : ''), viewBox: "0 0 24 24" }, h("path", { d: "M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" }))), this.isClearable ?
-                h("button", { "aria-label": "Close", class: this.baseClass + '__clear', role: "button", onClick: this.onClearClick.bind(this) }, h("svg", { class: this.baseClass + '__icon', viewBox: "0 0 24 24" }, h("path", { d: "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" }))) :
-                null),
-            this.usePortal ?
-                h("kup-portal", { isVisible: this.isOpen, mirroredCssVars: this.internalCssVars, nodes: this.composeList(), portalParentRef: this.comboEl, ref: el => this.portalRef = el,
-                    // Notice that the portal offset MUST be calculated considering the menu button, not the whole web component
-                    refOffset: getElementOffset(this.comboText, this.comboPosition), styleNode: this.comboEl.shadowRoot.querySelector('style') })
-                :
-                    this.composeList()
-        ]);
+        return [
+            h("div", { class: containerClass +
+                    (this.isClearable
+                        ? ' ' + containerClass + '--clearable'
+                        : ''), ref: (el) => (this.comboText = el) }, h("span", { class: this.baseClass + '__current-value', onClick: this.onComboClick.bind(this) }, h("span", { class: "value-text" }, this.selected
+                ? this.selected[this.displayedField]
+                : ''), h("svg", { class: this.baseClass +
+                    '__icon ' +
+                    this.baseClass +
+                    '__chevron' +
+                    (this.isOpen
+                        ? ' ' + this.baseClass + '__chevron--open'
+                        : ''), version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" }, h("path", { d: "M7,10L12,15L17,10H7Z" }))), this.isClearable ? (h("button", { "aria-label": "Close", class: this.baseClass + '__clear', role: "button", onClick: this.onClearClick.bind(this) }, h("svg", { class: this.baseClass + '__icon', viewBox: "0 0 24 24" }, h("path", { d: "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" })))) : null),
+            this.usePortal ? (h("kup-portal", { isVisible: this.isOpen, mirroredCssVars: this.internalCssVars, nodes: this.composeList(), portalParentRef: this.comboEl, ref: (el) => (this.portalRef = el),
+                // Notice that the portal offset MUST be calculated considering the menu button, not the whole web component
+                refOffset: getElementOffset(this.comboText, this.comboPosition), styleNode: this.comboEl.shadowRoot.querySelector('style') })) : (this.composeList()),
+        ];
     }
     get comboEl() { return getElement(this); }
     static get watchers() { return {
         "initialValue": ["reflectInitialValue"],
         "valueField": ["reflectValueField"]
     }; }
-    static get style() { return ":host{--cmb_font-size:var(--kup-combo_input_font-size,14px);--cmb_border-color:var(--kup-combo_input_border-color,grey);--cmb_border-color--selected:var(--kup-combo_input_border-color,#676767);--cmb_tr-duration:var(--kup-combo_input_transition-duration,0.6s);--cmb_icon-color:var(--kup-combo_icon_color,grey);--cmb_icon-color--hover:var(--kup-combo_icon_color--hover,#676767);--cmb_menu-background:var(--kup-combo_menu_background,#fff);display:inline-block;position:relative;z-index:1}.kup-combo__container{background-color:#fff;border:1px solid var(--cmb_border-color);border-radius:2px;-webkit-box-sizing:border-box;box-sizing:border-box;display:-ms-inline-flexbox;display:inline-flex;outline:none}.kup-combo__container:focus,.kup-combo__container:hover{border-color:var(--cmb_border-color--selected)}.kup-combo__icon{fill:var(--cmb_icon-color);height:var(--cmb_font-size);-webkit-transition:fill var(--cmb_tr-duration),-webkit-transform var(--cmb_tr-duration);transition:fill var(--cmb_tr-duration),-webkit-transform var(--cmb_tr-duration);transition:fill var(--cmb_tr-duration),transform var(--cmb_tr-duration);transition:fill var(--cmb_tr-duration),transform var(--cmb_tr-duration),-webkit-transform var(--cmb_tr-duration);width:var(--cmb_font-size)}.kup-combo__current-value{-ms-flex-align:center;align-items:center;cursor:pointer;display:-ms-inline-flexbox;display:inline-flex;font-size:var(--cmb_font-size);-ms-flex-pack:center;justify-content:center;padding:4px 6px}.kup-combo__chevron{margin-left:16px}.kup-combo__chevron--open{-webkit-transform:rotate(180deg);transform:rotate(180deg)}.kup-combo__clear{-ms-flex-align:center;align-items:center;background-color:transparent;border:none;cursor:pointer;display:-ms-inline-flexbox;display:inline-flex;-ms-flex-pack:center;justify-content:center;margin:0;outline:none;padding:4px}.kup-combo__clear:hover>svg{fill:var(--cmb_icon-color--hover)}.kup-combo__menu{background-color:var(--cmb_menu-background);border-radius:2px;-webkit-box-shadow:0 1px 5px rgba(0,0,0,.5);box-shadow:0 1px 5px rgba(0,0,0,.5);display:inline-block;left:0;opacity:0;position:absolute;-webkit-transition:opacity var(--cmb_tr-duration);transition:opacity var(--cmb_tr-duration);top:100%;visibility:hidden;z-index:1}.kup-combo__menu.is-open{opacity:1;visibility:visible}.kup-combo__menu.is-top{bottom:100%;top:auto}.kup-combo__menu.is-right{left:auto;right:0}.kup-combo__menu.is-using-portal{position:relative}.kup-combo__filter{-webkit-box-sizing:border-box;box-sizing:border-box;display:inline-block;padding:4px}.kup-combo__list{display:block;list-style-type:none;padding:0;max-height:400px;margin:0;overflow:auto}.kup-combo__list>li{border-bottom:1px solid #e8eae9;-webkit-box-sizing:border-box;box-sizing:border-box;cursor:pointer;display:block;padding:6px 8px 5px}.kup-combo__list>li.is-selected,.kup-combo__list>li:hover{background-color:#f0f0f0}.kup-combo__list>li:last-of-type{border-bottom:none}"; }
+    static get style() { return ":host{--cmb_font-size:var(--kup-combo_input_font-size,14px);--cmb_border-color:var(--kup-combo_input_border-color,#bdbdbd);--cmb_border-color--selected:var(--kup-combo_input_border-color--selected,#676767);--cmb_tr-duration:var(--kup-combo_input_transition-duration,0.6s);--cmb_icon-color:var(--kup-combo_icon_color,grey);--cmb_icon-color--hover:var(--kup-combo_icon_color--hover,#676767);--cmb_menu-background:var(--kup-combo_menu_background,#fff);--cmb_menu-background--hover:var(--kup-combo_menu_background--hover,#f0f0f0);--cmb_menu-text:var(--kup-combo_menu_text,grey);--cmb_menu-text--hover:var(--kup-combo_menu_text--hover,#555);--cmb_background-color:var(--kup-combo_background-color,#fff);--cmb_background-color--hover:var(--kup-combo_background-color--hover,#f0f0f0);--cmb_text-color:var(--kup-combo_text-color,grey);--cmb_text-color--hover:var(--kup-combo_text-color--hover,#676767);--cmb_border-radius:var(--kup-combo_border-radius,2px);--cmb_box-shadow:var(--kup-combo_box-shadow,0px 0px 7.5px 0px hsla(0,0%,50.2%,0.5));display:inline-block;position:relative;z-index:1}.kup-combo__container{background-color:var(--cmb_background-color);color:var(--cmb_text-color);border:1px solid var(--cmb_border-color);border-radius:var(--cmb_border-radius);-webkit-box-sizing:border-box;box-sizing:border-box;display:-ms-inline-flexbox;display:inline-flex;outline:none;-webkit-transition:border-color .25s ease;transition:border-color .25s ease}.kup-combo__container:focus,.kup-combo__container:hover{border-color:var(--cmb_border-color--selected)}.kup-combo__container:focus .value-text,.kup-combo__container:hover .value-text{color:var(--cmb_text-color--hover)}.kup-combo__container:focus svg,.kup-combo__container:hover svg{fill:var(--cmb_icon-color--hover)}.kup-combo__icon{fill:var(--cmb_icon-color);-webkit-transition:fill var(--cmb_tr-duration),-webkit-transform var(--cmb_tr-duration);transition:fill var(--cmb_tr-duration),-webkit-transform var(--cmb_tr-duration);transition:fill var(--cmb_tr-duration),transform var(--cmb_tr-duration);transition:fill var(--cmb_tr-duration),transform var(--cmb_tr-duration),-webkit-transform var(--cmb_tr-duration)}.kup-combo__current-value{-ms-flex-align:center;align-items:center;cursor:pointer;display:-ms-inline-flexbox;display:inline-flex;font-size:var(--cmb_font-size);-ms-flex-pack:center;justify-content:center}.kup-combo__current-value .value-text{padding:0 .75rem}.kup-combo__current-value svg{fill:#bdbdbd}.kup-combo__chevron{margin-left:16px}.kup-combo__chevron--open{-webkit-transform:rotate(180deg);transform:rotate(180deg)}.kup-combo__clear{-ms-flex-align:center;align-items:center;background-color:transparent;border:none;cursor:pointer;display:-ms-inline-flexbox;display:inline-flex;-ms-flex-pack:center;justify-content:center;margin:0;outline:none;padding:4px}.kup-combo__clear:hover>svg{fill:var(--cmb_icon-color--hover)}.kup-combo__menu{background-color:var(--cmb_menu-background);color:var(--cmb_menu-text);border-radius:0;-webkit-box-shadow:var(--cmb_box-shadow);box-shadow:var(--cmb_box-shadow);display:inline-block;left:0;opacity:0;position:absolute;-webkit-transition:opacity var(--cmb_tr-duration);transition:opacity var(--cmb_tr-duration);top:100%;visibility:hidden;z-index:1}.kup-combo__menu.is-open{opacity:1;visibility:visible}.kup-combo__menu.is-top{bottom:100%;top:auto}.kup-combo__menu.is-right{left:auto;right:0}.kup-combo__menu.is-using-portal{position:relative}.kup-combo__filter{-webkit-box-sizing:border-box;box-sizing:border-box;display:inline-block;padding:4px}.kup-combo__list{display:block;list-style-type:none;padding:0;min-width:80px;max-height:400px;margin:0;overflow:auto}.kup-combo__list>li{-webkit-box-sizing:border-box;box-sizing:border-box;cursor:pointer;display:block;padding:6px 8px 5px;-webkit-transition:color var(--cmb_tr-duration),background-color var(--cmb_tr-duration);transition:color var(--cmb_tr-duration),background-color var(--cmb_tr-duration)}.kup-combo__list>li.is-selected,.kup-combo__list>li:hover{background-color:var(--cmb_menu-background--hover);color:var(--cmb_menu-text--hover)}.kup-combo__list>li:last-of-type{border-bottom:none}"; }
 }
 
 class KupFld {
@@ -910,10 +951,10 @@ class KupGauge {
         // TODO these thresholds will be given to the component by a user prop
         const givenThresholds = [];
         if (!this.onlyValue) {
-            if (this.firstThreshold) {
+            if (this.firstThreshold || 0 === this.firstThreshold) {
                 givenThresholds.push(this.firstThreshold);
             }
-            if (this.secondThreshold) {
+            if (this.secondThreshold || 0 === this.secondThreshold) {
                 givenThresholds.push(this.secondThreshold);
             }
         }
@@ -945,6 +986,7 @@ class KupGauge {
                     : computedcolors[2];
             arcsColors = [valuecolor, 'var(--gau_empty-color)'];
         }
+        console.log(arcsThresholds.length);
         for (let i = 0; i < arcsThresholds.length - 1; i++) {
             const currentArcPath = this.arcGenerator({
                 innerRadius: halvedSize - this.arcThickness,
@@ -956,6 +998,7 @@ class KupGauge {
             // If there is no color specified for that arc, we provide a black fallback
             arcsElements.push(h("path", { d: currentArcPath, style: { fill: arcsColors[i] ? arcsColors[i] : '#000000' } }));
         }
+        console.log(arcsElements.length);
         // Composes the threshold label elements, if labels must be displayed
         const textElements = this.showLabels || this.showMaxmin
             ? arcsThresholds.map((threshold) => {
@@ -1084,7 +1127,7 @@ class KupPortal {
     // https://stenciljs.com/docs/component-lifecycle#componentwillrender-
     // Used this hook because during its execution props will held the new value
     // While componentWillUpdate does not have the correct value inside the props.
-    componentWillRender() {
+    componentDidUpdate() {
         // Updates tree node
         this.instance.vNodes = this.nodes;
         // Creates style node
@@ -1909,7 +1952,7 @@ class KupTextInput {
     static get watchers() { return {
         "debounce": ["debounceChanged"]
     }; }
-    static get style() { return ":host{--int_color:var(--kup-text-input_color,#000);--int_font-size:var(--kup-text-input_font-size,14px);--int_border-color:var(--kup-text-input_border-color,grey);--int_border-color--selected:var(--kup-text-input_border-color--selected,#4e908f);--int_tr-duration:var(--kup-text-input_transition-duration,0.6s);--int_icon-color:var(--kup-text-input_icon-color,grey);--int_icon-color--hover:var(--kup-text-input_icon-color--hover,#676767);--int_placeholder-color:var(--kup-text-input_placeholder-color,#bebebe);--int_background-color:var(--kup-text-input_background-color,transparent);display:inline-block}label{margin-right:.5rem}.kup-input-text{color:var(--int_color);background-color:transparent;border:none;outline:none;padding:4px 6px;position:relative;-webkit-transition:background-color var(--int_tr-duration);transition:background-color var(--int_tr-duration);z-index:0}.kup-input-text__input-wrapper{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;background-color:var(--int_background-color);border:1px solid var(--int_border-color);border-radius:2px;-webkit-box-sizing:border-box;box-sizing:border-box}.kup-input-text__input-wrapper.focused{border-color:var(--int_border-color--selected)}.kup-input-text__container{display:inline-block;position:relative;z-index:0}.kup-input-text::-webkit-input-placeholder{color:var(--int_placeholder-color)}.kup-input-text::-moz-placeholder{color:var(--int_placeholder-color)}.kup-input-text:-ms-input-placeholder{color:var(--int_placeholder-color)}.kup-input-text::-ms-input-placeholder{color:var(--int_placeholder-color)}.kup-input-text::placeholder{color:var(--int_placeholder-color)}.kup-input-text__clear{-ms-flex-align:center;align-items:center;background-color:transparent;border:none;cursor:pointer;display:-ms-inline-flexbox;display:inline-flex;-ms-flex-pack:center;justify-content:center;outline:none;padding:4px;z-index:1}.kup-input-text__clear>svg{fill:var(--int_icon-color);height:var(--int_font-size);-webkit-transition:fill var(--int_tr-duration);transition:fill var(--int_tr-duration);width:var(--int_font-size)}.kup-input-text__clear:hover>svg{fill:var(--int_icon-color--hover)}"; }
+    static get style() { return ":host{--itx_color:var(--kup-text-input_color,#000);--itx_font-size:var(--kup-text-input_font-size,14px);--itx_border-color:var(--kup-text-input_border-color,grey);--itx_border-color--selected:var(--kup-text-input_border-color--selected,#4e908f);--itx_tr-duration:var(--kup-text-input_transition-duration,0.6s);--itx_icon-color:var(--kup-text-input_icon-color,grey);--itx_icon-color--hover:var(--kup-text-input_icon-color--hover,#676767);--itx_placeholder-color:var(--kup-text-input_placeholder-color,#bebebe);--itx_background-color:var(--kup-text-input_background-color,transparent);display:inline-block}label{margin-right:.5rem}.kup-input-text{color:var(--itx_color);background-color:transparent;border:none;outline:none;padding:4px 6px;position:relative;-webkit-transition:background-color var(--itx_tr-duration);transition:background-color var(--itx_tr-duration);z-index:0}.kup-input-text__input-wrapper{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;background-color:var(--itx_background-color);border:1px solid var(--itx_border-color);border-radius:2px;-webkit-box-sizing:border-box;box-sizing:border-box}.kup-input-text__input-wrapper.focused{border-color:var(--itx_border-color--selected)}.kup-input-text__container{display:inline-block;position:relative;z-index:0}.kup-input-text::-webkit-input-placeholder{color:var(--itx_placeholder-color)}.kup-input-text::-moz-placeholder{color:var(--itx_placeholder-color)}.kup-input-text:-ms-input-placeholder{color:var(--itx_placeholder-color)}.kup-input-text::-ms-input-placeholder{color:var(--itx_placeholder-color)}.kup-input-text::placeholder{color:var(--itx_placeholder-color)}.kup-input-text__clear{-ms-flex-align:center;align-items:center;background-color:transparent;border:none;cursor:pointer;display:-ms-inline-flexbox;display:inline-flex;-ms-flex-pack:center;justify-content:center;outline:none;padding:4px;z-index:1}.kup-input-text__clear>svg{fill:var(--itx_icon-color);height:var(--itx_font-size);-webkit-transition:fill var(--itx_tr-duration);transition:fill var(--itx_tr-duration);width:var(--itx_font-size)}.kup-input-text__clear:hover>svg{fill:var(--itx_icon-color--hover)}"; }
 }
 
 export { KupBtn as kup_btn, KupButton as kup_button, KupCheckbox as kup_checkbox, KupCombo as kup_combo, KupFld as kup_fld, KupGauge as kup_gauge, KupHtml as kup_html, KupPortal as kup_portal, KupPortalInstance as kup_portal_instance, KupRadio as kup_radio, KupTextInput as kup_text_input };
