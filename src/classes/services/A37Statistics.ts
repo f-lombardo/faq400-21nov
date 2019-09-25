@@ -51,25 +51,25 @@ export default class TemplatesList extends Service {
           if (data.rows) {
             data.rows.forEach((row: any) => {
               let time: Cell = row.cells["TIME"];
-              time = EnrichUtil.addObj(time, "", "", "");
+              time = EnrichUtil.addObj(time, "", "", time.value);
 
               let incom: Cell = row.cells["IN"];
-              incom = EnrichUtil.addObj(incom, "", "", "");
+              incom = EnrichUtil.addObj(incom, "NR", "", incom.value);
 
               let cons: Cell = row.cells["CONS"];
-              cons = EnrichUtil.addObj(cons, "", "", "");
+              cons = EnrichUtil.addObj(cons, "NR", "", cons.value);
 
               let out: Cell = row.cells["OUT"];
-              out = EnrichUtil.addObj(out, "", "", "");
+              out = EnrichUtil.addObj(out, "NR", "", out.value);
 
               let err: Cell = row.cells["ERR"];
-              err = EnrichUtil.addObj(err, "", "", "");
+              err = EnrichUtil.addObj(err, "NR", "", err.value);
 
               let queue: Cell = row.cells["QUEUE"];
-              queue = EnrichUtil.addObj(queue, "", "", "");
+              queue = EnrichUtil.addObj(queue, "NR", "", queue.value);
 
               let evtTime: Cell = row.cells["EVTTIME"];
-              evtTime = EnrichUtil.addObj(evtTime, "", "", "");
+              evtTime = EnrichUtil.addObj(evtTime, "NR", "", evtTime.value);
 
               return row;
             });

@@ -1,6 +1,6 @@
 <template>
   <kup-chart
-    :data.prop="component.data"
+    :data.prop="_getData()"
     :axis.prop="_getAxis()"
     :series.prop="_getSeries()"
     :types.prop="_getTypes()"
@@ -19,6 +19,11 @@ export default class CHA extends BasicComponent {
   protected name = "CHA";
 
   private _onRowClicked($event: any): void {}
+
+  private _getData() {
+    //    alert(JSON.stringify(this.component.data));
+    return this.component.data;
+  }
 
   private _getAxis() {
     if (this.component.options.axis) {
