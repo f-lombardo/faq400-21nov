@@ -1,16 +1,9 @@
 <template>
-  <div class="full-width">
+  <div class="section">
     <template v-if="component.components.length > 1">
       <!-- When layout uses accordion (ExpansionPanel) - The expand property allows more than one open panel at time -->
-      <v-expansion-panel
-        v-if="component.layout === 'accordion'"
-        v-model="panelIndexModel"
-        expand
-      >
-        <v-expansion-panel-content
-          v-for="comp in component.components"
-          :key="comp.id"
-        >
+      <v-expansion-panel v-if="component.layout === 'accordion'" v-model="panelIndexModel" expand>
+        <v-expansion-panel-content v-for="comp in component.components" :key="comp.id">
           <template v-slot:header>
             <div>Section: {{ component.id }}</div>
           </template>
@@ -26,9 +19,7 @@
           fixed-tabs
           slider-color="rgb(78, 144, 143)"
         >
-          <v-tab v-for="comp in component.components" :key="comp.id"
-            >SEC: {{ comp.id }}</v-tab
-          >
+          <v-tab v-for="comp in component.components" :key="comp.id">SEC: {{ comp.id }}</v-tab>
         </v-tabs>
         <!-- Items which get switched by the above tabs -->
         <v-tabs-items v-model="tabIndexModel">

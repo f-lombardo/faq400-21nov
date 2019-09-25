@@ -1,0 +1,16 @@
+html {
+  font-family: "Roboto"; // Themeless - I.E. compatibility
+  font-family: var(--main-font-family);
+  height: 100%;
+  width: 100%;
+
+  & body {
+    height: 100%;
+    width: 100%;
+
+    & .section {
+      padding: 0.5rem;
+      overflow: auto;
+    }
+  }
+}

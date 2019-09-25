@@ -1,0 +1,41 @@
+.v-dialog.v-dialog--active.v-dialog--persistent {
+  margin: auto;
+  width: 300px; // I.E. compatibility
+  width: max-content;
+
+  div.v-card__title.dialog-title {
+    margin: auto;
+    display: table;
+  }
+
+  div.v-card__title.dialog-title {
+    font-size: 1.2rem;
+  }
+  div.v-card__text.dialog-text {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  div.theme--light.v-sheet {
+    background-color: white; // Themeless - I.E. compatibility
+    background-color: var(--main-background-color);
+    padding: 0rem 3rem 1rem 3rem;
+    border: none;
+    border-top: 0.5rem solid;
+    border-color: white; // Themeless - I.E. compatibility
+    border-color: var(--main-background-color);
+
+    &.all-good {
+      border-color: blue; // Themeless - I.E. compatibility
+      border-color: var(--main-blue);
+    }
+    &.warning {
+      border-color: orange; // Themeless - I.E. compatibility
+      border-color: var(--main-orange);
+    }
+    &.error {
+      border-color: red; // Themeless - I.E. compatibility
+      border-color: var(--main-red);
+    }
+  }
+}

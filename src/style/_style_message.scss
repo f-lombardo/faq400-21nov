@@ -1,0 +1,20 @@
+.v-snack__wrapper {
+  &.all-good {
+    background-color: blue; // Themeless - I.E. compatibility
+    background-color: var(--main-blue);
+    color: white; // Themeless - I.E. compatibility
+    color: var(--text-on-blue);
+  }
+  &.warning {
+    background-color: orange; // Themeless - I.E. compatibility
+    background-color: var(--main-orange);
+    color: white; // Themeless - I.E. compatibility
+    color: var(--text-on-orange);
+  }
+  &.error {
+    background-color: red; // Themeless - I.E. compatibility
+    background-color: var(--main-red);
+    color: white; // Themeless - I.E. compatibility
+    color: var(--text-on-red);
+  }
+}

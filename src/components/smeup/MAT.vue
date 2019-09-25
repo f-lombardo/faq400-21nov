@@ -5,11 +5,9 @@
       <div style="float:left">&nbsp;&nbsp;&nbsp;</div>
       <kup-button
         style="float:right"
-        label="Refresh"
-        icon-class="mdi mdi-refresh"
-        show-icon="true"
-        rounded="true"
-        showtext="false"
+        label="REFRESH"
+        showtext="true"
+        flat="true"
         @kupButtonClicked="_onClickRefresh($event)"
       ></kup-button>
     </div>
