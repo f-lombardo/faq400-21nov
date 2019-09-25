@@ -19,7 +19,7 @@
           fixed-tabs
           slider-color="rgb(78, 144, 143)"
         >
-          <v-tab v-for="comp in component.components" :key="comp.id">SEC: {{ comp.id }}</v-tab>
+          <v-tab v-for="comp in component.components" :key="comp.id">{{ comp.title }}</v-tab>
         </v-tabs>
         <!-- Items which get switched by the above tabs -->
         <v-tabs-items v-model="tabIndexModel">
@@ -77,6 +77,8 @@ export default class SEC extends Vue {
         return "MAT";
       case "LAB":
         return "LAB";
+      case "CHA":
+        return "CHA";
       default:
         return "UNK";
     }

@@ -14,7 +14,7 @@
 
     <kup-data-table
       :data.prop="component.data"
-      :rowsPerPage.prop="50"
+      :rowsPerPage.prop="25"
       :columnsWidth.prop="_getColumnsWidth()"
       :sort.prop="_getColumnsSort()"
       @kupCellButtonClicked="_onRowClicked($event)"
