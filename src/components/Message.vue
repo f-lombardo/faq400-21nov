@@ -45,12 +45,12 @@ export default class MESSAGE extends Vue {
   */
     if (this.message) {
       if (this.message.isError()) {
-        return "#f0423c";
+        return "error";
       } else if (this.message.isWarning()) {
-        return "#ffd454";
+        return "warning";
       }
     }
-    return "#6a8fd1";
+    return "all-good";
   }
 }
 </script>

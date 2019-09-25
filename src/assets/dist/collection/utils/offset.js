@@ -42,7 +42,7 @@ export function getElementOffset(el, positioning = { isRight: false, isTop: fals
     }
     else {
         // If right positioned
-        ret.right = offsetEl.scrollWidth - rect.left - rect.width;
+        ret.right = offsetEl.offsetWidth - rect.left - rect.width;
     }
     // If positioned on the bottom of the el element
     if (!positioning.isTop) {

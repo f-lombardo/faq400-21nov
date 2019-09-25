@@ -1,9 +1,11 @@
 import { EventEmitter } from '../../stencil.core';
+import { PaginatorMode } from './kup-paginator-declarations';
 export declare class KupPaginator {
     max: number;
     perPage: number;
     selectedPerPage: number;
     currentPage: number;
+    mode: PaginatorMode;
     /**
      * When the current page change
      */
@@ -18,11 +20,11 @@ export declare class KupPaginator {
     }>;
     private isPrevPageDisabled;
     private isNextPageDisabled;
+    private onPageChange;
     private onPrevPage;
     private onNextPage;
-    private onGoToPage;
     private onRowsPerPage;
-    private getGoToPageOptions;
-    private getRowsPerPageOptions;
+    private getGoToPageItems;
+    private getRowsPerPageItems;
     render(): any;
 }

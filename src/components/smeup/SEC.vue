@@ -1,5 +1,5 @@
 <template>
-  <div class="full-width">
+  <div class="section">
     <template v-if="component.components.length > 1">
       <!-- When layout uses accordion (ExpansionPanel) - The expand property allows more than one open panel at time -->
       <v-expansion-panel v-if="component.layout === 'accordion'" v-model="panelIndexModel" expand>

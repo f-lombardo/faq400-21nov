@@ -1,41 +1,29 @@
-<style>
-form {
-  display: table; /* shrinks to fit content */
-  margin: auto;
-  text-align: right;
-  padding: 4px;
-}
-fieldset {
-  padding: 4px;
-}
-</style>
-
 <template>
-  <form>
-    <h1 style="text-align:left;padding-bottom:4px;">Sme.UP Gateway</h1>
-    <fieldset>
+  <form class="login-form">
+    <h1 class="login-title">Sme.UP Gateway</h1>
+    <fieldset class="login-container">
       <kup-text-input
         @ketchupTextInputUpdated="onFldChangeUser($event)"
-        label="USER"
+        class="login-field"
+        label="Username"
         is-clearable
         :initial-value="this.userValue"
       ></kup-text-input>
-      <br />
-      <br />
       <kup-text-input
         @ketchupTextInputUpdated="onFldChangePwd($event)"
-        label="PASSWORD"
+        class="login-field"
+        label="Password"
         is-clearable
         input-type="password"
       ></kup-text-input>
-      <br />
-      <br />
       <kup-button
-        label="LOGIN"
+        class="login-button"
+        icon-class="mdi mdi-lock"
+        label="Login"
         @kupButtonClicked="onClick($event)"
       ></kup-button>
     </fieldset>
-    <label style="text-align:left;color:red;padding:4px;">{{ message }}</label>
+    <label class="login-error">{{ message }}</label>
   </form>
 </template>
 
@@ -84,7 +72,7 @@ export default class Main extends Vue {
           this.$router.push("/");
         });
     } else {
-      this.message = "WRONG CREDENTIALS SUPPLIED";
+      this.message = "Username or password incorrect";
     }
   }
 }
