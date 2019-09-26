@@ -131,9 +131,26 @@ function _getChildren(component: BasicComponent): BasicComponent[] {
   let components: BasicComponent[] = [];
   if (component.type === EXD_TYPE) {
     component.sections.forEach((section: any) => {
-      components = [...section.components, ...components];
+      const comps = _getSectionChildren(section);
+
+      components = [...components, ...comps];
     });
   }
+  return components;
+}
+
+function _getSectionChildren(section: any): BasicComponent[] {
+  const components: BasicComponent[] = [];
+
+  if (!!section.sections && section.sections.length > 0) {
+    section.sections.forEach((s: any) => {
+      const comps = _getSectionChildren(s);
+      comps.forEach(c => components.push(c));
+    });
+  } else if (!!section.components && section.components.length > 0) {
+    section.components.forEach((c: BasicComponent) => components.push(c));
+  }
+
   return components;
 }
 

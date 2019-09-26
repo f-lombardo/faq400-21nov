@@ -8,7 +8,7 @@
     <smeup-section
       v-for="section in this.component.sections"
       :key="section.id"
-      :component="section"
+      :section="section"
     />
   </div>
 </template>
