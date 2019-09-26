@@ -1,0 +1,106 @@
+/**
+* @prop --tre_node-expander_background-color, --kup-tre_node-expander_background-color: the background color of the TreeNode expander when hovered.
+* @prop --tre_node-expander_color, --kup-tre_node-expander_color: The TreeNode expander icon color.
+* @prop --tre_node_background-color--hover, --kup-tre_node_background-color--hover: TreeNode background color when TreeNode is hovered.
+* @prop --tre_node-icon_color, --kup-tre_node-icon_color: TreeNode icon color. Applied to all TreeNodes.
+* @prop --tre_node-icon_size, --kup-tre_node-icon_size: The TreeNode icon size (includes expand icon).
+* @prop --tre_node-indent_width, --kup-tre_node-indent_width: Width of each single indentation of the tree.
+* @prop --tre_node--disabled_opacity, --kup-tre_node--disabled_opacity: The opacity of a TreeNode when disabled.
+* @prop --tre_table_border-bottom-color, --kup-tre_table_border-bottom-color: When showColumns is active, specify the border bottom color of the table.
+* @prop --tre_table-header_background-color, --kup-tre_table-header_background-color: Table header common background color.
+* @prop --tre_table-header_color, --kup-tre_table-header_color: Table header common text color.
+*/
+:host {
+  --tre_node-expander_background-color: var(--kup-tre_node-expander_background-color, #e0e0e0);
+  --tre_node-expander_color: var(--kup-tre_node-expander_color, #545454);
+  --tre_node_background-color--hover: var(--kup-tre_node_background-color--hover, #e6e6e6);
+  --tre_node-icon_color: var(--kup-tre_node-icon_color, #545454);
+  --tre_node-icon_size: var(--kup-tre_node-icon_size, 16px);
+  --tre_node-indent_width: var(--kup-tre_node-indent_width, 16px);
+  --tre_node--disabled_opacity: var(--kup-tre_node--disabled_opacity, .7);
+  --tre_table_border-bottom-color: var(--kup-tre_table_border-bottom-color, #e0e0e0);
+  --tre_table-header_background-color: var(--kup-tre_table-header_background-color, #808080);
+  --tre_table-header_color: var(--kup-tre_table-header_color, #ffffff);
+  --tre_table-header_font-weight: var(--kup-tre_table-header_font-weight, 400);
+  display: block;
+}
+
+.kup-tree {
+  border-collapse: collapse;
+  width: 100%;
+}
+.kup-tree thead {
+  display: none;
+}
+.kup-tree thead.header--is-visible {
+  display: table-header-group;
+}
+.kup-tree thead th {
+  background-color: var(--tre_table-header_background-color);
+  color: var(--tre_table-header_color);
+  font-weight: var(--tre_table-header_font-weight);
+  text-align: left;
+}
+.kup-tree__indent {
+  display: inline-block;
+  width: calc(var(--tre_node-indent_width) * var(--tree-node_depth, 0));
+}
+.kup-tree .options, .kup-tree__icon {
+  align-items: center;
+  color: var(--tre_node-icon_color);
+  display: inline-flex;
+  font-size: var(--tre_node-icon_size);
+  height: var(--tre_node-icon_size);
+  justify-content: center;
+  width: var(--tre_node-icon_size);
+}
+.kup-tree__node > * {
+  vertical-align: middle;
+}
+.kup-tree__node--disabled {
+  opacity: var(--tre_node--disabled_opacity);
+}
+.kup-tree__node--disabled .kup-tree__node__expander {
+  cursor: initial;
+  pointer-events: none;
+}
+.kup-tree__node__expander {
+  border-radius: 50%;
+  color: var(--tre_node-expander_color);
+  cursor: pointer;
+  transition: background-color 0.4s, box-shadow 0.4s, transform 0.4s;
+}
+.kup-tree__node__expander:hover {
+  background-color: var(--tre_node-expander_background-color);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+.kup-tree__node[data-is-expanded] .kup-tree__node__expander {
+  transform: rotate(180deg);
+}
+.kup-tree__node[data-is-expanded] .kup-tree__node__expander:hover {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px -1px 3px, rgba(0, 0, 0, 0.24) 0px -1px 2px;
+}
+.kup-tree__node .options {
+  cursor: pointer;
+  float: right;
+  margin-left: 8px;
+  opacity: 0;
+  transition: opacity 0.6s, visibility 0.6s;
+}
+.kup-tree__node .options:before {
+  height: inherit;
+  width: inherit;
+}
+.kup-tree__node--selected > td, .kup-tree__node:hover > td {
+  background-color: var(--tre_node_background-color--hover);
+}
+.kup-tree[data-show-columns] .kup-tree__node {
+  border-bottom: solid 1px var(--tre_table_border-bottom-color);
+}
+.kup-tree[data-show-object-navigation] .kup-tree__node:hover .options {
+  opacity: 1;
+  visibility: visible;
+}
+.kup-tree[data-show-object-navigation] .kup-tree__node:hover .options:hover {
+  opacity: 0.54;
+}

@@ -1,6 +1,6 @@
 import { r as registerInstance, c as createEvent, h, g as getElement } from './chunk-1851c479.js';
 import './chunk-d8060b98.js';
-import { o as numeral, p as moment, n as isNumber, q as isDate, m as getColumnByName$1 } from './chunk-08b2255d.js';
+import { n as numeral, r as moment, d as isNumber, t as isDate, o as getColumnByName$1 } from './chunk-6abc1eda.js';
 
 var ChartType;
 (function (ChartType) {

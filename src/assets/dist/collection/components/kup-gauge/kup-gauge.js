@@ -162,10 +162,10 @@ export class KupGauge {
         // TODO these thresholds will be given to the component by a user prop
         const givenThresholds = [];
         if (!this.onlyValue) {
-            if (this.firstThreshold) {
+            if (this.firstThreshold || 0 === this.firstThreshold) {
                 givenThresholds.push(this.firstThreshold);
             }
-            if (this.secondThreshold) {
+            if (this.secondThreshold || 0 === this.secondThreshold) {
                 givenThresholds.push(this.secondThreshold);
             }
         }
@@ -197,6 +197,7 @@ export class KupGauge {
                     : computedcolors[2];
             arcsColors = [valuecolor, 'var(--gau_empty-color)'];
         }
+        console.log(arcsThresholds.length);
         for (let i = 0; i < arcsThresholds.length - 1; i++) {
             const currentArcPath = this.arcGenerator({
                 innerRadius: halvedSize - this.arcThickness,
@@ -208,6 +209,7 @@ export class KupGauge {
             // If there is no color specified for that arc, we provide a black fallback
             arcsElements.push(h("path", { d: currentArcPath, style: { fill: arcsColors[i] ? arcsColors[i] : '#000000' } }));
         }
+        console.log(arcsElements.length);
         // Composes the threshold label elements, if labels must be displayed
         const textElements = this.showLabels || this.showMaxmin
             ? arcsThresholds.map((threshold) => {
@@ -308,7 +310,7 @@ export class KupGauge {
                 "tags": [],
                 "text": "Array of three elements to specify the color of the arcs."
             },
-            "defaultValue": "[\r\n        'var(--gau_first-color)',\r\n        'var(--gau_second-color)',\r\n        'var(--gau_third-color)',\r\n    ]"
+            "defaultValue": "[\n        'var(--gau_first-color)',\n        'var(--gau_second-color)',\n        'var(--gau_third-color)',\n    ]"
         },
         "firstThreshold": {
             "type": "number",
@@ -506,7 +508,7 @@ export class KupGauge {
                         "text": "kup-gauge.arcThickness",
                         "name": "see"
                     }],
-                "text": "Con be used change the viewbox of the SVG.\r\nBy manipulating this value, some customizations of the aspect of the gauge is achievable."
+                "text": "Con be used change the viewbox of the SVG.\nBy manipulating this value, some customizations of the aspect of the gauge is achievable."
             },
             "attribute": "size",
             "reflect": false,
@@ -524,7 +526,7 @@ export class KupGauge {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": "The current value of the gauge.\r\nThe gauge's needle points to the percentage based on this prop."
+                "text": "The current value of the gauge.\nThe gauge's needle points to the percentage based on this prop."
             },
             "attribute": "value",
             "reflect": false,
@@ -542,7 +544,7 @@ export class KupGauge {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": "The current size of gauge's value.\r\nCorrect values are: 0,1,2 or 3."
+                "text": "The current size of gauge's value.\nCorrect values are: 0,1,2 or 3."
             },
             "attribute": "value-size",
             "reflect": false,
@@ -578,7 +580,7 @@ export class KupGauge {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": "if true, ignore threasholds in gauge and show\r\ncolored value's arc."
+                "text": "if true, ignore threasholds in gauge and show\ncolored value's arc."
             },
             "attribute": "only-value",
             "reflect": false,

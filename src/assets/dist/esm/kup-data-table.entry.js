@@ -1,6 +1,6 @@
 import { r as registerInstance, c as createEvent, h } from './chunk-1851c479.js';
 import './chunk-d8060b98.js';
-import { L as LoadMoreMode, P as PaginatorPos, S as ShowGrid, c as calcTotals, f as filterRows, a as SortMode, g as groupRows, s as sortRows, i as isIcon, b as isVoCodver, d as isImage, e as isLink, h as isCheckbox, j as isButton, k as createJ4objButtonConfig, l as isBar, m as getColumnByName, K as KupDataTableColumnDragType, n as isNumber } from './chunk-08b2255d.js';
+import { L as LoadMoreMode, P as PaginatorPos, S as ShowGrid, c as calcTotals, p as paginateRows, f as filterRows, a as SortMode, g as groupRows, s as sortRows, i as isIcon, b as isVoCodver, d as isNumber, n as numeral, e as isImage, h as isLink, j as isCheckbox, k as isButton, l as createJ4objButtonConfig, m as isBar, o as getColumnByName, K as KupDataTableColumnDragType, q as styleHasBorderRadius } from './chunk-6abc1eda.js';
 
 class KupDataTable {
     constructor(hostRef) {
@@ -53,7 +53,7 @@ class KupDataTable {
          */
         this.showHeader = true;
         this.showFilters = false;
-        this.showGrid = ShowGrid.COMPLETE;
+        this.showGrid = ShowGrid.ROW;
         /**
          * If set to true, displays the button to load more records.
          */
@@ -76,6 +76,8 @@ class KupDataTable {
          */
         this.openedMenu = null;
         this.density = 'medium';
+        this.topDensityPanelVisible = false;
+        this.botDensityPanelVisible = false;
         this.renderedRows = [];
         this.loadMoreEventCounter = 0;
         this.loadMoreEventPreviousQuantity = 0;
@@ -105,6 +107,10 @@ class KupDataTable {
          * @private
          */
         this.dragStarterAttribute = 'drag-starter';
+        this.onDocumentClick = () => {
+            this.topDensityPanelVisible = false;
+            this.botDensityPanelVisible = false;
+        };
         this.kupAutoRowSelect = createEvent(this, "kupAutoRowSelect", 6);
         this.kupRowSelected = createEvent(this, "kupRowSelected", 6);
         this.kupOptionClicked = createEvent(this, "kupOptionClicked", 6);
@@ -151,6 +157,7 @@ class KupDataTable {
         }
     }
     componentDidLoad() {
+        document.addEventListener('click', this.onDocumentClick);
         // observing table
         // this.theadObserver.observe(this.theadRef);
         // automatic row selection
@@ -163,6 +170,9 @@ class KupDataTable {
                 });
             }
         }
+    }
+    componentDidUnload() {
+        document.removeEventListener('click', this.onDocumentClick);
     }
     getColumns() {
         return this.data && this.data.columns
@@ -219,7 +229,7 @@ class KupDataTable {
         this.footer = calcTotals(this.rows, this.totals);
         this.groupRows();
         this.sortRows();
-        this.paginatedRows = this.paginateRows(this.rows);
+        this.paginatedRows = paginateRows(this.rows, this.currentPage, this.currentRowsPerPage);
     }
     filterRows() {
         this.rows = filterRows(this.getRows(), this.filters, this.globalFilterValue, this.getVisibleColumns().map((c) => c.name));
@@ -234,6 +244,27 @@ class KupDataTable {
         // resetting group state
         this.groupState = {};
         const index = this.groups.indexOf(group);
+        if (index >= 0) {
+            // removing group from prop
+            this.groups.splice(index, 1);
+            this.groups = [...this.groups];
+        }
+    }
+    removeGroupFromRow(group) {
+        if (!group) {
+            return;
+        }
+        // resetting group state
+        this.groupState = {};
+        // search group
+        let index = -1;
+        for (let i = 0; i < this.groups.length; i++) {
+            const g = this.groups[i];
+            if (g.column === group.column) {
+                index = i;
+                break;
+            }
+        }
         if (index >= 0) {
             // removing group from prop
             this.groups.splice(index, 1);
@@ -267,6 +298,15 @@ class KupDataTable {
         this.groupState[row.group.id] = groupState;
         if (row.group.children) {
             row.group.children.forEach((childRow) => this.forceRowGroupExpansion(childRow));
+        }
+    }
+    adjustPaginator() {
+        const numberOfRows = this.rows.length;
+        // check if current page is valid
+        const numberOfPages = Math.ceil(numberOfRows / this.currentRowsPerPage);
+        if (this.currentPage > numberOfPages) {
+            // reset page
+            this.currentPage = 1;
         }
     }
     // event listeners
@@ -329,6 +369,7 @@ class KupDataTable {
     }
     handleRowsPerPageChanged({ detail }) {
         this.currentRowsPerPage = detail.newRowsPerPage;
+        this.adjustPaginator();
     }
     onRowClick(event, row) {
         // selecting row
@@ -474,7 +515,7 @@ class KupDataTable {
             buttonEvent.stopPropagation();
         }
         else {
-            throw "kup-data-table error: missing event";
+            throw 'kup-data-table error: missing event';
         }
         this.kupCellButtonClicked.emit({
             cell,
@@ -544,11 +585,6 @@ class KupDataTable {
     sortRows() {
         this.rows = sortRows(this.rows, this.sort);
     }
-    paginateRows(rows) {
-        const start = this.currentPage * this.currentRowsPerPage -
-            this.currentRowsPerPage;
-        return rows.slice(start, start + this.currentRowsPerPage);
-    }
     getSortIcon(columnName) {
         // check if column in sort array
         for (let sortObj of this.sort) {
@@ -586,18 +622,14 @@ class KupDataTable {
             return false;
         }
     }
-    styleHasBorderRadius(cell) {
-        if (cell && cell.style && cell.style.borderRadius) {
-            return true;
-        }
-        return false;
-    }
     //==== Column sort order methods ====
     handleColumnSort(receivingColumn, sortedColumn) {
         // Get receiving column position
-        const receivingColIndex = this.data.columns.findIndex(col => col.name === receivingColumn.name && col.title === receivingColumn.title);
+        const receivingColIndex = this.data.columns.findIndex((col) => col.name === receivingColumn.name &&
+            col.title === receivingColumn.title);
         // Get sorted column current position
-        const sortedColIndex = this.data.columns.findIndex(col => col.name === sortedColumn.name && col.title === sortedColumn.title);
+        const sortedColIndex = this.data.columns.findIndex((col) => col.name === sortedColumn.name &&
+            col.title === sortedColumn.title);
         // Moves the sortedColumn into the correct position
         if (this.sortableColumnsMutateData) {
             this.moveSortedColumns(this.data.columns, receivingColIndex, sortedColIndex);
@@ -617,6 +649,17 @@ class KupDataTable {
         this.moveSortedColumns(toSort, receivingColumnIndex, sortedColumnIndex);
         return toSort;
     }
+    toggleDensityVisibility(event, top) {
+        event.stopPropagation();
+        if (top) {
+            this.topDensityPanelVisible = !this.topDensityPanelVisible;
+            this.botDensityPanelVisible = false;
+        }
+        else {
+            this.topDensityPanelVisible = false;
+            this.botDensityPanelVisible = !this.botDensityPanelVisible;
+        }
+    }
     //======== render methods ========
     renderHeader() {
         const hasCustomColumnsWidth = this.columnsWidth.length > 0;
@@ -628,14 +671,14 @@ class KupDataTable {
                 if (this.filters && this.filters[column.name]) {
                     filterValue = this.filters[column.name];
                 }
-                filter = (h("div", { onMouseEnter: () => this.onColumnMouseLeave(column.name), onMouseLeave: () => this.onColumnMouseEnter(column.name) }, h("kup-text-input", { class: "datatable-filter", initialValue: filterValue, "data-col": column.name, onKetchupTextInputUpdated: (e) => {
+                filter = (h("div", null, h("kup-text-input", { class: "datatable-filter", initialValue: filterValue, "data-col": column.name, onKetchupTextInputUpdated: (e) => {
                         this.onFilterChange(e, column.name);
                     } })));
             }
             // sort
             let sort = null;
             if (this.sortEnabled) {
-                sort = (h("span", { class: "column-sort", onMouseEnter: () => this.onColumnMouseLeave(column.name), onMouseLeave: () => this.onColumnMouseEnter(column.name) }, h("span", { role: "button", "aria-label": "Sort column" // TODO
+                sort = (h("span", { class: "column-sort" }, h("span", { role: "button", "aria-label": "Sort column" // TODO
                     ,
                     class: 'mdi ' + this.getSortIcon(column.name), onClick: (e) => this.onColumnSort(e, column.name) })));
             }
@@ -695,7 +738,8 @@ class KupDataTable {
                             const overElement = e.target;
                             overElement.setAttribute(this.dragOverAttribute, '');
                             // If element can have a drop effect
-                            if (!overElement.hasAttribute(this.dragStarterAttribute) && this.columnsAreBeingDragged) {
+                            if (!overElement.hasAttribute(this.dragStarterAttribute) &&
+                                this.columnsAreBeingDragged) {
                                 e.preventDefault(); // Mandatory to allow drop
                                 e.dataTransfer.effectAllowed = 'move';
                             }
@@ -771,7 +815,7 @@ class KupDataTable {
                 // empty group
                 return null;
             }
-            let icon = 'mdi mdi-chevron-' + (row.group.expanded ? 'right' : 'down');
+            const icon = row.group.expanded ? (h("path", { d: "M19,13H5V11H19V13Z" })) : (h("path", { d: "M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" }));
             const jsxRows = [];
             let indent = [];
             for (let i = 0; i < level; i++) {
@@ -781,24 +825,34 @@ class KupDataTable {
                 const cells = [];
                 // adding 'grouping' cell
                 const colSpan = this.multiSelection ? 2 : 1;
-                cells.push(h("td", { colSpan: colSpan }, indent, h("span", { role: "button", "aria-label": "Row expander" // TODO change this label
+                cells.push(h("td", { colSpan: colSpan }, indent, h("span", { class: "group-cell-content" }, h("span", { role: "button", "aria-label": "Row expander" // TODO change this label
                     ,
-                    class: icon, onClick: (e) => {
+                    tabindex: "0", onClick: (e) => {
                         e.stopPropagation();
                         this.onRowExpand(row);
-                    } }), row.group.label));
+                    } }, h("svg", { width: "24", height: "24", viewBox: "0 0 24 24", class: "group-expander" }, icon)), row.group.label, h("span", { role: "button", "aria-label": "Remove group" // TODO change this label
+                    ,
+                    tabindex: "0", onClick: (e) => {
+                        e.stopPropagation();
+                        this.removeGroupFromRow(row.group);
+                    } }, h("svg", { width: "24", height: "24", viewBox: "0 0 24 24", class: "group-remove" }, h("path", { d: "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" }))))));
                 for (let column of visibleColumns) {
                     cells.push(h("td", { class: "total" }, row.group.totals[column.name]));
                 }
                 jsxRows.push(h("tr", { class: "group", onClick: () => this.onRowExpand(row) }, cells));
             }
             else {
-                jsxRows.push(h("tr", { class: "group", onClick: () => this.onRowExpand(row) }, h("td", { colSpan: this.calculateColspan() }, indent, h("span", { role: "button", "aria-label": "Row expander" // TODO change this label
+                jsxRows.push(h("tr", { class: "group", onClick: () => this.onRowExpand(row) }, h("td", { colSpan: this.calculateColspan() }, indent, h("span", { class: "group-cell-content" }, h("span", { role: "button", "aria-label": "Row expander" // TODO change this label
                     ,
-                    class: `row-expander ${icon}`, onClick: (e) => {
+                    tabindex: "0", onClick: (e) => {
                         e.stopPropagation();
                         this.onRowExpand(row);
-                    } }), row.group.label)));
+                    } }, h("svg", { width: "24", height: "24", viewBox: "0 0 24 24", class: "group-expander" }, icon)), h("span", { class: "text" }, row.group.label), h("span", { role: "button", "aria-label": "Remove group" // TODO change this label
+                    ,
+                    tabindex: "0", onClick: (e) => {
+                        e.stopPropagation();
+                        this.removeGroupFromRow(row.group);
+                    } }, h("svg", { width: "24", height: "24", viewBox: "0 0 24 24", class: "group-remove" }, h("path", { d: "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" })))))));
             }
             // if group is expanded, add children
             if (this.isGroupExpanded(row)) {
@@ -838,20 +892,26 @@ class KupDataTable {
                  * 3 - Column has to hide repetitions but the value of the previous row is not equal to the current row cell.
                  * @todo Move this rendering, if possible, inside renderCell()
                  */
-                if (cell.options && (!hideValuesRepetitions || (hideValuesRepetitions && (!previousRow || previousRow.cells[name].value !== cell.value)))) {
+                if (cell.options &&
+                    (!hideValuesRepetitions ||
+                        (hideValuesRepetitions &&
+                            (!previousRow ||
+                                previousRow.cells[name].value !== cell.value)))) {
                     options = (h("span", { class: "options", role: "button", "aria-label": "Opzioni oggetto", title: "Opzioni oggetto", onClick: () => this.onOptionClicked(name, row) }, h("i", { class: "mdi mdi-settings" })));
                 }
                 const jsxCell = this.renderCell(cell, name, 
                 // The previous value must be passed only if repeated values can be hidden and we have a previous row.
                 {
                     row,
-                    column: currentColumn
-                }, hideValuesRepetitions && previousRow ? previousRow.cells[name].value : null);
+                    column: currentColumn,
+                }, hideValuesRepetitions && previousRow
+                    ? previousRow.cells[name].value
+                    : null);
                 const cellClass = {
                     number: isNumber(cell.obj),
                 };
                 let cellStyle = null;
-                if (!this.styleHasBorderRadius(cell)) {
+                if (!styleHasBorderRadius(cell)) {
                     cellStyle = cell.style;
                 }
                 return (h("td", { "data-column": name, style: cellStyle, class: cellClass }, indend, jsxCell, options));
@@ -877,7 +937,7 @@ class KupDataTable {
                 }
                 else {
                     // adding expander
-                    rowActionExpander = (h("span", { title: "Espandi voci", class: `row-action mdi mdi-chevron-right`, onClick: (e) => this.onRowActionExpanderClick(e, row), role: "button", "aria-label": "Espandi voci", "aria-pressed": "false" }));
+                    rowActionExpander = (h("span", { title: "Espandi voci", class: `row-action mdi mdi-chevron-right`, onClick: (e) => this.onRowActionExpanderClick(e, row), role: "button", "aria-label": "Espandi voci" }));
                 }
                 rowActionsCell = (h("td", null, defaultRowActions, rowActionExpander, variableActions));
             }
@@ -894,7 +954,7 @@ class KupDataTable {
                     index,
                     row,
                     type,
-                }), role: "button", "aria-label": action.text, "aria-pressed": "false" }));
+                }), role: "button", "aria-label": action.text }));
         });
     }
     /**
@@ -907,12 +967,24 @@ class KupDataTable {
      * @param cellData.row - The row object to which the cell belongs.
      */
     renderCell(cell, column, cellData, previousRowCellValue) {
+        const clazz = {
+            'cell-content': true,
+        };
         // When the previous row value is different from the current value, we can show the current value.
         const valueToDisplay = previousRowCellValue !== cell.value ? cell.value : '';
         // Sets the default value
         let content = valueToDisplay;
         if (isIcon(cell.obj) || isVoCodver(cell.obj)) {
             content = h("span", { class: valueToDisplay });
+        }
+        else if (isNumber(cell.obj)) {
+            content = valueToDisplay;
+            if (content) {
+                const cellValue = numeral(cell.obj.k).value();
+                if (cellValue < 0) {
+                    clazz['negative-number'] = true;
+                }
+            }
         }
         else if (isImage(cell.obj)) {
             content = (h("img", { src: valueToDisplay, alt: "", width: "64", height: "64" }));
@@ -921,7 +993,11 @@ class KupDataTable {
             content = (h("a", { href: valueToDisplay, target: "_blank" }, valueToDisplay));
         }
         else if (isCheckbox(cell.obj)) {
-            content = h("kup-checkbox", { checked: !!cell.obj.k, disabled: cellData && cellData.row && cellData.row.hasOwnProperty('readOnly') ? cellData.row.readOnly : true });
+            content = (h("kup-checkbox", { checked: !!cell.obj.k, disabled: cellData &&
+                    cellData.row &&
+                    cellData.row.hasOwnProperty('readOnly')
+                    ? cellData.row.readOnly
+                    : true }));
         }
         else if (isButton(cell.obj)) {
             /**
@@ -962,14 +1038,34 @@ class KupDataTable {
         // }
         // if cell.style has border, apply style to cellcontent
         let style = null;
-        if (this.styleHasBorderRadius(cell)) {
+        if (styleHasBorderRadius(cell)) {
             style = cell.style;
         }
-        return (h("span", { class: "cell-content", style: style }, content));
+        return (h("span", { class: clazz, style: style }, content));
     }
     renderLoadMoreButton(isSlotted = true) {
         const label = 'Carica altri dati';
         return (h("button", { "aria-label": label, class: "load-more-records mdi mdi-plus-circle", role: "button", slot: isSlotted ? 'more-results' : null, tabindex: "0", title: label, onClick: () => this.onLoadMoreClick() }));
+    }
+    renderPaginator(top) {
+        return (h("div", { class: "paginator-wrapper" }, h("kup-paginator", { id: top ? 'top-paginator' : 'bottom-paginator', max: this.rows.length, perPage: this.rowsPerPage, selectedPerPage: this.currentRowsPerPage, currentPage: this.currentPage, onKupPageChanged: (e) => this.handlePageChanged(e), onKupRowsPerPageChanged: (e) => this.handleRowsPerPageChanged(e) }, this.showLoadMore ? this.renderLoadMoreButton() : null), this.renderDensityPanel(top)));
+    }
+    renderDensityPanel(top) {
+        return (h("div", { class: "density-panel" }, h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" }, h("path", { d: "M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" })), h("div", { role: "button", tabindex: "0", onClick: (e) => this.toggleDensityVisibility(e, top) }, h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" }, h("path", { d: "M7,10L12,15L17,10H7Z" }))), h("div", { class: {
+                'density-panel-overlay': true,
+                open: top
+                    ? this.topDensityPanelVisible
+                    : this.botDensityPanelVisible,
+            } }, h("div", { class: {
+                wrapper: true,
+                active: this.density === 'big',
+            }, onClick: () => (this.density = 'big'), role: "button", tabindex: "0", "aria-pressed": this.density === 'big' ? 'true' : 'false' }, h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" }, h("path", { d: "M3,4H21V8H3V4M3,10H21V14H3V10M3,16H21V20H3V16Z" })), "Bassa"), h("div", { class: {
+                wrapper: true,
+                active: this.density === 'medium',
+            }, onClick: () => (this.density = 'medium'), role: "button", tabindex: "0", "aria-pressed": this.density === 'medium' ? 'true' : 'false' }, h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" }, h("path", { d: "M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" })), "Media"), h("div", { class: {
+                wrapper: true,
+                active: this.density === 'small',
+            }, onClick: () => (this.density = 'small'), role: "button", tabindex: "0", "aria-pressed": this.density === 'small' ? 'true' : 'false' }, h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" }, h("path", { d: "M3,3H21V5H3V3M3,7H21V9H3V7M3,11H21V13H3V11M3,15H21V17H3V15M3,19H21V21H3V19Z" })), "Alta"))));
     }
     render() {
         // resetting rows
@@ -1005,19 +1101,19 @@ class KupDataTable {
         let paginatorTop = null;
         if (PaginatorPos.TOP === this.paginatorPos ||
             PaginatorPos.BOTH === this.paginatorPos) {
-            paginatorTop = (h("kup-paginator", { id: "top-paginator", max: this.rows.length, perPage: this.rowsPerPage, selectedPerPage: this.currentRowsPerPage, currentPage: this.currentPage, onKupPageChanged: (e) => this.handlePageChanged(e), onKupRowsPerPageChanged: (e) => this.handleRowsPerPageChanged(e) }, this.showLoadMore ? this.renderLoadMoreButton() : null));
+            paginatorTop = this.renderPaginator(true);
         }
         let paginatorBottom = null;
         if (PaginatorPos.BOTTOM === this.paginatorPos ||
             PaginatorPos.BOTH === this.paginatorPos) {
-            paginatorBottom = (h("kup-paginator", { id: "bottom-paginator", max: this.rows.length, perPage: this.rowsPerPage, selectedPerPage: this.currentRowsPerPage, currentPage: this.currentPage, onKupPageChanged: (e) => this.handlePageChanged(e), onKupRowsPerPageChanged: (e) => this.handleRowsPerPageChanged(e) }, this.showLoadMore ? this.renderLoadMoreButton() : null));
+            paginatorBottom = this.renderPaginator(false);
         }
         let groupChips = null;
         if (this.isGrouping()) {
             const chips = this.groups.map((group) => {
                 const column = getColumnByName(this.getColumns(), group.column);
                 if (column) {
-                    return (h("div", { class: "group-chip", tabIndex: 0, onClick: () => this.removeGroup(group) }, h("span", { class: "mdi mdi-close-circle" }), column.title));
+                    return (h("kup-chip", { closable: true, onClose: () => this.removeGroup(group) }, column.title));
                 }
                 else {
                     return null;
@@ -1025,7 +1121,6 @@ class KupDataTable {
             });
             groupChips = h("div", { id: "group-chips" }, chips);
         }
-        const densityPanel = (h("div", { id: "density-panel" }, h("kup-button", { class: { active: this.density === 'small' }, iconClass: "mdi mdi-format-align-justify", onClick: () => (this.density = 'small') }), h("kup-button", { class: { active: this.density === 'medium' }, iconClass: "mdi mdi-menu", onClick: () => (this.density = 'medium') }), h("kup-button", { class: { active: this.density === 'big' }, iconClass: "mdi mdi-view-sequential", onClick: () => (this.density = 'big') })));
         const tableClass = {
             'column-separation': ShowGrid.COMPLETE === this.showGrid ||
                 ShowGrid.COL === this.showGrid,
@@ -1034,7 +1129,7 @@ class KupDataTable {
             'persistent-header': this.headerIsPersistent,
         };
         tableClass[`density-${this.density}`] = true;
-        return (h("div", { id: "data-table-wrapper" }, h("div", { class: "above-wrapper" }, paginatorTop, globalFilter, densityPanel), h("div", { class: "below-wrapper" }, groupChips, h("table", { class: tableClass }, h("thead", { hidden: !this.showHeader, ref: (el) => this.theadRef = el }, h("tr", null, header)), h("tbody", null, rows), footer)), paginatorBottom));
+        return (h("div", { id: "data-table-wrapper" }, h("div", { class: "above-wrapper" }, paginatorTop, globalFilter), h("div", { class: "below-wrapper" }, groupChips, h("table", { class: tableClass }, h("thead", { hidden: !this.showHeader, ref: (el) => (this.theadRef = el) }, h("tr", null, header)), h("tbody", null, rows), footer)), paginatorBottom));
     }
     static get watchers() { return {
         "rowsPerPage": ["rowsPerPageHandler", "recalculateRows"],
@@ -1048,7 +1143,7 @@ class KupDataTable {
         "currentPage": ["recalculateRows"],
         "currentRowsPerPage": ["recalculateRows"]
     }; }
-    static get style() { return "\@import url(https://cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css);:host{--int_background-color:var(--kup-data-table_background-color,#fff);--int_border-color:var(--kup-data-table_border-color,#000);--int_box-shadow:var(--kup-data-table_box-shadow,0px 0px 7.5px 0px hsla(0,0%,50.2%,0.5));--int_color:var(--kup-data-table_color,$mainTextColor);--int_drag-over--allowed:var(--kup-data-table_drag-over--allowed,rgba(78,144,143,0.24));--int_drag-over--forbidden:var(--kup-data-table_drag-over--forbidden,rgba(240,66,60,0.24));--int_filter-border-color:var(--kup-data-table_filter-border-color,#d0d0d0);--int_filter-background-color:var(--kup-data-table_filter-background-color,#fff);--int_group-background-color:var(--kup-data-table_group-background-color,#f9f9f9);--int_group-border-color:var(--kup-data-table_group-border-color,#6aaaa7);--int_hover-color:var(--kup-data-table_hover-color,$mainTextColor);--int_head-background-color:var(--kup-data-table_head-background-color,#f9f9f9);--int_header-offset:var(--kup-data-table_header-offset,50px);--int_hover-background-color:var(--kup-data-table_hover-background-color,#e0e0e0);--int_icons-color:var(--kup-data-table_icons-color,grey);--int_icons-hover-color:var(--kup-data-table_icons-hover-color,#a0a0a0);--int_font-size:var(--kup-data-table_font-size,1rem);--int_main-color:var(--kup-data-table_main-color,#6aaaa7);--int_stronger-color:var(--kup-data-table_stronger-color,#111);--int_text-on-main-color:var(--kup-data-table_text-on-main-color,#fff)}#data-table-wrapper{background-color:var(--int_background-color)}#data-table-wrapper table{color:var(--int_stronger-color);width:100%;min-width:intrinsic;min-width:-moz-max-content;min-width:-webkit-max-content;border-collapse:collapse;text-align:left;font-size:var(--int_font-size)}#data-table-wrapper table td,#data-table-wrapper table th{padding:.5rem 1rem}#data-table-wrapper table.row-separation tr{border-bottom:1px solid var(--int_border-color)}#data-table-wrapper table.column-separation td,#data-table-wrapper table.column-separation th{border-right:1px solid var(--int_border-color)}#data-table-wrapper table .column-sort{margin-left:.5rem;cursor:pointer}#data-table-wrapper table .column-sort .mdi{-webkit-transition:color .2s ease-in-out;transition:color .2s ease-in-out}#data-table-wrapper table .column-sort .mdi-sort-ascending,#data-table-wrapper table .column-sort .mdi-sort-descending{color:var(--int_main-color)}#data-table-wrapper table th kup-text-input.datatable-filter{--int_border-color:var(--int_filter-border-color);--int_background-color:var(--int_filter-background-color)}#data-table-wrapper table th input{display:block}#data-table-wrapper table thead{background:var(--int_head-background-color);border:1px solid var(--int_border-color);font-size:115%}#data-table-wrapper table thead th{position:relative}#data-table-wrapper table thead[columns-dragging] [drag-over]{background-color:var(--int_drag-over--allowed)}#data-table-wrapper table thead[columns-dragging] [drag-over]>*{pointer-events:none}#data-table-wrapper table thead[columns-dragging] [drag-over][drag-starter]{background-color:var(--int_drag-over--forbidden)}#data-table-wrapper table.persistent-header{border-top:1px solid var(--int_border-color);position:relative}#data-table-wrapper table.persistent-header thead{border-color:var(--int_border-color);border-style:solid;border-width:0 1px 0}#data-table-wrapper table.persistent-header thead th{background-color:var(--int_head-background-color);-webkit-box-shadow:var(--int_box-shadow);box-shadow:var(--int_box-shadow);position:-webkit-sticky;position:sticky;top:var(--int_header-offset);will-change:transform}#data-table-wrapper table.persistent-header tbody{border-top:3px solid var(--int_border-color)}#data-table-wrapper table tbody{border:1px solid var(--int_border-color);cursor:pointer;font-size:100%}#data-table-wrapper table tbody>tr.selected>td,#data-table-wrapper table tbody>tr:hover>td{color:var(--int_hover-color);background-color:var(--int_hover-background-color)}#data-table-wrapper table tbody>tr.group{background:var(--int_group-background-color);font-weight:700;border-top:1px solid var(--int_border-color)}#data-table-wrapper table tbody>tr.group td{padding:1rem 0}#data-table-wrapper table tbody>tr.group td.total{text-align:right;padding-right:1rem}#data-table-wrapper table tbody>tr.group icon{margin-right:.5rem}#data-table-wrapper table tbody>tr>td.number{text-align:right}#data-table-wrapper table tbody>tr>td .row-expander{margin-right:.5rem}#data-table-wrapper table tbody>tr>td .indent{display:inline-block;height:1rem;width:2rem}#data-table-wrapper table tbody>tr>td .options{font-size:100%;margin-left:.5rem;color:var(--int_icons-color)}#data-table-wrapper table tbody>tr>td .options:hover{color:var(--int_icons-hover-color)}#data-table-wrapper table tbody>tr>td .row-action{margin-right:.2rem}#data-table-wrapper table tfoot{font-size:110%}#data-table-wrapper table tfoot td{text-align:right}#data-table-wrapper table.noGrid,#data-table-wrapper table.noGrid td{border:none}#data-table-wrapper table.density-small tbody>tr>td{padding-top:.2rem;padding-bottom:.2rem}#data-table-wrapper table.density-small tbody>tr.group>td{padding-top:.75rem;padding-bottom:.75rem}#data-table-wrapper table.density-big tbody>tr>td{padding-top:1rem;padding-bottom:1rem}#data-table-wrapper table.density-big tbody>tr.group>td{padding-top:1.25rem;padding-bottom:1.25rem}#globalFilter{margin-bottom:.5rem;text-align:center}#group-chips{display:-ms-flexbox;display:flex;margin-bottom:.5rem}#group-chips>.group-chip{display:-ms-flexbox;display:flex;background-color:var(--int_main-color);padding:.5rem;color:var(--int_text-on-main-color);margin-right:.5rem;cursor:pointer;-webkit-transition:opacity .2s ease-in-out;transition:opacity .2s ease-in-out}#group-chips>.group-chip icon{margin-right:.5rem}#group-chips>.group-chip:hover{opacity:.75}.column-menu{background-color:var(--int_background-color);-webkit-box-shadow:var(--int_box-shadow);box-shadow:var(--int_box-shadow);color:var(--int_color);position:absolute;z-index:100;font-weight:400;-webkit-transition:opacity .2s ease-in-out;transition:opacity .2s ease-in-out;min-width:200px;min-width:-moz-max-content;min-width:-webkit-max-content}.column-menu.closed{display:none;opacity:0}.column-menu.open{display:block;opacity:1;-webkit-animation:display-none-transition .5s both;-webkit-animation-timing-function:cubic-bezier(.67,-.81,.89,.71);animation:display-none-transition .5s both;animation-timing-function:cubic-bezier(.67,-.81,.89,.71)}.column-menu ul{list-style-type:none;margin:0;padding:0}.column-menu ul>li{padding:.8rem;font-size:1rem;-webkit-transition:color .2s ease-in-out;transition:color .2s ease-in-out}.column-menu ul>li:hover{cursor:pointer;color:var(--int_main-color)}.column-menu ul>li .mdi{margin-right:.5rem}#density-panel{text-align:center}#density-panel kup-button{--kup-button_main-color:transparent;--kup-button_opacity:0.25;--kup-button_icon-color:var(--int_main-color);--kup-button_box-shadow:none}#density-panel kup-button:hover{--kup-button_opacity:0.75}#density-panel kup-button.active{--kup-button_opacity:1}\@-webkit-keyframes display-none-transition{0%{opacity:0}}\@keyframes display-none-transition{0%{opacity:0}}.load-more-records{background-color:transparent;border:0 none;color:var(--int_icons-color);cursor:pointer;display:inline-block;font-size:calc(var(--int_font-size) *1.2);height:calc(var(--int_font-size) *1.2);margin:0 6px;padding:0;-webkit-transition:color .3s;transition:color .3s;width:calc(var(--int_font-size) *1.2)}.load-more-records:hover{color:var(--int_icons-hover-color)}.load-more-records:before{height:inherit;width:inherit}"; }
+    static get style() { return "\@import url(https://cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css);:host{--dtt_background-color:var(--kup-data-table_background-color,#fff);--dtt_border-color:var(--kup-data-table_border-color,#bdbdbd);--dtt_box-shadow:var(--kup-data-table_box-shadow,0px 0px 7.5px 0px hsla(0,0%,50.2%,0.5));--dtt_color:var(--kup-data-table_color,#1a1a1a);--dtt_drag-over--allowed:var(--kup-data-table_drag-over--allowed,rgba(78,144,143,0.24));--dtt_drag-over--forbidden:var(--kup-data-table_drag-over--forbidden,rgba(240,66,60,0.24));--dtt_filter-border-color:var(--kup-data-table_filter-border-color,#d0d0d0);--dtt_filter-background-color:var(--kup-data-table_filter-background-color,#fff);--dtt_group-background-color:var(--kup-data-table_group-background-color,#f9f9f9);--dtt_hover-color:var(--kup-data-table_hover-color,#545454);--dtt_head-background-color:var(--kup-data-table_head-background-color,#fff);--dtt_header-offset:var(--kup-data-table_header-offset,50px);--dtt_hover-background-color:var(--kup-data-table_hover-background-color,#f0f0f0);--dtt_icons-color:var(--kup-data-table_icons-color,grey);--dtt_icons-hover-color:var(--kup-data-table_icons-hover-color,#4e908f);--dtt_font-size:var(--kup-data-table_font-size,0.9375rem);--dtt_main-color:var(--kup-data-table_main-color,#6aaaa7);--dtt_text-on-main-color:var(--kup-data-table_text-on-main-color,#fff);--dtt_negative-number-color:var(--kup-data-table_negative-number-color,#d91e18)}#data-table-wrapper{background-color:var(--dtt_background-color)}#data-table-wrapper table{color:var(--dtt_color);width:100%;min-width:intrinsic;min-width:-moz-max-content;min-width:-webkit-max-content;border-collapse:collapse;text-align:left;font-size:var(--dtt_font-size)}#data-table-wrapper table>thead{background:var(--dtt_head-background-color)}#data-table-wrapper table>thead th{position:relative;padding:.5rem .3125rem;white-space:nowrap;border-bottom:2px solid var(--dtt_border-color);border-right:1px solid var(--dtt_border-color)}#data-table-wrapper table>thead th kup-text-input.datatable-filter{--kup-text-input_border-color:var(--dtt_filter-border-color);--kup-text-input_background-color:var(--dtt_filter-background-color)}#data-table-wrapper table>thead th .column-sort{margin-left:.5rem;cursor:pointer}#data-table-wrapper table>thead th .column-sort .mdi{color:var(--dtt_icons-color);-webkit-transition:color .2s ease-in-out;transition:color .2s ease-in-out}#data-table-wrapper table>thead th .column-sort .mdi:hover{color:var(--dtt_icons-hover-color)}#data-table-wrapper table>thead th .column-sort .mdi-sort-ascending,#data-table-wrapper table>thead th .column-sort .mdi-sort-descending{color:var(--dtt_main-color)}#data-table-wrapper table>thead th .column-menu{background-color:var(--dtt_background-color);-webkit-box-shadow:var(--dtt_box-shadow);box-shadow:var(--dtt_box-shadow);color:var(--dtt_color);position:absolute;z-index:100;font-weight:400;min-width:200px;min-width:-moz-max-content;min-width:-webkit-max-content}#data-table-wrapper table>thead th .column-menu.closed{display:none}#data-table-wrapper table>thead th .column-menu.open{display:block;-webkit-animation:display-none-transition .5s both;-webkit-animation-timing-function:cubic-bezier(.67,-.81,.89,.71);animation:display-none-transition .5s both;animation-timing-function:cubic-bezier(.67,-.81,.89,.71)}#data-table-wrapper table>thead th .column-menu ul{list-style-type:none;margin:0;padding:0}#data-table-wrapper table>thead th .column-menu ul>li{padding:.8rem;-webkit-transition:color .2s ease-in-out;transition:color .2s ease-in-out;color:#545454}#data-table-wrapper table>thead th .column-menu ul>li:not(:last-child){border-bottom:1px solid var(--dtt_border-color)}#data-table-wrapper table>thead th .column-menu ul>li:hover{cursor:pointer;color:var(--dtt_main-color)}#data-table-wrapper table>thead th .column-menu ul>li .mdi{color:#4e908f;margin-right:.5rem}#data-table-wrapper table>thead[columns-dragging] [drag-over]{background-color:var(--dtt_drag-over--allowed)}#data-table-wrapper table>thead[columns-dragging] [drag-over]>*{pointer-events:none}#data-table-wrapper table>thead[columns-dragging] [drag-over][drag-starter]{background-color:var(--dtt_drag-over--forbidden)}#data-table-wrapper table>tbody{border:1px solid var(--dtt_border-color);cursor:pointer}#data-table-wrapper table>tbody>tr.selected>td,#data-table-wrapper table>tbody>tr:hover>td{color:var(--dtt_hover-color);background-color:var(--dtt_hover-background-color);-webkit-transition:background-color .25s ease-in-out;transition:background-color .25s ease-in-out}#data-table-wrapper table>tbody>tr.group{background:var(--dtt_group-background-color);font-weight:700;border-top:1px solid var(--dtt_border-color)}#data-table-wrapper table>tbody>tr.group>td{padding:1rem 0}#data-table-wrapper table>tbody>tr.group>td .group-cell-content svg{cursor:pointer;width:var(--dtt_font-size);height:var(--dtt_font-size);margin:0 .3rem}#data-table-wrapper table>tbody>tr.group>td .group-cell-content svg.group-expander{padding:.2rem;border-radius:50%;background:#e5e5e5;margin-right:1rem;margin-left:.5rem}#data-table-wrapper table>tbody>tr.group>td .group-cell-content svg.group-remove{fill:#d91e18}#data-table-wrapper table>tbody>tr.group>td .group-cell-content>span{display:-ms-inline-flexbox;display:inline-flex;vertical-align:middle;outline:none}#data-table-wrapper table>tbody>tr.group>td.total{text-align:right;padding-right:1rem}#data-table-wrapper table>tbody>tr>td{padding:.5rem .3125rem}#data-table-wrapper table>tbody>tr>td.number{text-align:right}#data-table-wrapper table>tbody>tr>td .row-expander{margin-right:.5rem}#data-table-wrapper table>tbody>tr>td .indent{display:inline-block;height:1rem;width:2rem}#data-table-wrapper table>tbody>tr>td .options{margin-left:.5rem;color:var(--dtt_icons-color)}#data-table-wrapper table>tbody>tr>td .options:hover{color:var(--dtt_icons-hover-color);-webkit-transition:color .25s ease-out;transition:color .25s ease-out}#data-table-wrapper table>tbody>tr>td .row-action{margin-right:.2rem}#data-table-wrapper table>tbody>tr>td .cell-content.negative-number{color:var(--dtt_negative-number-color)}#data-table-wrapper table.row-separation>tbody>tr{border-bottom:1px solid var(--dtt_border-color)}#data-table-wrapper table.column-separation>tbody>tr>td{border-right:1px solid var(--dtt_border-color)}#data-table-wrapper table.persistent-header{border-top:1px solid var(--dtt_border-color);position:relative}#data-table-wrapper table.persistent-header>thead{border-color:var(--dtt_border-color);border-style:solid;border-width:0 1px 0}#data-table-wrapper table.persistent-header>thead>th{background-color:var(--dtt_head-background-color);-webkit-box-shadow:var(--dtt_box-shadow);box-shadow:var(--dtt_box-shadow);position:-webkit-sticky;position:sticky;top:var(--dtt_header-offset);will-change:transform}#data-table-wrapper table.persistent-header>tbody{border-top:3px solid var(--dtt_border-color)}#data-table-wrapper table>tfoot td{text-align:right;font-weight:700;padding:.5rem .3125rem}#data-table-wrapper table.noGrid,#data-table-wrapper table.noGrid td{border:none}#data-table-wrapper table.density-big tbody>tr>td{padding-top:.2rem;padding-bottom:.2rem}#data-table-wrapper table.density-big tbody>tr.group>td{padding-top:.75rem;padding-bottom:.75rem}#data-table-wrapper table.density-small tbody>tr>td{padding-top:1rem;padding-bottom:1rem}#data-table-wrapper table.density-small tbody>tr.group>td{padding-top:1.25rem;padding-bottom:1.25rem}#data-table-wrapper .paginator-wrapper{display:-ms-flexbox;display:flex}#data-table-wrapper .paginator-wrapper kup-paginator{-ms-flex-positive:1;flex-grow:1}#globalFilter{margin-bottom:.5rem;text-align:center}#group-chips{display:-ms-flexbox;display:flex;margin-bottom:.5rem}#group-chips>.group-chip{display:-ms-flexbox;display:flex;background-color:var(--dtt_main-color);padding:.5rem;color:var(--dtt_text-on-main-color);margin-right:.5rem;cursor:pointer;-webkit-transition:opacity .2s ease-in-out;transition:opacity .2s ease-in-out}#group-chips>.group-chip:hover{opacity:.75}.density-panel{position:relative;margin-left:1rem;display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center}.density-panel svg{height:1.5rem;width:1.5rem}.density-panel [role=button]{outline:none;cursor:pointer;display:-ms-flexbox;display:flex}.density-panel [role=button] svg{fill:#bdbdbd}.density-panel .density-panel-overlay{background:var(--dtt_background-color);position:absolute;top:1.6rem;right:0;display:none;opacity:0;z-index:10;-webkit-box-shadow:0 0 7.5px 0 hsla(0,0%,50.2%,.5);box-shadow:0 0 7.5px 0 hsla(0,0%,50.2%,.5);width:100px;width:-webkit-max-content;width:-moz-max-content;width:max-content}.density-panel .density-panel-overlay .wrapper{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;outline:none;color:var(--dtt_color);cursor:pointer;padding:.5rem 1rem;-webkit-transition:color .25s,background-color .25s,opacity .25s;transition:color .25s,background-color .25s,opacity .25s}.density-panel .density-panel-overlay .wrapper:first-child{padding-top:.75rem}.density-panel .density-panel-overlay .wrapper:last-child{padding-bottom:.75rem}.density-panel .density-panel-overlay .wrapper svg{margin-right:.5rem;fill:var(--dtt_color)}.density-panel .density-panel-overlay .wrapper.active,.density-panel .density-panel-overlay .wrapper:hover{color:var(--dtt_hover-color);background-color:var(--dtt_hover-background-color)}.density-panel .density-panel-overlay .wrapper.active svg,.density-panel .density-panel-overlay .wrapper:hover svg{fill:var(--dtt_hover-color)}.density-panel .density-panel-overlay.open{opacity:1;display:block}\@-webkit-keyframes display-none-transition{0%{opacity:0}to{opacity:1}}\@keyframes display-none-transition{0%{opacity:0}to{opacity:1}}.load-more-records{background-color:transparent;border:0 none;color:var(--dtt_icons-color);cursor:pointer;display:inline-block;font-size:calc(var(--dtt_font-size) * 1.2);height:calc(var(--dtt_font-size) * 1.2);margin:0 6px;padding:0;-webkit-transition:color .3s;transition:color .3s;width:calc(var(--dtt_font-size) * 1.2)}.load-more-records:hover{color:var(--dtt_icons-hover-color)}.load-more-records:before{height:inherit;width:inherit}"; }
 }
 
 export { KupDataTable as kup_data_table };

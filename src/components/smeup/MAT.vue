@@ -5,18 +5,16 @@
       <div style="float:left">&nbsp;&nbsp;&nbsp;</div>
       <kup-button
         style="float:right"
-        label="Refresh"
-        icon-class="mdi mdi-refresh"
-        show-icon="true"
-        rounded="true"
-        showtext="false"
+        label="REFRESH"
+        showtext="true"
+        flat="true"
         @kupButtonClicked="_onClickRefresh($event)"
       ></kup-button>
     </div>
 
     <kup-data-table
       :data.prop="component.data"
-      :rowsPerPage.prop="50"
+      :rowsPerPage.prop="25"
       :columnsWidth.prop="_getColumnsWidth()"
       :sort.prop="_getColumnsSort()"
       @kupRowSelected="_onRowSelected($event)"

@@ -46,6 +46,14 @@ export declare class KupBox {
      * will be displayed on the right of every box
      */
     enableRowActions: boolean;
+    /**
+     * Enables pagination
+     */
+    pagination: boolean;
+    /**
+     * Number of boxes per page
+     */
+    pageSize: number;
     private globalFilterValue;
     private collapsedSection;
     private selectedRows;
@@ -53,6 +61,7 @@ export declare class KupBox {
      * Row that has the row object menu open
      */
     private rowActionMenuOpened;
+    private currentPage;
     /**
      * Triggered when a box is clicked
      */
@@ -89,6 +98,7 @@ export declare class KupBox {
     private boxLayout;
     private visibleColumns;
     private rows;
+    private filteredRows;
     recalculateRows(): void;
     onDataChanged(): void;
     onLayoutChanged(): void;
@@ -121,6 +131,7 @@ export declare class KupBox {
      * see onDocumentClick in kup-combo
      */
     private clickFunction;
+    private handlePageChanged;
     private renderRow;
     private renderSection;
     private renderBoxObject;
