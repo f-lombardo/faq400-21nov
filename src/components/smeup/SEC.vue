@@ -1,5 +1,5 @@
 <template>
-  <div class="section">
+  <div>
     <template v-if="hasSections()">
       <div :class="sectionClass">
         <SEC v-for="s in section.sections" :key="s.id" :section="s"></SEC>

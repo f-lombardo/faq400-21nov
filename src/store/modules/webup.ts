@@ -5,50 +5,61 @@ interface Component {
   component: BasicComponent; // Component
 }
 
-interface ComponentMap {
+export interface ComponentMap {
   [index: string]: Component;
 }
 
-const state = {
+interface MainComponent {
+  root: BasicComponent;
+}
+
+export interface State {
+  main: MainComponent;
+  componentsById: ComponentMap;
+}
+
+const state: State = {
   main: {
-    root: <BasicComponent>{
+    root: {
       id: "webup",
       loaded: true,
+      type: "WUP",
       variables: {}
     }
   },
-  componentsById: <ComponentMap>{}
+  componentsById: {}
 };
 
 const mutations = {
-  clearRoot(state: any) {
+  clearRoot(state: State) {
     state.main = {
-      root: <BasicComponent>{
+      root: {
         id: "webup",
         loaded: true,
+        type: "WUP",
         variables: {}
       }
     };
   },
-  setRoot(state: any, root: any) {
+  setRoot(state: State, root: BasicComponent) {
     state.main.root = root;
   },
-  setMain(state: any, mainComponent: any) {
+  setMain(state: State, mainComponent: MainComponent) {
     state.main = mainComponent;
   },
-  addComponent(state: any, vueComponent: Component) {
+  addComponent(state: State, vueComponent: Component) {
     // add vue component in componentsById
     if (vueComponent.component.id) {
       state.componentsById[vueComponent.component.id] = vueComponent;
     }
   },
-  removeComponent(state: any, vueComponent: Component) {
+  removeComponent(state: State, vueComponent: Component) {
     // remove vue component from componentsById
     if (vueComponent.component.id) {
       delete state.componentsById[vueComponent.component.id];
     }
   },
-  reloadComponent(state: any, component: BasicComponent) {
+  reloadComponent(state: State, component: BasicComponent) {
     // copy root
     const rootCopy = { ...state.main.root };
     // reload component
@@ -58,7 +69,7 @@ const mutations = {
     }
     state.main.root = rootCopy;
   },
-  reloadDataComponent(state: any, payload: any) {
+  reloadDataComponent(state: State, payload: BasicComponent) {
     // reload data component
     let component2update = _getComponent(payload.id, state.main.root);
     if (component2update) {

@@ -1,25 +1,27 @@
 <template>
-  <div v-if="this.component && this.component.loaded">
-    <div style="display:flex;">
-      <h2 style="float:left">{{ this.component.title }}</h2>
-      <div style="float:left">&nbsp;&nbsp;&nbsp;</div>
-      <kup-button
-        style="float:right"
-        label="REFRESH"
-        showtext="true"
-        flat="true"
-        @kupButtonClicked="_onClickRefresh($event)"
-      ></kup-button>
-    </div>
+  <div class="mat">
+    <div v-if="this.component && this.component.loaded">
+      <div style="display:flex;">
+        <h2 style="float:left">{{ this.component.title }}</h2>
+        <div style="float:left">&nbsp;&nbsp;&nbsp;</div>
+        <kup-button
+          style="float:right"
+          label="REFRESH"
+          showtext="true"
+          flat="true"
+          @kupButtonClicked="_onClickRefresh($event)"
+        ></kup-button>
+      </div>
 
-    <kup-data-table
-      :data.prop="component.data"
-      :rowsPerPage.prop="25"
-      :columnsWidth.prop="_getColumnsWidth()"
-      :sort.prop="_getColumnsSort()"
-      @kupRowSelected="_onRowSelected($event)"
-      @kupCellButtonClicked="_onButtonRowClicked($event)"
-    ></kup-data-table>
+      <kup-data-table
+        :data.prop="component.data"
+        :rowsPerPage.prop="25"
+        :columnsWidth.prop="_getColumnsWidth()"
+        :sort.prop="_getColumnsSort()"
+        @kupRowSelected="_onRowSelected($event)"
+        @kupCellButtonClicked="_onButtonRowClicked($event)"
+      ></kup-data-table>
+    </div>
   </div>
 </template>
 
