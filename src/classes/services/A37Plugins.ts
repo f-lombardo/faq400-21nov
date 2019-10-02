@@ -18,9 +18,9 @@ export default class A37Plugins extends Service {
             data.columns.unshift({ name: "BT02", title: "" });
             data.columns.unshift({ name: "BT01", title: "" });
             data.columns.forEach((column: any) => {
-              if (column.name == "ARTIF" || column.name == "VERS") {
-                column.visible = false;
-              }
+              //              if (column.name == "ARTIF" || column.name == "VERS") {
+              //                column.visible = false;
+              //              }
               return column;
             });
           }
