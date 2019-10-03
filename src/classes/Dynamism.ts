@@ -1,4 +1,6 @@
-import IBasic from "@/interfaces/IBasic";
+import VariableContext from "./VariableContext";
+import Basic from "@/components/Basic.vue";
+import SmeupVariables from "@/interfaces/SmeupVariables";
 
 interface Variable {
   key: string;
@@ -11,8 +13,9 @@ interface VariableMap {
 
 export default class Dynamism {
   event: string;
-  source?: IBasic;
-  variables: VariableMap = {};
+  source?: string;
+  implicitVariables: VariableMap = {};
+  variables: SmeupVariables = {};
   targets: string[] = [];
   title?: string;
   exec: string = "";
@@ -22,7 +25,7 @@ export default class Dynamism {
   }
 
   addImplictVariable(variable: Variable) {
-    this.variables[variable.key] = variable.value;
+    this.implicitVariables[variable.key] = variable.value;
   }
 
   isEnabled() {

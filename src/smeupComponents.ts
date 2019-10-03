@@ -5,6 +5,7 @@ import Label from "@/components/smeup/LAB.vue";
 import Fld from "@/components/smeup/FLD.vue";
 import Btn from "@/components/smeup/BTN.vue";
 import Exb from "@/components/smeup/MAT.vue";
+import Cha from "@/components/smeup/CHA.vue";
 import Unk from "@/components/smeup/UNK.vue";
 
 import { defineCustomElements } from "./assets/dist/loader";
@@ -19,4 +20,5 @@ Vue.component("LAB", Label);
 Vue.component("FLD", Fld);
 Vue.component("BTN", Btn);
 Vue.component("MAT", Exb);
+Vue.component("CHA", Cha);
 Vue.component("UNK", Unk);

@@ -8,7 +8,7 @@
     <smeup-section
       v-for="section in this.component.sections"
       :key="section.id"
-      :component="section"
+      :section="section"
     />
   </div>
 </template>
@@ -18,6 +18,7 @@ import { Component } from "vue-property-decorator";
 
 import BasicComponent from "@/components/Basic.vue";
 import smeupSection from "@/components/smeup/SEC.vue";
+import { ContextType } from "../../interfaces/IVariableContext";
 
 @Component({
   components: { smeupSection }
@@ -29,6 +30,10 @@ export default class EXD extends BasicComponent {
     return {
       flexDirection: this.component.layout ? this.component.layout : "column"
     };
+  }
+
+  getContextType(): ContextType {
+    return ContextType.SCH;
   }
 }
 </script>

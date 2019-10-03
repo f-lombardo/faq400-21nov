@@ -21,7 +21,7 @@ export default class FLD extends BasicComponent {
   private onFldChange($event: CustomEvent) {
     this.getDynamisms("change").forEach(d => {
       const dyn = new Dynamism(d.event);
-      dyn.source = this.component;
+      dyn.source = this.component.id;
       dyn.targets = d.targets;
 
       // adding implicit variables
@@ -36,7 +36,7 @@ export default class FLD extends BasicComponent {
   private onClick($event: CustomEvent) {
     this.getDynamisms("click").forEach(d => {
       const dyn = new Dynamism(d.event);
-      dyn.source = this.component;
+      dyn.source = this.component.id;
       dyn.targets = d.targets;
       dyn.exec = d.exec;
 

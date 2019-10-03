@@ -8,10 +8,11 @@ import ImplicitVariable from "@/interfaces/ImplicitVariable";
 
 const variableContextMixin = require("@/mixins/variableContextMixin.js");
 import VariableContext from "@/classes/VariableContext";
+import IVariableContext, { ContextType } from "../interfaces/IVariableContext";
 
 @Component
 export default class Basic extends VariableContext {
-  @Prop() protected component: any;
+  @Prop() component: any;
 
   private implicitVariables?: ImplicitVariable[];
   private timer?: number;
@@ -142,6 +143,43 @@ export default class Basic extends VariableContext {
       );
     }
     return [];
+  }
+
+  getParentVariableContext(): IVariableContext | null {
+    let parent = this.$parent;
+
+    while (parent) {
+      if (parent instanceof Basic) {
+        const comp = parent.component;
+
+        if (comp && comp.type === "EXD") {
+          break;
+        }
+      }
+
+      parent = parent.$parent;
+    }
+
+    return parent;
+  }
+
+  getContextType(): ContextType {
+    return ContextType.SEC;
+  }
+
+  getVariableContextAnchestors(): VariableContext[] {
+    const ancestors: VariableContext[] = [];
+
+    let parent = this.$parent;
+    while (parent != null) {
+      if (parent instanceof VariableContext) {
+        ancestors.push(parent);
+      }
+
+      parent = parent.$parent;
+    }
+
+    return ancestors;
   }
 }
 </script>

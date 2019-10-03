@@ -22,10 +22,9 @@ export default class DynamismManager {
     if (!dynamism.targets || dynamism.targets.length == 0) {
       // save variable in source
       const vueSource = vueComponent.$store.getters["webup/getComponentById"](
-        dynamism.source.id
+        dynamism.source
       );
       this._executeAssignmentsInTarget(vueSource, dynamism);
-      //
     } else {
       dynamism.targets
         .map(target =>
@@ -68,6 +67,7 @@ export default class DynamismManager {
         vueComponent,
         dynamism.exec
       );
+
       this._execFun(vueComponent, evaluatedFun);
     }
   }
@@ -134,24 +134,31 @@ export default class DynamismManager {
     }
   }
 
-  private _executeAssignmentsInTarget(vueTarget: IBasic, dynamism: Dynamism) {
+  private _executeAssignmentsInTarget(vueTarget: any, dynamism: Dynamism) {
     if (!vueTarget) {
       return;
     }
+
+    const vueSource = vueTarget.$store.getters["webup/getComponentById"](
+      dynamism.source
+    );
+
     // variables from source component
-    if (dynamism.source && parseInt(dynamism.source.variables.length) > 0) {
-      for (let k in dynamism.source.variables) {
-        vueTarget.putVariable(k, dynamism.source.variables[k]);
+    if (vueSource && vueSource.getAllVariables().length > 0) {
+      for (let k of vueSource.getAllVariables()) {
+        vueTarget.putVariable(k.name, k.value);
       }
     }
     // variables from dyn
-    if (dynamism.variables) {
-      for (let k in dynamism.variables) {
-        vueTarget.putVariable(k, dynamism.variables[k]);
+    if (dynamism.implicitVariables) {
+      for (let k in dynamism.implicitVariables) {
+        vueTarget.putVariable(k, dynamism.implicitVariables[k]);
       }
     }
 
-    // TODO variabili esplicite del dinamismo (voglio piangere)
+    if (dynamism.variables) {
+      vueTarget.executeAssignments(dynamism.variables);
+    }
 
     // TODO (forse) riresettare le variabili implicite
 
