@@ -1,5 +1,6 @@
 <template>
   <kup-chart
+    :width.prop="1000"
     :data.prop="_getData()"
     :axis.prop="_getAxis()"
     :series.prop="_getSeries()"
@@ -27,7 +28,7 @@ export default class CHA extends BasicComponent {
 
   private _getAxis() {
     if (this.component.options.axis) {
-      //      alert("Axis " + this.component.options.axis);
+      // alert("Axis " + this.component.options.axis);
       return this.component.options.axis;
     } else {
       return "";
