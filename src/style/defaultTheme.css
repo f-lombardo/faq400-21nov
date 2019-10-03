@@ -183,6 +183,7 @@
   /* Paginator */
   --kup-paginator_text-color: var(--main-text-color);
   --kup-paginator_font-size: var(--main-font-size);
+  --kup-paginator_icon-background: var(--main-color-lighter);
 
   /* Datatable */
   --kup-data-table_background-color: var(--main-background-color);
@@ -202,6 +203,8 @@
   --kup-data-table_icons-hover-color: var(--main-icon-color-hover);
   --kup-data-table_box-shadow: var(--main-box-shadow);
   --kup-data-table_font-size: var(--main-font-size);
+  --kup-data-table_density-icon-background: var(--main-color-lighter);
+  --kup-data-table_density-icon-color: var(--main-text-color);
 
   /* Input text */
   --kup-text-input_color: var(--main-text-color);
@@ -224,9 +227,14 @@
   --kup-gauge_third-color: var(--main-green);
 
   /* Button */
+  --kup-button_font-size: 1rem;
+  --kup-button_icon-size: 1rem;
   --kup-button_main-color: var(--main-color);
+  --kup-button_main-color-hover: var(--main-color-light);
+  --kup-button_main-color-active: var(--main-color-dark);
   --kup-button_text-color: var(--text-on-main);
   --kup-button_icon-color: var(--text-on-main);
+  --kup-button_box-shadow: var(--main-box-shadow);
   --kup-button_border-radius: var(--main-border-radius);
 
   /* Combo */
