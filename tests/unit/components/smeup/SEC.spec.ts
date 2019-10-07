@@ -86,7 +86,7 @@ describe("SEC", () => {
     });
 
     const sections = sec.findAll(".section");
-    expect(sections).toHaveLength(1);
+    expect(sections).toHaveLength(2);
     expect(sections.at(0).html()).toBe(
       `<div class="section"><div class="section"><sec-stub section="[object Object]"></sec-stub><sec-stub section="[object Object]"></sec-stub></div></div>`
     );
