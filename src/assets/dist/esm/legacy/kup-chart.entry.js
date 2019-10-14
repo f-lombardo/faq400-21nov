@@ -1,6 +1,6 @@
 import { r as registerInstance, c as createEvent, h, g as getElement } from './chunk-1851c479.js';
 import './chunk-d8060b98.js';
-import { n as numeral, r as moment, d as isNumber, t as isDate, o as getColumnByName$1 } from './chunk-6abc1eda.js';
+import { n as numeral, m as moment, e as isNumber, g as isDate, h as getColumnByName$1 } from './chunk-2ee83ce0.js';
 var ChartType;
 (function (ChartType) {
     ChartType["Area"] = "Area";

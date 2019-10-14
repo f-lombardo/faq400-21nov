@@ -1041,6 +1041,72 @@ var TotalMode;
 //---- Sortable Columns Functionality ----
 const KupDataTableColumnDragType = 'text/kup-data-table-column-drag';
 
+function isBar({ t, p }) {
+    return 'J4' === t && 'BAR' === p;
+}
+function isButton({ t, p }) {
+    return 'J4' === t && 'BTN' === p;
+}
+function isCheckbox({ t, p }) {
+    return 'V2' === t && 'SI/NO' === p.toUpperCase();
+}
+function isDate({ t }) {
+    return 'D8' === t;
+}
+function isIcon({ t, p }) {
+    return 'J4' === t && 'ICO' === p;
+}
+function isImage({ t, p }) {
+    return 'J4' === t && 'IMG' === p;
+}
+function isLink({ t, p }) {
+    return 'J1' === t && 'URL' === p;
+}
+function isNumber({ t }) {
+    return 'NR' === t;
+}
+function isProgressBar({ t, p }) {
+    return 'J4' === t && 'PGB' === p;
+}
+function isVoCodver({ t, p }) {
+    return 'VO' === t && 'COD_VER' === p;
+}
+function createJ4objButtonConfig(cell) {
+    let label = cell.value;
+    let textMode = 'Hint';
+    let icon = null;
+    let flat = true;
+    let showtext = false;
+    let fillspace = false;
+    if (cell.config) {
+        const config = cell.config;
+        icon = config.icon;
+        if (config.hasOwnProperty('showtext')) {
+            showtext = config.showtext;
+        }
+        if (config.hasOwnProperty('fillspace')) {
+            fillspace = config.fillspace;
+        }
+        if (config.hasOwnProperty('flat')) {
+            flat = config.flat;
+            if (!flat) {
+                textMode = '';
+            }
+        }
+        if (config.hasOwnProperty('fillspace')) {
+            fillspace = config.fillspace;
+        }
+    }
+    return {
+        label,
+        textmode: textMode,
+        iconClass: icon,
+        flat,
+        showtext,
+        fillspace
+    };
+}
+
 var hookCallback;
 
 function hooks () {
@@ -1081,11 +1147,11 @@ function isUndefined(input) {
     return input === void 0;
 }
 
-function isNumber(input) {
+function isNumber$1(input) {
     return typeof input === 'number' || Object.prototype.toString.call(input) === '[object Number]';
 }
 
-function isDate(input) {
+function isDate$1(input) {
     return input instanceof Date || Object.prototype.toString.call(input) === '[object Date]';
 }
 
@@ -1726,7 +1792,7 @@ function addParseToken (token, callback) {
     if (typeof token === 'string') {
         token = [token];
     }
-    if (isNumber(callback)) {
+    if (isNumber$1(callback)) {
         func = function (input, array) {
             array[callback] = toInt(input);
         };
@@ -2075,7 +2141,7 @@ function setMonth (mom, value) {
         } else {
             value = mom.localeData().monthsParse(value);
             // TODO: Another silent failure?
-            if (!isNumber(value)) {
+            if (!isNumber$1(value)) {
                 return mom;
             }
         }
@@ -3619,7 +3685,7 @@ function prepareConfig (config) {
 
     if (isMoment(input)) {
         return new Moment(checkOverflow(input));
-    } else if (isDate(input)) {
+    } else if (isDate$1(input)) {
         config._d = input;
     } else if (isArray(format)) {
         configFromStringAndArray(config);
@@ -3640,7 +3706,7 @@ function configFromInput(config) {
     var input = config._i;
     if (isUndefined(input)) {
         config._d = new Date(hooks.now());
-    } else if (isDate(input)) {
+    } else if (isDate$1(input)) {
         config._d = new Date(input.valueOf());
     } else if (typeof input === 'string') {
         configFromString(config);
@@ -3651,7 +3717,7 @@ function configFromInput(config) {
         configFromArray(config);
     } else if (isObject(input)) {
         configFromObject(config);
-    } else if (isNumber(input)) {
+    } else if (isNumber$1(input)) {
         // from milliseconds
         config._d = new Date(input);
     } else {
@@ -3885,7 +3951,7 @@ function cloneWithOffset(input, model) {
     var res, diff;
     if (model._isUTC) {
         res = model.clone();
-        diff = (isMoment(input) || isDate(input) ? input.valueOf() : createLocal(input).valueOf()) - res.valueOf();
+        diff = (isMoment(input) || isDate$1(input) ? input.valueOf() : createLocal(input).valueOf()) - res.valueOf();
         // Use low-level api, because this fn is low-level api.
         res._d.setTime(res._d.valueOf() + diff);
         hooks.updateOffset(res, false);
@@ -4073,7 +4139,7 @@ function createDuration (input, key) {
             d  : input._days,
             M  : input._months
         };
-    } else if (isNumber(input)) {
+    } else if (isNumber$1(input)) {
         duration = {};
         if (key) {
             duration[key] = input;
@@ -5085,7 +5151,7 @@ function get$1 (format, index, field, setter) {
 }
 
 function listMonthsImpl (format, index, field) {
-    if (isNumber(format)) {
+    if (isNumber$1(format)) {
         index = format;
         format = undefined;
     }
@@ -5114,7 +5180,7 @@ function listMonthsImpl (format, index, field) {
 // (true, fmt)
 function listWeekdaysImpl (localeSorted, format, index, field) {
     if (typeof localeSorted === 'boolean') {
-        if (isNumber(format)) {
+        if (isNumber$1(format)) {
             index = format;
             format = undefined;
         }
@@ -5125,7 +5191,7 @@ function listWeekdaysImpl (localeSorted, format, index, field) {
         index = format;
         localeSorted = false;
 
-        if (isNumber(format)) {
+        if (isNumber$1(format)) {
             index = format;
             format = undefined;
         }
@@ -5595,7 +5661,7 @@ hooks.now                   = now;
 hooks.utc                   = createUTC;
 hooks.unix                  = createUnix;
 hooks.months                = listMonths;
-hooks.isDate                = isDate;
+hooks.isDate                = isDate$1;
 hooks.locale                = getSetGlobalLocale;
 hooks.invalid               = createInvalid;
 hooks.duration              = createDuration;
@@ -6107,72 +6173,6 @@ function styleHasBorderRadius(cell) {
     return !!(cell && cell.style && (cell.style.borderRadius || cell.style['border-radius']));
 }
 
-function isBar({ t, p }) {
-    return 'J4' === t && 'BAR' === p;
-}
-function isButton({ t, p }) {
-    return 'J4' === t && 'BTN' === p;
-}
-function isCheckbox({ t, p }) {
-    return 'V2' === t && 'SI/NO' === p.toUpperCase();
-}
-function isDate$1({ t }) {
-    return 'D8' === t;
-}
-function isIcon({ t, p }) {
-    return 'J4' === t && 'ICO' === p;
-}
-function isImage({ t, p }) {
-    return 'J4' === t && 'IMG' === p;
-}
-function isLink({ t, p }) {
-    return 'J1' === t && 'URL' === p;
-}
-function isNumber$1({ t }) {
-    return 'NR' === t;
-}
-function isProgressBar({ t, p }) {
-    return 'J4' === t && 'PGB' === p;
-}
-function isVoCodver({ t, p }) {
-    return 'VO' === t && 'COD_VER' === p;
-}
-function createJ4objButtonConfig(cell) {
-    let label = cell.value;
-    let textMode = 'Hint';
-    let icon = null;
-    let flat = true;
-    let showtext = false;
-    let fillspace = false;
-    if (cell.config) {
-        const config = cell.config;
-        icon = config.icon;
-        if (config.hasOwnProperty('showtext')) {
-            showtext = config.showtext;
-        }
-        if (config.hasOwnProperty('fillspace')) {
-            fillspace = config.fillspace;
-        }
-        if (config.hasOwnProperty('flat')) {
-            flat = config.flat;
-            if (!flat) {
-                textMode = '';
-            }
-        }
-        if (config.hasOwnProperty('fillspace')) {
-            fillspace = config.fillspace;
-        }
-    }
-    return {
-        label,
-        textmode: textMode,
-        iconClass: icon,
-        flat,
-        showtext,
-        fillspace
-    };
-}
-
 exports.KupDataTableColumnDragType = KupDataTableColumnDragType;
 exports.calcTotals = calcTotals;
 exports.createJ4objButtonConfig = createJ4objButtonConfig;
@@ -6182,11 +6182,11 @@ exports.groupRows = groupRows;
 exports.isBar = isBar;
 exports.isButton = isButton;
 exports.isCheckbox = isCheckbox;
-exports.isDate = isDate$1;
+exports.isDate = isDate;
 exports.isIcon = isIcon;
 exports.isImage = isImage;
 exports.isLink = isLink;
-exports.isNumber = isNumber$1;
+exports.isNumber = isNumber;
 exports.isProgressBar = isProgressBar;
 exports.isVoCodver = isVoCodver;
 exports.moment = hooks;

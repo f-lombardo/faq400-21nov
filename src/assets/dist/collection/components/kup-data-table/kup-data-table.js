@@ -1209,7 +1209,7 @@ export class KupDataTable {
             "type": "unknown",
             "mutable": false,
             "complexType": {
-                "original": "Array<{\n        column: string;\n        width: number;\n    }>",
+                "original": "Array<{\r\n        column: string;\r\n        width: number;\r\n    }>",
                 "resolved": "{ column: string; width: number; }[]",
                 "references": {
                     "Array": {
@@ -1368,7 +1368,7 @@ export class KupDataTable {
                         "text": "https://caniuse.com/#feat=css-sticky",
                         "name": "see"
                     }],
-                "text": "If table header is visible and this prop is set to true, the header will be visible while scrolling the table.\nTo make this work, it must be configured together with the data-table CSS property --kup-data-table_header-offset.\nIt uses CSS position: sticky."
+                "text": "If table header is visible and this prop is set to true, the header will be visible while scrolling the table.\r\nTo make this work, it must be configured together with the data-table CSS property --kup-data-table_header-offset.\r\nIt uses CSS position: sticky."
             },
             "attribute": "header-is-persistent",
             "reflect": true,
@@ -1428,7 +1428,7 @@ export class KupDataTable {
                         "text": "loadMoreLimit",
                         "name": "see"
                     }],
-                "text": "The number of records which will be requested to be downloaded when clicking on the load more button.\n\nThis property is regulated also by loadMoreMode."
+                "text": "The number of records which will be requested to be downloaded when clicking on the load more button.\r\n\r\nThis property is regulated also by loadMoreMode."
             },
             "attribute": "load-more-step",
             "reflect": false,
@@ -1457,7 +1457,7 @@ export class KupDataTable {
                         "text": "loadMoreLimit",
                         "name": "see"
                     }],
-                "text": "Establish the modality of how many new records will be downloaded.\n\nThis property is regulated also by loadMoreStep."
+                "text": "Establish the modality of how many new records will be downloaded.\r\n\r\nThis property is regulated also by loadMoreStep."
             },
             "attribute": "load-more-mode",
             "reflect": false,
@@ -1678,7 +1678,7 @@ export class KupDataTable {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": "If set to true, when a column is dragged to be sorted the component directly mutates the data.columns property\nand then fires the event"
+                "text": "If set to true, when a column is dragged to be sorted the component directly mutates the data.columns property\r\nand then fires the event"
             },
             "attribute": "sortable-columns-mutate-data",
             "reflect": false,
@@ -1727,7 +1727,7 @@ export class KupDataTable {
                 "text": "When a row is auto selected via selectRow prop"
             },
             "complexType": {
-                "original": "{\n        selectedRow: Row;\n    }",
+                "original": "{\r\n        selectedRow: Row;\r\n    }",
                 "resolved": "{ selectedRow: Row; }",
                 "references": {
                     "Row": {
@@ -1747,7 +1747,7 @@ export class KupDataTable {
                 "text": "When a row is selected"
             },
             "complexType": {
-                "original": "{\n        selectedRows: Array<Row>;\n        clickedColumn: string;\n    }",
+                "original": "{\r\n        selectedRows: Array<Row>;\r\n        clickedColumn: string;\r\n    }",
                 "resolved": "{ selectedRows: Row[]; clickedColumn: string; }",
                 "references": {
                     "Array": {
@@ -1770,7 +1770,7 @@ export class KupDataTable {
                 "text": "When cell option is clicked"
             },
             "complexType": {
-                "original": "{\n        column: string;\n        row: Row;\n    }",
+                "original": "{\r\n        column: string;\r\n        row: Row;\r\n    }",
                 "resolved": "{ column: string; row: Row; }",
                 "references": {
                     "Row": {
@@ -1805,7 +1805,7 @@ export class KupDataTable {
                 "text": "When a row action is clicked"
             },
             "complexType": {
-                "original": "{\n        type: 'default' | 'variable' | 'expander';\n        row: Row;\n        action?: RowAction;\n        index?: number;\n    }",
+                "original": "{\r\n        type: 'default' | 'variable' | 'expander';\r\n        row: Row;\r\n        action?: RowAction;\r\n        index?: number;\r\n    }",
                 "resolved": "{ type: \"default\" | \"variable\" | \"expander\"; row: Row; action?: RowAction; index?: number; }",
                 "references": {
                     "Row": {
@@ -1829,7 +1829,7 @@ export class KupDataTable {
                 "text": ""
             },
             "complexType": {
-                "original": "{\n        loadItems: number;\n    }",
+                "original": "{\r\n        loadItems: number;\r\n    }",
                 "resolved": "{ loadItems: number; }",
                 "references": {}
             }

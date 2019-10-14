@@ -14,6 +14,8 @@ import { Component } from "vue-property-decorator";
 import BasicComponent from "@/components/Basic.vue";
 import Dynamism from "@/classes/Dynamism";
 
+import '@vaadin/vaadin-upload';
+
 @Component
 export default class FLD extends BasicComponent {
   protected name = "FLD";

@@ -88,7 +88,7 @@ export class KupCheckbox {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": "Sets the checkbox to be disabled\n\nMust have reflect into the attribute"
+                "text": "Sets the checkbox to be disabled\r\n\r\nMust have reflect into the attribute"
             },
             "attribute": "disabled",
             "reflect": true,
@@ -142,7 +142,7 @@ export class KupCheckbox {
                 "text": "Fired when the checkbox input is blurred"
             },
             "complexType": {
-                "original": "{\n        checked: boolean;\n    }",
+                "original": "{\r\n        checked: boolean;\r\n    }",
                 "resolved": "{ checked: boolean; }",
                 "references": {}
             }
@@ -157,7 +157,7 @@ export class KupCheckbox {
                 "text": "Fired when the checkbox input changes its value"
             },
             "complexType": {
-                "original": "{\n        checked: boolean;\n    }",
+                "original": "{\r\n        checked: boolean;\r\n    }",
                 "resolved": "{ checked: boolean; }",
                 "references": {}
             }
@@ -172,7 +172,7 @@ export class KupCheckbox {
                 "text": "Fired when the checkbox input receive focus"
             },
             "complexType": {
-                "original": "{\n        checked: boolean;\n    }",
+                "original": "{\r\n        checked: boolean;\r\n    }",
                 "resolved": "{ checked: boolean; }",
                 "references": {}
             }

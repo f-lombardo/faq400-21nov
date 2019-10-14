@@ -4,7 +4,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 const __chunk_1 = require('./chunk-c31c1549.js');
 require('./chunk-d83edcd4.js');
-const __chunk_3 = require('./chunk-866cce30.js');
+const __chunk_3 = require('./chunk-fa3040e4.js');
 
 var ChartType;
 (function (ChartType) {

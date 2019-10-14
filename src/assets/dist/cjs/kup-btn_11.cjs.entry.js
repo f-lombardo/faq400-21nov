@@ -755,9 +755,10 @@ class KupFld {
          * JSX dynamic component notation
          * @see: https://stackoverflow.com/questions/29875869/react-jsx-dynamic-component-name
          */
+        let compPrefix = 'kup-';
         let type = '';
         let confObj = {};
-        switch (this.type) {
+        switch (this.type.toLowerCase()) {
             case 'cmb':
                 confObj.displayedField = 'value';
                 confObj.valueField = 'value';
@@ -771,14 +772,28 @@ class KupFld {
                 type = 'radio';
                 break;
             case 'itx':
-            case 'Itx':
                 confObj.onKetchupTextInputUpdated = this.onChangeInstance;
                 // When FLD has the text form, it should submit also when a user presses Enter on the text field
                 confObj.onKetchupTextInputSubmit = this.onSubmitInstance;
                 type = 'text-input';
                 break;
+            /**/
+            case 'fup':
+                type = 'upload';
+            //TODO confObj.formDataName:'WTX_FILE' -> no, usare il nome del campo: "id": "TPLFLD"
+            /*
+            compPrefix = '';
+            type = 'vaadin-upload';
+            */
+            /*
+            compPrefix = '';
+            type ='input';
+            confObj.type = 'file';
+            break;
+            */
         }
-        const $DynamicComponent = ('kup-' + type); // TODO check if there is a better typing
+        const $DynamicComponent = (compPrefix + type); // TODO check if there is a better typing
+        /** ... -> spread operator */
         toRender.push(__chunk_1.h($DynamicComponent, Object.assign({ class: baseClass + '__component', items: this.data }, confObj, this.propagate)));
         if (!submitIsTop && submit) {
             toRender.push(submit);

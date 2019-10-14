@@ -241,7 +241,7 @@ export class KupTextInput {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": "The max length of the text field.\nDefault value copied from here: https://www.w3schools.com/tags/att_input_maxlength.asp"
+                "text": "The max length of the text field.\r\nDefault value copied from here: https://www.w3schools.com/tags/att_input_maxlength.asp"
             },
             "attribute": "max-length",
             "reflect": false,
@@ -282,7 +282,7 @@ export class KupTextInput {
             "optional": true,
             "docs": {
                 "tags": [],
-                "text": "A generic object which can be passed to the component.\nOnce this object is set, it will always be returned inside the info field of the\nketchupTextInputUpdated and ketchupTextInputSubmit."
+                "text": "A generic object which can be passed to the component.\r\nOnce this object is set, it will always be returned inside the info field of the\r\nketchupTextInputUpdated and ketchupTextInputSubmit."
             }
         },
         "placeholder": {

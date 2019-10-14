@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import { r as registerInstance, c as createEvent, h } from './chunk-1851c479.js';
 import './chunk-d8060b98.js';
-import { f as filterRows, p as paginateRows, s as sortRows, e as isImage, k as isButton, l as createJ4objButtonConfig, u as isProgressBar, n as numeral, i as isIcon, a as SortMode } from './chunk-6abc1eda.js';
+import { f as filterRows, p as paginateRows, s as sortRows, i as isImage, a as isButton, c as createJ4objButtonConfig, b as isProgressBar, n as numeral, d as isIcon, S as SortMode } from './chunk-2ee83ce0.js';
 import { P as PaginatorMode } from './chunk-8cdcd574.js';
 var KupBox = /** @class */ (function () {
     function KupBox(hostRef) {

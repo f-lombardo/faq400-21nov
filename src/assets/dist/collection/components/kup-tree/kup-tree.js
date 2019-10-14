@@ -583,7 +583,7 @@ export class KupTree {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": "An array of integers containing the path to a selected child.\\\nGroups up the properties SelFirst, SelItem, SelName."
+                "text": "An array of integers containing the path to a selected child.\\\r\nGroups up the properties SelFirst, SelItem, SelName."
             },
             "defaultValue": "[]"
         },
@@ -599,7 +599,7 @@ export class KupTree {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": "When a node has options in its data and is on mouse over state while this prop is true,\nthe node must shows the cog wheel to trigger object navigation upon click.\n\nThis will generate an event to inform the navigation object has been activated."
+                "text": "When a node has options in its data and is on mouse over state while this prop is true,\r\nthe node must shows the cog wheel to trigger object navigation upon click.\r\n\r\nThis will generate an event to inform the navigation object has been activated."
             },
             "attribute": "show-object-navigation",
             "reflect": false,
@@ -620,7 +620,7 @@ export class KupTree {
                         "text": "dynamicExpansionCallback",
                         "name": "see"
                     }],
-                "text": "When the component must use the dynamic expansion feature to open its nodes, it means that not all the nodes of the\ntree have been passed inside the data property.\n\nTherefore, when expanding a node, the tree must emit an event (or run a given callback)\nand wait for the child nodes to be downloaded from the server.\n\nFor more information:"
+                "text": "When the component must use the dynamic expansion feature to open its nodes, it means that not all the nodes of the\r\ntree have been passed inside the data property.\r\n\r\nTherefore, when expanding a node, the tree must emit an event (or run a given callback)\r\nand wait for the child nodes to be downloaded from the server.\r\n\r\nFor more information:"
             },
             "attribute": "use-dynamic-expansion",
             "reflect": true,
@@ -653,7 +653,7 @@ export class KupTree {
                         "text": "useDynamicExpansion",
                         "name": "see"
                     }],
-                "text": "Function that gets invoked when a new set of nodes must be loaded as children of a node.\nUsed in combination with showObjectNavigation.\n\nWhen useDynamicExpansion is set, the tree component will have two different behaviors depending on the value of this prop.\n1 - If this prop is set to null, no callback to download data is available:\n    the component will emit an event requiring the parent to load the children of the given node.\n2 - If this prop is set to have a callback, then the component will automatically make requests to load children of\n    a given node. After the load has been completed, a different event will be fired to alert the parent of the change."
+                "text": "Function that gets invoked when a new set of nodes must be loaded as children of a node.\r\nUsed in combination with showObjectNavigation.\r\n\r\nWhen useDynamicExpansion is set, the tree component will have two different behaviors depending on the value of this prop.\r\n1 - If this prop is set to null, no callback to download data is available:\r\n    the component will emit an event requiring the parent to load the children of the given node.\r\n2 - If this prop is set to have a callback, then the component will automatically make requests to load children of\r\n    a given node. After the load has been completed, a different event will be fired to alert the parent of the change."
             },
             "defaultValue": "undefined"
         }
@@ -669,10 +669,10 @@ export class KupTree {
             "composed": true,
             "docs": {
                 "tags": [],
-                "text": "When a cell option is clicked.\nIf the cell option is the one of the TreeNodeCell,\nthen column will be set to the fixed value {name: \"TreeNodeCell\", title: \"TreeNodeCell\"}."
+                "text": "When a cell option is clicked.\r\nIf the cell option is the one of the TreeNodeCell,\r\nthen column will be set to the fixed value {name: \"TreeNodeCell\", title: \"TreeNodeCell\"}."
             },
             "complexType": {
-                "original": "{\n    cell: Cell;\n    column: Column;\n    treeNode: TreeNode;\n  }",
+                "original": "{\r\n    cell: Cell;\r\n    column: Column;\r\n    treeNode: TreeNode;\r\n  }",
                 "resolved": "{ cell: Cell; column: Column; treeNode: TreeNode; }",
                 "references": {
                     "Cell": {
@@ -700,7 +700,7 @@ export class KupTree {
                 "text": "Fired when a TreeNode gets collapsed (closed)."
             },
             "complexType": {
-                "original": "{\n    treeNodePath: TreeNodePath;\n    treeNode: TreeNode;\n  }",
+                "original": "{\r\n    treeNodePath: TreeNodePath;\r\n    treeNode: TreeNode;\r\n  }",
                 "resolved": "{ treeNodePath: number[]; treeNode: TreeNode; }",
                 "references": {
                     "TreeNodePath": {
@@ -736,7 +736,7 @@ export class KupTree {
                         "text": "{boolean} usesDynamicExpansion - Flag to notify that the component is running in dynamicExpansion mode.",
                         "name": "property"
                     }, {
-                        "text": "{boolean} dynamicExpansionRequireChildren - Flag to notify that the current dynamicExpansion event\nrequires the parent component to add TreeNode children to the given TreeNode.",
+                        "text": "{boolean} dynamicExpansionRequireChildren - Flag to notify that the current dynamicExpansion event\rrequires the parent component to add TreeNode children to the given TreeNode.",
                         "name": "property"
                     }, {
                         "text": "useDynamicExpansion",
@@ -748,10 +748,10 @@ export class KupTree {
                         "text": "1.0.0",
                         "name": "since"
                     }],
-                "text": "Fired when a node expansion ion has been triggered.\nContains additional data when the tree is using the dynamicExpansion feature."
+                "text": "Fired when a node expansion ion has been triggered.\r\nContains additional data when the tree is using the dynamicExpansion feature."
             },
             "complexType": {
-                "original": "{\n    treeNodePath: TreeNodePath;\n    treeNode: TreeNode;\n    usesDynamicExpansion?: boolean;\n    dynamicExpansionRequireChildren?: boolean;\n  }",
+                "original": "{\r\n    treeNodePath: TreeNodePath;\r\n    treeNode: TreeNode;\r\n    usesDynamicExpansion?: boolean;\r\n    dynamicExpansionRequireChildren?: boolean;\r\n  }",
                 "resolved": "{ treeNodePath: number[]; treeNode: TreeNode; usesDynamicExpansion?: boolean; dynamicExpansionRequireChildren?: boolean; }",
                 "references": {
                     "TreeNodePath": {
@@ -775,7 +775,7 @@ export class KupTree {
                 "text": "Fired when a node of the tree has been selected"
             },
             "complexType": {
-                "original": "{\n    treeNodePath: TreeNodePath,\n    treeNode: TreeNode,\n  }",
+                "original": "{\r\n    treeNodePath: TreeNodePath,\r\n    treeNode: TreeNode,\r\n  }",
                 "resolved": "{ treeNodePath: number[]; treeNode: TreeNode; }",
                 "references": {
                     "TreeNodePath": {

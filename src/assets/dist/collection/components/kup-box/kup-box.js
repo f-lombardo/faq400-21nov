@@ -791,7 +791,7 @@ export class KupBox {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": "If enabled, a button to load / display the row actions\nwill be displayed on the right of every box"
+                "text": "If enabled, a button to load / display the row actions\r\nwill be displayed on the right of every box"
             },
             "attribute": "enable-row-actions",
             "reflect": false,
@@ -852,7 +852,7 @@ export class KupBox {
                 "text": "Triggered when a box is clicked"
             },
             "complexType": {
-                "original": "{\n        row: BoxRow;\n        column?: string;\n    }",
+                "original": "{\r\n        row: BoxRow;\r\n        column?: string;\r\n    }",
                 "resolved": "{ row: BoxRow; column?: string; }",
                 "references": {
                     "BoxRow": {
@@ -872,7 +872,7 @@ export class KupBox {
                 "text": "Triggered when the multi selection checkbox changes value"
             },
             "complexType": {
-                "original": "{\n        rows: BoxRow[];\n    }",
+                "original": "{\r\n        rows: BoxRow[];\r\n    }",
                 "resolved": "{ rows: BoxRow[]; }",
                 "references": {
                     "BoxRow": {
@@ -892,7 +892,7 @@ export class KupBox {
                 "text": "Triggered when a box is auto selected via selectBox prop"
             },
             "complexType": {
-                "original": "{\n        row: BoxRow;\n    }",
+                "original": "{\r\n        row: BoxRow;\r\n    }",
                 "resolved": "{ row: BoxRow; }",
                 "references": {
                     "BoxRow": {
@@ -912,7 +912,7 @@ export class KupBox {
                 "text": "When the row menu action icon is clicked"
             },
             "complexType": {
-                "original": "{\n        row: BoxRow;\n    }",
+                "original": "{\r\n        row: BoxRow;\r\n    }",
                 "resolved": "{ row: BoxRow; }",
                 "references": {
                     "BoxRow": {
@@ -932,7 +932,7 @@ export class KupBox {
                 "text": "When the row menu action icon is clicked"
             },
             "complexType": {
-                "original": "{\n        row: BoxRow;\n        action: RowAction;\n        index: number;\n    }",
+                "original": "{\r\n        row: BoxRow;\r\n        action: RowAction;\r\n        index: number;\r\n    }",
                 "resolved": "{ row: BoxRow; action: RowAction; index: number; }",
                 "references": {
                     "BoxRow": {
