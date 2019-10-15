@@ -1,0 +1,13 @@
+@import url(https://cdn.materialdesignicons.com/4.5.95/css/materialdesignicons.min.css);
+* {
+  box-sizing: border-box;
+}
+
+#image-wrapper {
+  position: relative;
+  display: inline-block;
+}
+#image-wrapper img {
+  width: 100%;
+  height: 100%;
+}
