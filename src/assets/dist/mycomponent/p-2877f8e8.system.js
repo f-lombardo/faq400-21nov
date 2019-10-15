@@ -1,1 +1,0 @@
-System.register([],function(e){"use strict";return{execute:function(){e("a",t);var n=e("c",typeof globalThis!=="undefined"?globalThis:typeof window!=="undefined"?window:typeof global!=="undefined"?global:typeof self!=="undefined"?self:{});function t(e,n){return n={exports:{}},e(n,n.exports),n.exports}}}});
