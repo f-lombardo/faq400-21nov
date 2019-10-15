@@ -86,7 +86,7 @@ class KupUpload {
                     error: {
                         serverUnavailable: 'Server Unavailable',
                         unexpectedServerError: 'Unexpected Server Error',
-                        forbidden: 'Forbidden',
+                        forbidden: 'Rejected',
                     },
                 },
                 units: {
@@ -124,17 +124,16 @@ class KupUpload {
         */
         /*
         file-reject
+                     {
+                     message: ev.detail.xhr.response,
+                 }
         */
         return (h($DynamicComponent, Object.assign({}, confObj, { "onUpload-error": (ev) => {
-                //console.log('upload error', ev.detail.xhr.response);
-                this.ketchupFileRejected.emit({
-                    message: ev.detail.xhr.response,
-                });
+                //console.log('upload error', ev);
+                this.ketchupFileRejected.emit(ev.detail.xhr.response);
             }, "onUpload-success": (ev) => {
-                //console.log('upload success', ev.detail.xhr.response);
-                this.ketchupFileUploaded.emit({
-                    message: ev.detail.xhr.response,
-                });
+                //console.log('upload success', ev);
+                this.ketchupFileUploaded.emit(ev.detail.xhr.response);
             } })));
     }
     static get style() { return "\@import url(https://cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css);"; }

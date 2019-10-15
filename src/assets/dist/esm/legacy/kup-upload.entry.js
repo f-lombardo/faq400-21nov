@@ -86,7 +86,7 @@ var KupUpload = /** @class */ (function () {
                     error: {
                         serverUnavailable: 'Server Unavailable',
                         unexpectedServerError: 'Unexpected Server Error',
-                        forbidden: 'Forbidden',
+                        forbidden: 'Rejected',
                     },
                 },
                 units: {
@@ -124,17 +124,16 @@ var KupUpload = /** @class */ (function () {
         */
         /*
         file-reject
+                     {
+                     message: ev.detail.xhr.response,
+                 }
         */
         return (h($DynamicComponent, Object.assign({}, confObj, { "onUpload-error": function (ev) {
-                //console.log('upload error', ev.detail.xhr.response);
-                _this.ketchupFileRejected.emit({
-                    message: ev.detail.xhr.response,
-                });
+                //console.log('upload error', ev);
+                _this.ketchupFileRejected.emit(ev.detail.xhr.response);
             }, "onUpload-success": function (ev) {
-                //console.log('upload success', ev.detail.xhr.response);
-                _this.ketchupFileUploaded.emit({
-                    message: ev.detail.xhr.response,
-                });
+                //console.log('upload success', ev);
+                _this.ketchupFileUploaded.emit(ev.detail.xhr.response);
             } })));
     };
     Object.defineProperty(KupUpload, "style", {

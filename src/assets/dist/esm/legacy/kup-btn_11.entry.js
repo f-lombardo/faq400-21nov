@@ -873,17 +873,18 @@ var KupFld = /** @class */ (function () {
             /**/
             case 'fup':
                 type = 'upload';
-            //TODO confObj.formDataName:'WTX_FILE' -> no, usare il nome del campo: "id": "TPLFLD"
-            /*
-            compPrefix = '';
-            type = 'vaadin-upload';
-            */
-            /*
-            compPrefix = '';
-            type ='input';
-            confObj.type = 'file';
-            break;
-            */
+                //TODO ???
+                //TODO confObj.formDataName:'WTX_FILE' -> no, usare il nome del campo: "id": "TPLFLD"
+                /*
+                compPrefix = '';
+                type = 'vaadin-upload';
+                */
+                /*
+                compPrefix = '';
+                type ='input';
+                confObj.type = 'file';
+                */
+                break;
         }
         var $DynamicComponent = (compPrefix + type); // TODO check if there is a better typing
         /** ... -> spread operator */

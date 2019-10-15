@@ -80,7 +80,7 @@ export class KupUpload {
                     error: {
                         serverUnavailable: 'Server Unavailable',
                         unexpectedServerError: 'Unexpected Server Error',
-                        forbidden: 'Forbidden',
+                        forbidden: 'Rejected',
                     },
                 },
                 units: {
@@ -118,17 +118,16 @@ export class KupUpload {
         */
         /*
         file-reject
+                     {
+                     message: ev.detail.xhr.response,
+                 }
         */
         return (h($DynamicComponent, Object.assign({}, confObj, { "onUpload-error": (ev) => {
-                //console.log('upload error', ev.detail.xhr.response);
-                this.ketchupFileRejected.emit({
-                    message: ev.detail.xhr.response,
-                });
+                //console.log('upload error', ev);
+                this.ketchupFileRejected.emit(ev.detail.xhr.response);
             }, "onUpload-success": (ev) => {
-                //console.log('upload success', ev.detail.xhr.response);
-                this.ketchupFileUploaded.emit({
-                    message: ev.detail.xhr.response,
-                });
+                //console.log('upload success', ev);
+                this.ketchupFileUploaded.emit(ev.detail.xhr.response);
             } })));
     }
     static get is() { return "kup-upload"; }
@@ -172,8 +171,8 @@ export class KupUpload {
                 "text": "Launched when file upload succeed"
             },
             "complexType": {
-                "original": "{\r\n        message: string;\r\n    }",
-                "resolved": "{ message: string; }",
+                "original": "any",
+                "resolved": "any",
                 "references": {}
             }
         }, {
@@ -184,11 +183,11 @@ export class KupUpload {
             "composed": true,
             "docs": {
                 "tags": [],
-                "text": "Launched when file upload fail"
+                "text": ""
             },
             "complexType": {
-                "original": "{\r\n        message: string;\r\n    }",
-                "resolved": "{ message: string; }",
+                "original": "any",
+                "resolved": "any",
                 "references": {}
             }
         }]; }

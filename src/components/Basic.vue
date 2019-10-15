@@ -1,4 +1,5 @@
 <script lang="ts">
+import Vue from "vue";
 import { Component, Prop, Watch } from "vue-property-decorator";
 import { mapActions } from "vuex";
 
@@ -112,15 +113,15 @@ export default class Basic extends VariableContext {
   }
 
   public getOptions() {
-    // TODO questo sara' da rivedere quando gestiremo i setup 'correttamente'
+    // TODO questo sarà da rivedere quando gestiremo i setup 'correttamente'
     if (this.component.options && this.component.type) {
       if (this.component.type === "FLD") {
         let fldOptions = this.component.options[this.component.type].default;
         if (fldOptions && fldOptions.type.toLowerCase() === "fup") {
           if (fldOptions.typeOptions) {
-            //TODO prendere dinamicamente
             fldOptions.typeOptions["service"] =
-              "https://webuptest.smeup.com/gtw/gtw-resource-manager/api/services/uploadTemplate";
+              Vue.prototype.$SmeUP.GTWFrontend.urls.rest +
+              "/gtw-resource-manager/api/services/uploadTemplate";
           }
         }
         return fldOptions;

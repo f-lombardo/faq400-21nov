@@ -13,14 +13,7 @@ export declare class KupUpload {
     /**
      * Launched when file upload succeed
      */
-    ketchupFileUploaded: EventEmitter<{
-        message: string;
-    }>;
-    /**
-     * Launched when file upload fail
-     */
-    ketchupFileRejected: EventEmitter<{
-        message: string;
-    }>;
+    ketchupFileUploaded: EventEmitter;
+    ketchupFileRejected: EventEmitter;
     render(): any;
 }

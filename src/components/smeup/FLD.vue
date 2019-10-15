@@ -3,6 +3,8 @@
   <kup-fld
     @ketchupFldChanged="onFldChange($event)"
     @ketchupFldSubmit="onClick($event)"
+    @ketchupFileUploaded="onFileUploaded($event)"
+    @ketchupFileRejected="onFileUploaded($event)"
     :data.prop="getData()"
     :config.prop="getOptions()"
   ></kup-fld>
@@ -14,7 +16,11 @@ import { Component } from "vue-property-decorator";
 import BasicComponent from "@/components/Basic.vue";
 import Dynamism from "@/classes/Dynamism";
 
-import '@vaadin/vaadin-upload';
+import IMessage from "@/interfaces/IMessage";
+import Message from "@/classes/Message";
+import Vue from "vue";
+
+import "@vaadin/vaadin-upload";
 
 @Component
 export default class FLD extends BasicComponent {
@@ -49,6 +55,17 @@ export default class FLD extends BasicComponent {
       // dyn.addImplictVariable({ key: "Fu", value: $event.detail.value.exec });
 
       this.$dynamismManager.execute(this, dyn);
+    });
+  }
+
+  private onFileUploaded($event: CustomEvent) {
+    console.log("onFileUploaded", $event.detail);
+    const msgjson: any = JSON.parse($event.detail);
+    console.log("msgJSON", msgjson.messages);
+    msgjson.messages.forEach((rawMessage: IMessage) => {
+      let message: Message = new Message(rawMessage);
+      console.log("message", message);
+      Vue.prototype.$messageManager.show(message);
     });
   }
 }
