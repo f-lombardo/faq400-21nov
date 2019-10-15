@@ -21,6 +21,9 @@ export default class Logs extends Service {
             ) {
               column.visible = false;
             }
+            if (column.name == "SIZE") {
+              column = EnrichUtil.addObj(column, "NR", "", "");
+            }
             return column;
           });
         }
@@ -36,7 +39,7 @@ export default class Logs extends Service {
             let type: Cell = row.cells["TYPE"];
             type = EnrichUtil.addObj(type, "", "", "");
             let size: Cell = row.cells["SIZE"];
-            size = EnrichUtil.addObj(size, "", "", "");
+            size = EnrichUtil.addObj(size, "NR", "", "");
             let link: Cell = row.cells["LINK"];
             link = EnrichUtil.addObj(link, "J1", "URL", "");
             let path: Cell = row.cells["PATH"];

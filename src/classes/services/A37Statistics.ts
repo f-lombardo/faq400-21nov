@@ -17,22 +17,22 @@ export default class A37Statistics extends Service {
               time = EnrichUtil.addObj(time, "", "", "");
 
               let incom: Cell = row.cells["IN"];
-              incom = EnrichUtil.addObj(incom, "", "", "");
+              incom = EnrichUtil.addObj(incom, "NR", "", "");
 
               let cons: Cell = row.cells["CONS"];
-              cons = EnrichUtil.addObj(cons, "", "", "");
+              cons = EnrichUtil.addObj(cons, "NR", "", "");
 
               let out: Cell = row.cells["OUT"];
-              out = EnrichUtil.addObj(out, "", "", "");
+              out = EnrichUtil.addObj(out, "NR", "", "");
 
               let err: Cell = row.cells["ERR"];
-              err = EnrichUtil.addObj(err, "", "", "");
+              err = EnrichUtil.addObj(err, "NR", "", "");
 
               let queue: Cell = row.cells["QUEUE"];
-              queue = EnrichUtil.addObj(queue, "", "", "");
+              queue = EnrichUtil.addObj(queue, "NR", "", "");
 
               let evtTime: Cell = row.cells["EVTTIME"];
-              evtTime = EnrichUtil.addObj(evtTime, "", "", "");
+              evtTime = EnrichUtil.addObj(evtTime, "NR", "", "");
 
               return row;
             });
@@ -108,7 +108,12 @@ export default class A37Statistics extends Service {
               queue = EnrichUtil.addObj(queue, "NR", "", queue.value);
 
               let evtTime: Cell = row.cells["EVTTIME"];
-              evtTime = EnrichUtil.addObj(evtTime, "NR", "", evtTime.value);
+              evtTime = EnrichUtil.addObj(
+                evtTime,
+                "NR",
+                "",
+                evtTime.value.replace(",", ".")
+              );
 
               return row;
             });
