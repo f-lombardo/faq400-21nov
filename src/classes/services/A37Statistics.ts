@@ -11,6 +11,22 @@ export default class A37Statistics extends Service {
       srv
         .doGet(A37Statistics.PATH + "/frontend/hub/statisticsListNow")
         .then((data: any) => {
+          if (data.columns) {
+            data.columns.forEach((column: any) => {
+              if (
+                column.name == "IN" ||
+                column.name == "CONS" ||
+                column.name == "OUT" ||
+                column.name == "ERR" ||
+                column.name == "QUEUE" ||
+                column.name == "EVTTIME"
+              ) {
+                column = EnrichUtil.addObj(column, "NR", "", "");
+              }
+              return column;
+            });
+          }
+
           if (data.rows) {
             data.rows.forEach((row: any) => {
               let time: Cell = row.cells["TIME"];
@@ -48,6 +64,22 @@ export default class A37Statistics extends Service {
       srv
         .doGet(A37Statistics.PATH + "/frontend/hub/statisticsList")
         .then((data: any) => {
+          if (data.columns) {
+            data.columns.forEach((column: any) => {
+              if (
+                column.name == "IN" ||
+                column.name == "CONS" ||
+                column.name == "OUT" ||
+                column.name == "ERR" ||
+                column.name == "QUEUE" ||
+                column.name == "EVTTIME"
+              ) {
+                column = EnrichUtil.addObj(column, "NR", "", "");
+              }
+              return column;
+            });
+          }
+
           if (data.rows) {
             data.rows.forEach((row: any) => {
               let time: Cell = row.cells["TIME"];
