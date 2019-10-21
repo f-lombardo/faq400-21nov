@@ -252,4 +252,10 @@
   --kup-combo_text-color--hover: var(--main-text-lighter-color);
   --kup-combo_border-radius: var(--main-border-radius);
   --kup-combo_box-shadow: var(--main-box-shadow);
+
+  /* Upload */
+  --kup-upload_background-color: var(--main-color);
+  --kup-upload_color: var(--text-on-main);
+  --kup-upload_font-size: var(--main-font-size);
+  --kup-upload_border-radius: var(--main-border-radius);
 }
