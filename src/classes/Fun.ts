@@ -5,7 +5,7 @@ import FunUIsetup from "./FunUISetup";
 export default class Fun {
   private triad: Triad;
   private objects: FunObject[];
-  private notify: string | null = null;
+  private notify: string[] | null = null;
   private uiSetup: FunUIsetup | null = null;
 
   constructor(fun: string) {
@@ -40,8 +40,8 @@ export default class Fun {
     return triad;
   }
 
-  parseNotify(fun: string): string {
-    return this.parseBetweenBrackets("NOTIFY", fun);
+  parseNotify(fun: string): string[] {
+    return this.parseBetweenBrackets("NOTIFY", fun).split("\\");
   }
 
   parseObjects(fun: string): FunObject[] {
@@ -132,11 +132,15 @@ export default class Fun {
     return null;
   }
 
-  getNotify(): string | null {
+  getNotify(): string[] | null {
     return this.notify;
   }
 
   getUISetup(): FunUIsetup | null {
     return this.uiSetup;
+  }
+
+  clearUISetup(): void {
+    this.uiSetup = new FunUIsetup();
   }
 }

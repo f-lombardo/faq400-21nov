@@ -25,7 +25,7 @@ class KupImage {
         };
         return (__chunk_1.h("div", { id: "image-wrapper", style: wrapperStyle }, __chunk_1.h("img", { src: this.src, alt: this.alt }), badgesElem));
     }
-    static get style() { return "\@import url(https://cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css);*{-webkit-box-sizing:border-box;box-sizing:border-box}#image-wrapper{position:relative;display:inline-block}#image-wrapper img{width:100%;height:100%}"; }
+    static get style() { return "\@import url(https://cdn.materialdesignicons.com/4.5.95/css/materialdesignicons.min.css);*{-webkit-box-sizing:border-box;box-sizing:border-box}#image-wrapper{position:relative;display:inline-block}#image-wrapper img{width:100%;height:100%}"; }
 }
 
 class KupProgressBar {

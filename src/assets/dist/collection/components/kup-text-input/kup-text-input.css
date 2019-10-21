@@ -11,7 +11,7 @@
 */
 :host {
   --itx_color: var(--kup-text-input_color, #000);
-  --itx_font-size: var(--kup-text-input_font-size, 14px);
+  --itx_font-size: var(--kup-text-input_font-size, 1rem);
   --itx_border-color: var(--kup-text-input_border-color, #808080);
   --itx_border-color--selected: var(
     --kup-text-input_border-color--selected,
@@ -37,7 +37,6 @@ label {
   background-color: transparent;
   border: none;
   outline: none;
-  padding: 4px 6px;
   position: relative;
   transition: background-color var(--itx_tr-duration);
   z-index: 0;
@@ -45,10 +44,14 @@ label {
 .kup-input-text__input-wrapper {
   display: flex;
   align-items: center;
+  padding: 0.2rem 0.4rem;
   background-color: var(--itx_background-color);
   border: 1px solid var(--itx_border-color);
   border-radius: 2px;
   box-sizing: border-box;
+}
+.kup-input-text__input-wrapper .kup-input-text {
+  font-size: var(--itx_font-size);
 }
 .kup-input-text__input-wrapper.focused {
   border-color: var(--itx_border-color--selected);
@@ -69,8 +72,8 @@ label {
   display: inline-flex;
   justify-content: center;
   outline: none;
-  padding: 4px;
   z-index: 1;
+  padding: 0;
 }
 .kup-input-text__clear > svg {
   fill: var(--itx_icon-color);

@@ -97,28 +97,25 @@ export class KupPaginator {
         const rowsPerPageItems = this.getRowsPerPageItems();
         return (h("div", { id: "paginator" },
             h("div", { class: "align-left" },
-                "Pagina",
-                h("span", { class: "prev-page" },
-                    h("icon", { className: prevPageClassName, onclick: () => this.onPrevPage() })),
-                h("kup-combo", { usePortal: true, items: goToPageItems, isFilterable: false, initialValue: {
-                        id: this.currentPage,
-                    }, onKetchupComboSelected: (e) => this.onPageChange(e) }),
-                h("span", { class: "next-page" },
-                    h("icon", { className: nextPageClassName, onclick: () => this.onNextPage() })),
-                h("span", { class: "number-of-pages" },
-                    "di ",
-                    maxNumberOfPage)),
-            h("div", { class: "align-right" },
-                h("span", { class: "nextPageGroup" },
-                    "Numero risultati: ",
-                    this.max),
-                h("slot", { name: "more-results" }),
-                "Mostra",
-                h("kup-combo", { usePortal: true, items: rowsPerPageItems, isFilterable: false, initialValue: {
-                        id: this.perPage,
-                    }, onKetchupComboSelected: (e) => this.onRowsPerPage(e) }),
-                h("span", { class: "rows-per-page" }, "righe per pagina"),
-                h("slot", { name: "right" }))));
+                h("div", { class: "nav-section" },
+                    h("span", { class: "prev-page" },
+                        h("icon", { className: prevPageClassName, onclick: () => this.onPrevPage() })),
+                    h("kup-combo", { usePortal: true, items: goToPageItems, isFilterable: false, initialValue: {
+                            id: this.currentPage,
+                        }, onKetchupComboSelected: (e) => this.onPageChange(e) }),
+                    h("span", { class: "next-page" },
+                        h("icon", { className: nextPageClassName, onclick: () => this.onNextPage() }))),
+                h("div", { class: "tot-section" },
+                    h("span", null, "Righe:"),
+                    h("slot", { name: "more-results" }),
+                    h("kup-combo", { usePortal: true, items: rowsPerPageItems, isFilterable: false, initialValue: {
+                            id: this.perPage,
+                        }, onKetchupComboSelected: (e) => this.onRowsPerPage(e) }),
+                    h("slot", { name: "right" }),
+                    h("span", { class: "nextPageGroup" },
+                        "di ",
+                        this.max))),
+            h("div", { class: "align-left" })));
     }
     static get is() { return "kup-paginator"; }
     static get encapsulation() { return "shadow"; }

@@ -202,7 +202,7 @@ export class KupFld {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": "Data the FLD must parse to fully be configured.\nIt must be either an Object or a JSON parsable string"
+                "text": "Data the FLD must parse to fully be configured.\r\nIt must be either an Object or a JSON parsable string"
             },
             "attribute": "config",
             "reflect": false,

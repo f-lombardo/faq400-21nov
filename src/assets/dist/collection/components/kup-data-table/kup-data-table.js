@@ -75,7 +75,10 @@ export class KupDataTable {
          * name of the column with an open menu
          */
         this.openedMenu = null;
+        this.topFontSizePanelVisible = false;
+        this.botFontSizePanelVisible = false;
         this.density = 'medium';
+        this.fontsize = 'medium';
         this.topDensityPanelVisible = false;
         this.botDensityPanelVisible = false;
         this.renderedRows = [];
@@ -108,6 +111,8 @@ export class KupDataTable {
          */
         this.dragStarterAttribute = 'drag-starter';
         this.onDocumentClick = () => {
+            this.topFontSizePanelVisible = false;
+            this.botFontSizePanelVisible = false;
             this.topDensityPanelVisible = false;
             this.botDensityPanelVisible = false;
         };
@@ -165,6 +170,18 @@ export class KupDataTable {
     }
     componentDidUnload() {
         document.removeEventListener('click', this.onDocumentClick);
+    }
+    hasTooltip(cell) {
+        return cell.obj
+            && cell.obj.t !== ""
+            && !isBar(cell.obj)
+            && !isButton(cell.obj)
+            && !isCheckbox(cell.obj)
+            && !isIcon(cell.obj)
+            && !isImage(cell.obj)
+            && !isLink(cell.obj)
+            && !isNumber(cell.obj)
+            && !isVoCodver(cell.obj);
     }
     getColumns() {
         return this.data && this.data.columns
@@ -641,6 +658,17 @@ export class KupDataTable {
         this.moveSortedColumns(toSort, receivingColumnIndex, sortedColumnIndex);
         return toSort;
     }
+    toggleFontSizeVisibility(event, top) {
+        event.stopPropagation();
+        if (top) {
+            this.topFontSizePanelVisible = !this.topFontSizePanelVisible;
+            this.botFontSizePanelVisible = false;
+        }
+        else {
+            this.topFontSizePanelVisible = false;
+            this.botFontSizePanelVisible = !this.botFontSizePanelVisible;
+        }
+    }
     toggleDensityVisibility(event, top) {
         event.stopPropagation();
         if (top) {
@@ -767,7 +795,13 @@ export class KupDataTable {
                     },
                 };
             }
-            return (h("th", Object.assign({ style: thStyle, onMouseEnter: () => this.onColumnMouseEnter(column.name), onMouseLeave: () => this.onColumnMouseLeave(column.name) }, dragHandlers),
+            let columnClass = {};
+            if (column.obj) {
+                columnClass = {
+                    number: isNumber(column.obj),
+                };
+            }
+            return (h("th", Object.assign({ class: columnClass, style: thStyle, onMouseEnter: () => this.onColumnMouseEnter(column.name), onMouseLeave: () => this.onColumnMouseLeave(column.name) }, dragHandlers),
                 h("span", { class: "column-title" }, column.title),
                 sort,
                 filter,
@@ -836,14 +870,14 @@ export class KupDataTable {
                     indent,
                     h("span", { class: "group-cell-content" },
                         h("span", { role: "button", "aria-label": "Row expander" // TODO change this label
-                            , tabindex: "0", onClick: (e) => {
+                            , title: "Expand/collapse group", tabindex: "0", onClick: (e) => {
                                 e.stopPropagation();
                                 this.onRowExpand(row);
                             } },
                             h("svg", { width: "24", height: "24", viewBox: "0 0 24 24", class: "group-expander" }, icon)),
                         row.group.label,
                         h("span", { role: "button", "aria-label": "Remove group" // TODO change this label
-                            , tabindex: "0", onClick: (e) => {
+                            , title: "Remove group", tabindex: "0", onClick: (e) => {
                                 e.stopPropagation();
                                 this.removeGroupFromRow(row.group);
                             } },
@@ -860,14 +894,14 @@ export class KupDataTable {
                         indent,
                         h("span", { class: "group-cell-content" },
                             h("span", { role: "button", "aria-label": "Row expander" // TODO change this label
-                                , tabindex: "0", onClick: (e) => {
+                                , title: "Expand/collapse group", tabindex: "0", onClick: (e) => {
                                     e.stopPropagation();
                                     this.onRowExpand(row);
                                 } },
                                 h("svg", { width: "24", height: "24", viewBox: "0 0 24 24", class: "group-expander" }, icon)),
                             h("span", { class: "text" }, row.group.label),
                             h("span", { role: "button", "aria-label": "Remove group" // TODO change this label
-                                , tabindex: "0", onClick: (e) => {
+                                , title: "Remove group", tabindex: "0", onClick: (e) => {
                                     e.stopPropagation();
                                     this.removeGroupFromRow(row.group);
                                 } },
@@ -1073,22 +1107,106 @@ export class KupDataTable {
         if (styleHasBorderRadius(cell)) {
             style = cell.style;
         }
+        if (this.hasTooltip(cell)) {
+            content = h("kup-tooltip", { onKupTooltipLoadData: (ev) => this.kupLoadRequest.emit({
+                    cell: cell,
+                    tooltip: ev.srcElement
+                }), onKupTooltipLoadDetail: (ev) => this.kupDetailRequest.emit({
+                    cell: cell,
+                    tooltip: ev.srcElement
+                }) }, content);
+        }
         return (h("span", { class: clazz, style: style }, content));
     }
     renderLoadMoreButton(isSlotted = true) {
-        const label = 'Carica altri dati';
-        return (h("button", { "aria-label": label, class: "load-more-records mdi mdi-plus-circle", role: "button", slot: isSlotted ? 'more-results' : null, tabindex: "0", title: label, onClick: () => this.onLoadMoreClick() }));
+        const label = 'Mostra altri dati';
+        return (h("button", { "aria-label": label, class: "loadmore-button mdi mdi-plus", role: "button", slot: isSlotted ? 'more-results' : null, tabindex: "0", title: label, onClick: () => this.onLoadMoreClick() },
+            h("span", { class: "paginator-tab-text" }, "Pi\u00F9 risultati"),
+            ' '));
+    }
+    onCustomSettingsClick(event) {
+        let t = event.target;
+        let elPanel = t
+            .closest('.paginator-wrapper')
+            .getElementsByClassName('customize-panel')[0];
+        let elButton = t
+            .closest('.paginator-wrapper')
+            .getElementsByClassName('custom-settings')[0];
+        if (elButton.classList.contains('activated')) {
+            elButton.classList.remove('activated');
+            elPanel.classList.remove('visible');
+        }
+        else {
+            elButton.classList.add('activated');
+            elPanel.classList.add('visible');
+        }
     }
     renderPaginator(top) {
         return (h("div", { class: "paginator-wrapper" },
-            h("kup-paginator", { id: top ? 'top-paginator' : 'bottom-paginator', max: this.rows.length, perPage: this.rowsPerPage, selectedPerPage: this.currentRowsPerPage, currentPage: this.currentPage, onKupPageChanged: (e) => this.handlePageChanged(e), onKupRowsPerPageChanged: (e) => this.handleRowsPerPageChanged(e) }, this.showLoadMore ? this.renderLoadMoreButton() : null),
-            this.renderDensityPanel(top)));
+            h("div", { class: "paginator-tabs" },
+                h("kup-paginator", { id: top ? 'top-paginator' : 'bottom-paginator', max: this.rows.length, perPage: this.rowsPerPage, selectedPerPage: this.currentRowsPerPage, currentPage: this.currentPage, onKupPageChanged: (e) => this.handlePageChanged(e), onKupRowsPerPageChanged: (e) => this.handleRowsPerPageChanged(e) }),
+                h("button", { title: "Mostra opzioni di personalizzazione", class: "paginator-button mdi mdi-settings custom-settings", onClick: (e) => this.onCustomSettingsClick(e) },
+                    h("div", { class: "customize-panel" },
+                        this.renderDensityPanel(top),
+                        this.renderFontSizePanel(top))),
+                this.showLoadMore ? this.renderLoadMoreButton() : null)));
+    }
+    renderFontSizePanel(top) {
+        let fontSize;
+        {
+            this.fontsize === 'medium'
+                ? (fontSize = 'Media')
+                : this.fontsize === 'big'
+                    ? (fontSize = 'Grande')
+                    : this.fontsize === 'small'
+                        ? (fontSize = 'Piccolo')
+                        : (fontSize = '');
+        }
+        let fontSizeTypeString = 'Dimensione carattere: ' + fontSize;
+        return (h("div", { class: "fontsize-panel" },
+            h("span", { title: fontSizeTypeString, class: "panel-label" }, "Dimensione carattere"),
+            h("span", { class: "fontsize-label", onClick: (e) => this.toggleFontSizeVisibility(e, top) }, fontSize),
+            h("div", { role: "button", onClick: (e) => this.toggleFontSizeVisibility(e, top), tabindex: "0" },
+                h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
+                    h("path", { d: "M7,10L12,15L17,10H7Z" }))),
+            h("div", { class: {
+                    'fontsize-panel-overlay': true,
+                    open: top
+                        ? this.topFontSizePanelVisible
+                        : this.botFontSizePanelVisible,
+                } },
+                h("div", { class: {
+                        wrapper: true,
+                        active: this.fontsize === 'small',
+                    }, onClick: () => (this.fontsize = 'small'), role: "button", tabindex: "0", "aria-pressed": this.fontsize === 'small' ? 'true' : 'false' },
+                    h("span", { title: "Piccolo", class: "fontsize-icon-panel mdi mdi-format-font-size-decrease" })),
+                h("div", { class: {
+                        wrapper: true,
+                        active: this.fontsize === 'medium',
+                    }, onClick: () => (this.fontsize = 'medium'), role: "button", tabindex: "0", "aria-pressed": this.fontsize === 'medium' ? 'true' : 'false' },
+                    h("span", { title: "Normale", class: "fontsize-icon-panel mdi mdi-format-color-text" })),
+                h("div", { class: {
+                        wrapper: true,
+                        active: this.fontsize === 'big',
+                    }, onClick: () => (this.fontsize = 'big'), role: "button", tabindex: "0", "aria-pressed": this.fontsize === 'big' ? 'true' : 'false' },
+                    h("span", { title: "Grande", class: "fontsize-icon-panel mdi mdi-format-font-size-increase" })))));
     }
     renderDensityPanel(top) {
+        let densityType;
+        {
+            this.density === 'medium'
+                ? (densityType = 'Normale')
+                : this.density === 'big'
+                    ? (densityType = 'Ampia')
+                    : this.density === 'small'
+                        ? (densityType = 'Compatta')
+                        : (densityType = '');
+        }
+        let densityTypeString = 'Densità righe: ' + densityType;
         return (h("div", { class: "density-panel" },
-            h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
-                h("path", { d: "M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" })),
-            h("div", { role: "button", tabindex: "0", onClick: (e) => this.toggleDensityVisibility(e, top) },
+            h("span", { title: densityTypeString, class: "panel-label" }, "Densit\u00E0 righe"),
+            h("span", { class: "density-label", onClick: (e) => this.toggleDensityVisibility(e, top) }, densityType),
+            h("div", { role: "button", onClick: (e) => this.toggleDensityVisibility(e, top), tabindex: "0" },
                 h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
                     h("path", { d: "M7,10L12,15L17,10H7Z" }))),
             h("div", { class: {
@@ -1099,25 +1217,19 @@ export class KupDataTable {
                 } },
                 h("div", { class: {
                         wrapper: true,
-                        active: this.density === 'big',
-                    }, onClick: () => (this.density = 'big'), role: "button", tabindex: "0", "aria-pressed": this.density === 'big' ? 'true' : 'false' },
-                    h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
-                        h("path", { d: "M3,4H21V8H3V4M3,10H21V14H3V10M3,16H21V20H3V16Z" })),
-                    "Bassa"),
+                        active: this.density === 'small',
+                    }, onClick: () => (this.density = 'small'), role: "button", tabindex: "0", "aria-pressed": this.density === 'small' ? 'true' : 'false' },
+                    h("span", { title: "Compatta", class: "density-icon-panel mdi mdi-format-align-justify" })),
                 h("div", { class: {
                         wrapper: true,
                         active: this.density === 'medium',
                     }, onClick: () => (this.density = 'medium'), role: "button", tabindex: "0", "aria-pressed": this.density === 'medium' ? 'true' : 'false' },
-                    h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
-                        h("path", { d: "M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" })),
-                    "Media"),
+                    h("span", { title: "Normale", class: "density-icon-panel mdi mdi-reorder-horizontal" })),
                 h("div", { class: {
                         wrapper: true,
-                        active: this.density === 'small',
-                    }, onClick: () => (this.density = 'small'), role: "button", tabindex: "0", "aria-pressed": this.density === 'small' ? 'true' : 'false' },
-                    h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" },
-                        h("path", { d: "M3,3H21V5H3V3M3,7H21V9H3V7M3,11H21V13H3V11M3,15H21V17H3V15M3,19H21V21H3V19Z" })),
-                    "Alta"))));
+                        active: this.density === 'big',
+                    }, onClick: () => (this.density = 'big'), role: "button", tabindex: "0", "aria-pressed": this.density === 'big' ? 'true' : 'false' },
+                    h("span", { title: "Ampia", class: "density-icon-panel mdi mdi-view-sequential" })))));
     }
     render() {
         // resetting rows
@@ -1183,6 +1295,7 @@ export class KupDataTable {
             'persistent-header': this.headerIsPersistent,
         };
         tableClass[`density-${this.density}`] = true;
+        tableClass[`fontsize-${this.fontsize}`] = true;
         return (h("div", { id: "data-table-wrapper" },
             h("div", { class: "above-wrapper" },
                 paginatorTop,
@@ -1209,7 +1322,7 @@ export class KupDataTable {
             "type": "unknown",
             "mutable": false,
             "complexType": {
-                "original": "Array<{\n        column: string;\n        width: number;\n    }>",
+                "original": "Array<{\r\n        column: string;\r\n        width: number;\r\n    }>",
                 "resolved": "{ column: string; width: number; }[]",
                 "references": {
                     "Array": {
@@ -1368,7 +1481,7 @@ export class KupDataTable {
                         "text": "https://caniuse.com/#feat=css-sticky",
                         "name": "see"
                     }],
-                "text": "If table header is visible and this prop is set to true, the header will be visible while scrolling the table.\nTo make this work, it must be configured together with the data-table CSS property --kup-data-table_header-offset.\nIt uses CSS position: sticky."
+                "text": "If table header is visible and this prop is set to true, the header will be visible while scrolling the table.\r\nTo make this work, it must be configured together with the data-table CSS property --kup-data-table_header-offset.\r\nIt uses CSS position: sticky."
             },
             "attribute": "header-is-persistent",
             "reflect": true,
@@ -1428,7 +1541,7 @@ export class KupDataTable {
                         "text": "loadMoreLimit",
                         "name": "see"
                     }],
-                "text": "The number of records which will be requested to be downloaded when clicking on the load more button.\n\nThis property is regulated also by loadMoreMode."
+                "text": "The number of records which will be requested to be downloaded when clicking on the load more button.\r\n\r\nThis property is regulated also by loadMoreMode."
             },
             "attribute": "load-more-step",
             "reflect": false,
@@ -1457,7 +1570,7 @@ export class KupDataTable {
                         "text": "loadMoreLimit",
                         "name": "see"
                     }],
-                "text": "Establish the modality of how many new records will be downloaded.\n\nThis property is regulated also by loadMoreStep."
+                "text": "Establish the modality of how many new records will be downloaded.\r\n\r\nThis property is regulated also by loadMoreStep."
             },
             "attribute": "load-more-mode",
             "reflect": false,
@@ -1678,7 +1791,7 @@ export class KupDataTable {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": "If set to true, when a column is dragged to be sorted the component directly mutates the data.columns property\nand then fires the event"
+                "text": "If set to true, when a column is dragged to be sorted the component directly mutates the data.columns property\r\nand then fires the event"
             },
             "attribute": "sortable-columns-mutate-data",
             "reflect": false,
@@ -1712,7 +1825,10 @@ export class KupDataTable {
         "selectedRows": {},
         "groupState": {},
         "openedMenu": {},
+        "topFontSizePanelVisible": {},
+        "botFontSizePanelVisible": {},
         "density": {},
+        "fontsize": {},
         "topDensityPanelVisible": {},
         "botDensityPanelVisible": {}
     }; }
@@ -1727,7 +1843,7 @@ export class KupDataTable {
                 "text": "When a row is auto selected via selectRow prop"
             },
             "complexType": {
-                "original": "{\n        selectedRow: Row;\n    }",
+                "original": "{\r\n        selectedRow: Row;\r\n    }",
                 "resolved": "{ selectedRow: Row; }",
                 "references": {
                     "Row": {
@@ -1747,7 +1863,7 @@ export class KupDataTable {
                 "text": "When a row is selected"
             },
             "complexType": {
-                "original": "{\n        selectedRows: Array<Row>;\n        clickedColumn: string;\n    }",
+                "original": "{\r\n        selectedRows: Array<Row>;\r\n        clickedColumn: string;\r\n    }",
                 "resolved": "{ selectedRows: Row[]; clickedColumn: string; }",
                 "references": {
                     "Array": {
@@ -1770,7 +1886,7 @@ export class KupDataTable {
                 "text": "When cell option is clicked"
             },
             "complexType": {
-                "original": "{\n        column: string;\n        row: Row;\n    }",
+                "original": "{\r\n        column: string;\r\n        row: Row;\r\n    }",
                 "resolved": "{ column: string; row: Row; }",
                 "references": {
                     "Row": {
@@ -1805,7 +1921,7 @@ export class KupDataTable {
                 "text": "When a row action is clicked"
             },
             "complexType": {
-                "original": "{\n        type: 'default' | 'variable' | 'expander';\n        row: Row;\n        action?: RowAction;\n        index?: number;\n    }",
+                "original": "{\r\n        type: 'default' | 'variable' | 'expander';\r\n        row: Row;\r\n        action?: RowAction;\r\n        index?: number;\r\n    }",
                 "resolved": "{ type: \"default\" | \"variable\" | \"expander\"; row: Row; action?: RowAction; index?: number; }",
                 "references": {
                     "Row": {
@@ -1829,7 +1945,7 @@ export class KupDataTable {
                 "text": ""
             },
             "complexType": {
-                "original": "{\n        loadItems: number;\n    }",
+                "original": "{\r\n        loadItems: number;\r\n    }",
                 "resolved": "{ loadItems: number; }",
                 "references": {}
             }
@@ -1870,6 +1986,52 @@ export class KupDataTable {
                     "KupDataTableSortedColumnIndexes": {
                         "location": "import",
                         "path": "./kup-data-table-declarations"
+                    }
+                }
+            }
+        }, {
+            "method": "kupLoadRequest",
+            "name": "kupLoadRequest",
+            "bubbles": true,
+            "cancelable": false,
+            "composed": true,
+            "docs": {
+                "tags": [],
+                "text": "When a tooltip request initial data"
+            },
+            "complexType": {
+                "original": "{\r\n        cell: Cell,\r\n        tooltip: EventTarget\r\n    }",
+                "resolved": "{ cell: Cell; tooltip: EventTarget; }",
+                "references": {
+                    "Cell": {
+                        "location": "import",
+                        "path": "./kup-data-table-declarations"
+                    },
+                    "EventTarget": {
+                        "location": "global"
+                    }
+                }
+            }
+        }, {
+            "method": "kupDetailRequest",
+            "name": "kupDetailRequest",
+            "bubbles": true,
+            "cancelable": false,
+            "composed": true,
+            "docs": {
+                "tags": [],
+                "text": "When a tooltip request detail data"
+            },
+            "complexType": {
+                "original": "{\r\n        cell: Cell,\r\n        tooltip: EventTarget\r\n    }",
+                "resolved": "{ cell: Cell; tooltip: EventTarget; }",
+                "references": {
+                    "Cell": {
+                        "location": "import",
+                        "path": "./kup-data-table-declarations"
+                    },
+                    "EventTarget": {
+                        "location": "global"
                     }
                 }
             }

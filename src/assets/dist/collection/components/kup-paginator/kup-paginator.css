@@ -1,11 +1,17 @@
-@import url(https://cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css);
+@import url(https://cdn.materialdesignicons.com/4.5.95/css/materialdesignicons.min.css);
 /**
 * @prop --int_text-color, --kup-paginator_text-color: Set color of text
 * @prop --int_font-size, --kup-paginator_font-size: Set size of the font
+* @prop --int_box-shadow, --kup-paginator_box-shadow: Set box shadow of groups
+* @prop --int_icon-background, --kup-paginator_icon-background: Set the background color of icons
+* @prop --int_icon-color, --kup-paginator_icon-color: Set the color of icons
 */
 :host {
   --int_text-color: var(--kup-paginator_text-color, #545454);
   --int_font-size: var(--kup-paginator_font-size, 1rem);
+  --int_box-shadow: var(--kup-paginator_box-shadow, none);
+  --int_icon-background: var(--kup-paginator_icon-background, transparent);
+  --int_icon-color: var(--kup-paginator_icon-color, #545454);
 }
 
 #paginator {
@@ -13,13 +19,31 @@
   margin: 0.5rem 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   font-size: var(--int_font-size);
+}
+#paginator .mdi:before {
+  font-size: 120%;
+}
+#paginator .align-left {
+  margin-left: 0.5rem;
+}
+#paginator .align-right {
+  margin-right: 0.5rem;
 }
 #paginator .align-left,
 #paginator .align-right {
   display: flex;
   align-items: center;
+  box-shadow: var(--int_box-shadow);
+}
+#paginator .align-left .paging-icon, #paginator .align-left .counter-icon, #paginator .align-left .row-number-icon,
+#paginator .align-right .paging-icon,
+#paginator .align-right .counter-icon,
+#paginator .align-right .row-number-icon {
+  background: var(--int_icon-background);
+  color: var(--int_icon-color);
+  padding: 0 0.25rem;
+  cursor: help;
 }
 #paginator icon {
   cursor: pointer;
@@ -33,23 +57,14 @@
   cursor: default;
   opacity: 0.3;
 }
-#paginator select,
-#paginator .nextPageGroup {
-  margin: 0 0.5rem;
-}
 #paginator .prev-page,
 #paginator .next-page {
   margin: 0 0.25rem;
 }
-#paginator .nextPageGroup {
-  padding-right: 1.5rem;
-}
-#paginator .number-of-pages,
-#paginator .rows-per-page {
-  color: #bdbdbd;
-}
 #paginator kup-combo {
   margin: 0 0.25rem;
+  --kup-combo_input_border-color: transparent;
+  --kup-combo_input_border-color--selected: transparent;
 }
 
 :host([mode=simple]) #paginator .align-left .prev-page,

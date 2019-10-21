@@ -22,6 +22,11 @@ export interface Column {
     size?: number;
     visible?: boolean;
     hideValuesRepetitions?: boolean;
+    obj?: {
+        t: string;
+        p: string;
+        k: string;
+    };
 }
 export interface Row {
     cells: CellsHolder;

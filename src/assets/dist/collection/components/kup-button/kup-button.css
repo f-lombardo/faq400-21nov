@@ -11,6 +11,8 @@
    * @prop --btn_font-family, --kup-button_font-family: sets the font family of the button
    * @prop --btn_icon-size, --kup-button_icon-size: Set icon size.
    * @prop --btn_main-color, --kup-button_main-color: Sets the main color of the button.
+   * @prop --btn_main-color-hover, --kup-button_main-color-hover: Sets the main color of the button at mouse over.
+   * @prop --btn_main-color-active, --kup-button_main-color-hover: Sets the main color of the button when active.
    * @prop --btn_text-color, --kup-button_text-color: Sets color of the button text.
    * @prop --btn_text-color--transparent, --kup-button_text-color--transparent: Sets text color when button is transparent.
    * @prop --btn_icon-color, --kup-button_icon-color: Sets icon color.
@@ -23,11 +25,19 @@
    * @prop --btn_border-radius, --kup-button_border-radius: Sets border radius of the button.
   */
   --btn_font-style: var(--kup-button_font-style, "normal");
-  --btn_font-size: var(--kup-button_font-size, 14px);
+  --btn_font-size: var(--kup-button_font-size, 1rem);
   --btn_font-weight: var(--kup-button_font-weight, 400);
   --btn_font-family: var(--kup-button_font-family, inherit);
-  --btn_icon-size: var(--kup-button_icon-size, 18px);
+  --btn_icon-size: var(--kup-button_icon-size, 1rem);
   --btn_main-color: var(--kup-button_main-color, #4e908f);
+  --btn_main-color-hover: var(
+    --kup-button_main-color-hover,
+    #65acab
+  );
+  --btn_main-color-active: var(
+    --kup-button_main-color-active,
+    #3c6f6e
+  );
   --btn_text-color: var(--kup-button_text-color, #ffffff);
   --btn_text-color--transparent: var(
     --kup-button_text-color--transparent,
@@ -75,14 +85,18 @@ button {
   font-family: var(--btn_font-family);
   font-size: var(--btn_font-size);
   font-weight: var(--btn_font-weight);
-  line-height: 30px;
-  padding: 0px 8px;
+  padding: 0.5rem 1rem;
   text-align: center;
-  transition: box-shadow var(--btn_animation-duration), opacity 0.2s ease-in-out;
+  transition: box-shadow var(--btn_animation-duration), opacity var(--btn_animation-duration) ease-in-out, background-color var(--btn_animation-duration) ease;
   white-space: nowrap;
 }
 button:hover {
   box-shadow: var(--btn_box-shadow);
+  background: var(--btn_main-color-hover);
+}
+button:active {
+  box-shadow: none;
+  background: var(--btn_main-color-active);
 }
 button > .button-icon {
   display: block;
@@ -90,10 +104,12 @@ button > .button-icon {
   fill: var(--btn_icon-color);
   float: left;
   width: var(--btn_icon-size);
+  margin-right: 0.5rem;
 }
 button > .button-text {
   font-style: var(--btn_font-style);
   text-decoration: var(--btn_text-decoration);
+  vertical-align: 15%;
 }
 button.rounded {
   border-radius: 15px;
@@ -130,7 +146,7 @@ button.flat-btn {
 button.flat-btn:hover {
   box-shadow: none;
 }
-button.flat-btn .button-text {
+button.flat-btn:hover .button-text {
   text-decoration: underline;
 }
 button.flat-btn > .button-icon {
@@ -142,6 +158,8 @@ button.align-right {
 }
 button.align-right > .button-icon {
   float: right;
+  margin-right: 0;
+  margin-left: 0.5rem;
 }
 button.align-left {
   text-align: left;

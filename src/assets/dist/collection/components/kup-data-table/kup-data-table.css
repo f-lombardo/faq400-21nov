@@ -1,4 +1,4 @@
-@import url(https://cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css);
+@import url(https://cdn.materialdesignicons.com/4.5.95/css/materialdesignicons.min.css);
 /**
 * @prop --dtt_background-color, --kup-data-table_background-color: background-color of the whole component (paginator and table).
 * @prop --dtt_border-color, --kup-data-table_border-color: border-color for the whole table.
@@ -17,7 +17,12 @@
 * @prop --dtt_icons-hover-color, --kup-data-table_icons-hover-color: Color of a hovered icon.
 * @prop --dtt_font-size, --kup-data-table_font-size: Sets basic font size.
 * @prop --dtt_main-color, --kup-data-table_main-color: Set text color. Has the precedence.
+* @prop --dtt_main-color-lighter, --kup-data-table_main-color: Set lighter text color. Has the precedence.
+* @prop --dtt_main-color-darker, --kup-data-table_main-color: Set darker text color. Has the precedence.
 * @prop --dtt_text-on-main-color, --kup-data-table_text-on-main-color: Color of the grouping chips of a column.
+* @prop --dtt_density-box-shadow, --kup-data-table_density-box-shadow: Box shadow of the density combo, to match paginator's.
+* @prop --dtt_density-icon-background, --kup-data-table_density-icon-background: Background of the density icon, to match paginator's.
+* @prop --dtt_density-icon-color, --kup-data-table_density-icon-color: Color of the density icon, to match paginator's.
 */
 :host {
   --dtt_background-color: var(--kup-data-table_background-color, #ffffff);
@@ -50,7 +55,7 @@
   --dtt_hover-color: var(--kup-data-table_hover-color, #545454);
   --dtt_head-background-color: var(
     --kup-data-table_head-background-color,
-    #ffffff
+    #f4f4f4
   );
   --dtt_header-offset: var(--kup-data-table_header-offset, 50px);
   --dtt_hover-background-color: var(
@@ -64,10 +69,27 @@
   );
   --dtt_font-size: var(--kup-data-table_font-size, 0.9375rem);
   --dtt_main-color: var(--kup-data-table_main-color, #6aaaa7);
+  --dtt_main-color-lighter: var(
+    --kup-data-table_main-color-lighter,
+    #65acab
+  );
+  --dtt_main-color-darker: var(
+    --kup-data-table_main-color-darker,
+    #3c6f6e
+  );
   --dtt_text-on-main-color: var(--kup-data-table_text-on-main-color, #ffffff);
   --dtt_negative-number-color: var(
     --kup-data-table_negative-number-color,
     #d91e18
+  );
+  --dtt_density-box-shadow: var(--kup-data-table_density-box-shadow, none);
+  --dtt_density-icon-background: var(
+    --kup-data-table_density-icon-background,
+    transparent
+  );
+  --dtt_density-icon-color: var(
+    --kup-data-table_density-icon-color,
+    #545454
   );
 }
 
@@ -100,11 +122,17 @@
   background: var(--dtt_head-background-color);
 }
 #data-table-wrapper table > thead th {
+  background: var(--dtt_head-background-color);
   position: relative;
   padding: 0.5rem 0.3125rem;
   white-space: nowrap;
   border-bottom: 2px solid var(--dtt_border-color);
   border-right: 1px solid var(--dtt_border-color);
+  position: sticky;
+  top: 0;
+}
+#data-table-wrapper table > thead th.number {
+  text-align: right;
 }
 #data-table-wrapper table > thead th kup-text-input.datatable-filter {
   --kup-text-input_border-color: var(--dtt_filter-border-color);
@@ -157,16 +185,14 @@
   padding: 0.8rem;
   transition: color 0.2s ease-in-out;
   color: #545454;
-}
-#data-table-wrapper table > thead th .column-menu ul > li:not(:last-child) {
-  border-bottom: 1px solid var(--dtt_border-color);
+  transition: color 0.25s, background-color 0.25s, opacity 0.25s;
 }
 #data-table-wrapper table > thead th .column-menu ul > li:hover {
   cursor: pointer;
-  color: var(--dtt_main-color);
+  color: var(--dtt_hover-color);
+  background-color: var(--dtt_hover-background-color);
 }
 #data-table-wrapper table > thead th .column-menu ul > li .mdi {
-  color: #4e908f;
   margin-right: 0.5rem;
 }
 #data-table-wrapper table > thead[columns-dragging] [drag-over] {
@@ -203,8 +229,6 @@
 }
 #data-table-wrapper table > tbody > tr.group > td .group-cell-content svg.group-expander {
   padding: 0.2rem;
-  border-radius: 50%;
-  background: #e5e5e5;
   margin-right: 1rem;
   margin-left: 0.5rem;
 }
@@ -271,6 +295,9 @@
   top: var(--dtt_header-offset);
   will-change: transform;
 }
+#data-table-wrapper table.persistent-header > thead > th.number {
+  text-align: right;
+}
 #data-table-wrapper table.persistent-header > tbody {
   border-top: 3px solid var(--dtt_border-color);
 }
@@ -283,27 +310,38 @@
 #data-table-wrapper table.noGrid td {
   border: none;
 }
-#data-table-wrapper table.density-big tbody > tr > td {
+#data-table-wrapper table.density-small tbody > tr > td {
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
-}
-#data-table-wrapper table.density-big tbody > tr.group > td {
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-}
-#data-table-wrapper table.density-small tbody > tr > td {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  transition: padding 0.1s;
 }
 #data-table-wrapper table.density-small tbody > tr.group > td {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  transition: padding 0.1s;
+}
+#data-table-wrapper table.density-big tbody > tr > td {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  transition: padding 0.1s;
+}
+#data-table-wrapper table.density-big tbody > tr.group > td {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
+  transition: padding 0.1s;
+}
+#data-table-wrapper table.fontsize-small {
+  font-size: calc(var(--dtt_font-size) * 0.75);
+  transition: font-size 0.1s;
+}
+#data-table-wrapper table.fontsize-big {
+  font-size: calc(var(--dtt_font-size) * 1.25);
+  transition: font-size 0.1s;
 }
 #data-table-wrapper .paginator-wrapper {
   display: flex;
-}
-#data-table-wrapper .paginator-wrapper kup-paginator {
-  flex-grow: 1;
+  flex-flow: wrap;
+  min-width: max-content;
 }
 
 #globalFilter {
@@ -328,25 +366,135 @@
   opacity: 0.75;
 }
 
-.density-panel {
+.paginator-tabs {
+  width: 100%;
+}
+.paginator-tabs kup-paginator {
+  display: inline-flex;
+}
+.paginator-tabs .loadmore-button {
   position: relative;
-  margin-left: 1rem;
+  background: none;
+  border: none;
+  height: 100%;
+  cursor: pointer;
+  outline: none;
+  margin-left: 0.25rem;
+  padding: 0 0.25rem;
+  float: right;
+}
+.paginator-tabs .loadmore-button .paginator-tab-text {
+  margin-left: 0.25rem;
+  transition: color 0.25s ease;
+}
+.paginator-tabs .loadmore-button:before {
+  transition: color 0.25s ease;
+}
+.paginator-tabs .loadmore-button:hover:before, .paginator-tabs .loadmore-button:hover .paginator-tab-text, .paginator-tabs .loadmore-button.activated:before, .paginator-tabs .loadmore-button.activated .paginator-tab-text {
+  color: var(--dtt_main-color);
+}
+.paginator-tabs .paginator-button {
+  position: relative;
+  background: none;
+  border: none;
+  height: 100%;
+  cursor: pointer;
+  outline: none;
+  margin-left: 0.25rem;
+  padding: 0 0.25rem;
+  float: right;
+}
+.paginator-tabs .paginator-button .customize-panel {
+  cursor: default;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  bottom: -1.25rem;
+  left: 0;
+  padding: 1rem;
+  z-index: 1000;
+  width: 200px;
+  width: fit-content;
+  background: var(--dtt_background-color);
+  box-shadow: var(--dtt_box-shadow);
+  transition: opacity 0.25s ease;
+  transform: translate(-100%, 0);
+}
+.paginator-tabs .paginator-button .customize-panel.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+.paginator-tabs .paginator-button .customize-panel .panel-label {
+  min-width: 150px;
+  text-align: left;
+  text-overflow: ellipsis;
+  max-width: 150px;
+  overflow: hidden;
+}
+.paginator-tabs .paginator-button span {
+  cursor: default;
+}
+.paginator-tabs .paginator-button:before, .paginator-tabs .paginator-button span.density-label, .paginator-tabs .paginator-button span.fontsize-label {
+  color: var(--dtt_density-icon-color);
+  vertical-align: middle;
+  transition: color 0.25s;
+  cursor: pointer;
+}
+.paginator-tabs .paginator-button:before {
+  font-size: 120%;
+}
+.paginator-tabs .paginator-button span.density-label, .paginator-tabs .paginator-button span.fontsize-label {
+  font-size: var(--dtt_font-size);
+}
+.paginator-tabs .paginator-button:hover:before, .paginator-tabs .paginator-button:hover span.density-label, .paginator-tabs .paginator-button:hover span.fontsize-label, .paginator-tabs .paginator-button.activated:before, .paginator-tabs .paginator-button.activated span.density-label, .paginator-tabs .paginator-button.activated span.fontsize-label {
+  color: var(--dtt_main-color);
+}
+.paginator-tabs .paginator-button .paginator-tab-text {
+  margin-left: 0.25rem;
+}
+
+.density-panel,
+.fontsize-panel {
+  position: relative;
+  margin: 0;
   display: flex;
   align-items: center;
+  box-shadow: var(--dtt_density-box-shadow);
+  width: 200px;
+  width: max-content;
 }
-.density-panel svg {
+.density-panel .mdi:before, .density-panel:before,
+.fontsize-panel .mdi:before,
+.fontsize-panel:before {
+  color: var(--dtt_density-icon-color);
+  font-size: 120%;
+}
+.density-panel .density-label,
+.density-panel .fontsize-label,
+.fontsize-panel .density-label,
+.fontsize-panel .fontsize-label {
+  padding: 0.5rem 0.5rem;
+  cursor: pointer;
+}
+.density-panel svg,
+.fontsize-panel svg {
   height: 1.5rem;
   width: 1.5rem;
 }
-.density-panel [role=button] {
+.density-panel [role=button],
+.fontsize-panel [role=button] {
   outline: none;
   cursor: pointer;
   display: flex;
 }
-.density-panel [role=button] svg {
+.density-panel [role=button] svg,
+.fontsize-panel [role=button] svg {
   fill: #bdbdbd;
 }
-.density-panel .density-panel-overlay {
+.density-panel .density-panel-overlay,
+.density-panel .fontsize-panel-overlay,
+.fontsize-panel .density-panel-overlay,
+.fontsize-panel .fontsize-panel-overlay {
   background: var(--dtt_background-color);
   position: absolute;
   top: 1.6rem;
@@ -358,7 +506,10 @@
   width: 100px;
   width: max-content;
 }
-.density-panel .density-panel-overlay .wrapper {
+.density-panel .density-panel-overlay .wrapper,
+.density-panel .fontsize-panel-overlay .wrapper,
+.fontsize-panel .density-panel-overlay .wrapper,
+.fontsize-panel .fontsize-panel-overlay .wrapper {
   display: flex;
   align-items: center;
   outline: none;
@@ -367,24 +518,48 @@
   padding: 0.5rem 1rem;
   transition: color 0.25s, background-color 0.25s, opacity 0.25s;
 }
-.density-panel .density-panel-overlay .wrapper:first-child {
+.density-panel .density-panel-overlay .wrapper:first-child,
+.density-panel .fontsize-panel-overlay .wrapper:first-child,
+.fontsize-panel .density-panel-overlay .wrapper:first-child,
+.fontsize-panel .fontsize-panel-overlay .wrapper:first-child {
   padding-top: 0.75rem;
 }
-.density-panel .density-panel-overlay .wrapper:last-child {
+.density-panel .density-panel-overlay .wrapper:last-child,
+.density-panel .fontsize-panel-overlay .wrapper:last-child,
+.fontsize-panel .density-panel-overlay .wrapper:last-child,
+.fontsize-panel .fontsize-panel-overlay .wrapper:last-child {
   padding-bottom: 0.75rem;
 }
-.density-panel .density-panel-overlay .wrapper svg {
+.density-panel .density-panel-overlay .wrapper svg,
+.density-panel .fontsize-panel-overlay .wrapper svg,
+.fontsize-panel .density-panel-overlay .wrapper svg,
+.fontsize-panel .fontsize-panel-overlay .wrapper svg {
   margin-right: 0.5rem;
   fill: var(--dtt_color);
 }
-.density-panel .density-panel-overlay .wrapper:hover, .density-panel .density-panel-overlay .wrapper.active {
+.density-panel .density-panel-overlay .wrapper:hover, .density-panel .density-panel-overlay .wrapper.active,
+.density-panel .fontsize-panel-overlay .wrapper:hover,
+.density-panel .fontsize-panel-overlay .wrapper.active,
+.fontsize-panel .density-panel-overlay .wrapper:hover,
+.fontsize-panel .density-panel-overlay .wrapper.active,
+.fontsize-panel .fontsize-panel-overlay .wrapper:hover,
+.fontsize-panel .fontsize-panel-overlay .wrapper.active {
   color: var(--dtt_hover-color);
   background-color: var(--dtt_hover-background-color);
 }
-.density-panel .density-panel-overlay .wrapper:hover svg, .density-panel .density-panel-overlay .wrapper.active svg {
+.density-panel .density-panel-overlay .wrapper:hover svg, .density-panel .density-panel-overlay .wrapper.active svg,
+.density-panel .fontsize-panel-overlay .wrapper:hover svg,
+.density-panel .fontsize-panel-overlay .wrapper.active svg,
+.fontsize-panel .density-panel-overlay .wrapper:hover svg,
+.fontsize-panel .density-panel-overlay .wrapper.active svg,
+.fontsize-panel .fontsize-panel-overlay .wrapper:hover svg,
+.fontsize-panel .fontsize-panel-overlay .wrapper.active svg {
   fill: var(--dtt_hover-color);
 }
-.density-panel .density-panel-overlay.open {
+.density-panel .density-panel-overlay.open,
+.density-panel .fontsize-panel-overlay.open,
+.fontsize-panel .density-panel-overlay.open,
+.fontsize-panel .fontsize-panel-overlay.open {
   opacity: 1;
   display: block;
 }

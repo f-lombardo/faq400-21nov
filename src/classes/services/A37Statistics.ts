@@ -11,28 +11,44 @@ export default class A37Statistics extends Service {
       srv
         .doGet(A37Statistics.PATH + "/frontend/hub/statisticsListNow")
         .then((data: any) => {
+          if (data.columns) {
+            data.columns.forEach((column: any) => {
+              if (
+                column.name == "IN" ||
+                column.name == "CONS" ||
+                column.name == "OUT" ||
+                column.name == "ERR" ||
+                column.name == "QUEUE" ||
+                column.name == "EVTTIME"
+              ) {
+                column = EnrichUtil.addObj(column, "NR", "", "");
+              }
+              return column;
+            });
+          }
+
           if (data.rows) {
             data.rows.forEach((row: any) => {
               let time: Cell = row.cells["TIME"];
               time = EnrichUtil.addObj(time, "", "", "");
 
               let incom: Cell = row.cells["IN"];
-              incom = EnrichUtil.addObj(incom, "", "", "");
+              incom = EnrichUtil.addObj(incom, "NR", "", "");
 
               let cons: Cell = row.cells["CONS"];
-              cons = EnrichUtil.addObj(cons, "", "", "");
+              cons = EnrichUtil.addObj(cons, "NR", "", "");
 
               let out: Cell = row.cells["OUT"];
-              out = EnrichUtil.addObj(out, "", "", "");
+              out = EnrichUtil.addObj(out, "NR", "", "");
 
               let err: Cell = row.cells["ERR"];
-              err = EnrichUtil.addObj(err, "", "", "");
+              err = EnrichUtil.addObj(err, "NR", "", "");
 
               let queue: Cell = row.cells["QUEUE"];
-              queue = EnrichUtil.addObj(queue, "", "", "");
+              queue = EnrichUtil.addObj(queue, "NR", "", "");
 
               let evtTime: Cell = row.cells["EVTTIME"];
-              evtTime = EnrichUtil.addObj(evtTime, "", "", "");
+              evtTime = EnrichUtil.addObj(evtTime, "NR", "", "");
 
               return row;
             });
@@ -48,6 +64,22 @@ export default class A37Statistics extends Service {
       srv
         .doGet(A37Statistics.PATH + "/frontend/hub/statisticsList")
         .then((data: any) => {
+          if (data.columns) {
+            data.columns.forEach((column: any) => {
+              if (
+                column.name == "IN" ||
+                column.name == "CONS" ||
+                column.name == "OUT" ||
+                column.name == "ERR" ||
+                column.name == "QUEUE" ||
+                column.name == "EVTTIME"
+              ) {
+                column = EnrichUtil.addObj(column, "NR", "", "");
+              }
+              return column;
+            });
+          }
+
           if (data.rows) {
             data.rows.forEach((row: any) => {
               let time: Cell = row.cells["TIME"];
@@ -108,7 +140,12 @@ export default class A37Statistics extends Service {
               queue = EnrichUtil.addObj(queue, "NR", "", queue.value);
 
               let evtTime: Cell = row.cells["EVTTIME"];
-              evtTime = EnrichUtil.addObj(evtTime, "NR", "", evtTime.value);
+              evtTime = EnrichUtil.addObj(
+                evtTime,
+                "NR",
+                "",
+                evtTime.value.replace(",", ".")
+              );
 
               return row;
             });

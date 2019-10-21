@@ -17,7 +17,7 @@
 * @prop --cmb_box-shadow, --kup-combo_box-shadow: Specify menu box shadow
 */
 :host {
-  --cmb_font-size: var(--kup-combo_input_font-size, 14px);
+  --cmb_font-size: var(--kup-combo_input_font-size, 1rem);
   --cmb_border-color: var(--kup-combo_input_border-color, #bdbdbd);
   --cmb_border-color--selected: var(
     --kup-combo_input_border-color--selected,
@@ -91,13 +91,13 @@
   justify-content: center;
 }
 .kup-combo__current-value .value-text {
-  padding: 0 0.75rem;
+  padding: 0 0.25rem;
 }
 .kup-combo__current-value svg {
   fill: #bdbdbd;
 }
 .kup-combo__chevron {
-  margin-left: 16px;
+  margin-left: 0.25rem;
 }
 .kup-combo__chevron--open {
   transform: rotate(180deg);

@@ -4,7 +4,9 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 const __chunk_1 = require('./chunk-c31c1549.js');
 require('./chunk-d83edcd4.js');
-const __chunk_3 = require('./chunk-866cce30.js');
+const __chunk_3 = require('./chunk-4f8b617c.js');
+const __chunk_4 = require('./chunk-333d207b.js');
+const __chunk_6 = require('./chunk-a9d9f9b4.js');
 
 var ChartType;
 (function (ChartType) {
@@ -28,24 +30,6 @@ var ChartAspect;
     ChartAspect["D2"] = "2D";
     ChartAspect["D3"] = "3D";
 })(ChartAspect || (ChartAspect = {}));
-
-function formatToNumber(cell) {
-    if (cell.obj) {
-        return __chunk_3.numeral(cell.obj.k).value();
-    }
-    return __chunk_3.numeral(cell.value).value();
-}
-function formatToMomentDate(cell) {
-    let format = 'YYYYMMDD';
-    if (cell.obj) {
-        const obj = cell.obj;
-        if ('D8' === obj.t && '*DMYY' === obj.p) {
-            format = 'DDMMYYYY';
-        }
-        return __chunk_3.moment(cell.obj.k, format);
-    }
-    return __chunk_3.moment(cell.value, 'DD/MM/YYYY');
-}
 
 // TODO this should be in a "data-table" utility file
 function getColumnByName(name, columns) {
@@ -90,15 +74,15 @@ const convertRows = (data, columns, showMarks) => {
                 const cell = cells[c.name];
                 if (cell && cell.obj) {
                     const addMark = showMarks && index > 0;
-                    if (__chunk_3.isNumber(cell.obj)) {
-                        const value = formatToNumber(cell);
+                    if (__chunk_4.isNumber(cell.obj)) {
+                        const value = __chunk_6.formatToNumber(cell);
                         currentRow.push(value);
                         if (addMark) {
                             currentRow.push(value.toString());
                         }
                     }
-                    else if (__chunk_3.isDate(cell.obj)) {
-                        const value = formatToMomentDate(cell).toDate();
+                    else if (__chunk_4.isDate(cell.obj)) {
+                        const value = __chunk_6.formatToMomentDate(cell).toDate();
                         currentRow.push(value);
                         if (addMark) {
                             currentRow.push(value.toString());

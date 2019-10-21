@@ -4,7 +4,8 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 const __chunk_1 = require('./chunk-c31c1549.js');
 require('./chunk-d83edcd4.js');
-const __chunk_3 = require('./chunk-866cce30.js');
+const __chunk_3 = require('./chunk-4f8b617c.js');
+const __chunk_4 = require('./chunk-333d207b.js');
 
 class KupDataTable {
     constructor(hostRef) {
@@ -79,7 +80,10 @@ class KupDataTable {
          * name of the column with an open menu
          */
         this.openedMenu = null;
+        this.topFontSizePanelVisible = false;
+        this.botFontSizePanelVisible = false;
         this.density = 'medium';
+        this.fontsize = 'medium';
         this.topDensityPanelVisible = false;
         this.botDensityPanelVisible = false;
         this.renderedRows = [];
@@ -112,6 +116,8 @@ class KupDataTable {
          */
         this.dragStarterAttribute = 'drag-starter';
         this.onDocumentClick = () => {
+            this.topFontSizePanelVisible = false;
+            this.botFontSizePanelVisible = false;
             this.topDensityPanelVisible = false;
             this.botDensityPanelVisible = false;
         };
@@ -123,6 +129,8 @@ class KupDataTable {
         this.kupLoadMoreClicked = __chunk_1.createEvent(this, "kupLoadMoreClicked", 6);
         this.kupCellButtonClicked = __chunk_1.createEvent(this, "kupCellButtonClicked", 6);
         this.kupDataTableSortedColumn = __chunk_1.createEvent(this, "kupDataTableSortedColumn", 6);
+        this.kupLoadRequest = __chunk_1.createEvent(this, "kupLoadRequest", 6);
+        this.kupDetailRequest = __chunk_1.createEvent(this, "kupDetailRequest", 6);
     }
     rowsPerPageHandler(newValue) {
         this.currentRowsPerPage = newValue;
@@ -177,6 +185,18 @@ class KupDataTable {
     }
     componentDidUnload() {
         document.removeEventListener('click', this.onDocumentClick);
+    }
+    hasTooltip(cell) {
+        return cell.obj
+            && cell.obj.t !== ""
+            && !__chunk_4.isBar(cell.obj)
+            && !__chunk_4.isButton(cell.obj)
+            && !__chunk_4.isCheckbox(cell.obj)
+            && !__chunk_4.isIcon(cell.obj)
+            && !__chunk_4.isImage(cell.obj)
+            && !__chunk_4.isLink(cell.obj)
+            && !__chunk_4.isNumber(cell.obj)
+            && !__chunk_4.isVoCodver(cell.obj);
     }
     getColumns() {
         return this.data && this.data.columns
@@ -653,6 +673,17 @@ class KupDataTable {
         this.moveSortedColumns(toSort, receivingColumnIndex, sortedColumnIndex);
         return toSort;
     }
+    toggleFontSizeVisibility(event, top) {
+        event.stopPropagation();
+        if (top) {
+            this.topFontSizePanelVisible = !this.topFontSizePanelVisible;
+            this.botFontSizePanelVisible = false;
+        }
+        else {
+            this.topFontSizePanelVisible = false;
+            this.botFontSizePanelVisible = !this.botFontSizePanelVisible;
+        }
+    }
     toggleDensityVisibility(event, top) {
         event.stopPropagation();
         if (top) {
@@ -773,7 +804,13 @@ class KupDataTable {
                     },
                 };
             }
-            return (__chunk_1.h("th", Object.assign({ style: thStyle, onMouseEnter: () => this.onColumnMouseEnter(column.name), onMouseLeave: () => this.onColumnMouseLeave(column.name) }, dragHandlers), __chunk_1.h("span", { class: "column-title" }, column.title), sort, filter, columnMenu));
+            let columnClass = {};
+            if (column.obj) {
+                columnClass = {
+                    number: __chunk_4.isNumber(column.obj),
+                };
+            }
+            return (__chunk_1.h("th", Object.assign({ class: columnClass, style: thStyle, onMouseEnter: () => this.onColumnMouseEnter(column.name), onMouseLeave: () => this.onColumnMouseLeave(column.name) }, dragHandlers), __chunk_1.h("span", { class: "column-title" }, column.title), sort, filter, columnMenu));
         });
         let multiSelectColumn = null;
         if (this.multiSelection) {
@@ -831,12 +868,12 @@ class KupDataTable {
                 const colSpan = this.multiSelection ? 2 : 1;
                 cells.push(__chunk_1.h("td", { colSpan: colSpan }, indent, __chunk_1.h("span", { class: "group-cell-content" }, __chunk_1.h("span", { role: "button", "aria-label": "Row expander" // TODO change this label
                     ,
-                    tabindex: "0", onClick: (e) => {
+                    title: "Expand/collapse group", tabindex: "0", onClick: (e) => {
                         e.stopPropagation();
                         this.onRowExpand(row);
                     } }, __chunk_1.h("svg", { width: "24", height: "24", viewBox: "0 0 24 24", class: "group-expander" }, icon)), row.group.label, __chunk_1.h("span", { role: "button", "aria-label": "Remove group" // TODO change this label
                     ,
-                    tabindex: "0", onClick: (e) => {
+                    title: "Remove group", tabindex: "0", onClick: (e) => {
                         e.stopPropagation();
                         this.removeGroupFromRow(row.group);
                     } }, __chunk_1.h("svg", { width: "24", height: "24", viewBox: "0 0 24 24", class: "group-remove" }, __chunk_1.h("path", { d: "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" }))))));
@@ -848,12 +885,12 @@ class KupDataTable {
             else {
                 jsxRows.push(__chunk_1.h("tr", { class: "group", onClick: () => this.onRowExpand(row) }, __chunk_1.h("td", { colSpan: this.calculateColspan() }, indent, __chunk_1.h("span", { class: "group-cell-content" }, __chunk_1.h("span", { role: "button", "aria-label": "Row expander" // TODO change this label
                     ,
-                    tabindex: "0", onClick: (e) => {
+                    title: "Expand/collapse group", tabindex: "0", onClick: (e) => {
                         e.stopPropagation();
                         this.onRowExpand(row);
                     } }, __chunk_1.h("svg", { width: "24", height: "24", viewBox: "0 0 24 24", class: "group-expander" }, icon)), __chunk_1.h("span", { class: "text" }, row.group.label), __chunk_1.h("span", { role: "button", "aria-label": "Remove group" // TODO change this label
                     ,
-                    tabindex: "0", onClick: (e) => {
+                    title: "Remove group", tabindex: "0", onClick: (e) => {
                         e.stopPropagation();
                         this.removeGroupFromRow(row.group);
                     } }, __chunk_1.h("svg", { width: "24", height: "24", viewBox: "0 0 24 24", class: "group-remove" }, __chunk_1.h("path", { d: "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" })))))));
@@ -912,7 +949,7 @@ class KupDataTable {
                     ? previousRow.cells[name].value
                     : null);
                 const cellClass = {
-                    number: __chunk_3.isNumber(cell.obj),
+                    number: __chunk_4.isNumber(cell.obj),
                 };
                 let cellStyle = null;
                 if (!__chunk_3.styleHasBorderRadius(cell)) {
@@ -978,10 +1015,10 @@ class KupDataTable {
         const valueToDisplay = previousRowCellValue !== cell.value ? cell.value : '';
         // Sets the default value
         let content = valueToDisplay;
-        if (__chunk_3.isIcon(cell.obj) || __chunk_3.isVoCodver(cell.obj)) {
+        if (__chunk_4.isIcon(cell.obj) || __chunk_4.isVoCodver(cell.obj)) {
             content = __chunk_1.h("span", { class: valueToDisplay });
         }
-        else if (__chunk_3.isNumber(cell.obj)) {
+        else if (__chunk_4.isNumber(cell.obj)) {
             content = valueToDisplay;
             if (content) {
                 const cellValue = __chunk_3.numeral(cell.obj.k).value();
@@ -990,20 +1027,20 @@ class KupDataTable {
                 }
             }
         }
-        else if (__chunk_3.isImage(cell.obj)) {
+        else if (__chunk_4.isImage(cell.obj)) {
             content = (__chunk_1.h("img", { src: valueToDisplay, alt: "", width: "64", height: "64" }));
         }
-        else if (__chunk_3.isLink(cell.obj)) {
+        else if (__chunk_4.isLink(cell.obj)) {
             content = (__chunk_1.h("a", { href: valueToDisplay, target: "_blank" }, valueToDisplay));
         }
-        else if (__chunk_3.isCheckbox(cell.obj)) {
+        else if (__chunk_4.isCheckbox(cell.obj)) {
             content = (__chunk_1.h("kup-checkbox", { checked: !!cell.obj.k, disabled: cellData &&
                     cellData.row &&
                     cellData.row.hasOwnProperty('readOnly')
                     ? cellData.row.readOnly
                     : true }));
         }
-        else if (__chunk_3.isButton(cell.obj)) {
+        else if (__chunk_4.isButton(cell.obj)) {
             /**
              * Here either using .bind() or () => {} function would bring more or less the same result.
              * Both those syntax would create at run time a new function for each cell on which they're rendered.
@@ -1023,9 +1060,9 @@ class KupDataTable {
              * there is a significant performance loss.
              * @see https://reactjs.org/docs/handling-events.html
              */
-            content = (__chunk_1.h("kup-button", Object.assign({}, __chunk_3.createJ4objButtonConfig(cell), { onKupButtonClicked: this.onJ4btnClicked.bind(this, cellData ? cellData.row : null, cellData ? cellData.column : null, cell) })));
+            content = (__chunk_1.h("kup-button", Object.assign({}, __chunk_4.createJ4objButtonConfig(cell), { onKupButtonClicked: this.onJ4btnClicked.bind(this, cellData ? cellData.row : null, cellData ? cellData.column : null, cell) })));
         }
-        else if (__chunk_3.isBar(cell.obj)) {
+        else if (__chunk_4.isBar(cell.obj)) {
             const props = {
                 value: cell.value,
             };
@@ -1045,31 +1082,96 @@ class KupDataTable {
         if (__chunk_3.styleHasBorderRadius(cell)) {
             style = cell.style;
         }
+        if (this.hasTooltip(cell)) {
+            content = __chunk_1.h("kup-tooltip", { onKupTooltipLoadData: (ev) => this.kupLoadRequest.emit({
+                    cell: cell,
+                    tooltip: ev.srcElement
+                }), onKupTooltipLoadDetail: (ev) => this.kupDetailRequest.emit({
+                    cell: cell,
+                    tooltip: ev.srcElement
+                }) }, content);
+        }
         return (__chunk_1.h("span", { class: clazz, style: style }, content));
     }
     renderLoadMoreButton(isSlotted = true) {
-        const label = 'Carica altri dati';
-        return (__chunk_1.h("button", { "aria-label": label, class: "load-more-records mdi mdi-plus-circle", role: "button", slot: isSlotted ? 'more-results' : null, tabindex: "0", title: label, onClick: () => this.onLoadMoreClick() }));
+        const label = 'Mostra altri dati';
+        return (__chunk_1.h("button", { "aria-label": label, class: "loadmore-button mdi mdi-plus", role: "button", slot: isSlotted ? 'more-results' : null, tabindex: "0", title: label, onClick: () => this.onLoadMoreClick() }, __chunk_1.h("span", { class: "paginator-tab-text" }, "Pi\u00F9 risultati"), ' '));
+    }
+    onCustomSettingsClick(event) {
+        let t = event.target;
+        let elPanel = t
+            .closest('.paginator-wrapper')
+            .getElementsByClassName('customize-panel')[0];
+        let elButton = t
+            .closest('.paginator-wrapper')
+            .getElementsByClassName('custom-settings')[0];
+        if (elButton.classList.contains('activated')) {
+            elButton.classList.remove('activated');
+            elPanel.classList.remove('visible');
+        }
+        else {
+            elButton.classList.add('activated');
+            elPanel.classList.add('visible');
+        }
     }
     renderPaginator(top) {
-        return (__chunk_1.h("div", { class: "paginator-wrapper" }, __chunk_1.h("kup-paginator", { id: top ? 'top-paginator' : 'bottom-paginator', max: this.rows.length, perPage: this.rowsPerPage, selectedPerPage: this.currentRowsPerPage, currentPage: this.currentPage, onKupPageChanged: (e) => this.handlePageChanged(e), onKupRowsPerPageChanged: (e) => this.handleRowsPerPageChanged(e) }, this.showLoadMore ? this.renderLoadMoreButton() : null), this.renderDensityPanel(top)));
+        return (__chunk_1.h("div", { class: "paginator-wrapper" }, __chunk_1.h("div", { class: "paginator-tabs" }, __chunk_1.h("kup-paginator", { id: top ? 'top-paginator' : 'bottom-paginator', max: this.rows.length, perPage: this.rowsPerPage, selectedPerPage: this.currentRowsPerPage, currentPage: this.currentPage, onKupPageChanged: (e) => this.handlePageChanged(e), onKupRowsPerPageChanged: (e) => this.handleRowsPerPageChanged(e) }), __chunk_1.h("button", { title: "Mostra opzioni di personalizzazione", class: "paginator-button mdi mdi-settings custom-settings", onClick: (e) => this.onCustomSettingsClick(e) }, __chunk_1.h("div", { class: "customize-panel" }, this.renderDensityPanel(top), this.renderFontSizePanel(top))), this.showLoadMore ? this.renderLoadMoreButton() : null)));
+    }
+    renderFontSizePanel(top) {
+        let fontSize;
+        {
+            this.fontsize === 'medium'
+                ? (fontSize = 'Media')
+                : this.fontsize === 'big'
+                    ? (fontSize = 'Grande')
+                    : this.fontsize === 'small'
+                        ? (fontSize = 'Piccolo')
+                        : (fontSize = '');
+        }
+        let fontSizeTypeString = 'Dimensione carattere: ' + fontSize;
+        return (__chunk_1.h("div", { class: "fontsize-panel" }, __chunk_1.h("span", { title: fontSizeTypeString, class: "panel-label" }, "Dimensione carattere"), __chunk_1.h("span", { class: "fontsize-label", onClick: (e) => this.toggleFontSizeVisibility(e, top) }, fontSize), __chunk_1.h("div", { role: "button", onClick: (e) => this.toggleFontSizeVisibility(e, top), tabindex: "0" }, __chunk_1.h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" }, __chunk_1.h("path", { d: "M7,10L12,15L17,10H7Z" }))), __chunk_1.h("div", { class: {
+                'fontsize-panel-overlay': true,
+                open: top
+                    ? this.topFontSizePanelVisible
+                    : this.botFontSizePanelVisible,
+            } }, __chunk_1.h("div", { class: {
+                wrapper: true,
+                active: this.fontsize === 'small',
+            }, onClick: () => (this.fontsize = 'small'), role: "button", tabindex: "0", "aria-pressed": this.fontsize === 'small' ? 'true' : 'false' }, __chunk_1.h("span", { title: "Piccolo", class: "fontsize-icon-panel mdi mdi-format-font-size-decrease" })), __chunk_1.h("div", { class: {
+                wrapper: true,
+                active: this.fontsize === 'medium',
+            }, onClick: () => (this.fontsize = 'medium'), role: "button", tabindex: "0", "aria-pressed": this.fontsize === 'medium' ? 'true' : 'false' }, __chunk_1.h("span", { title: "Normale", class: "fontsize-icon-panel mdi mdi-format-color-text" })), __chunk_1.h("div", { class: {
+                wrapper: true,
+                active: this.fontsize === 'big',
+            }, onClick: () => (this.fontsize = 'big'), role: "button", tabindex: "0", "aria-pressed": this.fontsize === 'big' ? 'true' : 'false' }, __chunk_1.h("span", { title: "Grande", class: "fontsize-icon-panel mdi mdi-format-font-size-increase" })))));
     }
     renderDensityPanel(top) {
-        return (__chunk_1.h("div", { class: "density-panel" }, __chunk_1.h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" }, __chunk_1.h("path", { d: "M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" })), __chunk_1.h("div", { role: "button", tabindex: "0", onClick: (e) => this.toggleDensityVisibility(e, top) }, __chunk_1.h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" }, __chunk_1.h("path", { d: "M7,10L12,15L17,10H7Z" }))), __chunk_1.h("div", { class: {
+        let densityType;
+        {
+            this.density === 'medium'
+                ? (densityType = 'Normale')
+                : this.density === 'big'
+                    ? (densityType = 'Ampia')
+                    : this.density === 'small'
+                        ? (densityType = 'Compatta')
+                        : (densityType = '');
+        }
+        let densityTypeString = 'Densità righe: ' + densityType;
+        return (__chunk_1.h("div", { class: "density-panel" }, __chunk_1.h("span", { title: densityTypeString, class: "panel-label" }, "Densit\u00E0 righe"), __chunk_1.h("span", { class: "density-label", onClick: (e) => this.toggleDensityVisibility(e, top) }, densityType), __chunk_1.h("div", { role: "button", onClick: (e) => this.toggleDensityVisibility(e, top), tabindex: "0" }, __chunk_1.h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" }, __chunk_1.h("path", { d: "M7,10L12,15L17,10H7Z" }))), __chunk_1.h("div", { class: {
                 'density-panel-overlay': true,
                 open: top
                     ? this.topDensityPanelVisible
                     : this.botDensityPanelVisible,
             } }, __chunk_1.h("div", { class: {
                 wrapper: true,
-                active: this.density === 'big',
-            }, onClick: () => (this.density = 'big'), role: "button", tabindex: "0", "aria-pressed": this.density === 'big' ? 'true' : 'false' }, __chunk_1.h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" }, __chunk_1.h("path", { d: "M3,4H21V8H3V4M3,10H21V14H3V10M3,16H21V20H3V16Z" })), "Bassa"), __chunk_1.h("div", { class: {
+                active: this.density === 'small',
+            }, onClick: () => (this.density = 'small'), role: "button", tabindex: "0", "aria-pressed": this.density === 'small' ? 'true' : 'false' }, __chunk_1.h("span", { title: "Compatta", class: "density-icon-panel mdi mdi-format-align-justify" })), __chunk_1.h("div", { class: {
                 wrapper: true,
                 active: this.density === 'medium',
-            }, onClick: () => (this.density = 'medium'), role: "button", tabindex: "0", "aria-pressed": this.density === 'medium' ? 'true' : 'false' }, __chunk_1.h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" }, __chunk_1.h("path", { d: "M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" })), "Media"), __chunk_1.h("div", { class: {
+            }, onClick: () => (this.density = 'medium'), role: "button", tabindex: "0", "aria-pressed": this.density === 'medium' ? 'true' : 'false' }, __chunk_1.h("span", { title: "Normale", class: "density-icon-panel mdi mdi-reorder-horizontal" })), __chunk_1.h("div", { class: {
                 wrapper: true,
-                active: this.density === 'small',
-            }, onClick: () => (this.density = 'small'), role: "button", tabindex: "0", "aria-pressed": this.density === 'small' ? 'true' : 'false' }, __chunk_1.h("svg", { version: "1.1", width: "24", height: "24", viewBox: "0 0 24 24" }, __chunk_1.h("path", { d: "M3,3H21V5H3V3M3,7H21V9H3V7M3,11H21V13H3V11M3,15H21V17H3V15M3,19H21V21H3V19Z" })), "Alta"))));
+                active: this.density === 'big',
+            }, onClick: () => (this.density = 'big'), role: "button", tabindex: "0", "aria-pressed": this.density === 'big' ? 'true' : 'false' }, __chunk_1.h("span", { title: "Ampia", class: "density-icon-panel mdi mdi-view-sequential" })))));
     }
     render() {
         // resetting rows
@@ -1133,6 +1235,7 @@ class KupDataTable {
             'persistent-header': this.headerIsPersistent,
         };
         tableClass[`density-${this.density}`] = true;
+        tableClass[`fontsize-${this.fontsize}`] = true;
         return (__chunk_1.h("div", { id: "data-table-wrapper" }, __chunk_1.h("div", { class: "above-wrapper" }, paginatorTop, globalFilter), __chunk_1.h("div", { class: "below-wrapper" }, groupChips, __chunk_1.h("table", { class: tableClass }, __chunk_1.h("thead", { hidden: !this.showHeader, ref: (el) => (this.theadRef = el) }, __chunk_1.h("tr", null, header)), __chunk_1.h("tbody", null, rows), footer)), paginatorBottom));
     }
     static get watchers() { return {
@@ -1147,7 +1250,7 @@ class KupDataTable {
         "currentPage": ["recalculateRows"],
         "currentRowsPerPage": ["recalculateRows"]
     }; }
-    static get style() { return "\@import url(https://cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css);:host{--dtt_background-color:var(--kup-data-table_background-color,#fff);--dtt_border-color:var(--kup-data-table_border-color,#bdbdbd);--dtt_box-shadow:var(--kup-data-table_box-shadow,0px 0px 7.5px 0px hsla(0,0%,50.2%,0.5));--dtt_color:var(--kup-data-table_color,#1a1a1a);--dtt_drag-over--allowed:var(--kup-data-table_drag-over--allowed,rgba(78,144,143,0.24));--dtt_drag-over--forbidden:var(--kup-data-table_drag-over--forbidden,rgba(240,66,60,0.24));--dtt_filter-border-color:var(--kup-data-table_filter-border-color,#d0d0d0);--dtt_filter-background-color:var(--kup-data-table_filter-background-color,#fff);--dtt_group-background-color:var(--kup-data-table_group-background-color,#f9f9f9);--dtt_hover-color:var(--kup-data-table_hover-color,#545454);--dtt_head-background-color:var(--kup-data-table_head-background-color,#fff);--dtt_header-offset:var(--kup-data-table_header-offset,50px);--dtt_hover-background-color:var(--kup-data-table_hover-background-color,#f0f0f0);--dtt_icons-color:var(--kup-data-table_icons-color,grey);--dtt_icons-hover-color:var(--kup-data-table_icons-hover-color,#4e908f);--dtt_font-size:var(--kup-data-table_font-size,0.9375rem);--dtt_main-color:var(--kup-data-table_main-color,#6aaaa7);--dtt_text-on-main-color:var(--kup-data-table_text-on-main-color,#fff);--dtt_negative-number-color:var(--kup-data-table_negative-number-color,#d91e18)}#data-table-wrapper{background-color:var(--dtt_background-color)}#data-table-wrapper table{color:var(--dtt_color);width:100%;min-width:intrinsic;min-width:-moz-max-content;min-width:-webkit-max-content;border-collapse:collapse;text-align:left;font-size:var(--dtt_font-size)}#data-table-wrapper table>thead{background:var(--dtt_head-background-color)}#data-table-wrapper table>thead th{position:relative;padding:.5rem .3125rem;white-space:nowrap;border-bottom:2px solid var(--dtt_border-color);border-right:1px solid var(--dtt_border-color)}#data-table-wrapper table>thead th kup-text-input.datatable-filter{--kup-text-input_border-color:var(--dtt_filter-border-color);--kup-text-input_background-color:var(--dtt_filter-background-color)}#data-table-wrapper table>thead th .column-sort{margin-left:.5rem;cursor:pointer}#data-table-wrapper table>thead th .column-sort .mdi{color:var(--dtt_icons-color);-webkit-transition:color .2s ease-in-out;transition:color .2s ease-in-out}#data-table-wrapper table>thead th .column-sort .mdi:hover{color:var(--dtt_icons-hover-color)}#data-table-wrapper table>thead th .column-sort .mdi-sort-ascending,#data-table-wrapper table>thead th .column-sort .mdi-sort-descending{color:var(--dtt_main-color)}#data-table-wrapper table>thead th .column-menu{background-color:var(--dtt_background-color);-webkit-box-shadow:var(--dtt_box-shadow);box-shadow:var(--dtt_box-shadow);color:var(--dtt_color);position:absolute;z-index:100;font-weight:400;min-width:200px;min-width:-moz-max-content;min-width:-webkit-max-content}#data-table-wrapper table>thead th .column-menu.closed{display:none}#data-table-wrapper table>thead th .column-menu.open{display:block;-webkit-animation:display-none-transition .5s both;-webkit-animation-timing-function:cubic-bezier(.67,-.81,.89,.71);animation:display-none-transition .5s both;animation-timing-function:cubic-bezier(.67,-.81,.89,.71)}#data-table-wrapper table>thead th .column-menu ul{list-style-type:none;margin:0;padding:0}#data-table-wrapper table>thead th .column-menu ul>li{padding:.8rem;-webkit-transition:color .2s ease-in-out;transition:color .2s ease-in-out;color:#545454}#data-table-wrapper table>thead th .column-menu ul>li:not(:last-child){border-bottom:1px solid var(--dtt_border-color)}#data-table-wrapper table>thead th .column-menu ul>li:hover{cursor:pointer;color:var(--dtt_main-color)}#data-table-wrapper table>thead th .column-menu ul>li .mdi{color:#4e908f;margin-right:.5rem}#data-table-wrapper table>thead[columns-dragging] [drag-over]{background-color:var(--dtt_drag-over--allowed)}#data-table-wrapper table>thead[columns-dragging] [drag-over]>*{pointer-events:none}#data-table-wrapper table>thead[columns-dragging] [drag-over][drag-starter]{background-color:var(--dtt_drag-over--forbidden)}#data-table-wrapper table>tbody{border:1px solid var(--dtt_border-color);cursor:pointer}#data-table-wrapper table>tbody>tr.selected>td,#data-table-wrapper table>tbody>tr:hover>td{color:var(--dtt_hover-color);background-color:var(--dtt_hover-background-color);-webkit-transition:background-color .25s ease-in-out;transition:background-color .25s ease-in-out}#data-table-wrapper table>tbody>tr.group{background:var(--dtt_group-background-color);font-weight:700;border-top:1px solid var(--dtt_border-color)}#data-table-wrapper table>tbody>tr.group>td{padding:1rem 0}#data-table-wrapper table>tbody>tr.group>td .group-cell-content svg{cursor:pointer;width:var(--dtt_font-size);height:var(--dtt_font-size);margin:0 .3rem}#data-table-wrapper table>tbody>tr.group>td .group-cell-content svg.group-expander{padding:.2rem;border-radius:50%;background:#e5e5e5;margin-right:1rem;margin-left:.5rem}#data-table-wrapper table>tbody>tr.group>td .group-cell-content svg.group-remove{fill:#d91e18}#data-table-wrapper table>tbody>tr.group>td .group-cell-content>span{display:-ms-inline-flexbox;display:inline-flex;vertical-align:middle;outline:none}#data-table-wrapper table>tbody>tr.group>td.total{text-align:right;padding-right:1rem}#data-table-wrapper table>tbody>tr>td{padding:.5rem .3125rem}#data-table-wrapper table>tbody>tr>td.number{text-align:right}#data-table-wrapper table>tbody>tr>td .row-expander{margin-right:.5rem}#data-table-wrapper table>tbody>tr>td .indent{display:inline-block;height:1rem;width:2rem}#data-table-wrapper table>tbody>tr>td .options{margin-left:.5rem;color:var(--dtt_icons-color)}#data-table-wrapper table>tbody>tr>td .options:hover{color:var(--dtt_icons-hover-color);-webkit-transition:color .25s ease-out;transition:color .25s ease-out}#data-table-wrapper table>tbody>tr>td .row-action{margin-right:.2rem}#data-table-wrapper table>tbody>tr>td .cell-content.negative-number{color:var(--dtt_negative-number-color)}#data-table-wrapper table.row-separation>tbody>tr{border-bottom:1px solid var(--dtt_border-color)}#data-table-wrapper table.column-separation>tbody>tr>td{border-right:1px solid var(--dtt_border-color)}#data-table-wrapper table.persistent-header{border-top:1px solid var(--dtt_border-color);position:relative}#data-table-wrapper table.persistent-header>thead{border-color:var(--dtt_border-color);border-style:solid;border-width:0 1px 0}#data-table-wrapper table.persistent-header>thead>th{background-color:var(--dtt_head-background-color);-webkit-box-shadow:var(--dtt_box-shadow);box-shadow:var(--dtt_box-shadow);position:-webkit-sticky;position:sticky;top:var(--dtt_header-offset);will-change:transform}#data-table-wrapper table.persistent-header>tbody{border-top:3px solid var(--dtt_border-color)}#data-table-wrapper table>tfoot td{text-align:right;font-weight:700;padding:.5rem .3125rem}#data-table-wrapper table.noGrid,#data-table-wrapper table.noGrid td{border:none}#data-table-wrapper table.density-big tbody>tr>td{padding-top:.2rem;padding-bottom:.2rem}#data-table-wrapper table.density-big tbody>tr.group>td{padding-top:.75rem;padding-bottom:.75rem}#data-table-wrapper table.density-small tbody>tr>td{padding-top:1rem;padding-bottom:1rem}#data-table-wrapper table.density-small tbody>tr.group>td{padding-top:1.25rem;padding-bottom:1.25rem}#data-table-wrapper .paginator-wrapper{display:-ms-flexbox;display:flex}#data-table-wrapper .paginator-wrapper kup-paginator{-ms-flex-positive:1;flex-grow:1}#globalFilter{margin-bottom:.5rem;text-align:center}#group-chips{display:-ms-flexbox;display:flex;margin-bottom:.5rem}#group-chips>.group-chip{display:-ms-flexbox;display:flex;background-color:var(--dtt_main-color);padding:.5rem;color:var(--dtt_text-on-main-color);margin-right:.5rem;cursor:pointer;-webkit-transition:opacity .2s ease-in-out;transition:opacity .2s ease-in-out}#group-chips>.group-chip:hover{opacity:.75}.density-panel{position:relative;margin-left:1rem;display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center}.density-panel svg{height:1.5rem;width:1.5rem}.density-panel [role=button]{outline:none;cursor:pointer;display:-ms-flexbox;display:flex}.density-panel [role=button] svg{fill:#bdbdbd}.density-panel .density-panel-overlay{background:var(--dtt_background-color);position:absolute;top:1.6rem;right:0;display:none;opacity:0;z-index:10;-webkit-box-shadow:0 0 7.5px 0 hsla(0,0%,50.2%,.5);box-shadow:0 0 7.5px 0 hsla(0,0%,50.2%,.5);width:100px;width:-webkit-max-content;width:-moz-max-content;width:max-content}.density-panel .density-panel-overlay .wrapper{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;outline:none;color:var(--dtt_color);cursor:pointer;padding:.5rem 1rem;-webkit-transition:color .25s,background-color .25s,opacity .25s;transition:color .25s,background-color .25s,opacity .25s}.density-panel .density-panel-overlay .wrapper:first-child{padding-top:.75rem}.density-panel .density-panel-overlay .wrapper:last-child{padding-bottom:.75rem}.density-panel .density-panel-overlay .wrapper svg{margin-right:.5rem;fill:var(--dtt_color)}.density-panel .density-panel-overlay .wrapper.active,.density-panel .density-panel-overlay .wrapper:hover{color:var(--dtt_hover-color);background-color:var(--dtt_hover-background-color)}.density-panel .density-panel-overlay .wrapper.active svg,.density-panel .density-panel-overlay .wrapper:hover svg{fill:var(--dtt_hover-color)}.density-panel .density-panel-overlay.open{opacity:1;display:block}\@-webkit-keyframes display-none-transition{0%{opacity:0}to{opacity:1}}\@keyframes display-none-transition{0%{opacity:0}to{opacity:1}}.load-more-records{background-color:transparent;border:0 none;color:var(--dtt_icons-color);cursor:pointer;display:inline-block;font-size:calc(var(--dtt_font-size) * 1.2);height:calc(var(--dtt_font-size) * 1.2);margin:0 6px;padding:0;-webkit-transition:color .3s;transition:color .3s;width:calc(var(--dtt_font-size) * 1.2)}.load-more-records:hover{color:var(--dtt_icons-hover-color)}.load-more-records:before{height:inherit;width:inherit}"; }
+    static get style() { return "\@import url(https://cdn.materialdesignicons.com/4.5.95/css/materialdesignicons.min.css);:host{--dtt_background-color:var(--kup-data-table_background-color,#fff);--dtt_border-color:var(--kup-data-table_border-color,#bdbdbd);--dtt_box-shadow:var(--kup-data-table_box-shadow,0px 0px 7.5px 0px hsla(0,0%,50.2%,0.5));--dtt_color:var(--kup-data-table_color,#1a1a1a);--dtt_drag-over--allowed:var(--kup-data-table_drag-over--allowed,rgba(78,144,143,0.24));--dtt_drag-over--forbidden:var(--kup-data-table_drag-over--forbidden,rgba(240,66,60,0.24));--dtt_filter-border-color:var(--kup-data-table_filter-border-color,#d0d0d0);--dtt_filter-background-color:var(--kup-data-table_filter-background-color,#fff);--dtt_group-background-color:var(--kup-data-table_group-background-color,#f9f9f9);--dtt_hover-color:var(--kup-data-table_hover-color,#545454);--dtt_head-background-color:var(--kup-data-table_head-background-color,#f4f4f4);--dtt_header-offset:var(--kup-data-table_header-offset,50px);--dtt_hover-background-color:var(--kup-data-table_hover-background-color,#f0f0f0);--dtt_icons-color:var(--kup-data-table_icons-color,grey);--dtt_icons-hover-color:var(--kup-data-table_icons-hover-color,#4e908f);--dtt_font-size:var(--kup-data-table_font-size,0.9375rem);--dtt_main-color:var(--kup-data-table_main-color,#6aaaa7);--dtt_main-color-lighter:var(--kup-data-table_main-color-lighter,#65acab);--dtt_main-color-darker:var(--kup-data-table_main-color-darker,#3c6f6e);--dtt_text-on-main-color:var(--kup-data-table_text-on-main-color,#fff);--dtt_negative-number-color:var(--kup-data-table_negative-number-color,#d91e18);--dtt_density-box-shadow:var(--kup-data-table_density-box-shadow,none);--dtt_density-icon-background:var(--kup-data-table_density-icon-background,transparent);--dtt_density-icon-color:var(--kup-data-table_density-icon-color,#545454)}#data-table-wrapper{background-color:var(--dtt_background-color)}#data-table-wrapper table{color:var(--dtt_color);width:100%;min-width:intrinsic;min-width:-moz-max-content;min-width:-webkit-max-content;border-collapse:collapse;text-align:left;font-size:var(--dtt_font-size)}#data-table-wrapper table>thead,#data-table-wrapper table>thead th{background:var(--dtt_head-background-color)}#data-table-wrapper table>thead th{position:relative;padding:.5rem .3125rem;white-space:nowrap;border-bottom:2px solid var(--dtt_border-color);border-right:1px solid var(--dtt_border-color);position:-webkit-sticky;position:sticky;top:0}#data-table-wrapper table>thead th.number{text-align:right}#data-table-wrapper table>thead th kup-text-input.datatable-filter{--kup-text-input_border-color:var(--dtt_filter-border-color);--kup-text-input_background-color:var(--dtt_filter-background-color)}#data-table-wrapper table>thead th .column-sort{margin-left:.5rem;cursor:pointer}#data-table-wrapper table>thead th .column-sort .mdi{color:var(--dtt_icons-color);-webkit-transition:color .2s ease-in-out;transition:color .2s ease-in-out}#data-table-wrapper table>thead th .column-sort .mdi:hover{color:var(--dtt_icons-hover-color)}#data-table-wrapper table>thead th .column-sort .mdi-sort-ascending,#data-table-wrapper table>thead th .column-sort .mdi-sort-descending{color:var(--dtt_main-color)}#data-table-wrapper table>thead th .column-menu{background-color:var(--dtt_background-color);-webkit-box-shadow:var(--dtt_box-shadow);box-shadow:var(--dtt_box-shadow);color:var(--dtt_color);position:absolute;z-index:100;font-weight:400;min-width:200px;min-width:-moz-max-content;min-width:-webkit-max-content}#data-table-wrapper table>thead th .column-menu.closed{display:none}#data-table-wrapper table>thead th .column-menu.open{display:block;-webkit-animation:display-none-transition .5s both;-webkit-animation-timing-function:cubic-bezier(.67,-.81,.89,.71);animation:display-none-transition .5s both;animation-timing-function:cubic-bezier(.67,-.81,.89,.71)}#data-table-wrapper table>thead th .column-menu ul{list-style-type:none;margin:0;padding:0}#data-table-wrapper table>thead th .column-menu ul>li{padding:.8rem;-webkit-transition:color .2s ease-in-out;transition:color .2s ease-in-out;color:#545454;-webkit-transition:color .25s,background-color .25s,opacity .25s;transition:color .25s,background-color .25s,opacity .25s}#data-table-wrapper table>thead th .column-menu ul>li:hover{cursor:pointer;color:var(--dtt_hover-color);background-color:var(--dtt_hover-background-color)}#data-table-wrapper table>thead th .column-menu ul>li .mdi{margin-right:.5rem}#data-table-wrapper table>thead[columns-dragging] [drag-over]{background-color:var(--dtt_drag-over--allowed)}#data-table-wrapper table>thead[columns-dragging] [drag-over]>*{pointer-events:none}#data-table-wrapper table>thead[columns-dragging] [drag-over][drag-starter]{background-color:var(--dtt_drag-over--forbidden)}#data-table-wrapper table>tbody{border:1px solid var(--dtt_border-color);cursor:pointer}#data-table-wrapper table>tbody>tr.selected>td,#data-table-wrapper table>tbody>tr:hover>td{color:var(--dtt_hover-color);background-color:var(--dtt_hover-background-color);-webkit-transition:background-color .25s ease-in-out;transition:background-color .25s ease-in-out}#data-table-wrapper table>tbody>tr.group{background:var(--dtt_group-background-color);font-weight:700;border-top:1px solid var(--dtt_border-color)}#data-table-wrapper table>tbody>tr.group>td{padding:1rem 0}#data-table-wrapper table>tbody>tr.group>td .group-cell-content svg{cursor:pointer;width:var(--dtt_font-size);height:var(--dtt_font-size);margin:0 .3rem}#data-table-wrapper table>tbody>tr.group>td .group-cell-content svg.group-expander{padding:.2rem;margin-right:1rem;margin-left:.5rem}#data-table-wrapper table>tbody>tr.group>td .group-cell-content svg.group-remove{fill:#d91e18}#data-table-wrapper table>tbody>tr.group>td .group-cell-content>span{display:-ms-inline-flexbox;display:inline-flex;vertical-align:middle;outline:none}#data-table-wrapper table>tbody>tr.group>td.total{text-align:right;padding-right:1rem}#data-table-wrapper table>tbody>tr>td{padding:.5rem .3125rem}#data-table-wrapper table>tbody>tr>td.number{text-align:right}#data-table-wrapper table>tbody>tr>td .row-expander{margin-right:.5rem}#data-table-wrapper table>tbody>tr>td .indent{display:inline-block;height:1rem;width:2rem}#data-table-wrapper table>tbody>tr>td .options{margin-left:.5rem;color:var(--dtt_icons-color)}#data-table-wrapper table>tbody>tr>td .options:hover{color:var(--dtt_icons-hover-color);-webkit-transition:color .25s ease-out;transition:color .25s ease-out}#data-table-wrapper table>tbody>tr>td .row-action{margin-right:.2rem}#data-table-wrapper table>tbody>tr>td .cell-content.negative-number{color:var(--dtt_negative-number-color)}#data-table-wrapper table.row-separation>tbody>tr{border-bottom:1px solid var(--dtt_border-color)}#data-table-wrapper table.column-separation>tbody>tr>td{border-right:1px solid var(--dtt_border-color)}#data-table-wrapper table.persistent-header{border-top:1px solid var(--dtt_border-color);position:relative}#data-table-wrapper table.persistent-header>thead{border-color:var(--dtt_border-color);border-style:solid;border-width:0 1px 0}#data-table-wrapper table.persistent-header>thead>th{background-color:var(--dtt_head-background-color);-webkit-box-shadow:var(--dtt_box-shadow);box-shadow:var(--dtt_box-shadow);position:-webkit-sticky;position:sticky;top:var(--dtt_header-offset);will-change:transform}#data-table-wrapper table.persistent-header>thead>th.number{text-align:right}#data-table-wrapper table.persistent-header>tbody{border-top:3px solid var(--dtt_border-color)}#data-table-wrapper table>tfoot td{text-align:right;font-weight:700;padding:.5rem .3125rem}#data-table-wrapper table.noGrid,#data-table-wrapper table.noGrid td{border:none}#data-table-wrapper table.density-small tbody>tr>td{padding-top:.2rem;padding-bottom:.2rem;-webkit-transition:padding .1s;transition:padding .1s}#data-table-wrapper table.density-small tbody>tr.group>td{padding-top:.75rem;padding-bottom:.75rem;-webkit-transition:padding .1s;transition:padding .1s}#data-table-wrapper table.density-big tbody>tr>td{padding-top:1rem;padding-bottom:1rem;-webkit-transition:padding .1s;transition:padding .1s}#data-table-wrapper table.density-big tbody>tr.group>td{padding-top:1.25rem;padding-bottom:1.25rem;-webkit-transition:padding .1s;transition:padding .1s}#data-table-wrapper table.fontsize-small{font-size:calc(var(--dtt_font-size) * .75);-webkit-transition:font-size .1s;transition:font-size .1s}#data-table-wrapper table.fontsize-big{font-size:calc(var(--dtt_font-size) * 1.25);-webkit-transition:font-size .1s;transition:font-size .1s}#data-table-wrapper .paginator-wrapper{display:-ms-flexbox;display:flex;-ms-flex-flow:wrap;flex-flow:wrap;min-width:-webkit-max-content;min-width:-moz-max-content;min-width:max-content}#globalFilter{margin-bottom:.5rem;text-align:center}#group-chips{display:-ms-flexbox;display:flex;margin-bottom:.5rem}#group-chips>.group-chip{display:-ms-flexbox;display:flex;background-color:var(--dtt_main-color);padding:.5rem;color:var(--dtt_text-on-main-color);margin-right:.5rem;cursor:pointer;-webkit-transition:opacity .2s ease-in-out;transition:opacity .2s ease-in-out}#group-chips>.group-chip:hover{opacity:.75}.paginator-tabs{width:100%}.paginator-tabs kup-paginator{display:-ms-inline-flexbox;display:inline-flex}.paginator-tabs .loadmore-button{position:relative;background:none;border:none;height:100%;cursor:pointer;outline:none;margin-left:.25rem;padding:0 .25rem;float:right}.paginator-tabs .loadmore-button .paginator-tab-text{margin-left:.25rem}.paginator-tabs .loadmore-button .paginator-tab-text,.paginator-tabs .loadmore-button:before{-webkit-transition:color .25s ease;transition:color .25s ease}.paginator-tabs .loadmore-button.activated .paginator-tab-text,.paginator-tabs .loadmore-button.activated:before,.paginator-tabs .loadmore-button:hover .paginator-tab-text,.paginator-tabs .loadmore-button:hover:before{color:var(--dtt_main-color)}.paginator-tabs .paginator-button{position:relative;background:none;border:none;height:100%;cursor:pointer;outline:none;margin-left:.25rem;padding:0 .25rem;float:right}.paginator-tabs .paginator-button .customize-panel{cursor:default;opacity:0;pointer-events:none;position:absolute;bottom:-1.25rem;left:0;padding:1rem;z-index:1000;width:200px;width:-webkit-fit-content;width:-moz-fit-content;width:fit-content;background:var(--dtt_background-color);-webkit-box-shadow:var(--dtt_box-shadow);box-shadow:var(--dtt_box-shadow);-webkit-transition:opacity .25s ease;transition:opacity .25s ease;-webkit-transform:translate(-100%);transform:translate(-100%)}.paginator-tabs .paginator-button .customize-panel.visible{opacity:1;pointer-events:all}.paginator-tabs .paginator-button .customize-panel .panel-label{min-width:150px;text-align:left;text-overflow:ellipsis;max-width:150px;overflow:hidden}.paginator-tabs .paginator-button span{cursor:default}.paginator-tabs .paginator-button:before,.paginator-tabs .paginator-button span.density-label,.paginator-tabs .paginator-button span.fontsize-label{color:var(--dtt_density-icon-color);vertical-align:middle;-webkit-transition:color .25s;transition:color .25s;cursor:pointer}.paginator-tabs .paginator-button:before{font-size:120%}.paginator-tabs .paginator-button span.density-label,.paginator-tabs .paginator-button span.fontsize-label{font-size:var(--dtt_font-size)}.paginator-tabs .paginator-button.activated:before,.paginator-tabs .paginator-button.activated span.density-label,.paginator-tabs .paginator-button.activated span.fontsize-label,.paginator-tabs .paginator-button:hover:before,.paginator-tabs .paginator-button:hover span.density-label,.paginator-tabs .paginator-button:hover span.fontsize-label{color:var(--dtt_main-color)}.paginator-tabs .paginator-button .paginator-tab-text{margin-left:.25rem}.density-panel,.fontsize-panel{position:relative;margin:0;display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;-webkit-box-shadow:var(--dtt_density-box-shadow);box-shadow:var(--dtt_density-box-shadow);width:200px;width:-webkit-max-content;width:-moz-max-content;width:max-content}.density-panel .mdi:before,.density-panel:before,.fontsize-panel .mdi:before,.fontsize-panel:before{color:var(--dtt_density-icon-color);font-size:120%}.density-panel .density-label,.density-panel .fontsize-label,.fontsize-panel .density-label,.fontsize-panel .fontsize-label{padding:.5rem .5rem;cursor:pointer}.density-panel svg,.fontsize-panel svg{height:1.5rem;width:1.5rem}.density-panel [role=button],.fontsize-panel [role=button]{outline:none;cursor:pointer;display:-ms-flexbox;display:flex}.density-panel [role=button] svg,.fontsize-panel [role=button] svg{fill:#bdbdbd}.density-panel .density-panel-overlay,.density-panel .fontsize-panel-overlay,.fontsize-panel .density-panel-overlay,.fontsize-panel .fontsize-panel-overlay{background:var(--dtt_background-color);position:absolute;top:1.6rem;right:0;display:none;opacity:0;z-index:10;-webkit-box-shadow:0 0 7.5px 0 hsla(0,0%,50.2%,.5);box-shadow:0 0 7.5px 0 hsla(0,0%,50.2%,.5);width:100px;width:-webkit-max-content;width:-moz-max-content;width:max-content}.density-panel .density-panel-overlay .wrapper,.density-panel .fontsize-panel-overlay .wrapper,.fontsize-panel .density-panel-overlay .wrapper,.fontsize-panel .fontsize-panel-overlay .wrapper{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;outline:none;color:var(--dtt_color);cursor:pointer;padding:.5rem 1rem;-webkit-transition:color .25s,background-color .25s,opacity .25s;transition:color .25s,background-color .25s,opacity .25s}.density-panel .density-panel-overlay .wrapper:first-child,.density-panel .fontsize-panel-overlay .wrapper:first-child,.fontsize-panel .density-panel-overlay .wrapper:first-child,.fontsize-panel .fontsize-panel-overlay .wrapper:first-child{padding-top:.75rem}.density-panel .density-panel-overlay .wrapper:last-child,.density-panel .fontsize-panel-overlay .wrapper:last-child,.fontsize-panel .density-panel-overlay .wrapper:last-child,.fontsize-panel .fontsize-panel-overlay .wrapper:last-child{padding-bottom:.75rem}.density-panel .density-panel-overlay .wrapper svg,.density-panel .fontsize-panel-overlay .wrapper svg,.fontsize-panel .density-panel-overlay .wrapper svg,.fontsize-panel .fontsize-panel-overlay .wrapper svg{margin-right:.5rem;fill:var(--dtt_color)}.density-panel .density-panel-overlay .wrapper.active,.density-panel .density-panel-overlay .wrapper:hover,.density-panel .fontsize-panel-overlay .wrapper.active,.density-panel .fontsize-panel-overlay .wrapper:hover,.fontsize-panel .density-panel-overlay .wrapper.active,.fontsize-panel .density-panel-overlay .wrapper:hover,.fontsize-panel .fontsize-panel-overlay .wrapper.active,.fontsize-panel .fontsize-panel-overlay .wrapper:hover{color:var(--dtt_hover-color);background-color:var(--dtt_hover-background-color)}.density-panel .density-panel-overlay .wrapper.active svg,.density-panel .density-panel-overlay .wrapper:hover svg,.density-panel .fontsize-panel-overlay .wrapper.active svg,.density-panel .fontsize-panel-overlay .wrapper:hover svg,.fontsize-panel .density-panel-overlay .wrapper.active svg,.fontsize-panel .density-panel-overlay .wrapper:hover svg,.fontsize-panel .fontsize-panel-overlay .wrapper.active svg,.fontsize-panel .fontsize-panel-overlay .wrapper:hover svg{fill:var(--dtt_hover-color)}.density-panel .density-panel-overlay.open,.density-panel .fontsize-panel-overlay.open,.fontsize-panel .density-panel-overlay.open,.fontsize-panel .fontsize-panel-overlay.open{opacity:1;display:block}\@-webkit-keyframes display-none-transition{0%{opacity:0}to{opacity:1}}\@keyframes display-none-transition{0%{opacity:0}to{opacity:1}}.load-more-records{background-color:transparent;border:0 none;color:var(--dtt_icons-color);cursor:pointer;display:inline-block;font-size:calc(var(--dtt_font-size) * 1.2);height:calc(var(--dtt_font-size) * 1.2);margin:0 6px;padding:0;-webkit-transition:color .3s;transition:color .3s;width:calc(var(--dtt_font-size) * 1.2)}.load-more-records:hover{color:var(--dtt_icons-hover-color)}.load-more-records:before{height:inherit;width:inherit}"; }
 }
 
 exports.kup_data_table = KupDataTable;

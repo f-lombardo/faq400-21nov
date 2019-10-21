@@ -1,6 +1,8 @@
 import { r as registerInstance, c as createEvent, h, g as getElement } from './chunk-1851c479.js';
 import './chunk-d8060b98.js';
-import { n as numeral, r as moment, d as isNumber, t as isDate, o as getColumnByName$1 } from './chunk-6abc1eda.js';
+import { g as getColumnByName$1 } from './chunk-d042f468.js';
+import { e as isNumber, f as isDate } from './chunk-3bb7c1ff.js';
+import { a as formatToNumber, f as formatToMomentDate } from './chunk-9f2fab2e.js';
 
 var ChartType;
 (function (ChartType) {
@@ -24,24 +26,6 @@ var ChartAspect;
     ChartAspect["D2"] = "2D";
     ChartAspect["D3"] = "3D";
 })(ChartAspect || (ChartAspect = {}));
-
-function formatToNumber(cell) {
-    if (cell.obj) {
-        return numeral(cell.obj.k).value();
-    }
-    return numeral(cell.value).value();
-}
-function formatToMomentDate(cell) {
-    let format = 'YYYYMMDD';
-    if (cell.obj) {
-        const obj = cell.obj;
-        if ('D8' === obj.t && '*DMYY' === obj.p) {
-            format = 'DDMMYYYY';
-        }
-        return moment(cell.obj.k, format);
-    }
-    return moment(cell.value, 'DD/MM/YYYY');
-}
 
 // TODO this should be in a "data-table" utility file
 function getColumnByName(name, columns) {

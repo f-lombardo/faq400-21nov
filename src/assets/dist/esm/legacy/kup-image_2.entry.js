@@ -21,7 +21,7 @@ var KupImage = /** @class */ (function () {
         return (h("div", { id: "image-wrapper", style: wrapperStyle }, h("img", { src: this.src, alt: this.alt }), badgesElem));
     };
     Object.defineProperty(KupImage, "style", {
-        get: function () { return "\@import url(https://cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css);*{-webkit-box-sizing:border-box;box-sizing:border-box}#image-wrapper{position:relative;display:inline-block}#image-wrapper img{width:100%;height:100%}"; },
+        get: function () { return "\@import url(https://cdn.materialdesignicons.com/4.5.95/css/materialdesignicons.min.css);*{-webkit-box-sizing:border-box;box-sizing:border-box}#image-wrapper{position:relative;display:inline-block}#image-wrapper img{width:100%;height:100%}"; },
         enumerable: true,
         configurable: true
     });

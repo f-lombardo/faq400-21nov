@@ -7,7 +7,7 @@ export class KupButton {
         this.showicon = true;
         this.rounded = false;
         this.transparent = false;
-        this.iconUrl = 'https://cdn.materialdesignicons.com/3.2.89/css/materialdesignicons.min.css';
+        this.iconUrl = 'https://cdn.materialdesignicons.com/4.5.95/css/materialdesignicons.min.css';
     }
     onBtnClickedHandler() {
         this.kupButtonClicked.emit({ id: this.ketchupButtonEl.dataset.id });
@@ -282,7 +282,7 @@ export class KupButton {
             },
             "attribute": "icon-url",
             "reflect": false,
-            "defaultValue": "'https://cdn.materialdesignicons.com/3.2.89/css/materialdesignicons.min.css'"
+            "defaultValue": "'https://cdn.materialdesignicons.com/4.5.95/css/materialdesignicons.min.css'"
         }
     }; }
     static get events() { return [{
@@ -296,7 +296,7 @@ export class KupButton {
                 "text": ""
             },
             "complexType": {
-                "original": "{\n        id: string;\n    }",
+                "original": "{\r\n        id: string;\r\n    }",
                 "resolved": "{ id: string; }",
                 "references": {}
             }

@@ -1,5 +1,5 @@
 import { EventEmitter } from '../../stencil.core';
-import { Column, KupDataTableCellButtonClick, GenericMap, GroupObject, LoadMoreMode, PaginatorPos, Row, RowAction, ShowGrid, SortObject, TableData, TotalsMap, KupDataTableSortedColumnIndexes } from './kup-data-table-declarations';
+import { Cell, Column, KupDataTableCellButtonClick, GenericMap, GroupObject, LoadMoreMode, PaginatorPos, Row, RowAction, ShowGrid, SortObject, TableData, TotalsMap, KupDataTableSortedColumnIndexes } from './kup-data-table-declarations';
 export declare class KupDataTable {
     columnsWidth: Array<{
         column: string;
@@ -77,7 +77,10 @@ export declare class KupDataTable {
      * name of the column with an open menu
      */
     private openedMenu;
+    private topFontSizePanelVisible;
+    private botFontSizePanelVisible;
     private density;
+    private fontsize;
     private topDensityPanelVisible;
     private botDensityPanelVisible;
     rowsPerPageHandler(newValue: number): void;
@@ -161,10 +164,25 @@ export declare class KupDataTable {
     }>;
     kupCellButtonClicked: EventEmitter<KupDataTableCellButtonClick>;
     kupDataTableSortedColumn: EventEmitter<KupDataTableSortedColumnIndexes>;
+    /**
+    * When a tooltip request initial data
+    */
+    kupLoadRequest: EventEmitter<{
+        cell: Cell;
+        tooltip: EventTarget;
+    }>;
+    /**
+    * When a tooltip request detail data
+    */
+    kupDetailRequest: EventEmitter<{
+        cell: Cell;
+        tooltip: EventTarget;
+    }>;
     onDocumentClick: () => void;
     componentWillLoad(): void;
     componentDidLoad(): void;
     componentDidUnload(): void;
+    private hasTooltip;
     private getColumns;
     private getVisibleColumns;
     private getGroupByName;
@@ -207,6 +225,7 @@ export declare class KupDataTable {
     private handleColumnSort;
     private moveSortedColumns;
     defaultSortingFunction(columns: Column[], receivingColumnIndex: number, sortedColumnIndex: number, useNewObject?: boolean): Promise<Column[]>;
+    private toggleFontSizeVisibility;
     private toggleDensityVisibility;
     private renderHeader;
     renderFooter(): any;
@@ -223,7 +242,9 @@ export declare class KupDataTable {
      */
     private renderCell;
     private renderLoadMoreButton;
+    private onCustomSettingsClick;
     private renderPaginator;
+    private renderFontSizePanel;
     private renderDensityPanel;
     render(): any;
 }

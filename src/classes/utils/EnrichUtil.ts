@@ -1,29 +1,29 @@
 export default class EnrichUtil {
-  static addObj(cell: Cell, type: string, param: string, code: string) {
-    cell.obj = { t: type, p: param, k: code };
+  static addObj(object: any, type: string, param: string, code: string) {
+    object.obj = { t: type, p: param, k: code };
 
     if (type === "D8") {
-      cell.obj = { t: type, p: param, k: cell.value };
+      object.obj = { t: type, p: param, k: object.value };
       switch (param) {
         case "*YYMD": {
-          var y = cell.value.substr(0, 4),
-            m = cell.value.substr(4, 2),
-            d = cell.value.substr(6, 2);
-          cell.value = d + "/" + m + "/" + y;
+          var y = object.value.substr(0, 4),
+            m = object.value.substr(4, 2),
+            d = object.value.substr(6, 2);
+          object.value = d + "/" + m + "/" + y;
           break;
         }
         case "*DMYY": {
-          (y = cell.value.substr(4, 4)),
-            (m = cell.value.substr(2, 2)),
-            (d = cell.value.substr(0, 2));
-          cell.value = d + "/" + m + "/" + y;
+          (y = object.value.substr(4, 4)),
+            (m = object.value.substr(2, 2)),
+            (d = object.value.substr(0, 2));
+          object.value = d + "/" + m + "/" + y;
           break;
         }
         case "*MDYY": {
-          (y = cell.value.substr(4, 4)),
-            (m = cell.value.substr(0, 2)),
-            (d = cell.value.substr(2, 2));
-          cell.value = d + "/" + m + "/" + y;
+          (y = object.value.substr(4, 4)),
+            (m = object.value.substr(0, 2)),
+            (d = object.value.substr(2, 2));
+          object.value = d + "/" + m + "/" + y;
           break;
         }
       }
@@ -31,13 +31,13 @@ export default class EnrichUtil {
     if (type === "V2") {
       switch (param) {
         case "SI/NO": {
-          cell.obj = { t: type, p: param, k: cell.value };
+          object.obj = { t: type, p: param, k: object.value };
           break;
         }
       }
     }
 
-    return cell;
+    return object;
   }
 
   static setCellIcon(cell: Cell, icon: string, iconcolor: string) {
