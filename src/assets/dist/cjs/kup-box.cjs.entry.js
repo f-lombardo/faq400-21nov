@@ -6,7 +6,7 @@ const __chunk_1 = require('./chunk-c31c1549.js');
 require('./chunk-d83edcd4.js');
 const __chunk_3 = require('./chunk-4f8b617c.js');
 const __chunk_4 = require('./chunk-333d207b.js');
-const __chunk_5 = require('./chunk-a2cd5f7a.js');
+const __chunk_6 = require('./chunk-a2cd5f7a.js');
 
 class KupBox {
     constructor(hostRef) {
@@ -565,7 +565,7 @@ class KupBox {
         }
         let paginator = null;
         if (this.pagination) {
-            paginator = (__chunk_1.h("kup-paginator", { max: this.filteredRows.length, perPage: this.pageSize, currentPage: this.currentPage, onKupPageChanged: (e) => this.handlePageChanged(e), mode: __chunk_5.PaginatorMode.SIMPLE }));
+            paginator = (__chunk_1.h("kup-paginator", { max: this.filteredRows.length, perPage: this.pageSize, currentPage: this.currentPage, onKupPageChanged: (e) => this.handlePageChanged(e), mode: __chunk_6.PaginatorMode.SIMPLE }));
         }
         let boxContent = null;
         if (this.rows.length === 0) {

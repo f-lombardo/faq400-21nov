@@ -310,7 +310,7 @@ export class KupGauge {
                 "tags": [],
                 "text": "Array of three elements to specify the color of the arcs."
             },
-            "defaultValue": "[\r\n        'var(--gau_first-color)',\r\n        'var(--gau_second-color)',\r\n        'var(--gau_third-color)',\r\n    ]"
+            "defaultValue": "[\n        'var(--gau_first-color)',\n        'var(--gau_second-color)',\n        'var(--gau_third-color)',\n    ]"
         },
         "firstThreshold": {
             "type": "number",
@@ -508,7 +508,7 @@ export class KupGauge {
                         "text": "kup-gauge.arcThickness",
                         "name": "see"
                     }],
-                "text": "Con be used change the viewbox of the SVG.\r\nBy manipulating this value, some customizations of the aspect of the gauge is achievable."
+                "text": "Con be used change the viewbox of the SVG.\nBy manipulating this value, some customizations of the aspect of the gauge is achievable."
             },
             "attribute": "size",
             "reflect": false,
@@ -526,7 +526,7 @@ export class KupGauge {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": "The current value of the gauge.\r\nThe gauge's needle points to the percentage based on this prop."
+                "text": "The current value of the gauge.\nThe gauge's needle points to the percentage based on this prop."
             },
             "attribute": "value",
             "reflect": false,
@@ -544,7 +544,7 @@ export class KupGauge {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": "The current size of gauge's value.\r\nCorrect values are: 0,1,2 or 3."
+                "text": "The current size of gauge's value.\nCorrect values are: 0,1,2 or 3."
             },
             "attribute": "value-size",
             "reflect": false,
@@ -580,7 +580,7 @@ export class KupGauge {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": "if true, ignore threasholds in gauge and show\r\ncolored value's arc."
+                "text": "if true, ignore threasholds in gauge and show\ncolored value's arc."
             },
             "attribute": "only-value",
             "reflect": false,

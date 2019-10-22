@@ -36,6 +36,7 @@ export declare class KupTooltip {
     private getLayout2;
     private getLayout3;
     private getInfos;
+    private positionRecalc;
     private createTooltip;
     render(): any;
 }

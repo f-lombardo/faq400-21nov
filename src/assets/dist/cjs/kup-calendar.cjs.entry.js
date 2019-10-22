@@ -5,7 +5,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 const __chunk_1 = require('./chunk-c31c1549.js');
 require('./chunk-d83edcd4.js');
 const __chunk_3 = require('./chunk-4f8b617c.js');
-const __chunk_6 = require('./chunk-a9d9f9b4.js');
+const __chunk_5 = require('./chunk-a9d9f9b4.js');
 
 /*!
 FullCalendar Core Package v4.3.1
@@ -13331,8 +13331,8 @@ class KupCalendar {
             __chunk_3.getColumnByName(this.getColumns(), this.startCol) &&
             __chunk_3.getColumnByName(this.getColumns(), this.endCol);
         return this.getRows().map((row) => {
-            const startDate = __chunk_6.formatToMomentDate(row.cells[this.dateCol]);
-            const endDate = __chunk_6.formatToMomentDate(row.cells[this.dateCol]);
+            const startDate = __chunk_5.formatToMomentDate(row.cells[this.dateCol]);
+            const endDate = __chunk_5.formatToMomentDate(row.cells[this.dateCol]);
             if (isHourRange) {
                 const startCell = row.cells[this.startCol];
                 const endCell = row.cells[this.endCol];

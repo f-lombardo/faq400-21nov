@@ -14,6 +14,7 @@ export declare class KupDataTable {
     filters: GenericMap;
     globalFilter: boolean;
     groups: Array<GroupObject>;
+    hoverScroll: boolean;
     /**
      * If table header is visible and this prop is set to true, the header will be visible while scrolling the table.
      * To make this work, it must be configured together with the data-table CSS property --kup-data-table_header-offset.
@@ -73,6 +74,10 @@ export declare class KupDataTable {
     private currentRowsPerPage;
     private selectedRows;
     private groupState;
+    scrollOnHoverStatus: number;
+    scrollOnHoverX: number;
+    scrollOnHoverY: number;
+    scrollTimeout: any;
     /**
      * name of the column with an open menu
      */
@@ -165,15 +170,15 @@ export declare class KupDataTable {
     kupCellButtonClicked: EventEmitter<KupDataTableCellButtonClick>;
     kupDataTableSortedColumn: EventEmitter<KupDataTableSortedColumnIndexes>;
     /**
-    * When a tooltip request initial data
-    */
+     * When a tooltip request initial data
+     */
     kupLoadRequest: EventEmitter<{
         cell: Cell;
         tooltip: EventTarget;
     }>;
     /**
-    * When a tooltip request detail data
-    */
+     * When a tooltip request detail data
+     */
     kupDetailRequest: EventEmitter<{
         cell: Cell;
         tooltip: EventTarget;
@@ -246,5 +251,8 @@ export declare class KupDataTable {
     private renderPaginator;
     private renderFontSizePanel;
     private renderDensityPanel;
+    private handleScroll;
+    private startScrollOnHover;
+    private killScroll;
     render(): any;
 }

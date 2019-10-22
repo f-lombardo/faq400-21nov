@@ -160,7 +160,7 @@ export class KupPortal {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": "Reference to the html element which is using the portal.\r\nIt must be a root of a web component."
+                "text": "Reference to the html element which is using the portal.\nIt must be a root of a web component."
             }
         },
         "refOffset": {

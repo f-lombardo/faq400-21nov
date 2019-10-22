@@ -161,7 +161,7 @@ export class KupImageButton {
                 "text": ""
             },
             "complexType": {
-                "original": "{\r\n        selectedImages: Image[];\r\n    }",
+                "original": "{\n        selectedImages: Image[];\n    }",
                 "resolved": "{ selectedImages: Image[]; }",
                 "references": {
                     "Image": {

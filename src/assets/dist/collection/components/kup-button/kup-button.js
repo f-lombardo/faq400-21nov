@@ -296,7 +296,7 @@ export class KupButton {
                 "text": ""
             },
             "complexType": {
-                "original": "{\r\n        id: string;\r\n    }",
+                "original": "{\n        id: string;\n    }",
                 "resolved": "{ id: string; }",
                 "references": {}
             }

@@ -426,7 +426,7 @@ export class KupCalendar {
                 "text": "When a date is dropped"
             },
             "complexType": {
-                "original": "{\r\n        fromDate: {\r\n            start: Date;\r\n            end: Date;\r\n        };\r\n        toDate: {\r\n            start: Date;\r\n            end: Date;\r\n        };\r\n    }",
+                "original": "{\n        fromDate: {\n            start: Date;\n            end: Date;\n        };\n        toDate: {\n            start: Date;\n            end: Date;\n        };\n    }",
                 "resolved": "{ fromDate: { start: Date; end: Date; }; toDate: { start: Date; end: Date; }; }",
                 "references": {
                     "Date": {
@@ -445,7 +445,7 @@ export class KupCalendar {
                 "text": "When the navigation change"
             },
             "complexType": {
-                "original": "{\r\n        from: Date;\r\n        to: Date;\r\n    }",
+                "original": "{\n        from: Date;\n        to: Date;\n    }",
                 "resolved": "{ from: Date; to: Date; }",
                 "references": {
                     "Date": {

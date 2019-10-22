@@ -412,7 +412,7 @@ export class KupCombo {
             "optional": true,
             "docs": {
                 "tags": [],
-                "text": "An arbitrary object object which can be passed to the component.\r\nIt will be returned when ketchupComboSelected event is fired, inside detail.info.obj"
+                "text": "An arbitrary object object which can be passed to the component.\nIt will be returned when ketchupComboSelected event is fired, inside detail.info.obj"
             }
         },
         "valueField": {
@@ -448,7 +448,7 @@ export class KupCombo {
                         "text": "kup-portal readme for more details.",
                         "name": "see"
                     }],
-                "text": "If true, the combobox uses a Stencil portal to create the menu.\r\nPlease use this feature carefully, only if needed."
+                "text": "If true, the combobox uses a Stencil portal to create the menu.\nPlease use this feature carefully, only if needed."
             },
             "attribute": "use-portal",
             "reflect": false,

@@ -152,7 +152,7 @@ export class KupDash {
                 "text": ""
             },
             "complexType": {
-                "original": "{\t\t\r\n    }",
+                "original": "{\t\t\n    }",
                 "resolved": "{}",
                 "references": {}
             }

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 const __chunk_1 = require('./chunk-c31c1549.js');
-const __chunk_5 = require('./chunk-a2cd5f7a.js');
+const __chunk_6 = require('./chunk-a2cd5f7a.js');
 
 class KupPaginator {
     constructor(hostRef) {
@@ -12,7 +12,7 @@ class KupPaginator {
         this.perPage = 10;
         this.selectedPerPage = 10;
         this.currentPage = 1;
-        this.mode = __chunk_5.PaginatorMode.FULL;
+        this.mode = __chunk_6.PaginatorMode.FULL;
         this.kupPageChanged = __chunk_1.createEvent(this, "kupPageChanged", 6);
         this.kupRowsPerPageChanged = __chunk_1.createEvent(this, "kupRowsPerPageChanged", 6);
     }

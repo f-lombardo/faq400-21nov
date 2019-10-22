@@ -14,6 +14,7 @@ export class KupDataTable {
         this.filters = {};
         this.globalFilter = false;
         this.groups = [];
+        this.hoverScroll = true;
         /**
          * If table header is visible and this prop is set to true, the header will be visible while scrolling the table.
          * To make this work, it must be configured together with the data-table CSS property --kup-data-table_header-offset.
@@ -71,6 +72,10 @@ export class KupDataTable {
         this.currentRowsPerPage = 10;
         this.selectedRows = [];
         this.groupState = {};
+        this.scrollOnHoverStatus = 0;
+        this.scrollOnHoverX = 0;
+        this.scrollOnHoverY = 0;
+        this.scrollTimeout = 'off';
         /**
          * name of the column with an open menu
          */
@@ -172,16 +177,16 @@ export class KupDataTable {
         document.removeEventListener('click', this.onDocumentClick);
     }
     hasTooltip(cell) {
-        return cell.obj
-            && cell.obj.t !== ""
-            && !isBar(cell.obj)
-            && !isButton(cell.obj)
-            && !isCheckbox(cell.obj)
-            && !isIcon(cell.obj)
-            && !isImage(cell.obj)
-            && !isLink(cell.obj)
-            && !isNumber(cell.obj)
-            && !isVoCodver(cell.obj);
+        return (cell.obj &&
+            cell.obj.t !== '' &&
+            !isBar(cell.obj) &&
+            !isButton(cell.obj) &&
+            !isCheckbox(cell.obj) &&
+            !isIcon(cell.obj) &&
+            !isImage(cell.obj) &&
+            !isLink(cell.obj) &&
+            !isNumber(cell.obj) &&
+            !isVoCodver(cell.obj));
     }
     getColumns() {
         return this.data && this.data.columns
@@ -1108,13 +1113,13 @@ export class KupDataTable {
             style = cell.style;
         }
         if (this.hasTooltip(cell)) {
-            content = h("kup-tooltip", { onKupTooltipLoadData: (ev) => this.kupLoadRequest.emit({
+            content = (h("kup-tooltip", { class: "datatable-tooltip", onKupTooltipLoadData: (ev) => this.kupLoadRequest.emit({
                     cell: cell,
-                    tooltip: ev.srcElement
+                    tooltip: ev.srcElement,
                 }), onKupTooltipLoadDetail: (ev) => this.kupDetailRequest.emit({
                     cell: cell,
-                    tooltip: ev.srcElement
-                }) }, content);
+                    tooltip: ev.srcElement,
+                }) }, content));
         }
         return (h("span", { class: clazz, style: style }, content));
     }
@@ -1231,6 +1236,111 @@ export class KupDataTable {
                     }, onClick: () => (this.density = 'big'), role: "button", tabindex: "0", "aria-pressed": this.density === 'big' ? 'true' : 'false' },
                     h("span", { title: "Ampia", class: "density-icon-panel mdi mdi-view-sequential" })))));
     }
+    handleScroll(event) {
+        this.scrollOnHoverX = event.clientX;
+        this.scrollOnHoverY = event.clientY;
+        let el = event.target
+            .closest('.hover-scrolling-parent')
+            .querySelectorAll('.hover-scrolling-el')[0];
+        let arrowContainter = el.querySelectorAll('#container-scrolling-arrow')[0];
+        let trueWidth = el.clientWidth;
+        arrowContainter.style.top = this.scrollOnHoverY + 'px';
+        arrowContainter.style.left = this.scrollOnHoverX + 'px';
+        if (trueWidth === 0) {
+            trueWidth = el.offsetWidth;
+        }
+        if (el.scrollWidth > trueWidth + 10) {
+            if (trueWidth !== 0 && this.scrollTimeout === 'off') {
+                let percRight = trueWidth - trueWidth * 0.1;
+                let percLeft = trueWidth - trueWidth * 0.9;
+                let elOffset = this.scrollOnHoverX - el.offsetLeft;
+                let maxScrollLeft = el.scrollWidth - trueWidth;
+                var leftArrow = el.querySelectorAll('#container-scrolling-arrow .left-scrolling-arrow');
+                var rightArrow = el.querySelectorAll('#container-scrolling-arrow .right-scrolling-arrow');
+                if (elOffset < percLeft) {
+                    if (el.scrollLeft !== 0) {
+                        for (let i = 0; i < leftArrow.length; i++) {
+                            leftArrow[i].classList.add('activated');
+                        }
+                        this.scrollTimeout = setTimeout(() => {
+                            this.startScrollOnHover(el, leftArrow, maxScrollLeft, arrowContainter, percRight, percLeft, event, 'left');
+                        }, 500);
+                    }
+                }
+                else if (elOffset > percRight) {
+                    if (el.scrollLeft !== maxScrollLeft) {
+                        for (let i = 0; i < rightArrow.length; i++) {
+                            rightArrow[i].classList.add('activated');
+                        }
+                        this.scrollTimeout = setTimeout(() => {
+                            this.startScrollOnHover(el, rightArrow, maxScrollLeft, arrowContainter, percRight, percLeft, event, 'right');
+                        }, 500);
+                    }
+                }
+            }
+        }
+    }
+    ;
+    startScrollOnHover(el, arrow, maxScrollLeft, arrowContainter, percRight, percLeft, event, direction) {
+        let elOffset = this.scrollOnHoverX - el.offsetLeft;
+        if (this.scrollTimeout === 'off' ||
+            (elOffset > percLeft && elOffset < percRight)) {
+            this.killScroll(el);
+            return;
+        }
+        if (direction === 'right' && percRight > elOffset) {
+            this.killScroll(el);
+            return;
+        }
+        if (direction === 'left' && percLeft < elOffset) {
+            this.killScroll(el);
+            return;
+        }
+        var step = el.scrollLeft;
+        arrowContainter.style.top = this.scrollOnHoverY + 'px';
+        arrowContainter.style.left = this.scrollOnHoverX + 'px';
+        for (let i = 0; i < arrow.length; i++) {
+            arrow[i].classList.add('animated');
+        }
+        var firstArrow = arrow[0];
+        if (firstArrow.classList.contains('left-scrolling-arrow')) {
+            if (step === 0) {
+                this.killScroll(el);
+                return;
+            }
+            step = step - parseInt('1', 10); //subtracting 1 without this trick caused Safari to have problems: it subtracted decimal values instead of 1
+        }
+        else {
+            if (step === maxScrollLeft) {
+                this.killScroll(el);
+                return;
+            }
+            step = step + parseInt('1', 10); //subtracting 1 without this trick caused Safari to have problems: it subtracted decimal values instead of 1
+        }
+        el.scrollLeft = step;
+        setTimeout(() => {
+            this.startScrollOnHover(el, arrow, maxScrollLeft, arrowContainter, percRight, percLeft, event, direction);
+        }, 50);
+        //Doppio lancio per aumentare la velocità ad ogni giro (in cascata)
+        setTimeout(() => {
+            this.startScrollOnHover(el, arrow, maxScrollLeft, arrowContainter, percRight, percLeft, event, direction);
+        }, 250);
+    }
+    killScroll(el) {
+        this.scrollTimeout = 'off';
+        clearTimeout(this.scrollTimeout);
+        var leftArrow = el.querySelectorAll('#container-scrolling-arrow .left-scrolling-arrow');
+        var rightArrow = el.querySelectorAll('#container-scrolling-arrow .right-scrolling-arrow');
+        for (let i = 0; i < leftArrow.length; i++) {
+            leftArrow[i].classList.remove('activated');
+            leftArrow[i].classList.remove('animated');
+        }
+        for (let i = 0; i < rightArrow.length; i++) {
+            rightArrow[i].classList.remove('activated');
+            rightArrow[i].classList.remove('animated');
+        }
+    }
+    ;
     render() {
         // resetting rows
         this.renderedRows = [];
@@ -1296,17 +1406,24 @@ export class KupDataTable {
         };
         tableClass[`density-${this.density}`] = true;
         tableClass[`fontsize-${this.fontsize}`] = true;
-        return (h("div", { id: "data-table-wrapper" },
+        return (h("div", { id: "data-table-wrapper", class: "hover-scrolling-parent" },
             h("div", { class: "above-wrapper" },
                 paginatorTop,
                 globalFilter),
-            h("div", { class: "below-wrapper" },
+            h("div", { class: "below-wrapper hover-scrolling-el", onMouseMove: (e) => this.handleScroll(e), onMouseLeave: (e) => this.killScroll(e.target) },
                 groupChips,
                 h("table", { class: tableClass },
                     h("thead", { hidden: !this.showHeader, ref: (el) => (this.theadRef = el) },
                         h("tr", null, header)),
                     h("tbody", null, rows),
-                    footer)),
+                    footer),
+                h("div", { id: "container-scrolling-arrow" },
+                    h("div", { class: "left-scrolling-arrow arrow-3" }),
+                    h("div", { class: "left-scrolling-arrow arrow-2" }),
+                    h("div", { class: "left-scrolling-arrow arrow-1" }),
+                    h("div", { class: "right-scrolling-arrow arrow-1" }),
+                    h("div", { class: "right-scrolling-arrow arrow-2" }),
+                    h("div", { class: "right-scrolling-arrow arrow-3" }))),
             paginatorBottom));
     }
     static get is() { return "kup-data-table"; }
@@ -1322,7 +1439,7 @@ export class KupDataTable {
             "type": "unknown",
             "mutable": false,
             "complexType": {
-                "original": "Array<{\r\n        column: string;\r\n        width: number;\r\n    }>",
+                "original": "Array<{\n        column: string;\n        width: number;\n    }>",
                 "resolved": "{ column: string; width: number; }[]",
                 "references": {
                     "Array": {
@@ -1457,6 +1574,24 @@ export class KupDataTable {
             },
             "defaultValue": "[]"
         },
+        "hoverScroll": {
+            "type": "boolean",
+            "mutable": false,
+            "complexType": {
+                "original": "boolean",
+                "resolved": "boolean",
+                "references": {}
+            },
+            "required": false,
+            "optional": false,
+            "docs": {
+                "tags": [],
+                "text": ""
+            },
+            "attribute": "hover-scroll",
+            "reflect": false,
+            "defaultValue": "true"
+        },
         "headerIsPersistent": {
             "type": "boolean",
             "mutable": false,
@@ -1481,7 +1616,7 @@ export class KupDataTable {
                         "text": "https://caniuse.com/#feat=css-sticky",
                         "name": "see"
                     }],
-                "text": "If table header is visible and this prop is set to true, the header will be visible while scrolling the table.\r\nTo make this work, it must be configured together with the data-table CSS property --kup-data-table_header-offset.\r\nIt uses CSS position: sticky."
+                "text": "If table header is visible and this prop is set to true, the header will be visible while scrolling the table.\nTo make this work, it must be configured together with the data-table CSS property --kup-data-table_header-offset.\nIt uses CSS position: sticky."
             },
             "attribute": "header-is-persistent",
             "reflect": true,
@@ -1541,7 +1676,7 @@ export class KupDataTable {
                         "text": "loadMoreLimit",
                         "name": "see"
                     }],
-                "text": "The number of records which will be requested to be downloaded when clicking on the load more button.\r\n\r\nThis property is regulated also by loadMoreMode."
+                "text": "The number of records which will be requested to be downloaded when clicking on the load more button.\n\nThis property is regulated also by loadMoreMode."
             },
             "attribute": "load-more-step",
             "reflect": false,
@@ -1570,7 +1705,7 @@ export class KupDataTable {
                         "text": "loadMoreLimit",
                         "name": "see"
                     }],
-                "text": "Establish the modality of how many new records will be downloaded.\r\n\r\nThis property is regulated also by loadMoreStep."
+                "text": "Establish the modality of how many new records will be downloaded.\n\nThis property is regulated also by loadMoreStep."
             },
             "attribute": "load-more-mode",
             "reflect": false,
@@ -1791,7 +1926,7 @@ export class KupDataTable {
             "optional": false,
             "docs": {
                 "tags": [],
-                "text": "If set to true, when a column is dragged to be sorted the component directly mutates the data.columns property\r\nand then fires the event"
+                "text": "If set to true, when a column is dragged to be sorted the component directly mutates the data.columns property\nand then fires the event"
             },
             "attribute": "sortable-columns-mutate-data",
             "reflect": false,
@@ -1824,6 +1959,10 @@ export class KupDataTable {
         "currentRowsPerPage": {},
         "selectedRows": {},
         "groupState": {},
+        "scrollOnHoverStatus": {},
+        "scrollOnHoverX": {},
+        "scrollOnHoverY": {},
+        "scrollTimeout": {},
         "openedMenu": {},
         "topFontSizePanelVisible": {},
         "botFontSizePanelVisible": {},
@@ -1843,7 +1982,7 @@ export class KupDataTable {
                 "text": "When a row is auto selected via selectRow prop"
             },
             "complexType": {
-                "original": "{\r\n        selectedRow: Row;\r\n    }",
+                "original": "{\n        selectedRow: Row;\n    }",
                 "resolved": "{ selectedRow: Row; }",
                 "references": {
                     "Row": {
@@ -1863,7 +2002,7 @@ export class KupDataTable {
                 "text": "When a row is selected"
             },
             "complexType": {
-                "original": "{\r\n        selectedRows: Array<Row>;\r\n        clickedColumn: string;\r\n    }",
+                "original": "{\n        selectedRows: Array<Row>;\n        clickedColumn: string;\n    }",
                 "resolved": "{ selectedRows: Row[]; clickedColumn: string; }",
                 "references": {
                     "Array": {
@@ -1886,7 +2025,7 @@ export class KupDataTable {
                 "text": "When cell option is clicked"
             },
             "complexType": {
-                "original": "{\r\n        column: string;\r\n        row: Row;\r\n    }",
+                "original": "{\n        column: string;\n        row: Row;\n    }",
                 "resolved": "{ column: string; row: Row; }",
                 "references": {
                     "Row": {
@@ -1921,7 +2060,7 @@ export class KupDataTable {
                 "text": "When a row action is clicked"
             },
             "complexType": {
-                "original": "{\r\n        type: 'default' | 'variable' | 'expander';\r\n        row: Row;\r\n        action?: RowAction;\r\n        index?: number;\r\n    }",
+                "original": "{\n        type: 'default' | 'variable' | 'expander';\n        row: Row;\n        action?: RowAction;\n        index?: number;\n    }",
                 "resolved": "{ type: \"default\" | \"variable\" | \"expander\"; row: Row; action?: RowAction; index?: number; }",
                 "references": {
                     "Row": {
@@ -1945,7 +2084,7 @@ export class KupDataTable {
                 "text": ""
             },
             "complexType": {
-                "original": "{\r\n        loadItems: number;\r\n    }",
+                "original": "{\n        loadItems: number;\n    }",
                 "resolved": "{ loadItems: number; }",
                 "references": {}
             }
@@ -2000,7 +2139,7 @@ export class KupDataTable {
                 "text": "When a tooltip request initial data"
             },
             "complexType": {
-                "original": "{\r\n        cell: Cell,\r\n        tooltip: EventTarget\r\n    }",
+                "original": "{\n        cell: Cell;\n        tooltip: EventTarget;\n    }",
                 "resolved": "{ cell: Cell; tooltip: EventTarget; }",
                 "references": {
                     "Cell": {
@@ -2023,7 +2162,7 @@ export class KupDataTable {
                 "text": "When a tooltip request detail data"
             },
             "complexType": {
-                "original": "{\r\n        cell: Cell,\r\n        tooltip: EventTarget\r\n    }",
+                "original": "{\n        cell: Cell;\n        tooltip: EventTarget;\n    }",
                 "resolved": "{ cell: Cell; tooltip: EventTarget; }",
                 "references": {
                     "Cell": {

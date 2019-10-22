@@ -1,19 +1,25 @@
 /**
 * @Prop --tlt_background, --kup-tlt_background: tooltip background
+* @Prop --tlt_border_color, --kup-tlt_background: tooltip border
 * @Prop --tlt_detail-lbl-color, --kup-tlt_detail-lbl-color: tooltip detail label color
+* @Prop --tlt_detail-lbl-color, --kup-tlt_detail-lbl-color: tooltip detail text color
 * @Prop --tlt_shadow, --kup-tlt_shadow: tooltip shadow
+* @Prop --tlt_display, --kup-tlt_display: tooltip display
 */
 :host {
   --tlt_background: var(--kup-tlt_background, #ffffff);
-  --tlt_detail-lbl-color: var(--kup-detail-lbl-color, #888888);
+  --tlt_border_color: var(--kup-tlt_border-color, #cccccc);
+  --tlt_detail-lbl-color: var(--kup-detail-lbl-color, #616161);
+  --tlt_detail-txt-color: var(--kup-detail-txt-color, #888888);
   --tlt_shadow: var(--kup-tlt_shadow, 0px 0px 7.5px 0px rgba(128, 128, 128, 0.5));
+  --tlt_display: var(--kup-tlt_display, inline-block);
 }
 :host #wrapper {
   position: relative;
-  display: inline-block;
+  display: var(--tlt_display);
 }
 :host #wrapper #tooltip {
-  position: absolute;
+  position: fixed;
   background: var(--tlt_background);
   z-index: 1000;
   box-shadow: var(--tlt_shadow);
@@ -23,6 +29,7 @@
 :host #wrapper #tooltip #main-content {
   margin: 20px;
   display: flex;
+  color: var(--tlt_detail-txt-color);
 }
 :host #wrapper #tooltip #main-content .left {
   width: 75px;
@@ -56,7 +63,7 @@
   transition: max-height 500ms ease-out, opacity 500ms ease-out;
 }
 :host #wrapper #tooltip #detail.visible {
-  border-top: 1px solid #ccc;
+  border-top: 1px solid var(--tlt_border_color);
   padding: 20px;
   max-height: 500px;
   opacity: 1;

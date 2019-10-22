@@ -6,7 +6,7 @@ const __chunk_1 = require('./chunk-c31c1549.js');
 require('./chunk-d83edcd4.js');
 const __chunk_3 = require('./chunk-4f8b617c.js');
 const __chunk_4 = require('./chunk-333d207b.js');
-const __chunk_6 = require('./chunk-a9d9f9b4.js');
+const __chunk_5 = require('./chunk-a9d9f9b4.js');
 
 var ChartType;
 (function (ChartType) {
@@ -75,14 +75,14 @@ const convertRows = (data, columns, showMarks) => {
                 if (cell && cell.obj) {
                     const addMark = showMarks && index > 0;
                     if (__chunk_4.isNumber(cell.obj)) {
-                        const value = __chunk_6.formatToNumber(cell);
+                        const value = __chunk_5.formatToNumber(cell);
                         currentRow.push(value);
                         if (addMark) {
                             currentRow.push(value.toString());
                         }
                     }
                     else if (__chunk_4.isDate(cell.obj)) {
-                        const value = __chunk_6.formatToMomentDate(cell).toDate();
+                        const value = __chunk_5.formatToMomentDate(cell).toDate();
                         currentRow.push(value);
                         if (addMark) {
                             currentRow.push(value.toString());
