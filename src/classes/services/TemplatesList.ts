@@ -13,8 +13,13 @@ export default class TemplatesList extends Service {
         .then((data: any) => {
           if (data.columns) {
             data.columns.unshift({ name: "BT01", title: "" });
+            data.columns.forEach((column: any) => {
+              if (column.name == "SIZE") {
+                column = EnrichUtil.addObj(column, "NR", "", "");
+              }
+              return column;
+            });
           }
-
           if (data.rows) {
             data.rows.forEach((row: any) => {
               let name: Cell = row.cells["NAME"];
@@ -26,7 +31,7 @@ export default class TemplatesList extends Service {
               let type: Cell = row.cells["TYPE"];
               type = EnrichUtil.addObj(type, "", "", "");
               let size: Cell = row.cells["SIZE"];
-              size = EnrichUtil.addObj(size, "", "", "");
+              size = EnrichUtil.addObj(size, "NR", "", "");
 
               // Button 01
               let button01: Cell = {

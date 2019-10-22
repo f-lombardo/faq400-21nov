@@ -19,7 +19,7 @@ export default class FunManager {
             type: "CONFIRM",
             text: uisup.getMsg()
           }),
-          service[method].bind(service)
+          fun
         );
         resolve();
       } else {

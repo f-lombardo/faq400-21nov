@@ -15,6 +15,20 @@ export default class QueueRabbit extends Service {
           if (data.columns) {
             data.columns.unshift({ name: "BT02", title: "" });
             data.columns.unshift({ name: "BT01", title: "" });
+
+            data.columns.forEach((column: any) => {
+              if (
+                column.name == "READY" ||
+                column.name == "UNACKED" ||
+                column.name == "TOTAL" ||
+                column.name == "INCOMING" ||
+                column.name == "DELIVER" ||
+                column.name == "ACK"
+              ) {
+                column = EnrichUtil.addObj(column, "NR", "", "");
+              }
+              return column;
+            });
           }
           if (data.rows) {
             data.rows.forEach((row: any) => {
@@ -22,18 +36,18 @@ export default class QueueRabbit extends Service {
               name = EnrichUtil.addObj(name, "", "", "");
               let state: Cell = row.cells["STATE"];
               state = EnrichUtil.addObj(state, "", "", "");
-              let reay: Cell = row.cells["READY"];
-              reay = EnrichUtil.addObj(reay, "", "", "");
+              let ready: Cell = row.cells["READY"];
+              ready = EnrichUtil.addObj(ready, "NR", "", "");
               let ucred: Cell = row.cells["UNACKED"];
-              ucred = EnrichUtil.addObj(ucred, "", "", "");
+              ucred = EnrichUtil.addObj(ucred, "NR", "", "");
               let tot: Cell = row.cells["TOTAL"];
-              tot = EnrichUtil.addObj(tot, "", "", "");
+              tot = EnrichUtil.addObj(tot, "NR", "", "");
               let incoming: Cell = row.cells["INCOMING"];
-              incoming = EnrichUtil.addObj(incoming, "", "", "");
+              incoming = EnrichUtil.addObj(incoming, "NR", "", "");
               let deliver: Cell = row.cells["DELIVER"];
-              deliver = EnrichUtil.addObj(deliver, "", "", "");
+              deliver = EnrichUtil.addObj(deliver, "NR", "", "");
               let ack: Cell = row.cells["ACK"];
-              ack = EnrichUtil.addObj(ack, "", "", "");
+              ack = EnrichUtil.addObj(ack, "NR", "", "");
 
               // Buttons
               // Button 01
