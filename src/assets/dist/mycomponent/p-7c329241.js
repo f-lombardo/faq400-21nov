@@ -1,0 +1,1 @@
+import{m as Y,n as o}from"./p-93a43134.js";function a(Y){return Y.obj?o(Y.obj.k).value():o(Y.value).value()}function t(o){let a="YYYYMMDD";if(o.obj){const t=o.obj;return"D8"===t.t&&"*DMYY"===t.p&&(a="DDMMYYYY"),Y(o.obj.k,a)}return Y(o.value,"DD/MM/YYYY")}export{a,t as f};

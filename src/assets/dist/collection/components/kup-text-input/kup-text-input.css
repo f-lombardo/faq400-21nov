@@ -1,0 +1,86 @@
+/**
+* @prop --itx_color, --kup-text-input_color: Set color of text
+* @prop --itx_font-size, --kup-text-input_font-size: Set height of the font and the svg icon
+* @prop --itx_border-color, --kup-text-input_border-color: Set normal border color of the input
+* @prop --itx_border-color--selected, --kup-text-input_border-color: Set color of the border when focused or hovered
+* @prop --itx_tr-duration, --kup-text-input_transition-duration: Set all transitions duration
+* @prop --itx_icon-color, --kup-text-input_icon-color: Set icon color
+* @prop --itx_icon-color--hover, --kup-text-input_icon-color--hover: Set icon color when hovered
+* @prop --itx_placeholder-color, --kup-text-input_placeholder-color: Set placeholder text color
+* @prop --itx_background-color, --kup-text-input_background-color: Sets the background color of the input text
+*/
+:host {
+  --itx_color: var(--kup-text-input_color, #000);
+  --itx_font-size: var(--kup-text-input_font-size, 1rem);
+  --itx_border-color: var(--kup-text-input_border-color, #808080);
+  --itx_border-color--selected: var(
+    --kup-text-input_border-color--selected,
+    #4e908f
+  );
+  --itx_tr-duration: var(--kup-text-input_transition-duration, 0.6s);
+  --itx_icon-color: var(--kup-text-input_icon-color, #808080);
+  --itx_icon-color--hover: var(
+    --kup-text-input_icon-color--hover,
+    #676767
+  );
+  --itx_placeholder-color: var(--kup-text-input_placeholder-color, #bebebe);
+  --itx_background-color: var(--kup-text-input_background-color, transparent);
+  display: inline-block;
+}
+
+label {
+  margin-right: 0.5rem;
+}
+
+.kup-input-text {
+  color: var(--itx_color);
+  background-color: transparent;
+  border: none;
+  outline: none;
+  position: relative;
+  transition: background-color var(--itx_tr-duration);
+  z-index: 0;
+}
+.kup-input-text__input-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 0.2rem 0.4rem;
+  background-color: var(--itx_background-color);
+  border: 1px solid var(--itx_border-color);
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+.kup-input-text__input-wrapper .kup-input-text {
+  font-size: var(--itx_font-size);
+}
+.kup-input-text__input-wrapper.focused {
+  border-color: var(--itx_border-color--selected);
+}
+.kup-input-text__container {
+  display: inline-block;
+  position: relative;
+  z-index: 0;
+}
+.kup-input-text::placeholder {
+  color: var(--itx_placeholder-color);
+}
+.kup-input-text__clear {
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  outline: none;
+  z-index: 1;
+  padding: 0;
+}
+.kup-input-text__clear > svg {
+  fill: var(--itx_icon-color);
+  height: var(--itx_font-size);
+  transition: fill var(--itx_tr-duration);
+  width: var(--itx_font-size);
+}
+.kup-input-text__clear:hover > svg {
+  fill: var(--itx_icon-color--hover);
+}
