@@ -33,9 +33,11 @@ export default class FLD extends BasicComponent {
       dyn.targets = d.targets;
 
       // adding implicit variables
-      dyn.addImplictVariable({ key: "T1", value: "" });
-      dyn.addImplictVariable({ key: "P1", value: "" });
-      dyn.addImplictVariable({ key: "K1", value: $event.detail.value.value });
+      if ($event.detail.value) {
+        dyn.addImplictVariable({ key: "T1", value: "" });
+        dyn.addImplictVariable({ key: "P1", value: "" });
+        dyn.addImplictVariable({ key: "K1", value: $event.detail.value.value });
+      }
 
       this.$dynamismManager.execute(this, dyn);
     });
@@ -67,6 +69,7 @@ export default class FLD extends BasicComponent {
       console.log("message", message);
       Vue.prototype.$messageManager.show(message);
     });
+    this.onFldChange($event);
   }
 }
 </script>
