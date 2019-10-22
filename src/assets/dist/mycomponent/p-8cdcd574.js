@@ -1,1 +1,0 @@
-var l;!function(l){l.SIMPLE="simple",l.FULL="full"}(l||(l={}));export{l as P};
