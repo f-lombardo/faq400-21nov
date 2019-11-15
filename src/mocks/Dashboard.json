@@ -1,0 +1,87 @@
+{
+  "type": "EXD",
+  "id": "SCHINF",
+  "title": "Scheda Dashboard",
+  "fun": "F(EXD;*SCO;) 2(MB;SCP_SCH;[K1])",
+  "loaded": true,
+  "layout": "column",
+  "sections": [{
+      "components": [{
+        "type": "EXD",
+        "layout": "row",
+        "id": "DASH1",
+        "loaded": true,
+        "sections": [{
+            "components": [{
+              "type": "EXB",
+              "id": "TITOPE",
+              "title": "Operations",
+              "loaded": true,
+              "fun": "F(EXB;DASHBOARD;OPERLIST)",
+              "options": {},
+              "data": {},
+              "messages": [],
+              "actions": {},
+              "variables": [],
+              "dynamisms": []
+            }]
+          },
+          {
+            "components": [{
+              "type": "EXB",
+              "id": "TITMAN",
+              "title": "Manufacturing Systems",
+              "loaded": true,
+              "fun": "F(EXB;DASHBOARD;MANULIST)",
+              "options": {},
+              "data": {},
+              "messages": [],
+              "actions": {},
+              "variables": [],
+              "dynamisms": []
+            }]
+          }
+        ]
+      }]
+    },
+    {
+      "components": [{
+        "type": "EXD",
+        "layout": "row",
+        "id": "DASH2",
+        "loaded": true,
+        "sections": [{
+            "components": [{
+              "type": "EXB",
+              "id": "TIT37L",
+              "title": "Administration Systems",
+              "loaded": true,
+              "fun": "F(EXB;DASHBOARD;ADMILIST)",
+              "options": {},
+              "data": {},
+              "messages": [],
+              "actions": {},
+              "variables": [],
+              "dynamisms": []
+            }]
+          },
+          {
+            "components": [{
+              "type": "EXB",
+              "id": "TIT38L",
+              "title": "Software Support",
+              "loaded": true,
+              "fun": "F(EXB;DASHBOARD;SOFTLIST)",
+              "options": {},
+              "data": {},
+              "messages": [],
+              "actions": {},
+              "variables": [],
+              "dynamisms": []
+            }]
+          }
+        ]
+      }]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "type": "EXD",
+  "id": "SCHINF",
+  "title": "All",
+  "loaded": true,
+  "layout": "column",
+  "sections": [{
+    "id": "SALL",
+    "components": [{
+      "type": "EXB",
+      "id": "TITALL",
+      "title": "All Employees",
+      "loaded": true,
+      "fun": "F(EXD;ALL;LIST)",
+      "options": {},
+      "data": {},
+      "messages": [],
+      "actions": {},
+      "variables": [],
+      "dynamisms": []
+    }]
+  }]
+}

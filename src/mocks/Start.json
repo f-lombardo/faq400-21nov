@@ -1,0 +1,132 @@
+{
+  "type": "EXD",
+  "id": "START",
+  "title": "Scheda iniziale FAQ400 - November 21",
+  "loaded": true,
+  "layout": "column",
+  "sections": [{
+      "id": "S1",
+      "dim": "10%",
+      "components": [{
+        "type": "LAB",
+        "id": "TITLAB",
+        "title": "*NONE",
+        "data": [{
+          "value": "FAQ400 - November 21",
+          "options": false
+        }]
+      }]
+    },
+    {
+      "id": "S2",
+      "dim": "10%",
+      "components": [{
+        "type": "FLD",
+        "id": "SELFLD",
+        "title": "*NONE",
+        "fun": "",
+        "loaded": true,
+        "options": {
+          "FLD": {
+            "default": {
+              "type": "rad",
+              "showSubmit": false,
+              "valueField": "value",
+              "displayedField": "value",
+              "initialValue": {
+                "value": "Dashboard"
+              },
+              "extensions": {
+                "minQueryLength": 4,
+                "forceSelection": true
+              }
+            }
+          }
+        },
+        "data": [{
+            "value": "Dashboard",
+            "options": false,
+            "obj": {
+              "t": "MB",
+              "p": "SCP_SCH",
+              "k": "DASH"
+            },
+            "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
+            "children": []
+          },
+          {
+            "value": "All",
+            "options": true,
+            "obj": {
+              "t": "MB",
+              "p": "SCP_SCH",
+              "k": "ALL"
+            },
+            "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
+            "children": []
+          },
+          {
+            "value": "Operations",
+            "options": true,
+            "obj": {
+              "t": "MB",
+              "p": "SCP_SCH",
+              "k": "OPER"
+            },
+            "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
+            "children": []
+          },
+          {
+            "value": "Manufacturing Systems",
+            "options": true,
+            "obj": {
+              "t": "MB",
+              "p": "SCP_SCH",
+              "k": "MANU"
+            },
+            "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
+            "children": []
+          },
+          {
+            "value": "Administration Systems",
+            "options": true,
+            "obj": {
+              "t": "MB",
+              "p": "SCP_SCH",
+              "k": "ADMI"
+            },
+            "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
+            "children": []
+          },
+          {
+            "value": "Software Support",
+            "options": true,
+            "obj": {
+              "t": "MB",
+              "p": "SCP_SCH",
+              "k": "SOFT"
+            },
+            "iconClass": "-smeup-fixed-icon TA-B-AMO-A-BASE",
+            "children": []
+          }
+        ],
+        "variables": [],
+        "dynamisms": [{
+          "event": "change",
+          "exec": "",
+          "targets": ["SCHINF"]
+        }]
+      }]
+    },
+    {
+      "id": "S3",
+      "components": [{
+        "type": "EXD",
+        "id": "SCHINF",
+        "title": "*NONE",
+        "fun": "F(EXD;*SCO;) 2(MB;SCP_SCH;[K1])",
+        "loaded": false
+      }]
+    }
+  ]
+}

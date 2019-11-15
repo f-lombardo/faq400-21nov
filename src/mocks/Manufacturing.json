@@ -1,0 +1,23 @@
+{
+  "type": "EXD",
+  "id": "SCHINF",
+  "title": "Manufacturing Systems",
+  "loaded": true,
+  "layout": "column",
+  "sections": [{
+    "id": "SMANU",
+    "components": [{
+      "type": "EXB",
+      "id": "TITMAN",
+      "title": "Manufacturing Systems Employees",
+      "loaded": true,
+      "fun": "F(EXD;MANUFACTURING;LIST)",
+      "options": {},
+      "data": {},
+      "messages": [],
+      "actions": {},
+      "variables": [],
+      "dynamisms": []
+    }]
+  }]
+}

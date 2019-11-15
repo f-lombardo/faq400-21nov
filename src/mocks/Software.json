@@ -1,0 +1,23 @@
+{
+  "type": "EXD",
+  "id": "SCHINF",
+  "title": "Software Support",
+  "loaded": true,
+  "layout": "column",
+  "sections": [{
+    "id": "SSOFT",
+    "components": [{
+      "type": "EXB",
+      "id": "TITSOF",
+      "title": "Software Support Employees",
+      "loaded": true,
+      "fun": "F(EXD;SOFTWARE;LIST)",
+      "options": {},
+      "data": {},
+      "messages": [],
+      "actions": {},
+      "variables": [],
+      "dynamisms": []
+    }]
+  }]
+}

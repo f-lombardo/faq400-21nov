@@ -1,0 +1,23 @@
+{
+  "type": "EXD",
+  "id": "SCHINF",
+  "title": "Administration Systems",
+  "loaded": true,
+  "layout": "column",
+  "sections": [{
+    "id": "SADMIN",
+    "components": [{
+      "type": "EXB",
+      "id": "TITADM",
+      "title": "Administration Systems Employees",
+      "loaded": true,
+      "fun": "F(EXD;ADMINISTRATION;LIST)",
+      "options": {},
+      "data": {},
+      "messages": [],
+      "actions": {},
+      "variables": [],
+      "dynamisms": []
+    }]
+  }]
+}
