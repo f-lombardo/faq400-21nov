@@ -26,6 +26,8 @@ import smeupDialog from "@/components/Dialog.vue";
 
 import Message from "@/classes/Message";
 
+const script = require("@/mocks/Start.json");
+
 @Component({
   components: {
     smeupMessage,
@@ -42,6 +44,7 @@ export default class Main extends Vue {
 
   private created() {
     // get script
+    /*
     this.$scriptManager
       .getScript("Start")
       .then(script => {
@@ -50,6 +53,8 @@ export default class Main extends Vue {
       .catch(err => {
         console.log(err);
       });
+    */
+    this.root = script;
     // save main in store
     this.$store.dispatch("webup/setMain", this);
   }

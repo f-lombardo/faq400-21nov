@@ -1,10 +1,10 @@
 import Dashboard from "./services/Dashboard";
-import TemplatesList from "./services/TemplatesList";
-import A38Plugins from "./services/A38Plugins";
-import A37Plugins from "./services/A37Plugins";
-import QueueRabbit from "./services/QueueRabbit";
-import Logs from "./services/Logs";
-import A37Statistics from "./services/A37Statistics";
+import All from "./services/All";
+import Operations from "./services/Operations";
+import Manufacturing from "./services/Manufacturing";
+import Administration from "./services/Administration";
+import Software from "./services/Software";
+
 import Fun from "./Fun";
 
 export default class ServiceFactory {
@@ -13,23 +13,20 @@ export default class ServiceFactory {
       case "DASHBOARD": {
         return new Dashboard(fun);
       }
-      case "LISTTEMPLATE": {
-        return new TemplatesList(fun);
+      case "ALL": {
+        return new All(fun);
       }
-      case "A38": {
-        return new A38Plugins(fun);
+      case "OPERATIONS": {
+        return new Operations(fun);
       }
-      case "A37": {
-        return new A37Plugins(fun);
+      case "MANUFACTURING": {
+        return new Manufacturing(fun);
       }
-      case "A37STATISTICS": {
-        return new A37Statistics(fun);
+      case "ADMINISTRATION": {
+        return new Administration(fun);
       }
-      case "RABBIT": {
-        return new QueueRabbit(fun);
-      }
-      case "LOGS": {
-        return new Logs(fun);
+      case "SOFTWARE": {
+        return new Software(fun);
       }
       default: {
         //TODO

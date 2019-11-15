@@ -40,10 +40,10 @@ const axiosConfigInstance = axios.create({
 
 // initial context
 Vue.prototype.$SmeUP = {
-  GTWFrontend: {
+  FAQ400Nov21: {
     urls: {
       config: process.env.VUE_APP_SMEUP_CONFIG_URL,
-      rest: ""
+      rest: " // TODO"
     }
   },
   // axios instance for REST calls

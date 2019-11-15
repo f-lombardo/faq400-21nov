@@ -113,18 +113,9 @@ export default class Basic extends VariableContext {
   }
 
   public getOptions() {
-    // TODO questo sarà da rivedere quando gestiremo i setup 'correttamente'
     if (this.component.options && this.component.type) {
       if (this.component.type === "FLD") {
-        let fldOptions = this.component.options[this.component.type].default;
-        if (fldOptions && fldOptions.type.toLowerCase() === "fup") {
-          if (fldOptions.typeOptions) {
-            fldOptions.typeOptions["service"] =
-              Vue.prototype.$SmeUP.GTWFrontend.urls.rest +
-              "/gtw-resource-manager/api/services/uploadTemplate";
-          }
-        }
-        return fldOptions;
+        return this.component.options[this.component.type].default;
       } else {
         return this.component.options;
       }

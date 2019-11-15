@@ -1,6 +1,6 @@
 <template>
   <form class="login-form">
-    <h1 class="login-title">Sme.UP Gateway</h1>
+    <h1 class="login-title">FAQ400 - 21 November</h1>
     <fieldset class="login-container">
       <kup-text-input
         @ketchupTextInputUpdated="onFldChangeUser($event)"

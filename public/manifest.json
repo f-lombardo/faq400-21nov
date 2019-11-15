@@ -1,8 +1,7 @@
 {
-  "name": "gtw-frontend",
-  "short_name": "gtw-frontend",
-  "icons": [
-    {
+  "name": "FAQ400 - November 21",
+  "short_name": "FAQ400",
+  "icons": [{
       "src": "./img/icons/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
@@ -16,5 +15,5 @@
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#009873",
-	"background_color": "#009873"
+  "background_color": "#009873"
 }
