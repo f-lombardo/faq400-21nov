@@ -1,0 +1,42 @@
+{
+  "columns": [{
+      "name": "TIME",
+      "title": "Timestamp"
+    },
+    {
+      "name": "OPER",
+      "title": "Operations"
+    },
+    {
+      "name": "MANU",
+      "title": "Manufacturing Systems"
+    },
+    {
+      "name": "ADMIN",
+      "title": "Administration Systems"
+    },
+    {
+      "name": "SW",
+      "title": "Software Support"
+    }
+  ],
+  "rows": [{
+    "cells": {
+      "TIME": {
+        "value": "Employees for Department"
+      },
+      "OPER": {
+        "value": 0
+      },
+      "MANU": {
+        "value": 0
+      },
+      "ADMIN": {
+        "value": 0
+      },
+      "SW": {
+        "value": 0
+      }
+    }
+  }]
+}
