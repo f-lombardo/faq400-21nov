@@ -2,11 +2,11 @@ export const baseData = {
   columns: [
     {
       name: "Col1",
-      title: "Person"
+      title: "Gender"
     },
     {
       name: "Col2",
-      title: "Value1"
+      title: "Value"
     }
   ],
   rows: [
