@@ -40,20 +40,6 @@ export default class Service {
   }
 
   private _showMessages(messages: IMessage[]): void {
-    /*
-    {
-      "messages": [
-        {
-          "gravity": "INFO",
-          "text": "All plugins are going to start",
-          "fullText": "",
-          "level": 50,
-          "type": "INFO",
-          "mode": "TN"
-        }
-      ]
-    }
-    */
     messages.forEach((rawMessage: IMessage) => {
       let message: Message = new Message(rawMessage);
       Vue.prototype.$messageManager.show(message);
@@ -67,5 +53,38 @@ export default class Service {
       return objx.getMethod().replace(/\s+/g, "");
     }
     return "";
+  }
+
+  formatMoney(
+    amount: any,
+    decimalCount = 2,
+    decimal = ".",
+    thousands = ","
+  ): any {
+    try {
+      decimalCount = Math.abs(decimalCount);
+      decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+
+      const negativeSign = amount < 0 ? "-" : "";
+
+      let i: any = parseInt(
+        (amount = Math.abs(Number(amount) || 0).toFixed(decimalCount))
+      ).toString();
+      let j: any = i.length > 3 ? i.length % 3 : 0;
+
+      return (
+        negativeSign +
+        (j ? i.substr(0, j) + thousands : "") +
+        i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) +
+        (decimalCount
+          ? decimal +
+            Math.abs(amount - i)
+              .toFixed(decimalCount)
+              .slice(2)
+          : "")
+      );
+    } catch (e) {
+      console.log(e);
+    }
   }
 }

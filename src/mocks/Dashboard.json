@@ -18,7 +18,17 @@
               "title": "Operations",
               "loaded": true,
               "fun": "F(EXB;DASHBOARD;OPERLIST)",
-              "options": {},
+              "options": {
+                "columnsWidth": [{
+                    "column": "GENDER",
+                    "width": 100
+                  },
+                  {
+                    "column": "SALARY",
+                    "width": 100
+                  }
+                ]
+              },
               "data": {},
               "messages": [],
               "actions": {},
@@ -33,7 +43,17 @@
               "title": "Manufacturing Systems",
               "loaded": true,
               "fun": "F(EXB;DASHBOARD;MANULIST)",
-              "options": {},
+              "options": {
+                "columnsWidth": [{
+                    "column": "GENDER",
+                    "width": 100
+                  },
+                  {
+                    "column": "SALARY",
+                    "width": 100
+                  }
+                ]
+              },
               "data": {},
               "messages": [],
               "actions": {},
@@ -57,7 +77,17 @@
               "title": "Administration Systems",
               "loaded": true,
               "fun": "F(EXB;DASHBOARD;ADMILIST)",
-              "options": {},
+              "options": {
+                "columnsWidth": [{
+                    "column": "GENDER",
+                    "width": 100
+                  },
+                  {
+                    "column": "SALARY",
+                    "width": 100
+                  }
+                ]
+              },
               "data": {},
               "messages": [],
               "actions": {},
@@ -72,7 +102,17 @@
               "title": "Software Support",
               "loaded": true,
               "fun": "F(EXB;DASHBOARD;SOFTLIST)",
-              "options": {},
+              "options": {
+                "columnsWidth": [{
+                    "column": "GENDER",
+                    "width": 100
+                  },
+                  {
+                    "column": "SALARY",
+                    "width": 100
+                  }
+                ]
+              },
               "data": {},
               "messages": [],
               "actions": {},

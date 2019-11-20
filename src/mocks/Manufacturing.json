@@ -12,7 +12,17 @@
       "title": "Manufacturing Systems Employees",
       "loaded": true,
       "fun": "F(EXD;MANUFACTURING;LIST)",
-      "options": {},
+      "options": {
+        "columnsWidth": [{
+            "column": "GENDER",
+            "width": 100
+          },
+          {
+            "column": "SALARY",
+            "width": 100
+          }
+        ]
+      },
       "data": {},
       "messages": [],
       "actions": {},

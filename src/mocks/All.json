@@ -1,23 +1,98 @@
 {
   "type": "EXD",
   "id": "SCHINF",
-  "title": "All",
+  "title": "Plugin A37 gateway",
   "loaded": true,
   "layout": "column",
   "sections": [{
-    "id": "SALL",
+    "id": "SA372",
     "components": [{
-      "type": "EXB",
-      "id": "TITALL",
-      "title": "All Employees",
-      "loaded": true,
-      "fun": "F(EXD;ALL;LIST)",
-      "options": {},
-      "data": {},
-      "messages": [],
-      "actions": {},
-      "variables": [],
-      "dynamisms": []
-    }]
+        "type": "EXD",
+        "id": "ALLEMPL",
+        "title": "Check",
+        "loaded": true,
+        "layout": "column",
+        "sections": [{
+          "components": [{
+            "type": "EXB",
+            "id": "TITALL",
+            "title": "All Employees",
+            "loaded": true,
+            "fun": "F(EXD;ALL;LIST)",
+            "options": {
+              "columnsWidth": [{
+                  "column": "GENDER",
+                  "width": 100
+                },
+                {
+                  "column": "SALARY",
+                  "width": 100
+                }
+              ]
+            },
+            "data": {},
+            "messages": [],
+            "actions": {},
+            "variables": [],
+            "dynamisms": []
+          }]
+        }]
+      },
+      {
+        "type": "EXD",
+        "id": "STATISTICS",
+        "title": "Statistics",
+        "loaded": true,
+        "layout": "column",
+        "sections": [{
+            "components": [{
+              "type": "CHA",
+              "id": "TITSTA1",
+              "title": "Employees data chart",
+              "loaded": true,
+              "fun": "F(EXB;ALL;CHARTLIST)",
+              "options": {
+                "refresh": 30000,
+                "axis": "TIME",
+                "series": [
+                  "OPER",
+                  "MANU",
+                  "ADMIN",
+                  "SW"
+                ],
+                "types": ["VBAR"]
+              },
+              "data": {},
+              "messages": [],
+              "actions": {},
+              "variables": [],
+              "dynamisms": []
+            }]
+          },
+          {
+            "components": [{
+              "type": "CHA",
+              "id": "TITSTA2",
+              "title": "Employees data chart",
+              "loaded": true,
+              "fun": "F(EXB;ALL;CHARTGENDER)",
+              "options": {
+                "refresh": 30000,
+                "axis": "Col1",
+                "series": [
+                  "Col2"
+                ],
+                "types": ["Pie"]
+              },
+              "data": {},
+              "messages": [],
+              "actions": {},
+              "variables": [],
+              "dynamisms": []
+            }]
+          }
+        ]
+      }
+    ]
   }]
 }

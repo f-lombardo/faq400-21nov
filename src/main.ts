@@ -43,7 +43,7 @@ Vue.prototype.$SmeUP = {
   FAQ400Nov21: {
     urls: {
       config: process.env.VUE_APP_SMEUP_CONFIG_URL,
-      rest: " // TODO"
+      rest: "http://127.0.0.1:7000/"
     }
   },
   // axios instance for REST calls
